@@ -8,4 +8,16 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="EditTextStyle" parent="@android:style/Widget.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/edittext_padding</item>
+        <item name="android:textColor">@color/greyText</item>
+        <item name="android:textColorHint">@color/greyText</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">@dimen/edittext_padding</item>
+        <item name="android:background">@drawable/edittext_background</item>
+    </style>
 </resources>

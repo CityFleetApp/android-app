@@ -3,4 +3,6 @@
     <string name="fontRegular">Montserrat-Regular.otf</string>
     <string name="log_in">Log in</string>
     <string name="create_an_account">Create an account</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

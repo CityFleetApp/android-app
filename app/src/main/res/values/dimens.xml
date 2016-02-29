@@ -5,9 +5,12 @@
     <dimen name="splash_logo_margin_top">145dp</dimen>
     <dimen name="welcome_textsize">26sp</dimen>
     <dimen name="splash_line_padding">22dp</dimen>
-    <dimen name="splash_hintlbl_textsize">17sp</dimen>
+    <dimen name="text_size">16sp</dimen>
     <dimen name="welcome_margin_top">46.6dp</dimen>
     <dimen name="splash_btn_margin">85dp</dimen>
     <dimen name="splash_btn_margin_small">20dp</dimen>
     <dimen name="btn_corners_radius">6dp</dimen>
+    <dimen name="edittext_padding">16dp</dimen>
+    <dimen name="login_edittext_margin">11dp</dimen>
+    <dimen name="login_edittext_margin_big">40dp</dimen>
 </resources>

@@ -9,4 +9,6 @@
     <color name="colorHighlightTransparent">#80B6B6B6</color>
     <color name="colorHighlight">#B6B6B6</color>
     <color name="yellowBtnTextColor">#b49238</color>
+    <color name="greyText">#475059</color>
+    <color name="editTextBackground">#ccf2f4f8</color>
 </resources>
