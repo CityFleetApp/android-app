@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.citifleet.R;
+import com.citifleet.view.BaseActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,7 +31,7 @@ public class SplashScreenFragment extends Fragment {
 
     @OnClick(R.id.loginBtn)
     public void onLoginBtnClick() {
-
+        ((BaseActivity) getActivity()).changeFragment(new LoginFragment(), true);
     }
 
     @OnClick(R.id.registerBtn)
