@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.citifleet"
           xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,17 +9,20 @@
         android:name=".CitiFleetApp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="d217b8a3de781c177191dbe6fa3d42c3275cc7c6" />
+
+        <activity
+            android:name=".view.login.LoginFlowActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+
 </manifest>
