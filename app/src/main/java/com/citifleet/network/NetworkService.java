@@ -12,4 +12,11 @@ public interface NetworkService {
     @POST("userslogin/")
     Call<LoginInfo> login(@Field("username") String username, @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("userssignup/")
+    Call<LoginInfo> signup(@Field("full_name") String fullName, @Field("username") String username,
+                           @Field("phone") String phone, @Field("hack_license") String hackLicense,
+                           @Field("email") String email, @Field("password") String password,
+                           @Field("password_confirm") String passwordConfirm);
+
 }
