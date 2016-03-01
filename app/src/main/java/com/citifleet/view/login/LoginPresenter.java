@@ -3,6 +3,7 @@ package com.citifleet.view.login;
 import android.util.Log;
 
 import com.citifleet.model.LoginInfo;
+import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 
 import retrofit2.Call;
@@ -35,8 +36,7 @@ public class LoginPresenter {
             if (response.isSuccess()) {
                 view.onLoginSuccess(response.body().getToken());
             } else {
-                Log.e(LoginPresenter.class.getName(), response.message());
-                view.onLoginFailure(response.message());
+                view.onLoginFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
         }
 
@@ -58,6 +58,7 @@ public class LoginPresenter {
         void onLoginFailure(String error);
 
         void onNetworkError();
+
     }
 
 }

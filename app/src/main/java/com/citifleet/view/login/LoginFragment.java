@@ -22,6 +22,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -39,6 +40,8 @@ public class LoginFragment extends Fragment implements Validator.ValidationListe
     Button      loginBtn;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
+    @BindString(R.string.default_error_mes)
+    String      defaultErrorMes;
 
     @Nullable
     @Override
@@ -83,6 +86,9 @@ public class LoginFragment extends Fragment implements Validator.ValidationListe
     @Override
     public void onLoginFailure(String error) {
         if (getActivity() != null) {
+            if (error == null) {
+                error = defaultErrorMes;
+            }
             Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
         }
     }
