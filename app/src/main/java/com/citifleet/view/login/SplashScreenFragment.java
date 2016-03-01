@@ -36,5 +36,6 @@ public class SplashScreenFragment extends Fragment {
 
     @OnClick(R.id.registerBtn)
     public void onRegisterBtnClick() {
+        ((BaseActivity) getActivity()).changeFragment(new RegisterFragment(), true);
     }
 }

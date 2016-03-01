@@ -13,4 +13,9 @@
     <dimen name="edittext_padding">16dp</dimen>
     <dimen name="login_edittext_margin">11dp</dimen>
     <dimen name="login_edittext_margin_big">40dp</dimen>
+    <dimen name="reg_edittext_padding">16dp</dimen>
+    <dimen name="reg_edittext_drawable_padding">13dp</dimen>
+    <dimen name="reg_edittext_lbl_textsize">15sp</dimen>
+    <dimen name="reg_edittext_padding_top">5dp</dimen>
+    <dimen name="toolbar_back_padding">10dp</dimen>
 </resources>

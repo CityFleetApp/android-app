@@ -19,4 +19,25 @@
         <item name="android:padding">@dimen/edittext_padding</item>
         <item name="android:background">@drawable/edittext_background</item>
     </style>
+
+    <style name="RegistrationEdittextLabelStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/reg_edittext_drawable_padding</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/reg_edittext_color</item>
+        <item name="android:textSize">@dimen/reg_edittext_lbl_textsize</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="RegistrationEdittextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:paddingBottom">@dimen/reg_edittext_padding_top</item>
+        <item name="android:paddingTop">@dimen/reg_edittext_padding_top</item>
+        <item name="android:textColor">@color/reg_edittext_hintcolor</item>
+        <item name="android:textColorHint">@color/reg_edittext_hintcolor</item>
+        <item name="android:textSize">@dimen/reg_edittext_lbl_textsize</item>
+    </style>
 </resources>
