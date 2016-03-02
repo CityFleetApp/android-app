@@ -4,9 +4,9 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-    <fragment
-        android:id="@+id/mapView"
-        class="com.google.android.gms.maps.MapFragment"
+    <FrameLayout
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomButtonsCont"/>
