@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">CitiFleet</string>
     <string name="fontRegular">Montserrat-Regular.otf</string>
+    <string name="fontLight">Montserrat-Light.otf</string>
     <string name="log_in">Log in</string>
     <string name="create_an_account">Create an account</string>
     <string name="enter_email">Enter Email</string>
@@ -28,4 +29,9 @@
     <string name="password_validation_mes">Password must be at least 8 characters long and contain at least one number</string>
     <string name="password_match_mes">Passwords don\'t match</string>
     <string name="license_error">Should be at least 6 characters long</string>
+    <string name="google_api_key">AIzaSyD6n3x0DiZuvIh8m5yQJ0NC1tVOrp1KB48</string>
+    <string name="report">Report</string>
+    <string name="notification">Notification</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="marketplace">Marketplace</string>
 </resources>

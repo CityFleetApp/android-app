@@ -68,7 +68,7 @@ public class LoginFragment extends Fragment implements Validator.ValidationListe
     @Override
     public void onLoginSuccess(String token) {
         PrefUtil.setToken(getContext(), token);
-        Toast.makeText(getContext(), "Successful login", Toast.LENGTH_SHORT).show();
+        ((LoginFlowActivity) getActivity()).startMainScreen();
     }
 
     @Override

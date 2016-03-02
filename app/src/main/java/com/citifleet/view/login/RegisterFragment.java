@@ -136,7 +136,7 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
     @Override
     public void onSignUpSuccess(String token) {
         PrefUtil.setToken(getContext(), token);
-        Toast.makeText(getContext(), "Successful sign up", Toast.LENGTH_SHORT).show();
+        ((LoginFlowActivity) getActivity()).startMainScreen();
     }
 
     @Override

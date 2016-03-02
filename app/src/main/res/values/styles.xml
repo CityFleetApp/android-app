@@ -40,4 +40,17 @@
         <item name="android:textColorHint">@color/reg_edittext_hintcolor</item>
         <item name="android:textSize">@dimen/reg_edittext_lbl_textsize</item>
     </style>
+
+    <style name="BottomPanelButton" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/bottom_menu_textsize</item>
+        <item name="android:textColor">@drawable/bottom_menu_text_selector</item>
+        <item name="fontPath">@string/fontLight</item>
+        <item name="android:padding">@dimen/bottom_menu_padding</item>
+        <item name="android:drawablePadding">@dimen/bottom_menu_drawable_padding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+    </style>
 </resources>
