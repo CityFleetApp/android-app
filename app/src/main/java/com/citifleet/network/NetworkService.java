@@ -19,4 +19,7 @@ public interface NetworkService {
                            @Field("email") String email, @Field("password") String password,
                            @Field("password_confirm") String passwordConfirm);
 
+    @FormUrlEncoded
+    @POST("reports/")
+    Call<Object> report(@Field("report_type") int reportType, @Field("lat") double lat, @Field("lng") double lng);
 }

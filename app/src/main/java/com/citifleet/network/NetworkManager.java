@@ -3,10 +3,17 @@ package com.citifleet.network;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
 
 import com.citifleet.R;
+import com.citifleet.util.PrefUtil;
 
+import java.io.IOException;
+
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -16,9 +23,21 @@ public class NetworkManager {
     private final ConnectivityManager connectivityManager;
 
     public NetworkManager(final Context context, ConnectivityManager mConnectivityManager) {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        Interceptor headerInterceptor = new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request;
+                if (!TextUtils.isEmpty(PrefUtil.getToken(context))) {
+                    request = chain.request().newBuilder().addHeader("Authorization", "Token " + PrefUtil.getToken(context)).build();
+                } else {
+                    request = chain.request();
+                }
+                return chain.proceed(request);
+            }
+        };
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(loggingInterceptor).addInterceptor(headerInterceptor).build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(context.getString(R.string.endpoint))
                 .client(client)

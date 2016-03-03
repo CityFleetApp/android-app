@@ -1,6 +1,7 @@
 package com.citifleet.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +9,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.citifleet.R;
+
+import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -33,6 +36,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         mFm.popBackStack();
         if (mFm.getBackStackEntryCount() == 0) {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        List<Fragment> fragmentList = mFm.getFragments();
+        for (int i = 0; i < fragmentList.size(); i++) {
+            fragmentList.get(i).onActivityResult(requestCode, resultCode, data);
         }
     }
 

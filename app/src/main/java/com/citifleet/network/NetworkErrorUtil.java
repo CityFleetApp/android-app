@@ -2,8 +2,6 @@ package com.citifleet.network;
 
 import android.util.Log;
 
-import com.citifleet.model.LoginInfo;
-
 import org.json.JSONObject;
 
 import java.util.Iterator;
@@ -11,7 +9,7 @@ import java.util.Iterator;
 import retrofit2.Response;
 
 public class NetworkErrorUtil {
-    public static String gerErrorMessage(Response<LoginInfo> response) {
+    public static String gerErrorMessage(Response<?> response) {
         String errorMes = null;
         try {
             String jsonError = response.errorBody().string();
