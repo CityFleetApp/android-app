@@ -58,11 +58,12 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center_horizontal|bottom</item>
         <item name="android:gravity">center</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/report_dialog_header</item>
-        <item name="android:textSize">@dimen/report_title_test_size</item>
+        <item name="android:textSize">@dimen/report_text_size</item>
         <item name="android:drawablePadding">@dimen/report_padding_drawable</item>
         <item name="android:padding">@dimen/report_padding</item>
     </style>

@@ -38,4 +38,5 @@
     <dimen name="report_padding_drawable">15dp</dimen>
     <dimen name="report_padding">10dp</dimen>
     <dimen name="report_dialog_width">300dp</dimen>
+    <dimen name="report_text_size">13sp</dimen>
 </resources>

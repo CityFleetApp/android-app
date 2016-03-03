@@ -7,4 +7,6 @@ public class Constants {
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS         = 10000;
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
             UPDATE_INTERVAL_IN_MILLISECONDS / 2;
+    public static final String REPORT_DIALOG_TAG = "report_dialog";
+    public static final int REPORT_TARGET_FRAGMENT = 100;
 }

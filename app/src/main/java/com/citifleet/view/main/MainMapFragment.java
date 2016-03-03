@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.citifleet.R;
 import com.citifleet.util.Constants;
@@ -176,9 +177,16 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
     void reportBtnClick() {
         if (!reportBtn.isSelected()) {
             selectButton(reportBtn);
-            //TODO
+            FragmentManager fm = getChildFragmentManager();
+            ReportDialogFragment fragment = (ReportDialogFragment) fm.findFragmentByTag(Constants.REPORT_DIALOG_TAG);
+            if (fragment == null) {
+                fragment = new ReportDialogFragment();
+            }
+            fragment.setTargetFragment(this, Constants.REPORT_TARGET_FRAGMENT);
+            fragment.show(getChildFragmentManager(), Constants.REPORT_DIALOG_TAG);
         }
     }
+
 
     @OnClick(R.id.notificationBtn)
     void notificationBtnClick() {
@@ -213,6 +221,15 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
     @OnClick(R.id.menuBtn)
     void onMenuBtnClick() {
 
+    }
+
+    public void onReportDialogClosed() {
+        dashboardBtnClick();
+    }
+
+    public void onReportItemClick(int position) {
+        Toast.makeText(getContext(), "position: " + position, Toast.LENGTH_SHORT).show();
+        dashboardBtnClick();
     }
 
     @Override
