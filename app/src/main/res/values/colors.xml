@@ -18,4 +18,6 @@
     <color name="bottom_button_textcolor">#4e5c69</color>
     <color name="direct_button_color">#102a3b</color>
     <color name="add_friend_button_color">#e71d35</color>
+    <color name="report_dialog_header">#192c3a</color>
+    <color name="report_divider_color">#d9d9d9</color>
 </resources>

@@ -30,4 +30,12 @@
     <dimen name="direct_btn_elevation">1dp</dimen>
     <dimen name="main_screen_fab_size">40dp</dimen>
     <dimen name="main_screen_button_size">30dp</dimen>
+    <dimen name="report_title_test_size">15sp</dimen>
+    <dimen name="report_title_margin_top">15dp</dimen>
+    <dimen name="report_title_margin_left">26dp</dimen>
+    <dimen name="report_title_margin_right">18dp</dimen>
+    <dimen name="report_grid_padding">13dp</dimen>
+    <dimen name="report_padding_drawable">15dp</dimen>
+    <dimen name="report_padding">10dp</dimen>
+    <dimen name="report_dialog_width">300dp</dimen>
 </resources>

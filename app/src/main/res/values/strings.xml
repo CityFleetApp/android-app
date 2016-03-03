@@ -34,4 +34,11 @@
     <string name="notification">Notification</string>
     <string name="dashboard">Dashboard</string>
     <string name="marketplace">Marketplace</string>
+    <string name="report_title">Report</string>
+    <string name="police">Police</string>
+    <string name="tlc">Tlc</string>
+    <string name="accident">Accident</string>
+    <string name="trafic_jam">Trafic jam</string>
+    <string name="hazard">Hazard</string>
+    <string name="road_closure">Road closure</string>
 </resources>

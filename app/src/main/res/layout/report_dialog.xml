@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="@dimen/report_dialog_width"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/report_dialog_header"
+        android:paddingLeft="@dimen/report_title_margin_left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/report_title"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/report_title_test_size"/>
+
+        <ImageButton
+            android:id="@+id/closeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/report_title_margin_top"
+            android:src="@drawable/close"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:divider="@drawable/vertical_divider"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/report_grid_padding"
+        android:showDividers="middle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@drawable/horizontal_divider"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/policeBtn"
+                style="@style/ReportButtonStyle"
+                android:drawableTop="@drawable/policeman"
+                android:text="@string/police"/>
+
+            <TextView
+                android:id="@+id/tlcBtn"
+                style="@style/ReportButtonStyle"
+                android:drawableTop="@drawable/police"
+                android:text="@string/tlc"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:divider="@drawable/horizontal_divider"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/accidentBtn"
+                style="@style/ReportButtonStyle"
+                android:drawableTop="@drawable/crash"
+                android:text="@string/accident"/>
+
+            <TextView
+                android:id="@+id/traficJamBtn"
+                style="@style/ReportButtonStyle"
+                android:drawableTop="@drawable/traffic"
+                android:text="@string/trafic_jam"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:divider="@drawable/horizontal_divider"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/hazardBtn"
+                style="@style/ReportButtonStyle"
+                android:drawableTop="@drawable/alert"
+                android:text="@string/hazard"/>
+
+            <TextView
+                android:id="@+id/roadClosureBtn"
+                style="@style/ReportButtonStyle"
+                android:drawableTop="@drawable/stop"
+                android:text="@string/road_closure"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
