@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <padding
+                android:bottom="@dimen/dash_icon_padding"
+                android:left="@dimen/dash_icon_padding"
+                android:right="@dimen/dash_icon_padding"
+                android:top="@dimen/dash_icon_padding"/>
+            <solid android:color="@android:color/white"/>
+            <corners
+                android:radius="@dimen/dash_icon_radius"/>
+        </shape>
+    </item>
+    <item android:drawable="@drawable/lifebuoy"/>
+</layer-list>

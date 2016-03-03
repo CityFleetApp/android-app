@@ -78,4 +78,15 @@
         <item name="android:paddingTop">@dimen/add_friends_padding_top</item>
         <item name="android:textSize">@dimen/add_friend_textsize</item>
     </style>
+
+    <style name="DashBtnStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/dash_btn_background_selector</item>
+        <item name="android:drawablePadding">@dimen/add_friends_drawable_padding_top</item>
+        <item name="android:padding">@dimen/add_friends_padding_top</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@drawable/dash_btn_text_selector</item>
+        <item name="android:textSize">@dimen/add_friend_textsize</item>
+    </style>
 </resources>

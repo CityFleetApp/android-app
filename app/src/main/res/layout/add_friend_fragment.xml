@@ -86,7 +86,7 @@
                     style="@style/AddFriendsBtnStyle"
                     android:drawableLeft="@drawable/facebook"
                     android:text="@string/facebook_friend"
-                    android:textColor="@color/add_friend_social_textcolor"/>
+                    android:textColor="@color/green_color"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -109,7 +109,7 @@
                     style="@style/AddFriendsBtnStyle"
                     android:drawableLeft="@drawable/instagramm"
                     android:text="@string/instagram_friends"
-                    android:textColor="@color/add_friend_social_textcolor"/>
+                    android:textColor="@color/green_color"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -132,7 +132,7 @@
                     style="@style/AddFriendsBtnStyle"
                     android:drawableLeft="@drawable/twitter"
                     android:text="@string/twitter_friends"
-                    android:textColor="@color/add_friend_social_textcolor"/>
+                    android:textColor="@color/green_color"/>
 
                 <ImageView
                     android:layout_width="wrap_content"

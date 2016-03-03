@@ -48,4 +48,15 @@
     <string name="instagram_friends">Instagram Friends</string>
     <string name="twitter_friends">Twitter Friends</string>
     <string name="add_friends_title">Add Friends</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="posting">Posting</string>
+    <string name="earnings">Earnings</string>
+    <string name="invite_a_driver">Invite a driver</string>
+    <string name="chat">Chat</string>
+    <string name="benefits">Benefits</string>
+    <string name="legal_aid">Legal Aid</string>
+    <string name="help">Help</string>
+    <string name="setting">Setting</string>
+    <string name="sign_out">Sign out</string>
 </resources>
