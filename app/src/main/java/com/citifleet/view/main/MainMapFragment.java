@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.Constants;
+import com.citifleet.view.BaseActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -240,7 +241,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
 
     @OnClick(R.id.addFriendBtn)
     void onAddFriendBtnClick() {
-
+        ((BaseActivity) getActivity()).changeFragment(new AddFriendsFragment(), true);
     }
 
     @OnClick(R.id.gpsBtn)
@@ -267,7 +268,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
     public void onReportItemClick(int position) {
         double lat = currentLocation == null ? 0 : currentLocation.getLatitude();
         double longt = currentLocation == null ? 0 : currentLocation.getLongitude();
-        presenter.sendReport(position+1, lat, longt);
+        presenter.sendReport(position + 1, lat, longt);
         dashboardBtnClick();
     }
 

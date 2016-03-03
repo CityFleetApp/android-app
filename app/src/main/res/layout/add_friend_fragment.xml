@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/add_friends_color"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/add_friend_background"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/background"
+                    android:layout_alignLeft="@+id/background"
+                    android:layout_alignRight="@+id/background"
+                    android:layout_alignTop="@+id/background"
+                    android:gravity="center"
+                    android:text="@string/add_friend_lbl"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/add_friend_lbl_textsize"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/contactsBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/add_friends_button_selector"
+                android:clickable="true">
+
+                <TextView
+                    style="@style/AddFriendsBtnStyle"
+                    android:drawableLeft="@drawable/card"
+                    android:text="@string/find_friends_from_contacts"
+                    android:textColor="@color/add_friends_text_color"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/add_friends_padding_left"
+                    android:src="@drawable/add"/>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/add_friends_padding_top_lbl"
+                android:paddingLeft="@dimen/add_friends_padding_left"
+                android:paddingTop="@dimen/add_friends_padding_top_lbl"
+                android:text="@string/social_media_connections"
+                android:textAllCaps="true"
+                android:textColor="@color/add_friend_lbl_color"
+                android:textSize="@dimen/add_friends_text_size_lbl"/>
+
+            <RelativeLayout
+                android:id="@+id/facebookBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/add_friends_button_selector"
+                android:clickable="true">
+
+                <TextView
+                    style="@style/AddFriendsBtnStyle"
+                    android:drawableLeft="@drawable/facebook"
+                    android:text="@string/facebook_friend"
+                    android:textColor="@color/add_friend_social_textcolor"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/add_friends_padding_left"
+                    android:src="@drawable/add"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/instagramBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/add_friends_button_selector"
+                android:layout_marginTop="@dimen/divider"
+                android:clickable="true">
+
+                <TextView
+                    style="@style/AddFriendsBtnStyle"
+                    android:drawableLeft="@drawable/instagramm"
+                    android:text="@string/instagram_friends"
+                    android:textColor="@color/add_friend_social_textcolor"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/add_friends_padding_left"
+                    android:src="@drawable/add"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/twitterBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/add_friends_button_selector"
+                android:layout_marginTop="@dimen/divider"
+                android:clickable="true">
+
+                <TextView
+                    style="@style/AddFriendsBtnStyle"
+                    android:drawableLeft="@drawable/twitter"
+                    android:text="@string/twitter_friends"
+                    android:textColor="@color/add_friend_social_textcolor"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/add_friends_padding_left"
+                    android:src="@drawable/add"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

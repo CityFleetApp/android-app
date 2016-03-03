@@ -39,4 +39,12 @@
     <dimen name="report_padding">10dp</dimen>
     <dimen name="report_dialog_width">300dp</dimen>
     <dimen name="report_text_size">13sp</dimen>
+    <dimen name="add_friend_lbl_textsize">18sp</dimen>
+    <dimen name="add_friend_textsize">16sp</dimen>
+    <dimen name="add_friends_drawable_padding_top">10dp</dimen>
+    <dimen name="add_friends_padding_top">18dp</dimen>
+    <dimen name="add_friends_padding_left">12dp</dimen>
+    <dimen name="add_friends_padding_top_lbl">20dp</dimen>
+    <dimen name="add_friends_text_size_lbl">11sp</dimen>
+    <dimen name="divider">1dp</dimen>
 </resources>

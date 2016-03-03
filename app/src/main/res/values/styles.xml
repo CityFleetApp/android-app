@@ -67,4 +67,15 @@
         <item name="android:drawablePadding">@dimen/report_padding_drawable</item>
         <item name="android:padding">@dimen/report_padding</item>
     </style>
+
+    <style name="AddFriendsBtnStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/add_friends_drawable_padding_top</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingBottom">@dimen/add_friends_padding_top</item>
+        <item name="android:paddingLeft">@dimen/add_friends_padding_left</item>
+        <item name="android:paddingTop">@dimen/add_friends_padding_top</item>
+        <item name="android:textSize">@dimen/add_friend_textsize</item>
+    </style>
 </resources>

@@ -20,4 +20,8 @@
     <color name="add_friend_button_color">#e71d35</color>
     <color name="report_dialog_header">#192c3a</color>
     <color name="report_divider_color">#d9d9d9</color>
+    <color name="add_friends_text_color">#4c5a76</color>
+    <color name="add_friends_color">#f2f4f8</color>
+    <color name="add_friend_lbl_color">#79858f</color>
+    <color name="add_friend_social_textcolor">#2ec4b6</color>
 </resources>

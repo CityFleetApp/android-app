@@ -41,4 +41,11 @@
     <string name="trafic_jam">Trafic jam</string>
     <string name="hazard">Hazard</string>
     <string name="road_closure">Road closure</string>
+    <string name="add_friend_lbl">Add friend to simplify\nconnecting and meeting up!\nsee other\'s ETA when heading\nto the same direction,\nand appear on the map when\ndriving nearby</string>
+    <string name="find_friends_from_contacts">Find friends from contacts</string>
+    <string name="social_media_connections">Social Media Connections</string>
+    <string name="facebook_friend">Facebook Friend</string>
+    <string name="instagram_friends">Instagram Friends</string>
+    <string name="twitter_friends">Twitter Friends</string>
+    <string name="add_friends_title">Add Friends</string>
 </resources>
