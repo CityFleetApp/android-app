@@ -47,10 +47,12 @@
     <dimen name="add_friends_padding_top_lbl">20dp</dimen>
     <dimen name="add_friends_text_size_lbl">11sp</dimen>
     <dimen name="divider">1dp</dimen>
-    <dimen name="dash_header_height">220dp</dimen>
+    <dimen name="dash_header_height">215dp</dimen>
     <dimen name="profile_image_height">140dp</dimen>
-    <dimen name="profile_name_textsize">22sp</dimen>
-    <dimen name="profile_name_padding">15dp</dimen>
+    <dimen name="profile_name_textsize">20sp</dimen>
+    <dimen name="profile_name_padding">10dp</dimen>
     <dimen name="dash_icon_padding">2dp</dimen>
     <dimen name="dash_icon_radius">3dp</dimen>
+    <dimen name="profile_image_frame">9dp</dimen>
+    <item name="profile_image_blur_radius_percent" format="float" type="dimen">0.02</item>
 </resources>

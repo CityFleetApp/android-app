@@ -21,6 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dash_header_height"
                 android:layout_gravity="center"
+                android:background="@color/green_color"
                 android:gravity="center">
 
                 <ImageView
@@ -28,7 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
-                    android:background="@color/green_color"
+                    android:alpha="0.4"
                     android:scaleType="centerCrop"/>
 
                 <RelativeLayout
@@ -41,8 +42,7 @@
                         android:layout_width="@dimen/profile_image_height"
                         android:layout_height="@dimen/profile_image_height"
                         android:layout_centerHorizontal="true"
-                        android:layout_margin="@dimen/profile_name_padding"
-                        android:background="@color/redColor"/>
+                        android:layout_margin="@dimen/profile_name_padding"/>
 
                     <ImageButton
                         android:id="@+id/cameraBtn"
@@ -71,73 +71,73 @@
             </RelativeLayout>
 
             <TextView
-                android:clickable="true"
                 android:id="@+id/homeBtn"
                 style="@style/DashBtnStyle"
+                android:clickable="true"
                 android:drawableLeft="@drawable/home_btn_selector"
                 android:text="@string/home"/>
 
             <TextView
-                android:clickable="true"
                 android:id="@+id/profileBtn"
                 style="@style/DashBtnStyle"
+                android:clickable="true"
                 android:drawableLeft="@drawable/profile_btn_selector"
                 android:text="@string/profile"/>
 
             <TextView
-                android:clickable="true"
                 android:id="@+id/postingBtn"
                 style="@style/DashBtnStyle"
+                android:clickable="true"
                 android:drawableLeft="@drawable/posting_btn_selector"
                 android:text="@string/posting"/>
 
             <TextView
-                android:clickable="true"
                 android:id="@+id/earningsBtn"
                 style="@style/DashBtnStyle"
+                android:clickable="true"
                 android:drawableLeft="@drawable/earnings_btn_selector"
                 android:text="@string/earnings"/>
 
             <TextView
-                android:clickable="true"
                 android:id="@+id/inviteDriverBtn"
                 style="@style/DashBtnStyle"
+                android:clickable="true"
                 android:drawableLeft="@drawable/driver_btn_selector"
                 android:text="@string/invite_a_driver"/>
 
             <TextView
-                android:clickable="true"
                 android:id="@+id/chatBtn"
                 style="@style/DashBtnStyle"
+                android:clickable="true"
                 android:drawableLeft="@drawable/chat_btn_selector"
                 android:text="@string/chat"/>
 
             <TextView
-                android:clickable="true"
                 android:id="@+id/benefitsBtn"
                 style="@style/DashBtnStyle"
+                android:clickable="true"
                 android:drawableLeft="@drawable/benefits_btn_selector"
                 android:text="@string/benefits"/>
 
             <TextView
-                android:clickable="true"
                 android:id="@+id/legalAidBtn"
                 style="@style/DashBtnStyle"
+                android:clickable="true"
                 android:drawableLeft="@drawable/legal_aid_btn_selector"
                 android:text="@string/legal_aid"/>
 
             <TextView
-                android:clickable="true"
                 android:id="@+id/helpBtn"
                 style="@style/DashBtnStyle"
+                android:clickable="true"
                 android:drawableLeft="@drawable/help_btn_selector"
                 android:text="@string/help"/>
 
             <TextView
-                android:clickable="true"
                 android:id="@+id/signOutBtn"
                 style="@style/DashBtnStyle"
                 android:background="@drawable/signout_background_selector"
+                android:clickable="true"
                 android:drawableLeft="@drawable/sign_out_selector"
                 android:text="@string/sign_out"/>
         </LinearLayout>
