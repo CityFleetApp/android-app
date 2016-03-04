@@ -258,6 +258,11 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
 
     @OnClick(R.id.menuBtn)
     void onMenuBtnClick() {
+        ((BaseActivity) getActivity()).changeFragmentWithAnimation(new DashboardFragment(), true, R.anim.slide_up,
+                R.anim.slide_down,
+                R.anim.slide_up,
+                R.anim.slide_down);
+
 
     }
 

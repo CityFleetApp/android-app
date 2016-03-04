@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomButtonsCont"/>
 
+
     <ImageButton
         android:id="@+id/directBtn"
         android:layout_width="@dimen/main_screen_fab_size"
@@ -113,8 +114,8 @@
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.citifleet.view;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.AnimRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -74,4 +75,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         ft.commit();
     }
 
+    public void changeFragmentWithAnimation(Fragment f, boolean addToBackStack, @AnimRes int enter,
+                                            @AnimRes int exit, @AnimRes int popEnter, @AnimRes int popExit) {
+        if (f == null) {
+            return;
+        }
+        FragmentTransaction ft = mFm.beginTransaction();
+
+        // BackStack
+        if (addToBackStack) {
+            ft.addToBackStack(null);
+        }
+
+        ft.setCustomAnimations(enter, exit, popEnter, popExit);
+        ft.add(R.id.fragmentContainer, f);
+
+        // Commit transaction
+        ft.commit();
+    }
 }
