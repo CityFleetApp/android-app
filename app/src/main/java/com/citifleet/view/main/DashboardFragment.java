@@ -1,13 +1,17 @@
 package com.citifleet.view.main;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
@@ -22,6 +26,7 @@ import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.CircleTransform;
 import com.citifleet.util.CommonUtils;
+import com.citifleet.util.PermissionUtil;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.main.DashboardPresenter.DashboardView;
 import com.squareup.picasso.Picasso;
@@ -35,8 +40,10 @@ import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 public class DashboardFragment extends Fragment implements DashboardView {
-    private static final int REQUEST_CAMERA = 111;
-    private static final int SELECT_FILE    = 222;
+    private static final int REQUEST_CAMERA             = 111;
+    private static final int SELECT_FILE                = 222;
+    private static final int REQUEST_PERMISSION_CAMERA  = 1;
+    private static final int REQUEST_PERMISSION_GALLERY = 2;
     @Bind(R.id.profileImage)
     ImageView   profileImage;
     @Bind(R.id.bigProfileImage)
@@ -81,9 +88,9 @@ public class DashboardFragment extends Fragment implements DashboardView {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 if (item == 0) {
-                    launchCamera();
+                    checkPermissionsForCamera();
                 } else if (item == 1) {
-                    launchGallery();
+                    checkPermissionsForGallery();
                 } else {
                     dialog.dismiss();
                 }
@@ -103,6 +110,28 @@ public class DashboardFragment extends Fragment implements DashboardView {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, SELECT_FILE);
+    }
+
+    private void checkPermissionsForGallery() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // permissions have not been granted.
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_GALLERY);
+        } else {
+            launchGallery();
+        }
+    }
+
+    private void checkPermissionsForCamera() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // permissions have not been granted.
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_PERMISSION_CAMERA);
+        } else {
+            launchCamera();
+        }
+
     }
 
     @Override
@@ -212,5 +241,19 @@ public class DashboardFragment extends Fragment implements DashboardView {
     @Override
     public void onNetworkError() {
         Toast.makeText(getActivity(), getString(R.string.networkMesMoInternet), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSION_CAMERA) {
+            if (PermissionUtil.verifyPermissions(grantResults)) {
+                // All required permissions have been granted
+                launchCamera();
+            }
+        } else if (requestCode == REQUEST_PERMISSION_GALLERY) {
+            if (PermissionUtil.verifyPermissions(grantResults)) {
+                launchGallery();
+            }
+        }
     }
 }
