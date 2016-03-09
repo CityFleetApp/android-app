@@ -10,6 +10,7 @@ import com.squareup.picasso.Transformation;
 
 public class CircleTransform implements Transformation {
     private int frameSize;
+    private static final int FRAME_ALPHA = 63;
 
     public CircleTransform(int frameSize) {
         this.frameSize = frameSize;
@@ -38,11 +39,11 @@ public class CircleTransform implements Transformation {
 
         Paint paint = new Paint();
         paint.setColor(Color.WHITE);
-        paint.setAlpha(63);
+        paint.setAlpha(FRAME_ALPHA);
         paint.setStyle(Paint.Style.STROKE);
         paint.setAntiAlias(true);
         paint.setStrokeWidth(frameSize);
-        canvas.drawCircle(bigRadius, bigRadius, smallRadius+frameSize/2, paint);
+        canvas.drawCircle(bigRadius, bigRadius, smallRadius + frameSize / 2, paint);
 
         paint = new Paint();
         BitmapShader shader = new BitmapShader(squaredBitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);

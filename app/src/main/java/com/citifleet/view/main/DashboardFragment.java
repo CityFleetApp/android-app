@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -27,8 +28,11 @@ import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.CircleTransform;
 import com.citifleet.util.CommonUtils;
+import com.citifleet.util.Constants;
 import com.citifleet.util.PermissionUtil;
+import com.citifleet.util.PrefUtil;
 import com.citifleet.view.BaseActivity;
+import com.citifleet.view.login.LoginFlowActivity;
 import com.citifleet.view.main.DashboardPresenter.DashboardView;
 import com.squareup.picasso.Picasso;
 
@@ -200,6 +204,14 @@ public class DashboardFragment extends Fragment implements DashboardView {
 
     @OnClick(R.id.signOutBtn)
     void onSignoutBtnClick() {
+        PrefUtil.clearAllPrefs(getActivity());
+
+        Intent i = new Intent(getActivity(), LoginFlowActivity.class);
+        startActivity(i);
+
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(Constants.ACTION_LOGOUT);
+        LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(broadcastIntent);
 
     }
 

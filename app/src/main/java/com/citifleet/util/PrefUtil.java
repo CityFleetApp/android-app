@@ -13,4 +13,9 @@ public class PrefUtil {
         SharedPreferences settings = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
         settings.edit().putString(Constants.PREFS_TOKEN, token).commit();
     }
+
+    public static void clearAllPrefs(Context context){
+        SharedPreferences settings = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
+        settings.edit().clear().commit();
+    }
 }

@@ -9,4 +9,5 @@ public class Constants {
             UPDATE_INTERVAL_IN_MILLISECONDS / 2;
     public static final String REPORT_DIALOG_TAG = "report_dialog";
     public static final int REPORT_TARGET_FRAGMENT = 100;
+    public static final String ACTION_LOGOUT   = "ACTION_LOGOUT";
 }
