@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.model.ProfileImage;
+import com.citifleet.model.UserInfo;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 import com.citifleet.view.login.LoginPresenter;
@@ -25,6 +26,15 @@ public class DashboardPresenter {
         this.view = view;
     }
 
+    public void init() {
+        if (networkManager.isConnectedOrConnecting()) {
+            Call<UserInfo> call = CitiFleetApp.getInstance().getNetworkManager().getNetworkClient().getUserInfo();
+            call.enqueue(getUserInfoCallback);
+        } else {
+            view.onNetworkError();
+        }
+    }
+
     public void uploadImage(String filepath) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
@@ -38,12 +48,31 @@ public class DashboardPresenter {
         }
     }
 
+    Callback<UserInfo>     getUserInfoCallback = new Callback<UserInfo>() {
+        @Override
+        public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+            view.stopLoading();
+            if (response.isSuccess()) {
+                view.updateImage(response.body().getAvatarUrl());
+                view.setName(response.body().getFullName());
+            } else {
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
+
+        @Override
+        public void onFailure(Call<UserInfo> call, Throwable t) {
+            Log.e(LoginPresenter.class.getName(), t.getMessage());
+            view.stopLoading();
+            view.onFailure(t.getMessage());
+        }
+    };
     Callback<ProfileImage> uploadImageCallback = new Callback<ProfileImage>() {
         @Override
         public void onResponse(Call<ProfileImage> call, Response<ProfileImage> response) {
             view.stopLoading();
             if (response.isSuccess()) {
-                view.onImageUploadSuccess(response.body().getAvatar());
+                view.updateImage(response.body().getAvatar());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
@@ -64,9 +93,11 @@ public class DashboardPresenter {
 
         void onFailure(String error);
 
-        void onImageUploadSuccess(String url);
+        void updateImage(String url);
 
         void onNetworkError();
+
+        void setName(String name);
     }
 
 

@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
@@ -54,7 +55,8 @@ public class DashboardFragment extends Fragment implements DashboardView {
     ProgressBar progressBar;
     @BindString(R.string.default_error_mes)
     String      defaultErrorMes;
-
+    @Bind(R.id.profileFullName)
+    TextView    fullName;
     private DashboardPresenter presenter;
 
     @Nullable
@@ -62,14 +64,8 @@ public class DashboardFragment extends Fragment implements DashboardView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dashboard_fragment, container, false);
         ButterKnife.bind(this, view);
-        int frameSize = getResources().getDimensionPixelSize(R.dimen.profile_image_frame);
-        int screenWidth = getResources().getDisplayMetrics().widthPixels;
-        TypedValue outValue = new TypedValue();
-        getResources().getValue(R.dimen.profile_image_blur_radius_percent, outValue, true);
-        int blurradius = (int) (screenWidth * outValue.getFloat());
-        Picasso.with(getActivity()).load(R.drawable.testprofile).transform(new CircleTransform(frameSize)).into(profileImage);
-        Picasso.with(getActivity()).load(R.drawable.testprofile).transform(new BlurTransformation(getContext(), blurradius)).into(bigProfileImage);
         presenter = new DashboardPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
+        presenter.init();
         return view;
     }
 
@@ -139,17 +135,17 @@ public class DashboardFragment extends Fragment implements DashboardView {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case SELECT_FILE:
-                updateImage(CommonUtils.getImagePath(data.getData(), getContext()));
+                updateImageOnServer(CommonUtils.getImagePath(data.getData(), getContext()));
                 break;
             case REQUEST_CAMERA:
                 if (resultCode == Activity.RESULT_OK) {
-                    updateImage(getFileForProfileFromCamera().getAbsolutePath());
+                    updateImageOnServer(getFileForProfileFromCamera().getAbsolutePath());
                 }
                 break;
         }
     }
 
-    private void updateImage(String filepath) {
+    private void updateImageOnServer(String filepath) {
         presenter.uploadImage(filepath);
     }
 
@@ -227,8 +223,7 @@ public class DashboardFragment extends Fragment implements DashboardView {
         }
     }
 
-    @Override
-    public void onImageUploadSuccess(String url) {
+    public void updateImage(String url) {
         int frameSize = getResources().getDimensionPixelSize(R.dimen.profile_image_frame);
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
         TypedValue outValue = new TypedValue();
@@ -241,6 +236,11 @@ public class DashboardFragment extends Fragment implements DashboardView {
     @Override
     public void onNetworkError() {
         Toast.makeText(getActivity(), getString(R.string.networkMesMoInternet), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void setName(String name) {
+        fullName.setText(name);
     }
 
     @Override

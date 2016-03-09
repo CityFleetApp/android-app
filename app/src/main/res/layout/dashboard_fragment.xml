@@ -67,7 +67,6 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/profileImage"
                             android:layout_centerHorizontal="true"
-                            android:text="AR DIALLO"
                             android:textAllCaps="true"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/profile_name_textsize"
