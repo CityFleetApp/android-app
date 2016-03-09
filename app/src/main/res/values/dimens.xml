@@ -50,9 +50,11 @@
     <dimen name="dash_header_height">215dp</dimen>
     <dimen name="profile_image_height">140dp</dimen>
     <dimen name="profile_name_textsize">20sp</dimen>
-    <dimen name="profile_name_padding">10dp</dimen>
+    <dimen name="profile_name_padding">8dp</dimen>
     <dimen name="dash_icon_padding">2dp</dimen>
     <dimen name="dash_icon_radius">3dp</dimen>
     <dimen name="profile_image_frame">9dp</dimen>
     <item name="profile_image_blur_radius_percent" format="float" type="dimen">0.02</item>
+    <dimen name="camera_btn_size">40dp</dimen>
+    <dimen name="camera_profile_margin">5dp</dimen>
 </resources>

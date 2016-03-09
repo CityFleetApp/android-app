@@ -11,136 +11,151 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/add_friends_color"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dash_header_height"
-                android:layout_gravity="center"
-                android:background="@color/green_color"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/bigProfileImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:alpha="0.4"
-                    android:scaleType="centerCrop"/>
+                android:layout_height="match_parent"
+                android:background="@color/add_friends_color"
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true">
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dash_header_height"
+                    android:layout_gravity="center"
+                    android:background="@color/green_color"
+                    android:gravity="center">
 
                     <ImageView
-                        android:id="@+id/profileImage"
-                        android:layout_width="@dimen/profile_image_height"
-                        android:layout_height="@dimen/profile_image_height"
-                        android:layout_centerHorizontal="true"
-                        android:layout_margin="@dimen/profile_name_padding"/>
+                        android:id="@+id/bigProfileImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:alpha="0.4"
+                        android:scaleType="centerCrop"/>
 
-                    <ImageButton
-                        android:id="@+id/cameraBtn"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/profileImage"
-                        android:layout_alignRight="@+id/profileImage"
-                        android:background="@android:color/transparent"
-                        android:elevation="@dimen/direct_btn_elevation"
-                        android:src="@drawable/photo_btn"/>
+                        android:layout_centerInParent="true">
 
-                    <TextView
-                        android:id="@+id/profileFullName"
-                        fontPath="@string/fontLight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/profileImage"
-                        android:layout_centerHorizontal="true"
-                        android:text="AR DIALLO"
-                        android:textAllCaps="true"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/profile_name_textsize"
-                        tools:ignore="MissingPrefix"/>
+                        <ImageView
+                            android:id="@+id/profileImage"
+                            android:layout_width="@dimen/profile_image_height"
+                            android:layout_height="@dimen/profile_image_height"
+                            android:layout_centerHorizontal="true"
+                            android:layout_margin="@dimen/profile_name_padding"/>
+
+                        <ImageButton
+                            android:id="@+id/cameraBtn"
+                            android:layout_width="@dimen/camera_btn_size"
+                            android:layout_height="@dimen/camera_btn_size"
+                            android:layout_alignBottom="@+id/profileImage"
+                            android:layout_alignRight="@+id/profileImage"
+                            android:layout_marginBottom="@dimen/camera_profile_margin"
+                            android:layout_marginRight="@dimen/camera_profile_margin"
+                            android:background="@drawable/camera_selector"
+                            android:elevation="@dimen/direct_btn_elevation"
+                            android:src="@drawable/photo_white"/>
+
+                        <TextView
+                            android:id="@+id/profileFullName"
+                            fontPath="@string/fontLight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/profileImage"
+                            android:layout_centerHorizontal="true"
+                            android:text="AR DIALLO"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/profile_name_textsize"
+                            tools:ignore="MissingPrefix"/>
+                    </RelativeLayout>
+
                 </RelativeLayout>
 
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/homeBtn"
+                    style="@style/DashBtnStyle"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/home_btn_selector"
+                    android:text="@string/home"/>
 
-            <TextView
-                android:id="@+id/homeBtn"
-                style="@style/DashBtnStyle"
-                android:clickable="true"
-                android:drawableLeft="@drawable/home_btn_selector"
-                android:text="@string/home"/>
+                <TextView
+                    android:id="@+id/profileBtn"
+                    style="@style/DashBtnStyle"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/profile_btn_selector"
+                    android:text="@string/profile"/>
 
-            <TextView
-                android:id="@+id/profileBtn"
-                style="@style/DashBtnStyle"
-                android:clickable="true"
-                android:drawableLeft="@drawable/profile_btn_selector"
-                android:text="@string/profile"/>
+                <TextView
+                    android:id="@+id/postingBtn"
+                    style="@style/DashBtnStyle"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/posting_btn_selector"
+                    android:text="@string/posting"/>
 
-            <TextView
-                android:id="@+id/postingBtn"
-                style="@style/DashBtnStyle"
-                android:clickable="true"
-                android:drawableLeft="@drawable/posting_btn_selector"
-                android:text="@string/posting"/>
+                <TextView
+                    android:id="@+id/earningsBtn"
+                    style="@style/DashBtnStyle"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/earnings_btn_selector"
+                    android:text="@string/earnings"/>
 
-            <TextView
-                android:id="@+id/earningsBtn"
-                style="@style/DashBtnStyle"
-                android:clickable="true"
-                android:drawableLeft="@drawable/earnings_btn_selector"
-                android:text="@string/earnings"/>
+                <TextView
+                    android:id="@+id/inviteDriverBtn"
+                    style="@style/DashBtnStyle"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/driver_btn_selector"
+                    android:text="@string/invite_a_driver"/>
 
-            <TextView
-                android:id="@+id/inviteDriverBtn"
-                style="@style/DashBtnStyle"
-                android:clickable="true"
-                android:drawableLeft="@drawable/driver_btn_selector"
-                android:text="@string/invite_a_driver"/>
+                <TextView
+                    android:id="@+id/chatBtn"
+                    style="@style/DashBtnStyle"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/chat_btn_selector"
+                    android:text="@string/chat"/>
 
-            <TextView
-                android:id="@+id/chatBtn"
-                style="@style/DashBtnStyle"
-                android:clickable="true"
-                android:drawableLeft="@drawable/chat_btn_selector"
-                android:text="@string/chat"/>
+                <TextView
+                    android:id="@+id/benefitsBtn"
+                    style="@style/DashBtnStyle"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/benefits_btn_selector"
+                    android:text="@string/benefits"/>
 
-            <TextView
-                android:id="@+id/benefitsBtn"
-                style="@style/DashBtnStyle"
-                android:clickable="true"
-                android:drawableLeft="@drawable/benefits_btn_selector"
-                android:text="@string/benefits"/>
+                <TextView
+                    android:id="@+id/legalAidBtn"
+                    style="@style/DashBtnStyle"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/legal_aid_btn_selector"
+                    android:text="@string/legal_aid"/>
 
-            <TextView
-                android:id="@+id/legalAidBtn"
-                style="@style/DashBtnStyle"
-                android:clickable="true"
-                android:drawableLeft="@drawable/legal_aid_btn_selector"
-                android:text="@string/legal_aid"/>
+                <TextView
+                    android:id="@+id/helpBtn"
+                    style="@style/DashBtnStyle"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/help_btn_selector"
+                    android:text="@string/help"/>
 
-            <TextView
-                android:id="@+id/helpBtn"
-                style="@style/DashBtnStyle"
-                android:clickable="true"
-                android:drawableLeft="@drawable/help_btn_selector"
-                android:text="@string/help"/>
+                <TextView
+                    android:id="@+id/signOutBtn"
+                    style="@style/DashBtnStyle"
+                    android:background="@drawable/signout_background_selector"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/sign_out_selector"
+                    android:text="@string/sign_out"/>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/signOutBtn"
-                style="@style/DashBtnStyle"
-                android:background="@drawable/signout_background_selector"
-                android:clickable="true"
-                android:drawableLeft="@drawable/sign_out_selector"
-                android:text="@string/sign_out"/>
-        </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
 
     </ScrollView>
 </LinearLayout>

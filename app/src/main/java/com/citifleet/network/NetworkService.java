@@ -1,6 +1,7 @@
 package com.citifleet.network;
 
 import com.citifleet.model.LoginInfo;
+import com.citifleet.model.ProfileImage;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -29,5 +30,5 @@ public interface NetworkService {
 
     @Multipart
     @PUT("usersupload-avatar/")
-    Call<Object> uploadAvatar(@Part("avatar\"; filename=\"image.png\" ") RequestBody file, @Part("description") RequestBody description);
+    Call<ProfileImage> uploadAvatar(@Part("avatar\"; filename=\"image.png\" ") RequestBody file, @Part("description") RequestBody description);
 }
