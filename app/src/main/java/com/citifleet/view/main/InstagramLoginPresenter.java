@@ -2,7 +2,6 @@ package com.citifleet.view.main;
 
 import android.util.Log;
 
-import com.citifleet.model.InstagramLoginResponse;
 import com.citifleet.network.NetworkManager;
 
 import java.io.UnsupportedEncodingException;
@@ -13,10 +12,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class InstagramLoginPresenter {
     private static final String GRANT_TYPE = "authorization_code";
@@ -48,8 +43,8 @@ public class InstagramLoginPresenter {
         if (redirectedUrl.startsWith(redirectUrl)) {
             try {
                 Map<String, List<String>> queryParams = splitQuery(redirectedUrl.substring(redirectedUrl.indexOf("?") + 1, redirectedUrl.length()));
-                if (queryParams.containsKey("code")) {
-                    handleSuccessAuthorization(queryParams.get("code").toString());
+                if (queryParams.containsKey("access_token")) {
+                    view.onSuccessAuthorization(queryParams.get("access_token").toString());
                 } else if (queryParams.containsKey("error")) {
                     //   handleFailureAuthorization(queryParams);
                 }
@@ -61,24 +56,8 @@ public class InstagramLoginPresenter {
         return false;
     }
 
-    private void handleSuccessAuthorization(String code) {
-        view.showProgress(true);
-        Call<InstagramLoginResponse> call = networkManager.getNetworkClient().getInstagramToken(urlGetToken, clientId, clientSecret, GRANT_TYPE, redirectUrl, code);
-        call.enqueue(new Callback<InstagramLoginResponse>() {
-            @Override
-            public void onResponse(Call<InstagramLoginResponse> call, Response<InstagramLoginResponse> response) {
-                if (response.isSuccess()) {
-                    view.onSuccessAuthorization(response.body().getAccessToken());
-                } else {
-                    //TODO
-                }
-            }
-
-            @Override
-            public void onFailure(Call<InstagramLoginResponse> call, Throwable t) {
-            //TODO
-            }
-        });
+    private void handleSuccessAuthorization(String token) {
+        view.onSuccessAuthorization(token);
     }
 
     private void handleFailureAuthorization(Map<String, List<String>> queryParams) {
@@ -106,7 +85,7 @@ public class InstagramLoginPresenter {
         HashMap<String, Object> queryParams = new HashMap<String, Object>();
         queryParams.put("client_id", clientId);
         queryParams.put("redirect_uri", redirectUrl);
-        queryParams.put("response_type", "code");
+        queryParams.put("response_type", "token");
         String urlWithParams = authUrl + urlEncodeUTF8(queryParams);
         return urlWithParams;
     }

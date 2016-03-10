@@ -78,7 +78,6 @@ public class InstagramWebFragment extends Fragment implements InstagramLoginPres
     @Override
     public void onSuccessAuthorization(String token) {
         Log.d("TAG", "token");
-        progressBar.setVisibility(View.GONE);
         //TODO   VeritasApp.mBus.post(new LinkedInUserUpdatedEvent());
         //  getActivity().onBackPressed();
     }
