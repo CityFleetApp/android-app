@@ -60,6 +60,7 @@
     <string name="setting">Setting</string>
     <string name="sign_out">Sign out</string>
     <string name="pick_image_title">Choose profile image</string>
+    <string name="facebook_app_id">754079204723225</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

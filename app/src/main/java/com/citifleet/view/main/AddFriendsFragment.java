@@ -1,6 +1,7 @@
 package com.citifleet.view.main;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +23,16 @@ import android.widget.Toast;
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.PermissionUtil;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -41,6 +50,7 @@ public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.
     String      defaultErrorMes;
     private AddFriendsPresenter   presenter;
     private ContactsResultHandler contactsResultHandler;
+    private CallbackManager       callbackManager;
 
     @Nullable
     @Override
@@ -70,7 +80,14 @@ public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.
 
     @OnClick(R.id.facebookBtn)
     void onFacebookBtnClick() {
-
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        if (accessToken != null && !accessToken.isExpired() && !TextUtils.isEmpty(accessToken.getToken())) {
+            presenter.addFacebookFriends(accessToken.getToken());
+        } else {
+            callbackManager = CallbackManager.Factory.create();
+            LoginManager.getInstance().registerCallback(callbackManager, facebookCallback);
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends"));
+        }
     }
 
     @OnClick(R.id.twitterBtn)
@@ -125,6 +142,12 @@ public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_PERMISSION_CONTACTS) {
             if (PermissionUtil.verifyPermissions(grantResults)) {
@@ -163,4 +186,21 @@ public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.
             fragment.presenter.addFriendsFromContacts(phoneNumbers);
         }
     }
+
+    private FacebookCallback<LoginResult> facebookCallback = new FacebookCallback<LoginResult>() {
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+            presenter.addFacebookFriends(loginResult.getAccessToken().getToken());
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+
+        @Override
+        public void onError(FacebookException error) {
+            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    };
 }

@@ -25,14 +25,27 @@ public class AddFriendsPresenter {
 
     public void addFriendsFromContacts(List<String> phoneNumbers) {
         if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
             Call<List<UserInfo>> call = CitiFleetApp.getInstance().getNetworkManager().getNetworkClient().addFriendsFromContacts(new AddContactsBody(phoneNumbers));
-            call.enqueue(addFriendsFromContactsCallback);
+            call.enqueue(callback);
         } else {
+            view.stopLoading();
             view.onNetworkError();
         }
     }
 
-    Callback<List<UserInfo>> addFriendsFromContactsCallback = new Callback<List<UserInfo>>() {
+    public void addFacebookFriends(String token){
+        if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
+            Call<List<UserInfo>> call = CitiFleetApp.getInstance().getNetworkManager().getNetworkClient().addFacebookFriends(token);
+            call.enqueue(callback);
+        } else {
+            view.stopLoading();
+            view.onNetworkError();
+        }
+    }
+
+    Callback<List<UserInfo>> callback = new Callback<List<UserInfo>>() {
         @Override
         public void onResponse(Call<List<UserInfo>> call, Response<List<UserInfo>> response) {
             view.stopLoading();

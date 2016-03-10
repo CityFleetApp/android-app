@@ -43,4 +43,8 @@ public interface NetworkService {
 
     @POST("users/add-contacts-friends/")
     Call<List<UserInfo>> addFriendsFromContacts(@Body AddContactsBody body);
+
+    @FormUrlEncoded
+    @POST("users/add-facebook-friends/")
+    Call<List<UserInfo>> addFacebookFriends(@Field("token") String token);
 }

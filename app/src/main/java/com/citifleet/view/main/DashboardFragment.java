@@ -34,6 +34,8 @@ import com.citifleet.util.PrefUtil;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.login.LoginFlowActivity;
 import com.citifleet.view.main.DashboardPresenter.DashboardView;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -205,6 +207,11 @@ public class DashboardFragment extends Fragment implements DashboardView {
     @OnClick(R.id.signOutBtn)
     void onSignoutBtnClick() {
         PrefUtil.clearAllPrefs(getActivity());
+        //logout from fb
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        if (accessToken != null) {
+            LoginManager.getInstance().logOut();
+        }
 
         Intent i = new Intent(getActivity(), LoginFlowActivity.class);
         startActivity(i);

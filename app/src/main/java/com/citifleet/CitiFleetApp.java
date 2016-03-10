@@ -6,6 +6,8 @@ import android.net.ConnectivityManager;
 
 import com.citifleet.network.NetworkManager;
 import com.crashlytics.android.Crashlytics;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
 
 import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -18,6 +20,7 @@ public class CitiFleetApp extends Application {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
+        FacebookSdk.sdkInitialize(getApplicationContext());
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath(getString(R.string.fontRegular))
                 .setFontAttrId(R.attr.fontPath)
