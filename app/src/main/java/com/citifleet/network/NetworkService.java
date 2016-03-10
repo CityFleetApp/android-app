@@ -1,6 +1,7 @@
 package com.citifleet.network;
 
 import com.citifleet.model.AddContactsBody;
+import com.citifleet.model.InstagramLoginResponse;
 import com.citifleet.model.LoginInfo;
 import com.citifleet.model.ProfileImage;
 import com.citifleet.model.UserInfo;
@@ -17,6 +18,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Url;
 
 public interface NetworkService {
     @FormUrlEncoded
@@ -51,4 +53,9 @@ public interface NetworkService {
     @FormUrlEncoded
     @POST("users/add-twitter-friends/")
     Call<List<UserInfo>> addTwitterFriends(@Field("token") String token, @Field("token_secret") String tokenSecret);
+
+    @FormUrlEncoded
+    @POST
+    Call<InstagramLoginResponse> getInstagramToken(@Url String url, @Field("client_id") String clientId, @Field("client_secret") String clientSecret,
+                                                   @Field("grant_type") String grantType, @Field("redirect_uri") String redirectUri, @Field("code") String code);
 }

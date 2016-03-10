@@ -61,6 +61,11 @@
     <string name="sign_out">Sign out</string>
     <string name="pick_image_title">Choose profile image</string>
     <string name="facebook_app_id">754079204723225</string>
+    <string name="instagram_client_id">dcbc5373293d4c8aa3465ad53ca946bc</string>
+    <string name="instagram_client_secret">714646a846324f258a4e528bb8c1dc0c</string>
+    <string name="instagram_url">https://api.instagram.com/oauth/authorize/?</string>
+    <string name="instagram_redirect_url">http://citifleet</string>
+    <string name="instagram_url_get_token">https://api.instagram.com/oauth/access_token</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.PermissionUtil;
+import com.citifleet.view.BaseActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -127,7 +128,7 @@ public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.
 
     @OnClick(R.id.instagramBtn)
     void onInstagramBtnClick() {
-
+        ((BaseActivity) getActivity()).changeFragment(new InstagramWebFragment(), true);
     }
 
     @Override
