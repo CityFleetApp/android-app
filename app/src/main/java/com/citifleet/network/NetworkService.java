@@ -47,4 +47,8 @@ public interface NetworkService {
     @FormUrlEncoded
     @POST("users/add-facebook-friends/")
     Call<List<UserInfo>> addFacebookFriends(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("users/add-twitter-friends/")
+    Call<List<UserInfo>> addTwitterFriends(@Field("token") String token, @Field("token_secret") String tokenSecret);
 }

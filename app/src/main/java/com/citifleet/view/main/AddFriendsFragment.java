@@ -104,7 +104,7 @@ public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.
         twitterAuthClient = new TwitterAuthClient();
         TwitterSession session = Twitter.getSessionManager().getActiveSession();
         if (session != null && session.getAuthToken() != null) {
-            Toast.makeText(getActivity(), session.getAuthToken().token, Toast.LENGTH_LONG).show();
+            presenter.addTwitterFriends(session.getAuthToken().token, session.getAuthToken().secret);
         } else {
             twitterAuthClient.authorize(getActivity(), new com.twitter.sdk.android.core.Callback<TwitterSession>() {
 
@@ -113,7 +113,8 @@ public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.
                     TwitterSession session = twitterSessionResult.data;
                     TwitterAuthToken authToken = session.getAuthToken();
                     String token = authToken.token;
-                    Toast.makeText(getActivity(), token, Toast.LENGTH_LONG).show();
+                    String tokenSecret = authToken.secret;
+                    presenter.addTwitterFriends(token, tokenSecret);
                 }
 
                 @Override

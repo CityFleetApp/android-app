@@ -34,10 +34,21 @@ public class AddFriendsPresenter {
         }
     }
 
-    public void addFacebookFriends(String token){
+    public void addFacebookFriends(String token) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
             Call<List<UserInfo>> call = CitiFleetApp.getInstance().getNetworkManager().getNetworkClient().addFacebookFriends(token);
+            call.enqueue(callback);
+        } else {
+            view.stopLoading();
+            view.onNetworkError();
+        }
+    }
+
+    public void addTwitterFriends(String token, String tokenSecret) {
+        if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
+            Call<List<UserInfo>> call = CitiFleetApp.getInstance().getNetworkManager().getNetworkClient().addTwitterFriends(token, tokenSecret);
             call.enqueue(callback);
         } else {
             view.stopLoading();

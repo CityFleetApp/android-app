@@ -37,6 +37,7 @@ import com.citifleet.view.main.DashboardPresenter.DashboardView;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
+import com.twitter.sdk.android.Twitter;
 
 import java.io.File;
 
@@ -207,18 +208,25 @@ public class DashboardFragment extends Fragment implements DashboardView {
     @OnClick(R.id.signOutBtn)
     void onSignoutBtnClick() {
         PrefUtil.clearAllPrefs(getActivity());
-        //logout from fb
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        if (accessToken != null) {
-            LoginManager.getInstance().logOut();
-        }
-
+        logoutFromSocialNetworks();
         Intent i = new Intent(getActivity(), LoginFlowActivity.class);
         startActivity(i);
 
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction(Constants.ACTION_LOGOUT);
         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(broadcastIntent);
+
+    }
+
+    private void logoutFromSocialNetworks() {
+        //logout from fb
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        if (accessToken != null) {
+            LoginManager.getInstance().logOut();
+        }
+        //twitter
+        Twitter.getSessionManager().clearActiveSession();
+        Twitter.logOut();
 
     }
 
