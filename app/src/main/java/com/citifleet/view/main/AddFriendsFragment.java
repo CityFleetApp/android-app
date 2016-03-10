@@ -27,8 +27,16 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.internal.CallbackManagerImpl;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -50,7 +58,8 @@ public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.
     String      defaultErrorMes;
     private AddFriendsPresenter   presenter;
     private ContactsResultHandler contactsResultHandler;
-    private CallbackManager       callbackManager;
+    private CallbackManager       callbackManager; //facebook callback manager
+    private TwitterAuthClient     twitterAuthClient;
 
     @Nullable
     @Override
@@ -92,7 +101,27 @@ public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.
 
     @OnClick(R.id.twitterBtn)
     void onTwitterBtnClick() {
+        twitterAuthClient = new TwitterAuthClient();
+        TwitterSession session = Twitter.getSessionManager().getActiveSession();
+        if (session != null && session.getAuthToken() != null) {
+            Toast.makeText(getActivity(), session.getAuthToken().token, Toast.LENGTH_LONG).show();
+        } else {
+            twitterAuthClient.authorize(getActivity(), new com.twitter.sdk.android.core.Callback<TwitterSession>() {
 
+                @Override
+                public void success(Result<TwitterSession> twitterSessionResult) {
+                    TwitterSession session = twitterSessionResult.data;
+                    TwitterAuthToken authToken = session.getAuthToken();
+                    String token = authToken.token;
+                    Toast.makeText(getActivity(), token, Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void failure(TwitterException e) {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     @OnClick(R.id.instagramBtn)
@@ -144,7 +173,12 @@ public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CallbackManagerImpl.RequestCodeOffset.Login.toRequestCode() && callbackManager != null) {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        } else if (requestCode == TwitterAuthConfig.DEFAULT_AUTH_REQUEST_CODE) {
+            twitterAuthClient.onActivityResult(requestCode, resultCode, data);
+        }
+
     }
 
     @Override

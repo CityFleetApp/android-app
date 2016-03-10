@@ -6,20 +6,27 @@ import android.net.ConnectivityManager;
 
 import com.citifleet.network.NetworkManager;
 import com.crashlytics.android.Crashlytics;
-import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class CitiFleetApp extends Application {
+
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "9neWixCKXdBBR3hLYCq8BAxS8";
+    private static final String TWITTER_SECRET = "JLZSfqPXiiNCMOmHzU3eK85DD0VqmoUkmVNNp92LSyx9GPyGRS";
+
     private        NetworkManager networkManager;
     private static CitiFleetApp   instance;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
         FacebookSdk.sdkInitialize(getApplicationContext());
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath(getString(R.string.fontRegular))
