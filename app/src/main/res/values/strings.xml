@@ -6,7 +6,7 @@
     <string name="create_an_account">Create an account</string>
     <string name="enter_email">Enter Email</string>
     <string name="enter_password">Enter Password</string>
-    <string name="endpoint">http://citifleet.steelkiwi.com:80/api/</string>
+    <string name="endpoint">http://citifleet.steelkiwi.com/api/</string>
     <string name="networkMesMoInternet">No internet connection detected!</string>
     <string name="default_error_mes">Something went wrong</string>
     <string name="login_or_create_an_account_and_nenjoy_the_experience">Login or create an Account and\nenjoy the experience</string>

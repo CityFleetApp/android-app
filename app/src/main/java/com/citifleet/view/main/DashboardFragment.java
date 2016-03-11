@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,22 +52,22 @@ import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 public class DashboardFragment extends Fragment implements DashboardView {
-    private static final int REQUEST_CAMERA             = 111;
-    private static final int SELECT_FILE                = 222;
-    private static final int REQUEST_PERMISSION_CAMERA  = 1;
+    private static final int REQUEST_CAMERA = 111;
+    private static final int SELECT_FILE = 222;
+    private static final int REQUEST_PERMISSION_CAMERA = 1;
     private static final int REQUEST_PERMISSION_GALLERY = 2;
     @Bind(R.id.profileImage)
-    ImageView   profileImage;
+    ImageView profileImage;
     @Bind(R.id.bigProfileImage)
-    ImageView   bigProfileImage;
+    ImageView bigProfileImage;
     @BindString(R.string.pick_image_title)
-    String      pickImageTitle;
+    String pickImageTitle;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
     @BindString(R.string.default_error_mes)
-    String      defaultErrorMes;
+    String defaultErrorMes;
     @Bind(R.id.profileFullName)
-    TextView    fullName;
+    TextView fullName;
     private DashboardPresenter presenter;
 
     @Nullable
@@ -214,6 +215,7 @@ public class DashboardFragment extends Fragment implements DashboardView {
         RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
         refWatcher.watch(this);
     }
+
     @OnClick(R.id.signOutBtn)
     void onSignoutBtnClick() {
         PrefUtil.clearAllPrefs(getActivity());
@@ -244,12 +246,16 @@ public class DashboardFragment extends Fragment implements DashboardView {
 
     @Override
     public void startLoading() {
-        progressBar.setVisibility(View.VISIBLE);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void stopLoading() {
-        progressBar.setVisibility(View.GONE);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -263,13 +269,15 @@ public class DashboardFragment extends Fragment implements DashboardView {
     }
 
     public void updateImage(String url) {
-        int frameSize = getResources().getDimensionPixelSize(R.dimen.profile_image_frame);
-        int screenWidth = getResources().getDisplayMetrics().widthPixels;
-        TypedValue outValue = new TypedValue();
-        getResources().getValue(R.dimen.profile_image_blur_radius_percent, outValue, true);
-        int blurradius = (int) (screenWidth * outValue.getFloat());
-        Picasso.with(getActivity()).load(url).transform(new CircleTransform(frameSize)).fit().into(profileImage);
-        Picasso.with(getActivity()).load(url).transform(new BlurTransformation(getContext(), blurradius)).fit().into(bigProfileImage);
+        if (!TextUtils.isEmpty(url)) {
+            int frameSize = getResources().getDimensionPixelSize(R.dimen.profile_image_frame);
+            int screenWidth = getResources().getDisplayMetrics().widthPixels;
+            TypedValue outValue = new TypedValue();
+            getResources().getValue(R.dimen.profile_image_blur_radius_percent, outValue, true);
+            int blurradius = (int) (screenWidth * outValue.getFloat());
+            Picasso.with(getActivity()).load(url).transform(new CircleTransform(frameSize)).fit().into(profileImage);
+            Picasso.with(getActivity()).load(url).transform(new BlurTransformation(getContext(), blurradius)).fit().into(bigProfileImage);
+        }
     }
 
     @Override

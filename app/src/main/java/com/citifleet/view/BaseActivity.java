@@ -20,8 +20,8 @@ import java.util.List;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity extends AppCompatActivity {
-    private FragmentManager   fragmentManager = getSupportFragmentManager();
-    private BroadcastReceiver logoutReceiver  = new BroadcastReceiver() {
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private BroadcastReceiver logoutReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             finish();
@@ -61,7 +61,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         List<Fragment> fragmentList = fragmentManager.getFragments();
         for (int i = 0; i < fragmentList.size(); i++) {
-            fragmentList.get(i).onActivityResult(requestCode, resultCode, data);
+            Fragment fragment = fragmentList.get(i);
+            if (fragment != null) {
+                fragment.onActivityResult(requestCode, resultCode, data);
+            }
         }
     }
 

@@ -157,7 +157,17 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public void onStop() {
-        googleApiClient.disconnect();
+        if (googleApiClient != null) {
+            googleApiClient.unregisterConnectionCallbacks(this);
+            googleApiClient.unregisterConnectionFailedListener(this);
+
+            if (googleApiClient.isConnected()) {
+                LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+            }
+
+            googleApiClient.disconnect();
+        }
+
         super.onStop();
     }
 
