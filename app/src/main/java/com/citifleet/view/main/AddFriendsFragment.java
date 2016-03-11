@@ -32,6 +32,7 @@ import com.facebook.FacebookException;
 import com.facebook.internal.CallbackManagerImpl;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.squareup.leakcanary.RefWatcher;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
@@ -173,6 +174,13 @@ public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.
         contactsResultHandler = new ContactsResultHandler(this);
         Thread thread = new Thread(threadToRetrieveContacts);
         thread.start();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
+        refWatcher.watch(this);
     }
 
     @Override

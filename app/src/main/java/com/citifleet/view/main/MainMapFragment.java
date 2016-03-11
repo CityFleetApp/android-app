@@ -41,6 +41,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -128,9 +129,15 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
+        refWatcher.watch(this);
+    }
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_LOCATION_UPDATES) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
             } else {
                 //TODO
@@ -157,7 +164,6 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("TAG", "on resume");
         if (googleApiClient.isConnected()) {
             startLocationUpdates();
         }
@@ -166,7 +172,6 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onPause() {
         super.onPause();
-        Log.d("TAG", "on pause");
         if (googleApiClient.isConnected()) {
             stopLocationUpdates();
         }

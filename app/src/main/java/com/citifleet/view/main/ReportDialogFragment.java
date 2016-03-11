@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
 
@@ -35,6 +37,13 @@ public class ReportDialogFragment extends DialogFragment {
     public void onDestroyView() {
         ButterKnife.unbind(this);
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
+        refWatcher.watch(this);
     }
 
     @NonNull

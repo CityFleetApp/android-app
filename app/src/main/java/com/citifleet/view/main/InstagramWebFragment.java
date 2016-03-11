@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.InstagramLoginEvent;
+import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -75,6 +76,12 @@ public class InstagramWebFragment extends Fragment implements InstagramLoginPres
         ButterKnife.unbind(this);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
+        refWatcher.watch(this);
+    }
     @Override
     public void showProgress(boolean progress) {
         webView.setVisibility(View.GONE);

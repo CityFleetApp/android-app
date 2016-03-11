@@ -7,6 +7,8 @@ import android.net.ConnectivityManager;
 import com.citifleet.network.NetworkManager;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
@@ -19,12 +21,14 @@ public class CitiFleetApp extends Application {
     private static final String TWITTER_KEY = "9neWixCKXdBBR3hLYCq8BAxS8";
     private static final String TWITTER_SECRET = "JLZSfqPXiiNCMOmHzU3eK85DD0VqmoUkmVNNp92LSyx9GPyGRS";
 
-    private        NetworkManager networkManager;
-    private static CitiFleetApp   instance;
+    private NetworkManager networkManager;
+    private static CitiFleetApp instance;
+    private RefWatcher refWatcher;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        refWatcher = LeakCanary.install(this);
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -33,6 +37,10 @@ public class CitiFleetApp extends Application {
                 .setFontAttrId(R.attr.fontPath)
                 .build());
         instance = this;
+    }
+
+    public RefWatcher getRefWatcher() {
+        return refWatcher;
     }
 
     public NetworkManager getNetworkManager() {

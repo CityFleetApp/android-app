@@ -56,6 +56,6 @@ public class CircleTransform implements Transformation {
 
     @Override
     public String key() {
-        return "circle";
+        return "(circle):frame_size=" + frameSize;
     }
 }
