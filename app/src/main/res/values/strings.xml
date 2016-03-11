@@ -66,6 +66,7 @@
     <string name="instagram_url">https://api.instagram.com/oauth/authorize/?</string>
     <string name="instagram_redirect_url">http://citifleet</string>
     <string name="instagram_url_get_token">https://api.instagram.com/oauth/access_token</string>
+    <string name="rating">(%1$d)</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

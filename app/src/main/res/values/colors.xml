@@ -24,4 +24,5 @@
     <color name="add_friends_color">#f2f4f8</color>
     <color name="add_friend_lbl_color">#79858f</color>
     <color name="green_color">#2ec4b6</color>
+    <color name="yellow_star">#fbb202</color>
 </resources>

@@ -1,6 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/add_friends_color"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/profile_header_height"
+                android:layout_gravity="center"
+                android:background="@color/green_color"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/bigProfileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:alpha="0.4"
+                    android:scaleType="centerCrop"/>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+
+                    <ImageView
+                        android:id="@+id/profileImage"
+                        android:layout_width="@dimen/profile_image_height"
+                        android:layout_height="@dimen/profile_image_height"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="@dimen/profile_name_padding"
+                        android:scaleType="centerCrop"/>
+                    <TextView
+                        android:id="@+id/profileFullName"
+                        fontPath="@string/fontLight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profileImage"
+                        android:layout_centerHorizontal="true"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/profile_name_textsize"
+                        tools:ignore="MissingPrefix"/>
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:layout_below="@+id/profileFullName"
+                                  android:layout_centerHorizontal="true"
+                                  android:layout_marginTop="@dimen/star_margin_top"
+                                  android:divider="@drawable/empty_tall_divider"
+                                  android:gravity="center"
+                                  android:orientation="horizontal"
+                                  android:showDividers="middle">
+                        <ImageView android:id="@+id/star1"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:src="@drawable/star_background"/>
+                        <ImageView android:id="@+id/star2"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:src="@drawable/star_background"/>
+                        <ImageView android:id="@+id/star3"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:src="@drawable/star_background"/>
+                        <ImageView android:id="@+id/star4"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:src="@drawable/star_background"/>
+                        <ImageView android:id="@+id/star5"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:src="@drawable/star_background"/>
+
+                        <TextView
+                            android:id="@+id/ratingText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="@string/rating"
+                            android:textColor="@color/yellow_star"
+                            android:textSize="@dimen/rating_textsize"/>
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+    </RelativeLayout>
+</ScrollView>
