@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.util.InstagramLoginEvent;
 import com.citifleet.util.PermissionUtil;
 import com.citifleet.view.BaseActivity;
 import com.facebook.AccessToken;
@@ -48,19 +49,21 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.ThreadMode;
 
 public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.AddFriendsView {
     private static final int REQUEST_PERMISSION_CONTACTS = 1;
     @Bind(R.id.title)
-    TextView    title;
+    TextView title;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
     @BindString(R.string.default_error_mes)
-    String      defaultErrorMes;
-    private AddFriendsPresenter   presenter;
+    String defaultErrorMes;
+    private AddFriendsPresenter presenter;
     private ContactsResultHandler contactsResultHandler;
-    private CallbackManager       callbackManager; //facebook callback manager
-    private TwitterAuthClient     twitterAuthClient;
+    private CallbackManager callbackManager; //facebook callback manager
+    private TwitterAuthClient twitterAuthClient;
 
     @Nullable
     @Override
@@ -170,6 +173,24 @@ public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.
         contactsResultHandler = new ContactsResultHandler(this);
         Thread thread = new Thread(threadToRetrieveContacts);
         thread.start();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().registerSticky(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    public void onEvent(InstagramLoginEvent event) {
+        //TODO uncomment later    presenter.addInstagramFriends(event.getToken());
+        EventBus.getDefault().removeStickyEvent(event);
     }
 
     @Override

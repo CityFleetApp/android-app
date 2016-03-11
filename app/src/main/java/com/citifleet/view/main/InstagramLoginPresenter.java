@@ -14,57 +14,39 @@ import java.util.List;
 import java.util.Map;
 
 public class InstagramLoginPresenter {
-    private static final String GRANT_TYPE = "authorization_code";
-    private NetworkManager     networkManager;
     private InstagramLoginView view;
-    private String             clientId;
-    private String             redirectUrl;
-    private String             authUrl;
-    private String             urlGetToken;
-    private String             clientSecret;
+    private String clientId;
+    private String redirectUrl;
+    private String authUrl;
 
-    public InstagramLoginPresenter(NetworkManager networkManager, InstagramLoginView view) {
-        this.networkManager = networkManager;
+    public InstagramLoginPresenter(InstagramLoginView view) {
         this.view = view;
     }
 
-    public void init(String clientId, String redirectUrl, String authUrl, String urlGetToken, String clientSecret) {
+    public void init(String clientId, String redirectUrl, String authUrl) {
         this.clientId = clientId;
         this.redirectUrl = redirectUrl;
         this.authUrl = authUrl;
-        this.urlGetToken = urlGetToken;
-        this.clientSecret = clientSecret;
         String url = getUrl();
         view.loadUrl(url);
     }
 
-    public boolean handleAuthorizationCode(String redirectedUrl) {
+    public boolean handleToken(String redirectedUrl) {
         Log.d(InstagramLoginPresenter.class.getName(), redirectedUrl);
         if (redirectedUrl.startsWith(redirectUrl)) {
-            try {
-                Map<String, List<String>> queryParams = splitQuery(redirectedUrl.substring(redirectedUrl.indexOf("?") + 1, redirectedUrl.length()));
-                if (queryParams.containsKey("access_token")) {
-                    view.onSuccessAuthorization(queryParams.get("access_token").toString());
-                } else if (queryParams.containsKey("error")) {
-                    //   handleFailureAuthorization(queryParams);
-                }
+            view.showProgress(true);
+            String fragment = "#access_token=";
+            int start = redirectedUrl.indexOf(fragment);
+            if (start > -1) {
+                String accessToken = redirectedUrl.substring(start + fragment.length(), redirectedUrl.length());
+                view.onSuccessAuthorization(accessToken);
                 return true;
-            } catch (UnsupportedEncodingException e) {
+            } else {
                 view.onError(null);
             }
         }
         return false;
     }
-
-    private void handleSuccessAuthorization(String token) {
-        view.onSuccessAuthorization(token);
-    }
-
-    private void handleFailureAuthorization(Map<String, List<String>> queryParams) {
-        //TODO
-//        mView.onError(queryParams.get("error") + ":" + queryParams.get("error_description"));
-    }
-
 
     private Map<String, List<String>> splitQuery(String queryParams) throws UnsupportedEncodingException {
         final Map<String, List<String>> query_pairs = new LinkedHashMap<String, List<String>>();

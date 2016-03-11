@@ -55,7 +55,6 @@ public interface NetworkService {
     Call<List<UserInfo>> addTwitterFriends(@Field("token") String token, @Field("token_secret") String tokenSecret);
 
     @FormUrlEncoded
-    @POST
-    Call<InstagramLoginResponse> getInstagramToken(@Url String url, @Field("client_id") String clientId, @Field("client_secret") String clientSecret,
-                                                   @Field("grant_type") String grantType, @Field("redirect_uri") String redirectUri, @Field("code") String code);
+    @POST("users/add-instagram-friends/")
+    Call<List<UserInfo>> addInstagramFriends(@Field("token") String token);
 }

@@ -56,6 +56,17 @@ public class AddFriendsPresenter {
         }
     }
 
+    public void addInstagramFriends(String token) {
+        if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
+            Call<List<UserInfo>> call = CitiFleetApp.getInstance().getNetworkManager().getNetworkClient().addInstagramFriends(token);
+            call.enqueue(callback);
+        } else {
+            view.stopLoading();
+            view.onNetworkError();
+        }
+    }
+
     Callback<List<UserInfo>> callback = new Callback<List<UserInfo>>() {
         @Override
         public void onResponse(Call<List<UserInfo>> call, Response<List<UserInfo>> response) {

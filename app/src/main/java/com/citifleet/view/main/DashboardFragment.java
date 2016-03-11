@@ -19,6 +19,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -227,7 +229,10 @@ public class DashboardFragment extends Fragment implements DashboardView {
         //twitter
         Twitter.getSessionManager().clearActiveSession();
         Twitter.logOut();
-
+        //instagram
+        CookieSyncManager.createInstance(getActivity());
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.removeAllCookie();
     }
 
     @Override

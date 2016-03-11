@@ -1,9 +1,11 @@
 package com.citifleet.view.main;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.EventLog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,34 +17,53 @@ import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.util.InstagramLoginEvent;
 
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 public class InstagramWebFragment extends Fragment implements InstagramLoginPresenter.InstagramLoginView {
     @Bind(R.id.webView)
-    WebView     webView;
+    WebView webView;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
-    @BindString(R.string.instagram_client_id)     String                  clientId;
-    @BindString(R.string.instagram_client_secret) String                  clientSecret;
-    @BindString(R.string.instagram_url)           String                  authUrl;
-    @BindString(R.string.instagram_redirect_url)  String                  redirectUrl;
-    @BindString(R.string.instagram_url_get_token) String                  urlGetToken;
-    private                                       InstagramLoginPresenter presenter;
+    @BindString(R.string.instagram_client_id)
+    String clientId;
+    @BindString(R.string.instagram_url)
+    String authUrl;
+    @BindString(R.string.instagram_redirect_url)
+    String redirectUrl;
+    private InstagramLoginPresenter presenter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.instagram_web_fragment, container, false);
         ButterKnife.bind(this, view);
-        presenter = new InstagramLoginPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
-        presenter.init(clientId, redirectUrl, authUrl, urlGetToken, clientSecret);
+        presenter = new InstagramLoginPresenter(this);
+        presenter.init(clientId, redirectUrl, authUrl);
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return presenter.handleAuthorizationCode(url);
+                return presenter.handleToken(url);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
             }
         });
         return view;
@@ -77,9 +98,9 @@ public class InstagramWebFragment extends Fragment implements InstagramLoginPres
 
     @Override
     public void onSuccessAuthorization(String token) {
-        Log.d("TAG", "token");
-        //TODO   VeritasApp.mBus.post(new LinkedInUserUpdatedEvent());
-        //  getActivity().onBackPressed();
+        Log.d("TAG", token);
+        EventBus.getDefault().postSticky(new InstagramLoginEvent(token));
+        getActivity().onBackPressed();
     }
 
     @Override
