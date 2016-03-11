@@ -146,7 +146,9 @@ public class DashboardFragment extends Fragment implements DashboardView {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case SELECT_FILE:
-                updateImageOnServer(CommonUtils.getImagePath(data.getData(), getContext()));
+                if (resultCode == Activity.RESULT_OK) {
+                    updateImageOnServer(CommonUtils.getImagePath(data.getData(), getContext()));
+                }
                 break;
             case REQUEST_CAMERA:
                 if (resultCode == Activity.RESULT_OK) {
@@ -275,8 +277,8 @@ public class DashboardFragment extends Fragment implements DashboardView {
             TypedValue outValue = new TypedValue();
             getResources().getValue(R.dimen.profile_image_blur_radius_percent, outValue, true);
             int blurradius = (int) (screenWidth * outValue.getFloat());
-            Picasso.with(getActivity()).load(url).transform(new CircleTransform(frameSize)).fit().into(profileImage);
-            Picasso.with(getActivity()).load(url).transform(new BlurTransformation(getContext(), blurradius)).fit().into(bigProfileImage);
+            Picasso.with(getActivity()).load(url).transform(new CircleTransform(frameSize)).fit().centerCrop().into(profileImage);
+            Picasso.with(getActivity()).load(url).transform(new BlurTransformation(getContext(), blurradius)).fit().centerCrop().into(bigProfileImage);
         }
     }
 
