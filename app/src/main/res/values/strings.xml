@@ -2,6 +2,7 @@
     <string name="app_name">CitiFleet</string>
     <string name="fontRegular">Montserrat-Regular.otf</string>
     <string name="fontLight">Montserrat-Light.otf</string>
+    <string name="fontSemibold">Montserrat-SemiBold.otf</string>
     <string name="log_in">Log in</string>
     <string name="create_an_account">Create an account</string>
     <string name="enter_email">Enter Email</string>
@@ -67,6 +68,10 @@
     <string name="instagram_redirect_url">http://citifleet</string>
     <string name="instagram_url_get_token">https://api.instagram.com/oauth/access_token</string>
     <string name="rating">(%1$d)</string>
+    <string name="bio">Bio</string>
+    <string name="drives">Drives</string>
+    <string name="documents">Documents</string>
+    <string name="job_compl">Job completed</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

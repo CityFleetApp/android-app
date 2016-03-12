@@ -89,4 +89,16 @@
         <item name="android:textColor">@drawable/dash_btn_text_selector</item>
         <item name="android:textSize">@dimen/add_friend_textsize</item>
     </style>
+
+    <style name="GreenTextWithLeftIconStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/text_with_icon_left_padding</item>
+        <item name="android:paddingBottom">@dimen/profile_lbl_margin_top</item>
+        <item name="android:paddingLeft">@dimen/profile_padding_side</item>
+        <item name="android:paddingRight">@dimen/profile_padding_side</item>
+        <item name="android:paddingTop">@dimen/profile_padding_side</item>
+        <item name="android:textColor">@color/green_color_text</item>
+        <item name="android:textSize">@dimen/green_text_wth_icon_size</item>
+    </style>
 </resources>

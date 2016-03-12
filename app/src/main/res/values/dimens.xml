@@ -25,6 +25,7 @@
     <dimen name="bottom_menu_textsize">10sp</dimen>
     <dimen name="bottom_menu_padding">10dp</dimen>
     <dimen name="bottom_menu_drawable_padding">5dp</dimen>
+    <dimen name="text_with_icon_left_padding">7dp</dimen>
     <dimen name="direct_btn_margin_btm">15dp</dimen>
     <dimen name="direct_btn_margin_side">11dp</dimen>
     <dimen name="direct_btn_elevation">3dp</dimen>
@@ -60,4 +61,11 @@
     <dimen name="camera_profile_margin">7dp</dimen>
     <dimen name="profile_header_height">240dp</dimen>
     <dimen name="star_margin_top">7dp</dimen>
+    <dimen name="profile_padding_side">15dp</dimen>
+    <dimen name="green_text_wth_icon_size">15sp</dimen>
+    <dimen name="profile_lbl_margin_top">10dp</dimen>
+    <dimen name="profile_text_size">13sp</dimen>
+    <dimen name="profile_images_list_height">85dp</dimen>
+    <dimen name="profile_image_list_item_height">67dp</dimen>
+    <dimen name="elevation">3dp</dimen>
 </resources>

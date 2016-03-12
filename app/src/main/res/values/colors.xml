@@ -25,4 +25,6 @@
     <color name="add_friend_lbl_color">#79858f</color>
     <color name="green_color">#2ec4b6</color>
     <color name="yellow_star">#fbb202</color>
+    <color name="green_color_text">#2dc3b7</color>
+    <color name="text_color_grey">#4c5a75</color>
 </resources>
