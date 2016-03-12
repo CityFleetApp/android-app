@@ -39,6 +39,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 import android.support.v7.widget.RecyclerView;
@@ -79,6 +80,8 @@ public class ProfileFragment extends Fragment implements ProfilePresenter.Profil
     String defaultErrorMes;
     @BindString(R.string.pick_image_title)
     String pickImageTitle;
+    @Bind(R.id.title)
+    TextView title;
 
     @Nullable
     @Override
@@ -87,7 +90,13 @@ public class ProfileFragment extends Fragment implements ProfilePresenter.Profil
         ButterKnife.bind(this, view);
         presenter = new ProfilePresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.init();
+        title.setText(getString(R.string.profile));
         return view;
+    }
+
+    @OnClick(R.id.backBtn)
+    void onBackBtnClick() {
+        getActivity().onBackPressed();
     }
 
     @Override
@@ -240,7 +249,8 @@ public class ProfileFragment extends Fragment implements ProfilePresenter.Profil
                 break;
         }
     }
+
     private void updateImageOnServer(String filepath) {
-    //TODO
+        //TODO
     }
 }

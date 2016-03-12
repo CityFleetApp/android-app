@@ -101,4 +101,28 @@
         <item name="android:textColor">@color/green_color_text</item>
         <item name="android:textSize">@dimen/green_text_wth_icon_size</item>
     </style>
+
+    <style name="MarketplacaBtnLayoutStyle">
+        <item name="android:clickable">true</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/marketplace_btn_margin_side</item>
+        <item name="android:layout_marginRight">@dimen/marketplace_btn_margin_side</item>
+        <item name="android:paddingBottom">@dimen/marketplace_btn_padding_top</item>
+        <item name="android:paddingLeft">@dimen/marketplace_btn_padding_left</item>
+        <item name="android:paddingRight">@dimen/marketplace_btn_padding_top</item>
+        <item name="android:paddingTop">@dimen/marketplace_btn_padding_top</item>
+    </style>
+
+    <style name="MarketplaceTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:paddingLeft">@dimen/marketplace_btn_padding_drawable</item>
+    </style>
 </resources>

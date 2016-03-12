@@ -25,6 +25,7 @@ import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.Constants;
 import com.citifleet.view.BaseActivity;
+import com.citifleet.view.main.MarketPlaceFragment;
 import com.citifleet.view.main.dashboard.DashboardFragment;
 import com.citifleet.view.main.addfriends.AddFriendsFragment;
 import com.google.android.gms.common.ConnectionResult;
@@ -53,18 +54,23 @@ import butterknife.OnClick;
 public class MainMapFragment extends Fragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, ResultCallback<LocationSettingsResult>, MainMapPresenter.MainMapView {
     public static final int REQUEST_LOCATION_UPDATES = 111;
-    public static final int REQUEST_CHECK_SETTINGS   = 222;
-    @Bind(R.id.dashboardBtn)    TextView                dashboardBtn;
-    @Bind(R.id.marketplaceBtn)  TextView                marketplaceBtn;
-    @Bind(R.id.reportBtn)       TextView                reportBtn;
-    @Bind(R.id.notificationBtn) TextView                notificationBtn;
-    @Bind(R.id.progressBar)     ProgressBar             progressBar;
-    private static              GoogleMap               map;
-    protected                   GoogleApiClient         googleApiClient;
-    protected                   LocationRequest         locationRequest;
-    protected                   Location                currentLocation;
-    protected                   LocationSettingsRequest locationSettingsRequest;
-    private                     MainMapPresenter        presenter;
+    public static final int REQUEST_CHECK_SETTINGS = 222;
+    @Bind(R.id.dashboardBtn)
+    TextView dashboardBtn;
+    @Bind(R.id.marketplaceBtn)
+    TextView marketplaceBtn;
+    @Bind(R.id.reportBtn)
+    TextView reportBtn;
+    @Bind(R.id.notificationBtn)
+    TextView notificationBtn;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
+    private static GoogleMap map;
+    protected GoogleApiClient googleApiClient;
+    protected LocationRequest locationRequest;
+    protected Location currentLocation;
+    protected LocationSettingsRequest locationSettingsRequest;
+    private MainMapPresenter presenter;
     @BindString(R.string.default_error_mes)
     String defaultErrorMes;
 
@@ -124,7 +130,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
 
     protected void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-          requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_UPDATES);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_UPDATES);
         } else {
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
         }
@@ -136,6 +142,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
         RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
         refWatcher.watch(this);
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_LOCATION_UPDATES) {
@@ -222,7 +229,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
     void marketPlaceBtnClick() {
         if (!marketplaceBtn.isSelected()) {
             selectButton(marketplaceBtn);
-            //TODO
+            ((BaseActivity) getActivity()).changeFragment(new MarketPlaceFragment(), true);
         }
     }
 

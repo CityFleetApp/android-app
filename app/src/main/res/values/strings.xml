@@ -73,6 +73,9 @@
     <string name="drives">Drives</string>
     <string name="documents">Documents</string>
     <string name="job_compl">Job completed</string>
+    <string name="cars_for_rent_sale">Cars for rent/sale</string>
+    <string name="general_goods_for_sale">General goods for sale</string>
+    <string name="job_offers">Job offers</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

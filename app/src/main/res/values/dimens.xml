@@ -68,4 +68,9 @@
     <dimen name="profile_images_list_height">85dp</dimen>
     <dimen name="profile_image_list_item_height">67dp</dimen>
     <dimen name="elevation">3dp</dimen>
+    <dimen name="marketplace_btn_margin_side">14dp</dimen>
+    <dimen name="marketplace_btn_padding_top">12dp</dimen>
+    <dimen name="marketplace_btn_padding_left">22dp</dimen>
+    <dimen name="marketplace_btn_padding_drawable">11dp</dimen>
+    <dimen name="marketplace_margin_bottom">35dp</dimen>
 </resources>
