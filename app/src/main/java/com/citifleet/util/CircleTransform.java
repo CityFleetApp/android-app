@@ -10,7 +10,7 @@ import com.squareup.picasso.Transformation;
 
 public class CircleTransform implements Transformation {
     private int frameSize;
-    private static final int FRAME_ALPHA = 63;
+    private static final int FRAME_ALPHA = 43;
 
     public CircleTransform(int frameSize) {
         this.frameSize = frameSize;

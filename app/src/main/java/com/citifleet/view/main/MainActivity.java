@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 
 import com.citifleet.R;
 import com.citifleet.view.BaseActivity;
+import com.citifleet.view.main.mainmap.MainMapFragment;
 
 public class MainActivity extends BaseActivity {
     @Override

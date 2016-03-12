@@ -1,8 +1,6 @@
-package com.citifleet.view.main;
+package com.citifleet.view.main.addfriends;
 
 import android.util.Log;
-
-import com.citifleet.network.NetworkManager;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

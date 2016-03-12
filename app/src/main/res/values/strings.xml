@@ -60,7 +60,8 @@
     <string name="help">Help</string>
     <string name="setting">Setting</string>
     <string name="sign_out">Sign out</string>
-    <string name="pick_image_title">Choose profile image</string>
+    <string name="pick_profile_image_title">Choose profile image</string>
+    <string name="pick_image_title">Choose image</string>
     <string name="facebook_app_id">754079204723225</string>
     <string name="instagram_client_id">dcbc5373293d4c8aa3465ad53ca946bc</string>
     <string name="instagram_client_secret">714646a846324f258a4e528bb8c1dc0c</string>

@@ -1,4 +1,4 @@
-package com.citifleet.view.main;
+package com.citifleet.view.main.mainmap;
 
 import android.Manifest;
 import android.app.Activity;
@@ -25,6 +25,8 @@ import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.Constants;
 import com.citifleet.view.BaseActivity;
+import com.citifleet.view.main.dashboard.DashboardFragment;
+import com.citifleet.view.main.addfriends.AddFriendsFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;

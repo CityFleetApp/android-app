@@ -1,4 +1,4 @@
-package com.citifleet.view.main;
+package com.citifleet.view.main.addfriends;
 
 import android.util.Log;
 

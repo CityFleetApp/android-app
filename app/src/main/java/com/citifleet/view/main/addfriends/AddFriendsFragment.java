@@ -1,4 +1,4 @@
-package com.citifleet.view.main;
+package com.citifleet.view.main.addfriends;
 
 import android.Manifest;
 import android.content.Intent;
@@ -51,7 +51,6 @@ import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
-import de.greenrobot.event.ThreadMode;
 
 public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.AddFriendsView {
     private static final int REQUEST_PERMISSION_CONTACTS = 1;

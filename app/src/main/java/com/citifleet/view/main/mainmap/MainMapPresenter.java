@@ -1,4 +1,4 @@
-package com.citifleet.view.main;
+package com.citifleet.view.main.mainmap;
 
 import android.util.Log;
 

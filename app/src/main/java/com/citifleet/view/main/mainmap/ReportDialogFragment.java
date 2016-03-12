@@ -1,4 +1,4 @@
-package com.citifleet.view.main;
+package com.citifleet.view.main.mainmap;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.view.main.mainmap.MainMapFragment;
 import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;

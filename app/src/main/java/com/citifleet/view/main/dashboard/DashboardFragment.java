@@ -1,4 +1,4 @@
-package com.citifleet.view.main;
+package com.citifleet.view.main.dashboard;
 
 import android.Manifest;
 import android.app.Activity;
@@ -36,7 +36,8 @@ import com.citifleet.util.PermissionUtil;
 import com.citifleet.util.PrefUtil;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.login.LoginFlowActivity;
-import com.citifleet.view.main.DashboardPresenter.DashboardView;
+import com.citifleet.view.main.dashboard.DashboardPresenter.DashboardView;
+import com.citifleet.view.main.profile.ProfileFragment;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.squareup.leakcanary.RefWatcher;
@@ -60,7 +61,7 @@ public class DashboardFragment extends Fragment implements DashboardView {
     ImageView profileImage;
     @Bind(R.id.bigProfileImage)
     ImageView bigProfileImage;
-    @BindString(R.string.pick_image_title)
+    @BindString(R.string.pick_profile_image_title)
     String pickImageTitle;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
@@ -108,7 +109,7 @@ public class DashboardFragment extends Fragment implements DashboardView {
     }
 
     private void launchCamera() {
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        Intent intent = new Intent(Constants.ACTION_PICK_IMAGE_CAMERA);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(getFileForProfileFromCamera()));
         startActivityForResult(intent, REQUEST_CAMERA);
     }
@@ -173,7 +174,7 @@ public class DashboardFragment extends Fragment implements DashboardView {
 
     @OnClick(R.id.profileBtn)
     void onProfileBtnClick() {
-
+        ((BaseActivity)getActivity()).changeFragment(new ProfileFragment(), true);
     }
 
     @OnClick(R.id.postingBtn)
