@@ -36,6 +36,7 @@ import com.citifleet.util.PermissionUtil;
 import com.citifleet.util.PrefUtil;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.login.LoginFlowActivity;
+import com.citifleet.view.main.benefits.BenefitsFragment;
 import com.citifleet.view.main.dashboard.DashboardPresenter.DashboardView;
 import com.citifleet.view.main.profile.ProfileFragment;
 import com.facebook.AccessToken;
@@ -199,7 +200,7 @@ public class DashboardFragment extends Fragment implements DashboardView {
 
     @OnClick(R.id.benefitsBtn)
     void onBenefitsBtnClick() {
-
+        ((BaseActivity)getActivity()).changeFragment(new BenefitsFragment(), true);
     }
 
     @OnClick(R.id.legalAidBtn)

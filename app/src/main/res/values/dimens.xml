@@ -73,4 +73,10 @@
     <dimen name="marketplace_btn_padding_left">22dp</dimen>
     <dimen name="marketplace_btn_padding_drawable">11dp</dimen>
     <dimen name="marketplace_margin_bottom">35dp</dimen>
+    <dimen name="benefit_name_size">16sp</dimen>
+    <dimen name="benefit_name_padding_top">16dp</dimen>
+    <dimen name="benefit_list_space">8dp</dimen>
+    <dimen name="benefit_card_corner_radius">4dp</dimen>
+    <dimen name="benefits_corner_radius">4dp</dimen>
+    <dimen name="benefits_elevation">3dp</dimen>
 </resources>

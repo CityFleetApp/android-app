@@ -1,6 +1,7 @@
 package com.citifleet.network;
 
 import com.citifleet.model.AddContactsBody;
+import com.citifleet.model.Benefit;
 import com.citifleet.model.InstagramLoginResponse;
 import com.citifleet.model.LoginInfo;
 import com.citifleet.model.ProfileImage;
@@ -57,4 +58,7 @@ public interface NetworkService {
     @FormUrlEncoded
     @POST("users/add-instagram-friends/")
     Call<List<UserInfo>> addInstagramFriends(@Field("token") String token);
+
+    @GET("benefits/")
+    Call<List<Benefit>> getBenefits();
 }

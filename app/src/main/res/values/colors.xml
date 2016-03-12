@@ -28,4 +28,6 @@
     <color name="green_color_text">#2dc3b7</color>
     <color name="text_color_grey">#4c5a75</color>
     <color name="orange_color">#ff9f1c</color>
+    <color name="benefit_name_background">#011627</color>
+    <color name="benefits_background">#f3f4f8</color>
 </resources>
