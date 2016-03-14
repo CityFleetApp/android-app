@@ -131,7 +131,12 @@
                 android:clickable="true"
                 android:drawableLeft="@drawable/help_btn_selector"
                 android:text="@string/help"/>
-
+            <TextView
+                android:id="@+id/settingsBtn"
+                style="@style/DashBtnStyle"
+                android:clickable="true"
+                android:drawableLeft="@drawable/settings_btn_selector"
+                android:text="@string/settings"/>
             <TextView
                 android:id="@+id/signOutBtn"
                 style="@style/DashBtnStyle"

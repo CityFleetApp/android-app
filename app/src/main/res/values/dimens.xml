@@ -84,4 +84,8 @@
     <dimen name="barcode_width">290dp</dimen>
     <dimen name="barcode_margin">10dp</dimen>
     <dimen name="barcode_text_size">22sp</dimen>
+    <dimen name="settings_seekbar_margin_top">10dp</dimen>
+    <dimen name="settings_seekbar_marginleft">14dp</dimen>
+    <dimen name="settings_seekbar_margin_bottom">5dp</dimen>
+    <dimen name="thumb_size">20dp</dimen>
 </resources>

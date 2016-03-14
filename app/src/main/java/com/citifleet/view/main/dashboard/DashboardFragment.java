@@ -39,6 +39,7 @@ import com.citifleet.view.login.LoginFlowActivity;
 import com.citifleet.view.main.benefits.BenefitsFragment;
 import com.citifleet.view.main.dashboard.DashboardPresenter.DashboardView;
 import com.citifleet.view.main.profile.ProfileFragment;
+import com.citifleet.view.main.settings.SettingsFragment;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.squareup.leakcanary.RefWatcher;
@@ -175,7 +176,7 @@ public class DashboardFragment extends Fragment implements DashboardView {
 
     @OnClick(R.id.profileBtn)
     void onProfileBtnClick() {
-        ((BaseActivity)getActivity()).changeFragment(new ProfileFragment(), true);
+        ((BaseActivity) getActivity()).changeFragment(new ProfileFragment(), true);
     }
 
     @OnClick(R.id.postingBtn)
@@ -200,7 +201,7 @@ public class DashboardFragment extends Fragment implements DashboardView {
 
     @OnClick(R.id.benefitsBtn)
     void onBenefitsBtnClick() {
-        ((BaseActivity)getActivity()).changeFragment(new BenefitsFragment(), true);
+        ((BaseActivity) getActivity()).changeFragment(new BenefitsFragment(), true);
     }
 
     @OnClick(R.id.legalAidBtn)
@@ -211,6 +212,11 @@ public class DashboardFragment extends Fragment implements DashboardView {
     @OnClick(R.id.helpBtn)
     void onHelpBtnBtnClick() {
 
+    }
+
+    @OnClick(R.id.settingsBtn)
+    void onSettingsBtnClick() {
+        ((BaseActivity) getActivity()).changeFragment(new SettingsFragment(), true);
     }
 
     @Override
