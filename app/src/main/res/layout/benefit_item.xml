@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.citifleet.view.main.benefits.BenefitsImageView
             android:id="@+id/benefitImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

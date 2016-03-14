@@ -30,4 +30,5 @@
     <color name="orange_color">#ff9f1c</color>
     <color name="benefit_name_background">#011627</color>
     <color name="benefits_background">#f3f4f8</color>
+    <color name="barcode_dialog_background">#C0ffffff</color>
 </resources>

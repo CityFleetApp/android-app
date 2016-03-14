@@ -3,6 +3,7 @@ package com.citifleet.view.main.benefits;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,9 +16,10 @@ import android.widget.Toast;
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.Benefit;
+import com.citifleet.util.Constants;
+import com.citifleet.util.RecycleViewClickListener;
 import com.citifleet.util.SpacesItemDecoration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -51,12 +53,32 @@ public class BenefitsFragment extends Fragment implements BenefitPresenter.Benef
         benefitsList.addItemDecoration(new SpacesItemDecoration((int) getResources().getDimension(R.dimen.benefit_list_space)));
         presenter = new BenefitPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.loadBenefits();
+        benefitsList.addOnItemTouchListener(new RecycleViewClickListener(getActivity(), onItemClickListener));
         return view;
     }
 
+    private RecycleViewClickListener.OnItemClickListener onItemClickListener = new RecycleViewClickListener.OnItemClickListener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            FragmentManager fm = getChildFragmentManager();
+            BarcodeDialogFragment fragment = (BarcodeDialogFragment) fm.findFragmentByTag(Constants.BENEFITS_BARCODE_TAG);
+            if (fragment == null) {
+                fragment = new BarcodeDialogFragment();
+            }
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.BARCODE_STRING, adapter.getBarcodeString(position));
+            fragment.setArguments(bundle);
+            fm.beginTransaction().add(R.id.childFragmentContainer, fragment, Constants.BENEFITS_BARCODE_TAG).addToBackStack(null).commit();
+        }
+    };
+
     @OnClick(R.id.backBtn)
     void onBackBtnClick() {
-        getActivity().onBackPressed();
+        FragmentManager fragmentManager = getChildFragmentManager();
+        fragmentManager.popBackStack();
+        if (fragmentManager.getBackStackEntryCount() == 0) {
+            getActivity().onBackPressed();
+        }
     }
 
     @Override

@@ -47,6 +47,10 @@ public class BenefitsAdapter extends RecyclerView.Adapter<BenefitsAdapter.ViewHo
         this.benefitList.addAll(benefitList);
     }
 
+    public String getBarcodeString(int position) {
+        return benefitList.get(position).getBarcode();
+    }
+
     @Override
     public BenefitsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.benefit_item, parent, false);

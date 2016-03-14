@@ -76,6 +76,7 @@
     <string name="cars_for_rent_sale">Cars for rent/sale</string>
     <string name="general_goods_for_sale">General goods for sale</string>
     <string name="job_offers">Job offers</string>
+    <string name="present_barcode_to_be_n_scanned_at_register">Present barcode to be\nscanned at register</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>
