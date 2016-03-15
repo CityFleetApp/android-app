@@ -2,7 +2,6 @@ package com.citifleet.view.main.dashboard;
 
 import android.util.Log;
 
-import com.citifleet.CitiFleetApp;
 import com.citifleet.model.ProfileImage;
 import com.citifleet.model.UserInfo;
 import com.citifleet.network.NetworkErrorUtil;
@@ -28,7 +27,7 @@ public class DashboardPresenter {
 
     public void init() {
         if (networkManager.isConnectedOrConnecting()) {
-            Call<UserInfo> call = CitiFleetApp.getInstance().getNetworkManager().getNetworkClient().getUserInfo();
+            Call<UserInfo> call = networkManager.getNetworkClient().getUserInfo();
             call.enqueue(getUserInfoCallback);
         } else {
             view.onNetworkError();
@@ -41,7 +40,7 @@ public class DashboardPresenter {
             File file = new File(filepath);
             RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), "");
             RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            Call<ProfileImage> call = CitiFleetApp.getInstance().getNetworkManager().getNetworkClient().uploadAvatar(requestBody, description);
+            Call<ProfileImage> call = networkManager.getNetworkClient().uploadAvatar(requestBody, description);
             call.enqueue(uploadImageCallback);
         } else {
             view.onNetworkError();

@@ -92,6 +92,7 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/add_friend_textsize</item>
     </style>
+
     <style name="GreenTextWithLeftIconStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -126,5 +127,13 @@
         <item name="android:ellipsize">end</item>
         <item name="android:textSize">@dimen/text_size</item>
         <item name="android:paddingLeft">@dimen/marketplace_btn_padding_drawable</item>
+    </style>
+
+    <style name="ProfileImageStyle">
+        <item name="android:layout_width">@dimen/profile_image_list_item_height</item>
+        <item name="android:layout_height">@dimen/profile_image_list_item_height</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@android:color/white</item>
     </style>
 </resources>

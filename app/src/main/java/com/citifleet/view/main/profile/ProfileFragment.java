@@ -13,12 +13,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,13 +26,17 @@ import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.model.UserImages;
 import com.citifleet.model.UserInfo;
 import com.citifleet.util.CircleTransform;
 import com.citifleet.util.CommonUtils;
 import com.citifleet.util.Constants;
 import com.citifleet.util.PermissionUtil;
+import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import java.io.File;
 import java.util.List;
@@ -71,15 +75,16 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
     TextView documents;
     @Bind(R.id.jobsCompleted)
     TextView jobsCompleted;
-    @Bind(R.id.imagesList)
-    RecyclerView imagesList;
-    private ProfilePresenter presenter;
     @BindString(R.string.default_error_mes)
     String defaultErrorMes;
     @BindString(R.string.pick_image_title)
     String pickImageTitle;
     @Bind(R.id.title)
     TextView title;
+    @Bind({R.id.imageFirst, R.id.imageSecond, R.id.imageThird, R.id.imageFourth, R.id.imageFifth})
+    List<ImageButton> images;
+    private ProfilePresenter presenter;
+    private List<UserImages> imagesList;
 
     @Nullable
     @Override
@@ -152,6 +157,21 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
         bio.setText(userInfo.getBio());
         drives.setText(userInfo.getDrives());
         //TODO
+    }
+
+    @Override
+    public void updateImageFromList(int position, String url) {
+        Picasso.with(getContext()).load(url).into(images.get(0));
+    }
+
+    @Override
+    public void onUserImagesLoaded(List<UserImages> list) {
+        this.imagesList = list;
+        for (int i = 0; i < list.size(); i++) {
+            if (i < images.size()) {
+                Picasso.with(getContext()).load(list.get(i).getThumbnail()).into(images.get(i));
+            }
+        }
     }
 
     private void showPickImageDialog() {
@@ -242,6 +262,31 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
     }
 
     private void updateImageOnServer(String filepath) {
-        //TODO
+        presenter.uploadImageForList(0, filepath);
+    }
+
+    @OnClick({R.id.imageFirst, R.id.imageSecond, R.id.imageThird, R.id.imageFourth, R.id.imageFifth})
+    void onImageClick(View view) {
+        int clickedPosition = 0;
+        for (ImageButton imageButton : images) {
+            if (imageButton.getId() == view.getId()) {
+                clickedPosition = images.indexOf(imageButton);
+                break;
+            }
+        }
+        if (imagesList != null && imagesList.size() > clickedPosition && imagesList.get(clickedPosition) != null) {
+            showGallery(clickedPosition);
+        } else {
+            showPickImageDialog();
+        }
+    }
+
+    private void showGallery(int position) {
+        GalleryImageFragment fragment = new GalleryImageFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.IMAGES_LIST_TAG, Parcels.wrap(imagesList));
+        bundle.putInt(Constants.IMAGES_SELECTED_TAG, position);
+        fragment.setArguments(bundle);
+        ((BaseActivity) getActivity()).changeFragment(fragment, true);
     }
 }

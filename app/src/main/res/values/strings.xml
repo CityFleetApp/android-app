@@ -88,6 +88,7 @@
     <string name="current_password_hint">Enter your current password</string>
     <string name="new_password">New Password</string>
     <string name="new_password_hint">Enter your new password</string>
+    <string name="gallery_title">%1$d of %2$d</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

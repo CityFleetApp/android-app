@@ -4,6 +4,7 @@ import com.citifleet.model.AddContactsBody;
 import com.citifleet.model.Benefit;
 import com.citifleet.model.LoginInfo;
 import com.citifleet.model.ProfileImage;
+import com.citifleet.model.UserImages;
 import com.citifleet.model.UserInfo;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -18,6 +20,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface NetworkService {
     @FormUrlEncoded
@@ -63,4 +66,14 @@ public interface NetworkService {
     @FormUrlEncoded
     @POST("users/change-password/")
     Call<Void> changePassword(@Field("old_password") String oldPassword, @Field("password") String password, @Field("password_confirm") String passwordConfirm);
+
+    @Multipart
+    @POST("users/photos/")
+    Call<UserImages> uploadPhoto(@Part("file\"; filename=\"image.png\" ") RequestBody file, @Part("description") RequestBody description);
+
+    @GET("users/photos/")
+    Call<List<UserImages>> getPhotos();
+
+    @DELETE("users/photos/{id}")
+    Call<Void> deletePhoto(@Path("id") int id);
 }
