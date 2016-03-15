@@ -2,7 +2,6 @@ package com.citifleet.network;
 
 import com.citifleet.model.AddContactsBody;
 import com.citifleet.model.Benefit;
-import com.citifleet.model.InstagramLoginResponse;
 import com.citifleet.model.LoginInfo;
 import com.citifleet.model.ProfileImage;
 import com.citifleet.model.UserInfo;
@@ -19,7 +18,6 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
-import retrofit2.http.Url;
 
 public interface NetworkService {
     @FormUrlEncoded
@@ -61,4 +59,8 @@ public interface NetworkService {
 
     @GET("benefits/")
     Call<List<Benefit>> getBenefits();
+
+    @FormUrlEncoded
+    @POST("users/change-password/")
+    Call<Void> changePassword(@Field("old_password") String oldPassword, @Field("password") String password, @Field("password_confirm") String passwordConfirm);
 }

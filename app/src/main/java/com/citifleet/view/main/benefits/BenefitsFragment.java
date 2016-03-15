@@ -2,7 +2,6 @@ package com.citifleet.view.main.benefits;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +18,7 @@ import com.citifleet.model.Benefit;
 import com.citifleet.util.Constants;
 import com.citifleet.util.RecycleViewClickListener;
 import com.citifleet.util.SpacesItemDecoration;
+import com.citifleet.view.BaseFragment;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ import butterknife.OnClick;
 /**
  * Created by vika on 12.03.16.
  */
-public class BenefitsFragment extends Fragment implements BenefitPresenter.BenefitView {
+public class BenefitsFragment extends BaseFragment implements BenefitPresenter.BenefitView {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.progressBar)

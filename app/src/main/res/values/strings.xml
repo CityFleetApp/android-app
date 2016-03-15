@@ -79,6 +79,15 @@
     <string name="present_barcode_to_be_n_scanned_at_register">Present barcode to be\nscanned at register</string>
     <string name="display">Display</string>
     <string name="settings">Settings</string>
+    <string name="change_password">Change password</string>
+    <string name="status_visible_invisible">Status Visible/Invisible</string>
+    <string name="chat_privacy">Chat Privacy</string>
+    <string name="help_faq">Help/FAQ</string>
+    <string name="token_header">"Token "</string>
+    <string name="current_password">Current password</string>
+    <string name="current_password_hint">Enter your current password</string>
+    <string name="new_password">New Password</string>
+    <string name="new_password_hint">Enter your new password</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

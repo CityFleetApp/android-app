@@ -88,4 +88,5 @@
     <dimen name="settings_seekbar_marginleft">14dp</dimen>
     <dimen name="settings_seekbar_margin_bottom">5dp</dimen>
     <dimen name="thumb_size">20dp</dimen>
+    <dimen name="change_password_margin_top">20dp</dimen>
 </resources>

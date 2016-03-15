@@ -7,7 +7,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,20 +16,21 @@ import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.Constants;
 import com.citifleet.util.PermissionUtil;
-import com.squareup.leakcanary.RefWatcher;
+import com.citifleet.view.BaseActivity;
+import com.citifleet.view.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
  * Created by vika on 14.03.16.
  */
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends BaseFragment {
     private final static int REQUEST_PERMISSION_SETTINGS = 1;
     @Bind(R.id.title)
     TextView title;
@@ -100,17 +101,44 @@ public class SettingsFragment extends Fragment {
         getActivity().onBackPressed();
     }
 
+    @OnClick(R.id.profileBtn)
+    void onProfileBtnClick() {
+
+    }
+
+    @OnClick(R.id.changePasswordBtn)
+    void onChangePasswordBtnClick() {
+        ((BaseActivity) getActivity()).changeFragment(new ChangePasswordFragment(), true);
+    }
+
+    @OnClick(R.id.displayBtn)
+    void onDisplayBtnClick() {
+        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    @OnClick(R.id.helpFaqBtn)
+    void onHelpFaqBtnClick() {
+    }
+
+    @OnCheckedChanged(R.id.statusVisibleSwitch)
+    void onCheckedStatusChange(boolean checked) {
+
+    }
+
+    @OnCheckedChanged(R.id.notificationSwitch)
+    void onCheckedNotificationChange(boolean checked) {
+
+    }
+
+    @OnCheckedChanged(R.id.chatPrivacySwitch)
+    void onChatPrivacyChange(boolean checked) {
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
-        refWatcher.watch(this);
     }
 
     @Override

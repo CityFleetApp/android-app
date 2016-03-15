@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -25,9 +24,10 @@ import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.Constants;
 import com.citifleet.view.BaseActivity;
+import com.citifleet.view.BaseFragment;
 import com.citifleet.view.main.MarketPlaceFragment;
-import com.citifleet.view.main.dashboard.DashboardFragment;
 import com.citifleet.view.main.addfriends.AddFriendsFragment;
+import com.citifleet.view.main.dashboard.DashboardFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -44,14 +44,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainMapFragment extends Fragment implements OnMapReadyCallback,
+public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, ResultCallback<LocationSettingsResult>, MainMapPresenter.MainMapView {
     public static final int REQUEST_LOCATION_UPDATES = 111;
     public static final int REQUEST_CHECK_SETTINGS = 222;
@@ -65,7 +64,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
     TextView notificationBtn;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
-    private static GoogleMap map;
+    private GoogleMap map;
     protected GoogleApiClient googleApiClient;
     protected LocationRequest locationRequest;
     protected Location currentLocation;
@@ -112,7 +111,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
     }
 
     protected synchronized void buildGoogleApiClient() {
-        googleApiClient = new GoogleApiClient.Builder(getActivity())
+        googleApiClient = new GoogleApiClient.Builder(getActivity().getApplicationContext())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -134,13 +133,6 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
         } else {
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
-        refWatcher.watch(this);
     }
 
     @Override
@@ -198,6 +190,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public void onDestroyView() {
+
         map = null;
         ButterKnife.unbind(this);
         super.onDestroyView();
@@ -206,7 +199,6 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-
     }
 
     private void selectButton(View view) {

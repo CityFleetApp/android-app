@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.util.CommonUtils;
 import com.citifleet.util.PrefUtil;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -107,14 +108,6 @@ public class LoginFragment extends Fragment implements Validator.ValidationListe
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(getActivity());
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-            }
-        }
+        CommonUtils.handleValidationError(getActivity(), errors);
     }
 }

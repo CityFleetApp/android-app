@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.citifleet.R;
 import com.citifleet.util.PrefUtil;
@@ -19,7 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkManager {
-    private       NetworkService      networkClient;
+    private NetworkService networkClient;
     private final ConnectivityManager connectivityManager;
 
     public NetworkManager(final Context context, ConnectivityManager mConnectivityManager) {
@@ -30,7 +31,8 @@ public class NetworkManager {
             public Response intercept(Chain chain) throws IOException {
                 Request request;
                 if (!TextUtils.isEmpty(PrefUtil.getToken(context))) {
-                    request = chain.request().newBuilder().addHeader("Authorization", "Token " + PrefUtil.getToken(context)).build();
+                    request = chain.request().newBuilder().addHeader("Authorization", context.getString(R.string.token_header) + PrefUtil.getToken(context)).build();
+                    Log.d(NetworkManager.class.getName(), "Token " + PrefUtil.getToken(context));
                 } else {
                     request = chain.request();
                 }

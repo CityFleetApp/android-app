@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.util.CommonUtils;
+import com.citifleet.util.Constants;
 import com.citifleet.util.PrefUtil;
 import com.mobsandgeeks.saripaar.QuickRule;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -35,40 +37,40 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RegisterFragment extends Fragment implements Validator.ValidationListener, RegistrationPresenter.RegistrationView {
-    private Validator             validator;
+    private Validator validator;
     private RegistrationPresenter presenter;
     @NotEmpty
     @Bind(R.id.fullNameEt)
-    EditText    fullNameEt;
+    EditText fullNameEt;
     @NotEmpty
     @Bind(R.id.usernameEt)
-    EditText    usernameEt;
+    EditText usernameEt;
     @Bind(R.id.phoneEt)
-    EditText    phoneEt;
+    EditText phoneEt;
     @NotEmpty
-    @Size(min = 6, max = 6)
+    @Size(min = Constants.MIN_LENGTH_HACK_LICENSE, max = Constants.MIN_LENGTH_HACK_LICENSE)
     @Bind(R.id.hackLicenseEt)
-    EditText    hackLicenseEt;
+    EditText hackLicenseEt;
     @Email
     @Bind(R.id.emailEt)
-    EditText    emailEt;
-    @Password(min = 8, scheme = Password.Scheme.ALPHA_NUMERIC, messageResId = R.string.password_validation_mes)
+    EditText emailEt;
+    @Password(min = Constants.MIN_PASSWORD_LENGTH, scheme = Password.Scheme.ALPHA_NUMERIC, messageResId = R.string.password_validation_mes)
     @Bind(R.id.passwordEt)
-    EditText    passwordEt;
+    EditText passwordEt;
     @NotEmpty
     @ConfirmPassword(messageResId = R.string.password_match_mes)
     @Bind(R.id.confirmPasswordEt)
-    EditText    confirmPasswordEt;
+    EditText confirmPasswordEt;
     @Bind(R.id.signupBtn)
-    Button      signupBtn;
+    Button signupBtn;
     @Bind(R.id.toolbar)
-    Toolbar     toolbar;
+    Toolbar toolbar;
     @Bind(R.id.title)
-    TextView    title;
+    TextView title;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
     @BindString(R.string.default_error_mes)
-    String      defaultErrorMes;
+    String defaultErrorMes;
 
     @Nullable
     @Override
@@ -107,15 +109,7 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(getActivity());
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-            }
-        }
+        CommonUtils.handleValidationError(getActivity(), errors);
     }
 
     QuickRule<EditText> phoneRule = new QuickRule<EditText>(0) {

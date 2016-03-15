@@ -11,7 +11,6 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +24,7 @@ import com.citifleet.R;
 import com.citifleet.util.InstagramLoginEvent;
 import com.citifleet.util.PermissionUtil;
 import com.citifleet.view.BaseActivity;
+import com.citifleet.view.BaseFragment;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -32,7 +32,6 @@ import com.facebook.FacebookException;
 import com.facebook.internal.CallbackManagerImpl;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.squareup.leakcanary.RefWatcher;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
@@ -52,7 +51,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
-public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.AddFriendsView {
+public class AddFriendsFragment extends BaseFragment implements AddFriendsPresenter.AddFriendsView {
     private static final int REQUEST_PERMISSION_CONTACTS = 1;
     @Bind(R.id.title)
     TextView title;
@@ -173,13 +172,6 @@ public class AddFriendsFragment extends Fragment implements AddFriendsPresenter.
         contactsResultHandler = new ContactsResultHandler(this);
         Thread thread = new Thread(threadToRetrieveContacts);
         thread.start();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
-        refWatcher.watch(this);
     }
 
     @Override

@@ -14,4 +14,6 @@ public class Constants {
     public static final String ACTION_PICK_IMAGE_CAMERA = "android.media.action.IMAGE_CAPTURE";
     public static final String BARCODE_STRING = "barcode_string";
     public static final int MAX_BRIGHTNESS = 255;
+    public static final int MIN_LENGTH_HACK_LICENSE = 6;
+    public static final int MIN_PASSWORD_LENGTH = 8;
 }

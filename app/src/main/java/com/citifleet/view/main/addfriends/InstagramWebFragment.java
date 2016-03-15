@@ -3,7 +3,6 @@ package com.citifleet.view.main.addfriends;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,17 +13,16 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.InstagramLoginEvent;
-import com.squareup.leakcanary.RefWatcher;
+import com.citifleet.view.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
-public class InstagramWebFragment extends Fragment implements InstagramLoginPresenter.InstagramLoginView {
+public class InstagramWebFragment extends BaseFragment implements InstagramLoginPresenter.InstagramLoginView {
     @Bind(R.id.webView)
     WebView webView;
     @Bind(R.id.progressBar)
@@ -75,12 +73,6 @@ public class InstagramWebFragment extends Fragment implements InstagramLoginPres
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
-        refWatcher.watch(this);
-    }
     @Override
     public void showProgress(boolean progress) {
         webView.setVisibility(View.GONE);

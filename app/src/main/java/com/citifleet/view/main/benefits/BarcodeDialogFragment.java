@@ -3,7 +3,6 @@ package com.citifleet.view.main.benefits;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.Constants;
+import com.citifleet.view.BaseFragment;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.squareup.leakcanary.RefWatcher;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -32,7 +30,7 @@ import butterknife.OnClick;
 /**
  * Created by vika on 12.03.16.
  */
-public class BarcodeDialogFragment extends Fragment {
+public class BarcodeDialogFragment extends BaseFragment {
     @Bind(R.id.barcode)
     ImageView barcodeImageView;
     @Bind(R.id.barcodeText)
@@ -113,13 +111,6 @@ public class BarcodeDialogFragment extends Fragment {
     public void onDestroyView() {
         ButterKnife.unbind(this);
         super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
-        refWatcher.watch(this);
     }
 
 }

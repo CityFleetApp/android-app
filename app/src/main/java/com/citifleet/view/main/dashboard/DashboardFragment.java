@@ -12,7 +12,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -35,6 +34,7 @@ import com.citifleet.util.Constants;
 import com.citifleet.util.PermissionUtil;
 import com.citifleet.util.PrefUtil;
 import com.citifleet.view.BaseActivity;
+import com.citifleet.view.BaseFragment;
 import com.citifleet.view.login.LoginFlowActivity;
 import com.citifleet.view.main.benefits.BenefitsFragment;
 import com.citifleet.view.main.dashboard.DashboardPresenter.DashboardView;
@@ -42,7 +42,6 @@ import com.citifleet.view.main.profile.ProfileFragment;
 import com.citifleet.view.main.settings.SettingsFragment;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
-import com.squareup.leakcanary.RefWatcher;
 import com.squareup.picasso.Picasso;
 import com.twitter.sdk.android.Twitter;
 
@@ -54,7 +53,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
-public class DashboardFragment extends Fragment implements DashboardView {
+public class DashboardFragment extends BaseFragment implements DashboardView {
     private static final int REQUEST_CAMERA = 111;
     private static final int SELECT_FILE = 222;
     private static final int REQUEST_PERMISSION_CAMERA = 1;
@@ -219,12 +218,6 @@ public class DashboardFragment extends Fragment implements DashboardView {
         ((BaseActivity) getActivity()).changeFragment(new SettingsFragment(), true);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
-        refWatcher.watch(this);
-    }
 
     @OnClick(R.id.signOutBtn)
     void onSignoutBtnClick() {
@@ -297,7 +290,9 @@ public class DashboardFragment extends Fragment implements DashboardView {
 
     @Override
     public void setName(String name) {
-        fullName.setText(name);
+        if (fullName != null) {
+            fullName.setText(name);
+        }
     }
 
     @Override

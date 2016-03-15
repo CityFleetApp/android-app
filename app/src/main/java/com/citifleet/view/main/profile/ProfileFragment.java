@@ -12,8 +12,8 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
@@ -30,7 +31,7 @@ import com.citifleet.util.CircleTransform;
 import com.citifleet.util.CommonUtils;
 import com.citifleet.util.Constants;
 import com.citifleet.util.PermissionUtil;
-import com.squareup.leakcanary.RefWatcher;
+import com.citifleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -42,13 +43,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
-import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
-
 /**
  * Created by vika on 11.03.16.
  */
-public class ProfileFragment extends Fragment implements ProfilePresenter.ProfileView {
+public class ProfileFragment extends BaseFragment implements ProfilePresenter.ProfileView {
     private static final int REQUEST_CAMERA = 333;
     private static final int SELECT_FILE = 444;
     private static final int REQUEST_PERMISSION_CAMERA = 1;
@@ -103,13 +101,6 @@ public class ProfileFragment extends Fragment implements ProfilePresenter.Profil
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
-        refWatcher.watch(this);
     }
 
     @Override

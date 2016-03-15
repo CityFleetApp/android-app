@@ -2,7 +2,6 @@ package com.citifleet.view.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
-import com.citifleet.view.main.profile.ProfilePresenter;
+import com.citifleet.view.BaseFragment;
 import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.Bind;
@@ -20,7 +19,7 @@ import butterknife.OnClick;
 /**
  * Created by vika on 12.03.16.
  */
-public class MarketPlaceFragment extends Fragment {
+public class MarketPlaceFragment extends BaseFragment {
     @Bind(R.id.title)
     TextView title;
 

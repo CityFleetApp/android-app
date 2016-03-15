@@ -46,6 +46,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textSize">@dimen/bottom_menu_textsize</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:textColor">@drawable/bottom_menu_text_selector</item>
         <item name="fontPath">@string/fontLight</item>
         <item name="android:padding">@dimen/bottom_menu_padding</item>
@@ -87,9 +89,9 @@
         <item name="android:padding">@dimen/add_friends_padding_top</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@drawable/dash_btn_text_selector</item>
+        <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/add_friend_textsize</item>
     </style>
-
     <style name="GreenTextWithLeftIconStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

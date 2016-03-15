@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     android:alpha="0.4"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
                         android:layout_height="@dimen/profile_image_height"
                         android:layout_centerHorizontal="true"
                         android:layout_margin="@dimen/profile_name_padding"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop" />
 
                     <ImageButton
                         android:id="@+id/cameraBtn"
@@ -52,7 +52,7 @@
                         android:layout_marginRight="@dimen/camera_profile_margin"
                         android:background="@drawable/camera_selector"
                         android:elevation="@dimen/direct_btn_elevation"
-                        android:src="@drawable/photo_white"/>
+                        android:src="@drawable/photo_white" />
 
                     <TextView
                         android:id="@+id/profileFullName"
@@ -64,7 +64,7 @@
                         android:textAllCaps="true"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/profile_name_textsize"
-                        tools:ignore="MissingPrefix"/>
+                        tools:ignore="MissingPrefix" />
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -74,76 +74,128 @@
                 style="@style/DashBtnStyle"
                 android:clickable="true"
                 android:drawableLeft="@drawable/home_btn_selector"
-                android:text="@string/home"/>
+                android:text="@string/home" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
 
             <TextView
                 android:id="@+id/profileBtn"
                 style="@style/DashBtnStyle"
                 android:clickable="true"
                 android:drawableLeft="@drawable/profile_btn_selector"
-                android:text="@string/profile"/>
+                android:text="@string/profile" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
 
             <TextView
                 android:id="@+id/postingBtn"
                 style="@style/DashBtnStyle"
                 android:clickable="true"
                 android:drawableLeft="@drawable/posting_btn_selector"
-                android:text="@string/posting"/>
+                android:text="@string/posting" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
 
             <TextView
                 android:id="@+id/earningsBtn"
                 style="@style/DashBtnStyle"
                 android:clickable="true"
                 android:drawableLeft="@drawable/earnings_btn_selector"
-                android:text="@string/earnings"/>
+                android:text="@string/earnings" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
 
             <TextView
                 android:id="@+id/inviteDriverBtn"
                 style="@style/DashBtnStyle"
                 android:clickable="true"
                 android:drawableLeft="@drawable/driver_btn_selector"
-                android:text="@string/invite_a_driver"/>
+                android:text="@string/invite_a_driver" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
 
             <TextView
                 android:id="@+id/chatBtn"
                 style="@style/DashBtnStyle"
                 android:clickable="true"
                 android:drawableLeft="@drawable/chat_btn_selector"
-                android:text="@string/chat"/>
+                android:text="@string/chat" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
 
             <TextView
                 android:id="@+id/benefitsBtn"
                 style="@style/DashBtnStyle"
                 android:clickable="true"
                 android:drawableLeft="@drawable/benefits_btn_selector"
-                android:text="@string/benefits"/>
+                android:text="@string/benefits" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
 
             <TextView
                 android:id="@+id/legalAidBtn"
                 style="@style/DashBtnStyle"
                 android:clickable="true"
                 android:drawableLeft="@drawable/legal_aid_btn_selector"
-                android:text="@string/legal_aid"/>
+                android:text="@string/legal_aid" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
 
             <TextView
                 android:id="@+id/helpBtn"
                 style="@style/DashBtnStyle"
                 android:clickable="true"
                 android:drawableLeft="@drawable/help_btn_selector"
-                android:text="@string/help"/>
+                android:text="@string/help" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
+
             <TextView
                 android:id="@+id/settingsBtn"
                 style="@style/DashBtnStyle"
                 android:clickable="true"
                 android:drawableLeft="@drawable/settings_btn_selector"
-                android:text="@string/settings"/>
+                android:text="@string/settings" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
+
             <TextView
                 android:id="@+id/signOutBtn"
                 style="@style/DashBtnStyle"
                 android:background="@drawable/signout_background_selector"
                 android:clickable="true"
                 android:drawableLeft="@drawable/sign_out_selector"
-                android:text="@string/sign_out"/>
+                android:text="@string/sign_out" />
         </LinearLayout>
 
         <ProgressBar
@@ -151,6 +203,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </RelativeLayout>
 </ScrollView>
