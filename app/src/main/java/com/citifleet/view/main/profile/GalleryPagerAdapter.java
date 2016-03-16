@@ -74,4 +74,8 @@ public class GalleryPagerAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
     }
+
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
 }

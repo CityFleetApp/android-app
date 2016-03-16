@@ -2,6 +2,7 @@ package com.citifleet.view.main.profile;
 
 import android.util.Log;
 
+import com.citifleet.CitiFleetApp;
 import com.citifleet.model.UserImages;
 import com.citifleet.model.UserInfo;
 import com.citifleet.network.NetworkErrorUtil;
@@ -40,7 +41,7 @@ public class ProfilePresenter {
         }
     }
 
-    public void uploadImageForList(int position, String filePath) {
+    public void uploadImageForList(String filePath) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
             File file = new File(filePath);
@@ -53,6 +54,33 @@ public class ProfilePresenter {
         }
     }
 
+    public void deleteImageFromList(int id) {
+        if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
+            Call<Void> call = CitiFleetApp.getInstance().getNetworkManager().getNetworkClient().deletePhoto(id);
+            call.enqueue(deleteImageCallback);
+        } else {
+            view.onNetworkError();
+        }
+    }
+
+    private Callback<Void> deleteImageCallback = new Callback<Void>() {
+        @Override
+        public void onResponse(Call<Void> call, Response<Void> response) {
+            view.stopLoading();
+            if (response.isSuccess()) {
+                view.onDeleteImageSuccess();
+            } else {
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Void> call, Throwable t) {
+            view.stopLoading();
+            view.onFailure(t.getMessage());
+        }
+    };
     Callback<UserInfo> getUserInfoCallback = new Callback<UserInfo>() {
         @Override
         public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
@@ -78,7 +106,7 @@ public class ProfilePresenter {
         public void onResponse(Call<UserImages> call, Response<UserImages> response) {
             view.stopLoading();
             if (response.isSuccess()) {
-                view.updateImageFromList(0, response.body().getFile());
+                view.updateImageFromList(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
@@ -120,7 +148,9 @@ public class ProfilePresenter {
 
         void setUserInfo(UserInfo userInfo);
 
-        void updateImageFromList(int position, String url);
+        void updateImageFromList(UserImages userImages);
+
+        void onDeleteImageSuccess();
 
         void onUserImagesLoaded(List<UserImages> list);
     }

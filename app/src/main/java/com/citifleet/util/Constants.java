@@ -18,4 +18,5 @@ public class Constants {
     public static final int MIN_PASSWORD_LENGTH = 8;
     public static final String IMAGES_LIST_TAG = "images_list";
     public static final String IMAGES_SELECTED_TAG = "images_selected_tag";
+    public static final int DEFAULT_UNSELECTED_POSITION = -1;
 }

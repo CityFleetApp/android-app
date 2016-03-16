@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -20,7 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 /**
@@ -60,7 +62,7 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
     @Bind(R.id.bigProfileImage)
     ImageView bigProfileImage;
     @Bind(R.id.progressBar)
-    ProgressBar progressBar;
+    RelativeLayout progressBar;
     @Bind(R.id.profileFullName)
     TextView fullName;
     @Bind({R.id.star1, R.id.star2, R.id.star3, R.id.star4, R.id.star5})
@@ -85,6 +87,7 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
     List<ImageButton> images;
     private ProfilePresenter presenter;
     private List<UserImages> imagesList;
+    private int positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
 
     @Nullable
     @Override
@@ -134,7 +137,7 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
 
     @Override
     public void updateImage(String url) {
-        if (!TextUtils.isEmpty(url)) {
+        if (!TextUtils.isEmpty(url) && profileImage != null && bigProfileImage != null) {
             int frameSize = getResources().getDimensionPixelSize(R.dimen.profile_image_frame);
             int screenWidth = getResources().getDisplayMetrics().widthPixels;
             TypedValue outValue = new TypedValue();
@@ -160,16 +163,28 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
     }
 
     @Override
-    public void updateImageFromList(int position, String url) {
-        Picasso.with(getContext()).load(url).into(images.get(0));
+    public void updateImageFromList(UserImages userImages) {
+        if (positionToUpdateImage != Constants.DEFAULT_UNSELECTED_POSITION) {
+            Picasso.with(getContext()).load(userImages.getFile()).into(images.get(positionToUpdateImage));
+            imagesList.add(positionToUpdateImage, userImages);
+            positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
+        }
+    }
+
+    @Override
+    public void onDeleteImageSuccess() {
+        imagesList.remove(positionToUpdateImage);
+        onUserImagesLoaded(imagesList);
     }
 
     @Override
     public void onUserImagesLoaded(List<UserImages> list) {
         this.imagesList = list;
-        for (int i = 0; i < list.size(); i++) {
-            if (i < images.size()) {
+        for (int i = 0; i < images.size(); i++) {
+            if (i < imagesList.size()) {
                 Picasso.with(getContext()).load(list.get(i).getThumbnail()).into(images.get(i));
+            } else {
+                images.get(i).setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.painting));
             }
         }
     }
@@ -251,34 +266,68 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
             case SELECT_FILE:
                 if (resultCode == Activity.RESULT_OK) {
                     updateImageOnServer(CommonUtils.getImagePath(data.getData(), getContext()));
+                } else {
+                    positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
                 }
                 break;
             case REQUEST_CAMERA:
                 if (resultCode == Activity.RESULT_OK) {
                     updateImageOnServer(getFileForProfileFromCamera().getAbsolutePath());
+                } else {
+                    positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
                 }
                 break;
         }
     }
 
     private void updateImageOnServer(String filepath) {
-        presenter.uploadImageForList(0, filepath);
+        presenter.uploadImageForList(filepath);
     }
 
     @OnClick({R.id.imageFirst, R.id.imageSecond, R.id.imageThird, R.id.imageFourth, R.id.imageFifth})
     void onImageClick(View view) {
-        int clickedPosition = 0;
+        int clickedPosition = getClickedPosition(view);
+        if (imagesList != null && imagesList.size() > clickedPosition && imagesList.get(clickedPosition) != null) {
+            showGallery(clickedPosition);
+        } else {
+            positionToUpdateImage = clickedPosition;
+            showPickImageDialog();
+        }
+    }
+
+    @OnLongClick({R.id.imageFirst, R.id.imageSecond, R.id.imageThird, R.id.imageFourth, R.id.imageFifth})
+    boolean onLongImageClick(final View view) {
+        final int clickedPosition = getClickedPosition(view);
+        if (imagesList != null && imagesList.size() > clickedPosition && imagesList.get(clickedPosition) != null) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(getString(R.string.delete_dialog_title))
+                    .setMessage(getString(R.string.delete_dialog_message))
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            positionToUpdateImage = clickedPosition;
+                            presenter.deleteImageFromList(imagesList.get(clickedPosition).getId());
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    })
+                    .show();
+            return true;
+        }
+        return false;
+    }
+
+    private int getClickedPosition(View view) {
+        int clickedPosition = Constants.DEFAULT_UNSELECTED_POSITION;
         for (ImageButton imageButton : images) {
             if (imageButton.getId() == view.getId()) {
                 clickedPosition = images.indexOf(imageButton);
                 break;
             }
         }
-        if (imagesList != null && imagesList.size() > clickedPosition && imagesList.get(clickedPosition) != null) {
-            showGallery(clickedPosition);
-        } else {
-            showPickImageDialog();
-        }
+        return clickedPosition;
     }
 
     private void showGallery(int position) {

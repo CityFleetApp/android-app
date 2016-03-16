@@ -74,6 +74,6 @@ public interface NetworkService {
     @GET("users/photos/")
     Call<List<UserImages>> getPhotos();
 
-    @DELETE("users/photos/{id}")
+    @DELETE("users/photos/{id}/")
     Call<Void> deletePhoto(@Path("id") int id);
 }
