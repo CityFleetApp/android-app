@@ -36,6 +36,8 @@ import butterknife.OnClick;
  * Created by vika on 16.03.16.
  */
 public class LegalAidDetailFragment extends BaseFragment implements LegalAidPresenter.LegalAidDetailView {
+    private static final float DISABLED_LAYOUT_ALPHA = 0.5f;
+    private static final float ENABLED_LAYOUT_ALPHA = 1f;
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.personTitle)
@@ -56,6 +58,8 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
     TextView yearsOfExperience;
     @Bind({R.id.star1, R.id.star2, R.id.star3, R.id.star4, R.id.star5})
     List<ImageView> stars;
+    @Bind(R.id.personBtn)
+    RelativeLayout personBtn;
     private LegalAidType type;
     private LegalAidPresenter presenter;
     private List<LegalAidLocation> locations;
@@ -70,7 +74,7 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
         ButterKnife.bind(this, view);
         type = (LegalAidType) getArguments().getSerializable(Constants.LEGAL_AID_TYPE_TAG);
         presenter = new LegalAidPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
-        if(locations==null) {
+        if (locations == null) {
             presenter.loadLocations();
         }
         initLbl();
@@ -89,8 +93,9 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
                 personText.setText(selectedPerson.getName());
                 updatePersonInfo();
             }
-        } else{
+        } else {
             personInfo.setVisibility(View.GONE);
+            personBtn.setAlpha(DISABLED_LAYOUT_ALPHA);
         }
     }
 
@@ -160,6 +165,7 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
                             if (!locations.get(which).equals(selectedLocation)) {
                                 selectedLocation = locations.get(which);
                                 locationText.setText(selectedLocation.getName());
+                                personBtn.setAlpha(ENABLED_LAYOUT_ALPHA);
                                 if (persons != null) {
                                     persons.clear();
                                     personText.setText(getString(R.string.select_person, getPersonNameByType(type)));
@@ -193,13 +199,14 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
                                     selectedPerson = persons.get(which);
                                     personText.setText(selectedPerson.getName());
                                     updatePersonInfo();
+                                    personBtn.setAlpha(ENABLED_LAYOUT_ALPHA);
                                 }
                             }
                         });
                 personDialogBuilder.show();
+            } else {
+                Toast.makeText(getContext(), R.string.other_location, Toast.LENGTH_SHORT).show();
             }
-        } else {
-            //TODO
         }
     }
 

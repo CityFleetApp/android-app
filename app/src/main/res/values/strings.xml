@@ -110,6 +110,7 @@
     <string name="phone">Phone</string>
     <string name="address">Address</string>
     <string name="contact_person">Contact %1$s</string>
+    <string name="other_location">Please select other location</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>
