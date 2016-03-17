@@ -33,6 +33,7 @@
     <string name="google_api_key">AIzaSyD6n3x0DiZuvIh8m5yQJ0NC1tVOrp1KB48</string>
     <string name="report">Report</string>
     <string name="notification">Notification</string>
+    <string name="notifications">Notifications</string>
     <string name="dashboard">Dashboard</string>
     <string name="marketplace">Marketplace</string>
     <string name="report_title">Report</string>
@@ -113,6 +114,8 @@
     <string name="other_location">Please select other location</string>
     <string name="documents_true">All up to date</string>
     <string name="documents_false">Not up to date</string>
+    <string name="all">All</string>
+    <string name="unread">Unread</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

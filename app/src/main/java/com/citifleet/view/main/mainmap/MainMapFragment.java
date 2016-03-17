@@ -28,6 +28,7 @@ import com.citifleet.view.BaseFragment;
 import com.citifleet.view.main.MarketPlaceFragment;
 import com.citifleet.view.main.addfriends.AddFriendsFragment;
 import com.citifleet.view.main.dashboard.DashboardFragment;
+import com.citifleet.view.main.notifications.NotificationsFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -244,7 +245,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     void notificationBtnClick() {
         if (!notificationBtn.isSelected()) {
             selectButton(notificationBtn);
-            //TODO
+            ((BaseActivity) getActivity()).changeFragment(new NotificationsFragment(), true);
         }
     }
 

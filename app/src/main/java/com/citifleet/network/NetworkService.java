@@ -5,6 +5,7 @@ import com.citifleet.model.Benefit;
 import com.citifleet.model.LegalAidLocation;
 import com.citifleet.model.LegalAidPerson;
 import com.citifleet.model.LoginInfo;
+import com.citifleet.model.Notification;
 import com.citifleet.model.ProfileImage;
 import com.citifleet.model.UserImages;
 import com.citifleet.model.UserInfo;
@@ -95,4 +96,9 @@ public interface NetworkService {
     @GET("legalaid/tlc-lawyers/")
     Call<List<LegalAidPerson>> getLegalAidTlcLawyers(@Query("location") int locationId);
 
+    @GET("notifications/")
+    Call<List<Notification>> getNotifications();
+
+    @GET("notifications/{id}/")
+    Call<Notification> getNotificationById(@Path("id") int id);
 }

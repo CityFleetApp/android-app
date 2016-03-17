@@ -91,4 +91,8 @@
     <dimen name="change_password_margin_top">20dp</dimen>
     <dimen name="profile_images_scrollview_padding">10dp</dimen>
     <dimen name="profile_image_divider_width">7dp</dimen>
+    <dimen name="notification_divider_margin">6dp</dimen>
+    <dimen name="notification_button_padding">10dp</dimen>
+    <dimen name="notification_drawable_padding">4dp</dimen>
+    <dimen name="date_text_label">10sp</dimen>
 </resources>
