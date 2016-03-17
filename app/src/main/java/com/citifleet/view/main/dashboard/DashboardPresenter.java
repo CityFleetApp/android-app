@@ -6,7 +6,6 @@ import com.citifleet.model.ProfileImage;
 import com.citifleet.model.UserInfo;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
-import com.citifleet.view.login.LoginPresenter;
 
 import java.io.File;
 
@@ -27,6 +26,7 @@ public class DashboardPresenter {
 
     public void init() {
         if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
             Call<UserInfo> call = networkManager.getNetworkClient().getUserInfo();
             call.enqueue(getUserInfoCallback);
         } else {
@@ -61,7 +61,7 @@ public class DashboardPresenter {
 
         @Override
         public void onFailure(Call<UserInfo> call, Throwable t) {
-            Log.e(LoginPresenter.class.getName(), t.getMessage());
+            Log.e(DashboardPresenter.class.getName(), t.getMessage());
             view.stopLoading();
             view.onFailure(t.getMessage());
         }
@@ -79,7 +79,7 @@ public class DashboardPresenter {
 
         @Override
         public void onFailure(Call<ProfileImage> call, Throwable t) {
-            Log.e(LoginPresenter.class.getName(), t.getMessage());
+            Log.e(DashboardPresenter.class.getName(), t.getMessage());
             view.stopLoading();
             view.onFailure(t.getMessage());
         }

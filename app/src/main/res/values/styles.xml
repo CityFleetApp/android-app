@@ -36,7 +36,7 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:paddingBottom">@dimen/reg_edittext_padding_top</item>
         <item name="android:paddingTop">@dimen/reg_edittext_padding_top</item>
-        <item name="android:textColor">@color/reg_edittext_hintcolor</item>
+        <item name="android:textColor">@color/add_friends_text_color</item>
         <item name="android:textColorHint">@color/reg_edittext_hintcolor</item>
         <item name="android:textSize">@dimen/reg_edittext_lbl_textsize</item>
     </style>

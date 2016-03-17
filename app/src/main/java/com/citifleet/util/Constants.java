@@ -19,4 +19,5 @@ public class Constants {
     public static final String IMAGES_LIST_TAG = "images_list";
     public static final String IMAGES_SELECTED_TAG = "images_selected_tag";
     public static final int DEFAULT_UNSELECTED_POSITION = -1;
+    public static final String LEGAL_AID_TYPE_TAG = "legal_aid_type_tag";
 }

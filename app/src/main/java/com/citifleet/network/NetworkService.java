@@ -2,6 +2,8 @@ package com.citifleet.network;
 
 import com.citifleet.model.AddContactsBody;
 import com.citifleet.model.Benefit;
+import com.citifleet.model.LegalAidLocation;
+import com.citifleet.model.LegalAidPerson;
 import com.citifleet.model.LoginInfo;
 import com.citifleet.model.ProfileImage;
 import com.citifleet.model.UserImages;
@@ -21,6 +23,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface NetworkService {
     @FormUrlEncoded
@@ -76,4 +79,20 @@ public interface NetworkService {
 
     @DELETE("users/photos/{id}/")
     Call<Void> deletePhoto(@Path("id") int id);
+
+    @GET("legalaid/locations/")
+    Call<List<LegalAidLocation>> getLegalAidLocations();
+
+    @GET("legalaid/insurance/")
+    Call<List<LegalAidPerson>> getLegalAidInsurance(@Query("location") int locationId);
+
+    @GET("legalaid/accouting/")
+    Call<List<LegalAidPerson>> getLegalAidAccounting(@Query("location") int locationId);
+
+    @GET("legalaid/dmv-lawyers/")
+    Call<List<LegalAidPerson>> getLegalAidDmvLawyers(@Query("location") int locationId);
+
+    @GET("legalaid/tlc-lawyers/")
+    Call<List<LegalAidPerson>> getLegalAidTlcLawyers(@Query("location") int locationId);
+
 }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/add_friends_color"
+    android:orientation="vertical">
+    <include layout="@layout/toolbar" />
+    <TextView
+        android:id="@+id/phoneTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/add_friends_color"
+        android:paddingBottom="@dimen/add_friends_padding_top_lbl"
+        android:paddingLeft="@dimen/add_friends_padding_left"
+        android:paddingTop="@dimen/add_friends_padding_top_lbl"
+        android:text="@string/phone"
+        android:textAllCaps="true"
+        android:textColor="@color/add_friend_lbl_color"
+        android:textSize="@dimen/add_friends_text_size_lbl" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor" />
+
+    <LinearLayout
+        android:id="@+id/phoneBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:padding="@dimen/reg_edittext_padding">
+
+        <TextView
+            style="@style/RegistrationEdittextLabelStyle"
+            android:drawableLeft="@drawable/phone_selector"
+            android:text="@string/phone" />
+
+        <TextView
+            android:id="@+id/phoneLbl"
+            style="@style/RegistrationEdittextStyle"
+            android:text="1234" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor" />
+
+    <TextView
+        android:id="@+id/addressTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:paddingBottom="@dimen/add_friends_padding_top_lbl"
+        android:paddingLeft="@dimen/add_friends_padding_left"
+        android:paddingTop="@dimen/add_friends_padding_top_lbl"
+        android:text="@string/address"
+        android:textAllCaps="true"
+        android:textColor="@color/add_friend_lbl_color"
+        android:textSize="@dimen/add_friends_text_size_lbl" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor" />
+
+    <LinearLayout
+        android:id="@+id/addressBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/reg_edittext_padding">
+
+        <TextView
+            style="@style/RegistrationEdittextLabelStyle"
+            android:drawableLeft="@drawable/location_selector"
+            android:text="@string/address" />
+
+        <TextView
+            android:id="@+id/addressLbl"
+            style="@style/RegistrationEdittextStyle"
+            android:text="Address" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor" />
+</LinearLayout>

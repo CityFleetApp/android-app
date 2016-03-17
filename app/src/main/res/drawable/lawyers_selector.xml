@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/lawyer_selected" android:state_selected="true"/>
+    <item android:drawable="@drawable/lawyer_selected" android:state_focused="true"/>
+    <item android:drawable="@drawable/lawyer_selected" android:state_pressed="true"/>
+    <item>
+        <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+            <item>
+                <shape android:shape="rectangle">
+                    <padding
+                        android:bottom="@dimen/dash_icon_padding"
+                        android:left="@dimen/dash_icon_padding"
+                        android:right="@dimen/dash_icon_padding"
+                        android:top="@dimen/dash_icon_padding"/>
+                    <solid android:color="@android:color/transparent"/>
+                    <corners
+                        android:radius="@dimen/dash_icon_radius"/>
+                </shape>
+            </item>
+            <item android:drawable="@drawable/femida"/>
+        </layer-list>
+    </item>
+</selector>

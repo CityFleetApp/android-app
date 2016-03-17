@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:id="@+id/locationBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/reg_edittext_padding">
+
+                <TextView
+                    android:id="@+id/locationTitle"
+                    style="@style/RegistrationEdittextLabelStyle"
+                    android:drawableLeft="@drawable/location_selector"
+                    android:text="@string/location" />
+
+                <TextView
+                    android:id="@+id/locationText"
+                    style="@style/RegistrationEdittextStyle"
+                    fontPath="@string/fontLight"
+                    android:layout_below="@+id/locationTitle"
+                    android:layout_toLeftOf="@+id/arrowLocation"
+                    android:text="@string/select_location"
+                    tools:ignore="MissingPrefix" />
+
+                <ImageView
+                    android:id="@+id/arrowLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_down" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
+
+            <RelativeLayout
+                android:id="@+id/personBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/reg_edittext_padding">
+
+                <TextView
+                    android:id="@+id/personTitle"
+                    style="@style/RegistrationEdittextLabelStyle"
+                    android:drawableLeft="@drawable/lawyers_selector"
+                    android:text="@string/lawyer" />
+
+                <TextView
+                    android:id="@+id/personText"
+                    style="@style/RegistrationEdittextStyle"
+                    fontPath="@string/fontLight"
+                    android:layout_below="@+id/personTitle"
+                    android:layout_toLeftOf="@+id/arrowPerson"
+                    android:text="@string/select_person" />
+
+                <ImageView
+                    android:id="@+id/arrowPerson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_down" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
+
+            <LinearLayout
+                android:id="@+id/personInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/add_friends_color"
+                    android:paddingBottom="@dimen/add_friends_padding_top_lbl"
+                    android:paddingLeft="@dimen/add_friends_padding_left"
+                    android:paddingTop="@dimen/add_friends_padding_top_lbl"
+                    android:text="@string/lawyer_s_info"
+                    android:textAllCaps="true"
+                    android:textColor="@color/add_friend_lbl_color"
+                    android:textSize="@dimen/add_friends_text_size_lbl" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
+
+                    <TextView
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/user"
+                        android:text="@string/name" />
+
+                    <TextView
+                        android:id="@+id/nameLbl"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:text="@string/enter_name" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
+
+                    <TextView
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/calendar"
+                        android:text="@string/years_of_experience" />
+
+                    <TextView
+                        android:id="@+id/yearsOfExperienceLbl"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:text="@string/enter_years_of_experience" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
+
+                    <TextView
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/star_green"
+                        android:text="@string/rating_lbl" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profileFullName"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/star_margin_top"
+                        android:divider="@drawable/empty_tall_divider"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:showDividers="middle">
+
+                        <ImageView
+                            android:id="@+id/star1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/star_background" />
+
+                        <ImageView
+                            android:id="@+id/star2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/star_background" />
+
+                        <ImageView
+                            android:id="@+id/star3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/star_background" />
+
+                        <ImageView
+                            android:id="@+id/star4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/star_background" />
+
+                        <ImageView
+                            android:id="@+id/star5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/star_background" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
+
+                <Button
+                    android:id="@+id/contactBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/password"
+                    android:layout_marginBottom="@dimen/reg_edittext_padding"
+                    android:layout_marginLeft="@dimen/splash_btn_margin_small"
+                    android:layout_marginRight="@dimen/splash_btn_margin_small"
+                    android:layout_marginTop="@dimen/reg_edittext_padding"
+                    android:background="@drawable/red_btn_selector"
+                    android:text="@string/contact_person"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
