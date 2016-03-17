@@ -159,7 +159,16 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
         fullName.setText(userInfo.getUsername());
         bio.setText(userInfo.getBio());
         drives.setText(userInfo.getDrives());
-        //TODO
+        jobsCompleted.setText(String.valueOf(userInfo.getJobsCompleted()));
+        documents.setText(getString(userInfo.isDocumentsUpToDate() ? R.string.documents_true : R.string.documents_false));
+        int rating = userInfo.getRating();
+        ratingText.setText(getString(R.string.rating, rating));
+        for (int i = 0; i < rating; i++) {
+            stars.get(i).setSelected(true);
+        }
+        for (int i = rating; i < stars.size(); i++) {
+            stars.get(i).setSelected(false);
+        }
     }
 
     @Override

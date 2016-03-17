@@ -14,6 +14,11 @@ public class UserInfo {
     private String drives;
     @SerializedName("avatar_url")
     private String avatarUrl;
+    @SerializedName("documents_up_to_date")
+    private boolean documentsUpToDate;
+    @SerializedName("jobs_completed")
+    private String jobsCompleted;
+    private int rating;
 
     public String getEmail() {
         return email;
@@ -77,5 +82,29 @@ public class UserInfo {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public boolean isDocumentsUpToDate() {
+        return documentsUpToDate;
+    }
+
+    public void setDocumentsUpToDate(boolean documentsUpToDate) {
+        this.documentsUpToDate = documentsUpToDate;
+    }
+
+    public String getJobsCompleted() {
+        return jobsCompleted;
+    }
+
+    public void setJobsCompleted(String jobsCompleted) {
+        this.jobsCompleted = jobsCompleted;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }
