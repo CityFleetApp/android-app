@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:padding="@dimen/reg_edittext_padding">
+
+            <TextView
+                android:id="@+id/notificationTitle"
+                style="@style/RegistrationEdittextLabelStyle"
+                android:drawableLeft="@drawable/bell"
+                android:text="Title" />
+
+            <TextView
+                android:id="@+id/notificationMessage"
+                style="@style/RegistrationEdittextStyle"
+                fontPath="@string/fontLight"
+                android:layout_below="@+id/notificationTitle"
+                android:layout_toLeftOf="@+id/arrowLocation"
+                android:singleLine="true"
+                android:text="Title"
+                tools:ignore="MissingPrefix" />
+
+            <TextView
+                android:id="@+id/date"
+                fontPath="@string/fontLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/notificationTitle"
+                android:layout_toRightOf="@+id/notificationTitle"
+                android:drawableLeft="@drawable/calendar_small"
+                android:drawablePadding="@dimen/notification_drawable_padding"
+                android:paddingLeft="@dimen/reg_edittext_drawable_padding"
+                android:text="10/17/2912"
+                android:textColor="@color/date_text_color"
+                android:textSize="@dimen/date_text_label"
+                tools:ignore="MissingPrefix" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

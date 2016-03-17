@@ -2,6 +2,7 @@ package com.citifleet.view.main.notifications;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,8 +15,12 @@ import android.widget.Toast;
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.Notification;
+import com.citifleet.util.Constants;
 import com.citifleet.util.DividerItemDecoration;
+import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -26,7 +31,7 @@ import butterknife.OnClick;
 /**
  * Created by vika on 17.03.16.
  */
-public class NotificationsFragment extends BaseFragment implements NotificationPresenter.NotificationsView {
+public class NotificationsFragment extends BaseFragment implements NotificationPresenter.NotificationsView, NotificationsListAdapter.OnItemClickListener {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.notificationsListView)
@@ -45,7 +50,7 @@ public class NotificationsFragment extends BaseFragment implements NotificationP
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         notificationsListView.setLayoutManager(layoutManager);
-        adapter = new NotificationsListAdapter();
+        adapter = new NotificationsListAdapter(this);
         notificationsListView.setAdapter(adapter);
         notificationsListView.addItemDecoration(new DividerItemDecoration(getActivity()));
         presenter = new NotificationPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
@@ -104,5 +109,15 @@ public class NotificationsFragment extends BaseFragment implements NotificationP
     public void onNotificationsLoaded(List<Notification> notifications) {
         adapter.setNotifications(notifications);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(Notification item) {
+        presenter.setNotificationIsSeen(item.getId());
+        Fragment fragment = new NotificationDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.SELECTED_NOTIFICATION_TAG, Parcels.wrap(item));
+        fragment.setArguments(bundle);
+        ((BaseActivity) getActivity()).changeFragment(fragment, true);
     }
 }

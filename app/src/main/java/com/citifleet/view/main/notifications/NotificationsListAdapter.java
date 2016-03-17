@@ -20,14 +20,23 @@ import butterknife.ButterKnife;
  */
 public class NotificationsListAdapter extends RecyclerView.Adapter<NotificationsListAdapter.ViewHolder> {
     private List<Notification> notifications = new ArrayList<Notification>();
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(Notification item);
+    }
+
+    public NotificationsListAdapter(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.notificationTitle)
-        TextView notificationTitle;
+        @Bind(R.id.notificationType)
+        TextView notificationType;
         @Bind(R.id.date)
         TextView date;
-        @Bind(R.id.notificationMessage)
-        TextView notificationMessage;
+        @Bind(R.id.notificationTitle)
+        TextView notificationTitle;
 
         public ViewHolder(View v) {
             super(v);
@@ -54,10 +63,16 @@ public class NotificationsListAdapter extends RecyclerView.Adapter<Notifications
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Notification notification = notifications.get(position);
-        holder.notificationTitle.setText(notification.getTitle());
+        final Notification notification = notifications.get(position);
+        holder.notificationType.setText(notification.getType());
         holder.date.setText(notification.getCreated());
-        holder.notificationMessage.setText(notification.getMessage());
+        holder.notificationTitle.setText(notification.getTitle());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(notification);
+            }
+        });
     }
 
     @Override

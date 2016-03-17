@@ -9,27 +9,27 @@
     android:padding="@dimen/reg_edittext_padding">
 
     <TextView
-        android:id="@+id/notificationTitle"
+        android:id="@+id/notificationType"
         style="@style/RegistrationEdittextLabelStyle"
         android:drawableLeft="@drawable/bell"
-        android:text="Title" />
+        android:text="Type" />
 
     <TextView
-        android:id="@+id/notificationMessage"
+        android:id="@+id/notificationTitle"
         style="@style/RegistrationEdittextStyle"
         fontPath="@string/fontLight"
-        android:layout_below="@+id/notificationTitle"
+        android:layout_below="@+id/notificationType"
         android:layout_toLeftOf="@+id/arrowLocation"
         android:singleLine="true"
-        android:text="Message"
+        android:text="Title"
         tools:ignore="MissingPrefix" />
 
     <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/notificationTitle"
-        android:layout_toRightOf="@+id/notificationTitle"
+        android:layout_alignBaseline="@+id/notificationType"
+        android:layout_toRightOf="@+id/notificationType"
         android:drawableLeft="@drawable/calendar_small"
         fontPath = "@string/fontLight"
         android:drawablePadding="@dimen/notification_drawable_padding"

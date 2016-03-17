@@ -21,4 +21,5 @@ public class Constants {
     public static final int DEFAULT_UNSELECTED_POSITION = -1;
     public static final String LEGAL_AID_TYPE_TAG = "legal_aid_type_tag";
     public static final String SELECTED_PERSON_TAG = "selected_person_tag";
+    public static final String SELECTED_NOTIFICATION_TAG = "selected_notification_tag";
 }
