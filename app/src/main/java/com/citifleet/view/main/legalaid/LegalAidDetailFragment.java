@@ -21,7 +21,10 @@ import com.citifleet.model.LegalAidLocation;
 import com.citifleet.model.LegalAidPerson;
 import com.citifleet.util.Constants;
 import com.citifleet.util.LegalAidType;
+import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -62,15 +65,15 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
 
     @Nullable
     @Override
-
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.legalaid_detail_fragment, container, false);
         ButterKnife.bind(this, view);
         type = (LegalAidType) getArguments().getSerializable(Constants.LEGAL_AID_TYPE_TAG);
         presenter = new LegalAidPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
-        presenter.loadLocations();
+        if(locations==null) {
+            presenter.loadLocations();
+        }
         initLbl();
-        personInfo.setVisibility(View.GONE);
         return view;
     }
 
@@ -80,6 +83,15 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
         personTitle.setText(personType);
         personText.setText(getString(R.string.select_person, personType));
         contactBtn.setText(getString(R.string.contact_person, personType));
+        if (selectedLocation != null) {
+            locationText.setText(selectedLocation.getName());
+            if (selectedPerson != null) {
+                personText.setText(selectedPerson.getName());
+                updatePersonInfo();
+            }
+        } else{
+            personInfo.setVisibility(View.GONE);
+        }
     }
 
     private String getTitleTextByType(LegalAidType type) {
@@ -107,6 +119,17 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
                 return getString(R.string.broker);
         }
         return "";
+    }
+
+    @OnClick(R.id.contactBtn)
+    void onContactBtnClick() {
+        if (selectedPerson != null) {
+            LegalAidContactFragment contactFragment = new LegalAidContactFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(Constants.SELECTED_PERSON_TAG, Parcels.wrap(selectedPerson));
+            contactFragment.setArguments(bundle);
+            ((BaseActivity) getActivity()).changeFragment(contactFragment, true);
+        }
     }
 
     @OnClick(R.id.backBtn)

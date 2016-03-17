@@ -2,9 +2,12 @@ package com.citifleet.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by vika on 16.03.16.
  */
+@Parcel
 public class LegalAidPerson {
     private String name;
     @SerializedName("years_of_experience")
