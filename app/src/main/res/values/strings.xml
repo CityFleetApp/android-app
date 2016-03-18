@@ -140,6 +140,28 @@
     <string name="price">Price</string>
     <string name="descr">Description</string>
     <string name="provide_description">Provide Description</string>
+    <string name="item">Item</string>
+    <string name="enter_item">Enter Item</string>
+    <string name="asking_price">Asking Price</string>
+    <string name="enter_asking_price">Enter Asking Price</string>
+    <string name="condition">Condition</string>
+    <string name="select_condition">Select Condition</string>
+    <string name="date">Date</string>
+    <string name="enter_date">Enter Date</string>
+    <string name="time">Time</string>
+    <string name="enter_time">Enter Time</string>
+    <string name="pickup_address">Pickup Address</string>
+    <string name="enter_pickup_address">Enter Pickup Address</string>
+    <string name="destination">Destination</string>
+    <string name="enter_destination">Enter Destination</string>
+    <string name="fare">Fare</string>
+    <string name="enter_fare">Enter Fare</string>
+    <string name="gratuity">Gratuity</string>
+    <string name="enter_gratuity">Enter Gratuity</string>
+    <string name="vehicle_type">Vehicle Type</string>
+    <string name="select_vehicle_type">Select Vehicle Type</string>
+    <string name="suite_tie">Suite/Tie</string>
+    <string name="select_suite_tie">Select Suite/Tie</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

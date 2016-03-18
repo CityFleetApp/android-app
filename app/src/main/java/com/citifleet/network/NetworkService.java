@@ -8,6 +8,7 @@ import com.citifleet.model.LegalAidPerson;
 import com.citifleet.model.LoginInfo;
 import com.citifleet.model.Notification;
 import com.citifleet.model.ProfileImage;
+import com.citifleet.model.Settings;
 import com.citifleet.model.UserImages;
 import com.citifleet.model.UserInfo;
 
@@ -21,6 +22,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
@@ -109,4 +111,10 @@ public interface NetworkService {
     @DELETE("documents/{id}/")
     Call<Void> deleteDocument(@Path("id") int id);
 
+    @GET("users/settings/")
+    Call<Settings> getSettings();
+
+    @FormUrlEncoded
+    @PATCH("users/settings/")
+    Call<Settings> changeSettings(@Field("notifications_enabled") boolean notificationsEnabled, @Field("chat_privacy") boolean chatPrivacy, @Field("visible") boolean visible);
 }

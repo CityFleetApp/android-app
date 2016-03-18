@@ -8,14 +8,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.Constants;
 import com.citifleet.util.PermissionUtil;
@@ -30,7 +34,7 @@ import butterknife.OnClick;
 /**
  * Created by vika on 14.03.16.
  */
-public class SettingsFragment extends BaseFragment {
+public class SettingsFragment extends BaseFragment implements SettingsPresenter.SettingsView {
     private final static int REQUEST_PERMISSION_SETTINGS = 1;
     @Bind(R.id.title)
     TextView title;
@@ -38,7 +42,16 @@ public class SettingsFragment extends BaseFragment {
     SeekBar brightnessSeekbar;
     @Bind(R.id.displayLbl)
     TextView displayLbl;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
+    @Bind(R.id.statusVisibleSwitch)
+    SwitchCompat statusVisibleSwitch;
+    @Bind(R.id.notificationSwitch)
+    SwitchCompat notificationSwitch;
+    @Bind(R.id.chatPrivacySwitch)
+    SwitchCompat chatPrivacySwitch;
     private int brightness;
+    private SettingsPresenter presenter;
 
     @Nullable
     @Override
@@ -47,6 +60,8 @@ public class SettingsFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         title.setText(getString(R.string.profile));
         setupSeekbar();
+        presenter = new SettingsPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
+        presenter.loadSettings();
         return view;
     }
 
@@ -122,17 +137,17 @@ public class SettingsFragment extends BaseFragment {
 
     @OnCheckedChanged(R.id.statusVisibleSwitch)
     void onCheckedStatusChange(boolean checked) {
-
+        presenter.changeStatusVisible(checked);
     }
 
     @OnCheckedChanged(R.id.notificationSwitch)
     void onCheckedNotificationChange(boolean checked) {
-
+        presenter.changeNotificationsEnabled(checked);
     }
 
     @OnCheckedChanged(R.id.chatPrivacySwitch)
     void onChatPrivacyChange(boolean checked) {
-
+        presenter.changeChatPrivacy(checked);
     }
 
     @Override
@@ -148,5 +163,40 @@ public class SettingsFragment extends BaseFragment {
                 changeBrightness();
             }
         }
+    }
+
+    @Override
+    public void setLoading(boolean isLoading) {
+    //    progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onFailure(String error) {
+        if (getActivity() != null) {
+            if (error == null) {
+                error = getResources().getString(R.string.default_error_mes);
+            }
+            Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onNetworkError() {
+        Toast.makeText(getActivity(), getString(R.string.networkMesMoInternet), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void setStatusVisible(boolean visible) {
+        statusVisibleSwitch.setChecked(visible);
+    }
+
+    @Override
+    public void setNotificationsEnabled(boolean enabled) {
+        notificationSwitch.setChecked(enabled);
+    }
+
+    @Override
+    public void setChatPrivacy(boolean chatPrivacy) {
+        chatPrivacySwitch.setChecked(chatPrivacy);
     }
 }

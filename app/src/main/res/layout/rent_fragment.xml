@@ -32,6 +32,7 @@
                     android:text="@string/make" />
 
                 <TextView
+                    android:id="@+id/makeText"
                     style="@style/RegistrationEdittextStyle"
                     fontPath="@string/fontLight"
                     android:layout_below="@+id/makeTitle"
@@ -67,6 +68,7 @@
                     android:text="@string/model" />
 
                 <TextView
+                    android:id="@+id/modelText"
                     style="@style/RegistrationEdittextStyle"
                     fontPath="@string/fontLight"
                     android:layout_below="@+id/modelTitle"
@@ -102,6 +104,7 @@
                     android:text="@string/type" />
 
                 <TextView
+                    android:id="@+id/typeText"
                     style="@style/RegistrationEdittextStyle"
                     fontPath="@string/fontLight"
                     android:layout_below="@+id/typeTitle"
@@ -138,6 +141,7 @@
                     android:text="@string/color" />
 
                 <TextView
+                    android:id="@+id/colorText"
                     style="@style/RegistrationEdittextStyle"
                     fontPath="@string/fontLight"
                     android:layout_below="@+id/colorTitle"
@@ -173,6 +177,7 @@
                     android:text="@string/year" />
 
                 <TextView
+                    android:id="@+id/yearText"
                     style="@style/RegistrationEdittextStyle"
                     fontPath="@string/fontLight"
                     android:layout_below="@+id/yearTitle"
@@ -208,6 +213,7 @@
                     android:text="@string/fuel" />
 
                 <TextView
+                    android:id="@+id/fuelText"
                     style="@style/RegistrationEdittextStyle"
                     fontPath="@string/fontLight"
                     android:layout_below="@+id/fuelTitle"
@@ -243,6 +249,7 @@
                     android:text="@string/seats" />
 
                 <TextView
+                    android:id="@+id/seatsText"
                     style="@style/RegistrationEdittextStyle"
                     fontPath="@string/fontLight"
                     android:layout_below="@+id/seatsTitle"
@@ -278,6 +285,7 @@
                     android:text="@string/price" />
 
                 <TextView
+                    android:id="@+id/priceText"
                     style="@style/RegistrationEdittextStyle"
                     fontPath="@string/fontLight"
                     android:layout_below="@+id/priceTitle"

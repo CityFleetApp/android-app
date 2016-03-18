@@ -5,250 +5,276 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/toolbarColor"
             android:orientation="vertical">
 
-            <app:android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark">
+                android:background="@color/toolbarColor"
+                android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/backBtn"
-                    android:layout_width="wrap_content"
+                <app:android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:background="@android:color/transparent"
-                    android:paddingBottom="@dimen/toolbar_back_padding"
-                    android:paddingRight="@dimen/toolbar_back_padding"
-                    android:paddingTop="@dimen/toolbar_back_padding"
-                    android:src="@drawable/back" />
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+                    <ImageButton
+                        android:id="@+id/backBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:background="@android:color/transparent"
+                        android:paddingBottom="@dimen/toolbar_back_padding"
+                        android:paddingRight="@dimen/toolbar_back_padding"
+                        android:paddingTop="@dimen/toolbar_back_padding"
+                        android:src="@drawable/back" />
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/reg_edittext_lbl_textsize" />
+
+                </app:android.support.v7.widget.Toolbar>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+                </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/title"
+                    android:id="@+id/displayLbl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/reg_edittext_lbl_textsize" />
+                    android:layout_marginBottom="@dimen/settings_seekbar_margin_bottom"
+                    android:layout_marginLeft="@dimen/settings_seekbar_marginleft"
+                    android:layout_marginTop="@dimen/settings_seekbar_margin_top"
+                    android:drawableLeft="@drawable/sun"
+                    android:drawablePadding="@dimen/bottom_menu_drawable_padding"
+                    android:text="@string/display"
+                    android:textColor="@color/green_color_text" />
 
-            </app:android.support.v7.widget.Toolbar>
+                <SeekBar
+                    android:id="@+id/brightnessSeekbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/settings_seekbar_marginleft"
+                    android:layout_marginLeft="@dimen/settings_seekbar_marginleft"
+                    android:layout_marginRight="@dimen/settings_seekbar_marginleft"
+                    android:max="255" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/displayLbl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/settings_seekbar_margin_bottom"
-                android:layout_marginLeft="@dimen/settings_seekbar_marginleft"
-                android:layout_marginTop="@dimen/settings_seekbar_margin_top"
-                android:drawableLeft="@drawable/sun"
-                android:drawablePadding="@dimen/bottom_menu_drawable_padding"
-                android:text="@string/display"
-                android:textColor="@color/green_color_text" />
 
-            <SeekBar
-                android:id="@+id/brightnessSeekbar"
+            <RelativeLayout
+                android:id="@+id/profileBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/settings_seekbar_marginleft"
-                android:layout_marginLeft="@dimen/settings_seekbar_marginleft"
-                android:layout_marginRight="@dimen/settings_seekbar_marginleft"
-                android:max="255" />
+                android:clickable="true">
+
+                <TextView
+                    style="@style/DashBtnStyle"
+                    android:drawableLeft="@drawable/profile_btn_selector"
+                    android:text="@string/profile"
+                    android:textAllCaps="false" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/add_friends_padding_left"
+                    android:src="@drawable/add" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
+
+            <RelativeLayout
+                android:id="@+id/changePasswordBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true">
+
+                <TextView
+                    style="@style/DashBtnStyle"
+                    android:drawableLeft="@drawable/password_selector"
+                    android:text="@string/change_password"
+                    android:textAllCaps="false" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/add_friends_padding_left"
+                    android:src="@drawable/add" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
+
+            <RelativeLayout
+                android:id="@+id/statusVisibleBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/DashBtnStyle"
+                    android:drawableLeft="@drawable/siren"
+                    android:text="@string/status_visible_invisible"
+                    android:textAllCaps="false" />
+
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/statusVisibleSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:checked="true"
+                    android:paddingRight="@dimen/add_friends_padding_left" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
+
+            <RelativeLayout
+                android:id="@+id/notificationBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/DashBtnStyle"
+                    android:drawableLeft="@drawable/bell"
+                    android:text="@string/notification"
+                    android:textAllCaps="false" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/notificationSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:checked="true"
+                    android:paddingRight="@dimen/add_friends_padding_left" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
+
+            <RelativeLayout
+                android:id="@+id/displayBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true">
+
+                <TextView
+                    style="@style/DashBtnStyle"
+                    android:drawableLeft="@drawable/display_btn_selector"
+                    android:text="@string/display"
+                    android:textAllCaps="false" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/add_friends_padding_left"
+                    android:src="@drawable/add" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
+
+            <RelativeLayout
+                android:id="@+id/chatPrivacyBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/DashBtnStyle"
+                    android:drawableLeft="@drawable/chat"
+                    android:text="@string/chat_privacy"
+                    android:textAllCaps="false" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/chatPrivacySwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:checked="true"
+                    android:paddingRight="@dimen/add_friends_padding_left" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
+
+            <RelativeLayout
+                android:id="@+id/helpFaqBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true">
+
+                <TextView
+                    style="@style/DashBtnStyle"
+                    android:drawableLeft="@drawable/help_fax_btn_selector"
+                    android:text="@string/help_faq"
+                    android:textAllCaps="false" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/add_friends_padding_left"
+                    android:src="@drawable/add" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/lineColor" />
+
         </LinearLayout>
 
-
-        <RelativeLayout
-            android:id="@+id/profileBtn"
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true">
-
-            <TextView
-                style="@style/DashBtnStyle"
-                android:drawableLeft="@drawable/profile_btn_selector"
-                android:text="@string/profile"
-                android:textAllCaps="false" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingRight="@dimen/add_friends_padding_left"
-                android:src="@drawable/add" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@color/lineColor" />
-
-        <RelativeLayout
-            android:id="@+id/changePasswordBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true">
-
-            <TextView
-                style="@style/DashBtnStyle"
-                android:drawableLeft="@drawable/password_selector"
-                android:text="@string/change_password"
-                android:textAllCaps="false" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingRight="@dimen/add_friends_padding_left"
-                android:src="@drawable/add" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@color/lineColor" />
-
-        <RelativeLayout
-            android:id="@+id/statusVisibleBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/DashBtnStyle"
-                android:drawableLeft="@drawable/siren"
-                android:text="@string/status_visible_invisible"
-                android:textAllCaps="false" />
-
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/statusVisibleSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:checked="true"
-                android:paddingRight="@dimen/add_friends_padding_left" />
-
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@color/lineColor" />
-
-        <RelativeLayout
-            android:id="@+id/notificationBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/DashBtnStyle"
-                android:drawableLeft="@drawable/bell"
-                android:text="@string/notification"
-                android:textAllCaps="false" />
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/notificationSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:checked="true"
-                android:paddingRight="@dimen/add_friends_padding_left" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@color/lineColor" />
-
-        <RelativeLayout
-            android:id="@+id/displayBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true">
-
-            <TextView
-                style="@style/DashBtnStyle"
-                android:drawableLeft="@drawable/display_btn_selector"
-                android:text="@string/display"
-                android:textAllCaps="false" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingRight="@dimen/add_friends_padding_left"
-                android:src="@drawable/add" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@color/lineColor" />
-
-        <RelativeLayout
-            android:id="@+id/chatPrivacyBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/DashBtnStyle"
-                android:drawableLeft="@drawable/chat"
-                android:text="@string/chat_privacy"
-                android:textAllCaps="false" />
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/chatPrivacySwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:checked="true"
-                android:paddingRight="@dimen/add_friends_padding_left" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@color/lineColor" />
-
-        <RelativeLayout
-            android:id="@+id/helpFaqBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true">
-
-            <TextView
-                style="@style/DashBtnStyle"
-                android:drawableLeft="@drawable/help_fax_btn_selector"
-                android:text="@string/help_faq"
-                android:textAllCaps="false" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingRight="@dimen/add_friends_padding_left"
-                android:src="@drawable/add" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@color/lineColor" />
-    </LinearLayout>
+            android:visibility="gone"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 </ScrollView>

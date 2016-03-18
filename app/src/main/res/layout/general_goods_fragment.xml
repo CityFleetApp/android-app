@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/reg_edittext_padding">
+
+                <TextView
+                    android:id="@+id/itemTitle"
+                    style="@style/RegistrationEdittextLabelStyle"
+                    android:drawableLeft="@drawable/edit"
+                    android:text="@string/item" />
+
+                <EditText
+                    android:id="@+id/itemET"
+                    style="@style/RegistrationEdittextStyle"
+                    fontPath="@string/fontLight"
+                    android:layout_below="@+id/itemTitle"
+                    android:hint="@string/enter_item"
+                    android:inputType="text"
+                    tools:ignore="MissingPrefix" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/reg_edittext_padding">
+
+                <TextView
+                    android:id="@+id/priceTitle"
+                    style="@style/RegistrationEdittextLabelStyle"
+                    android:drawableLeft="@drawable/money"
+                    android:text="@string/asking_price" />
+
+                <EditText
+                    android:id="@+id/priceET"
+                    style="@style/RegistrationEdittextStyle"
+                    fontPath="@string/fontLight"
+                    android:layout_below="@+id/priceTitle"
+                    android:hint="@string/enter_asking_price"
+                    android:inputType="text"
+                    tools:ignore="MissingPrefix" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
+
+            <RelativeLayout
+                android:id="@+id/conditionBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/reg_edittext_padding">
+
+                <TextView
+                    android:id="@+id/conditionTitle"
+                    style="@style/RegistrationEdittextLabelStyle"
+                    android:drawableLeft="@drawable/shield"
+                    android:text="@string/condition" />
+
+                <TextView
+                    android:id="@+id/conditionText"
+                    style="@style/RegistrationEdittextStyle"
+                    fontPath="@string/fontLight"
+                    android:layout_below="@+id/conditionTitle"
+                    android:layout_toLeftOf="@+id/arrowCondition"
+                    android:text="@string/select_condition"
+                    tools:ignore="MissingPrefix" />
+
+                <ImageView
+                    android:id="@+id/arrowCondition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_down" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/reg_edittext_padding">
+
+                <TextView
+                    android:id="@+id/descrTitle"
+                    style="@style/RegistrationEdittextLabelStyle"
+                    android:drawableLeft="@drawable/edit"
+                    android:text="@string/descr" />
+
+                <EditText
+                    android:id="@+id/descrET"
+                    style="@style/RegistrationEdittextStyle"
+                    fontPath="@string/fontLight"
+                    android:layout_below="@+id/descrTitle"
+                    android:hint="@string/provide_description"
+                    android:inputType="text"
+                    tools:ignore="MissingPrefix" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
+
+            <include layout="@layout/photos_list_picker" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
