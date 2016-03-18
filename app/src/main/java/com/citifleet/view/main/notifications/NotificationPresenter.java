@@ -39,7 +39,7 @@ public class NotificationPresenter {
     }
 
     public void setNotificationIsSeen(int id) {
-        Call<Notification> call = networkManager.getNetworkClient().getNotificationById(id);
+        Call<Void> call = networkManager.getNetworkClient().getNotificationById(id);
         call.enqueue(markSeenNotificationCallback);
     }
 
@@ -57,7 +57,7 @@ public class NotificationPresenter {
                     unreadNotifications.add(n);
                 }
             }
-            view.onNotificationsLoaded(notifications);
+            view.onNotificationsLoaded(unreadNotifications);
         }
     }
 
@@ -80,16 +80,16 @@ public class NotificationPresenter {
             view.onFailure(t.getMessage());
         }
     };
-    Callback<Notification> markSeenNotificationCallback = new Callback<Notification>() {
+    Callback<Void> markSeenNotificationCallback = new Callback<Void>() {
         @Override
-        public void onResponse(Call<Notification> call, Response<Notification> response) {
+        public void onResponse(Call<Void> call, Response<Void> response) {
             if (!response.isSuccess()) {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
         }
 
         @Override
-        public void onFailure(Call<Notification> call, Throwable t) {
+        public void onFailure(Call<Void> call, Throwable t) {
             Log.e(NotificationPresenter.class.getName(), t.getMessage());
         }
     };

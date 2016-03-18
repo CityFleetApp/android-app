@@ -38,6 +38,10 @@ public class NotificationsFragment extends BaseFragment implements NotificationP
     RecyclerView notificationsListView;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
+    @Bind(R.id.allBtnLbl)
+    TextView allBtnLbl;
+    @Bind(R.id.unreadBtnLbl)
+    TextView unreadBtnLbl;
     private NotificationPresenter presenter;
     private NotificationsListAdapter adapter;
 
@@ -55,6 +59,7 @@ public class NotificationsFragment extends BaseFragment implements NotificationP
         notificationsListView.addItemDecoration(new DividerItemDecoration(getActivity()));
         presenter = new NotificationPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
         presenter.loadNotifications();
+        toggleSelectionOfFilters(true);
         return view;
     }
 
@@ -73,11 +78,18 @@ public class NotificationsFragment extends BaseFragment implements NotificationP
     @OnClick(R.id.allBtn)
     void onAllBtnClick() {
         presenter.onAllNotificationsBtnClicked();
+        toggleSelectionOfFilters(true);
     }
 
     @OnClick(R.id.unreadBtn)
     void unreadBtnClick() {
         presenter.onUnreadNotificationsBtnClicked();
+        toggleSelectionOfFilters(false);
+    }
+
+    private void toggleSelectionOfFilters(boolean isAllShown) {
+        allBtnLbl.setAlpha(isAllShown ? Constants.ENABLED_LAYOUT_ALPHA : Constants.DISABLED_LAYOUT_ALPHA);
+        unreadBtnLbl.setAlpha(isAllShown ? Constants.DISABLED_LAYOUT_ALPHA : Constants.ENABLED_LAYOUT_ALPHA);
     }
 
     @Override

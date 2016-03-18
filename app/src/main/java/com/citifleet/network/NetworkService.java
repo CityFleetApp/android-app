@@ -99,6 +99,6 @@ public interface NetworkService {
     @GET("notifications/")
     Call<List<Notification>> getNotifications();
 
-    @GET("notifications/{id}/")
-    Call<Notification> getNotificationById(@Path("id") int id);
+    @POST("notifications/{id}/mark-seen/")
+    Call<Void> getNotificationById(@Path("id") int id);
 }

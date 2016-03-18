@@ -22,4 +22,6 @@ public class Constants {
     public static final String LEGAL_AID_TYPE_TAG = "legal_aid_type_tag";
     public static final String SELECTED_PERSON_TAG = "selected_person_tag";
     public static final String SELECTED_NOTIFICATION_TAG = "selected_notification_tag";
+    public static final float DISABLED_LAYOUT_ALPHA = 0.5f;
+    public static final float ENABLED_LAYOUT_ALPHA = 1f;
 }

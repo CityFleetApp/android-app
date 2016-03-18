@@ -36,8 +36,6 @@ import butterknife.OnClick;
  * Created by vika on 16.03.16.
  */
 public class LegalAidDetailFragment extends BaseFragment implements LegalAidPresenter.LegalAidDetailView {
-    private static final float DISABLED_LAYOUT_ALPHA = 0.5f;
-    private static final float ENABLED_LAYOUT_ALPHA = 1f;
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.personTitle)
@@ -95,7 +93,7 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
             }
         } else {
             personInfo.setVisibility(View.GONE);
-            personBtn.setAlpha(DISABLED_LAYOUT_ALPHA);
+            personBtn.setAlpha(Constants.DISABLED_LAYOUT_ALPHA);
         }
     }
 
@@ -165,7 +163,7 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
                             if (!locations.get(which).equals(selectedLocation)) {
                                 selectedLocation = locations.get(which);
                                 locationText.setText(selectedLocation.getName());
-                                personBtn.setAlpha(ENABLED_LAYOUT_ALPHA);
+                                personBtn.setAlpha(Constants.ENABLED_LAYOUT_ALPHA);
                                 if (persons != null) {
                                     persons.clear();
                                     personText.setText(getString(R.string.select_person, getPersonNameByType(type)));
@@ -199,7 +197,7 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
                                     selectedPerson = persons.get(which);
                                     personText.setText(selectedPerson.getName());
                                     updatePersonInfo();
-                                    personBtn.setAlpha(ENABLED_LAYOUT_ALPHA);
+                                    personBtn.setAlpha(Constants.ENABLED_LAYOUT_ALPHA);
                                 }
                             }
                         });

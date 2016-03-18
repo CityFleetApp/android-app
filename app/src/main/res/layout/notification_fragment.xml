@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomBar"
-        android:overScrollMode="never"
-        android:layout_below="@+id/toolbar" />
+        android:layout_below="@+id/toolbar"
+        android:overScrollMode="never" />
 
     <LinearLayout
         android:id="@+id/bottomBar"
@@ -30,6 +30,7 @@
             android:clickable="true">
 
             <TextView
+                android:id="@+id/allBtnLbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -59,6 +60,7 @@
             android:clickable="true">
 
             <TextView
+                android:id="@+id/unreadBtnLbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
