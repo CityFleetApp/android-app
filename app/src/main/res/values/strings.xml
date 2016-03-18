@@ -120,6 +120,26 @@
     <string name="general_goods">General Goods</string>
     <string name="manage_previous_posts">Manage Previous Posts</string>
     <string name="post">Post</string>
+    <string name="rent">Rent</string>
+    <string name="sale">Sale</string>
+    <string name="make">Make</string>
+    <string name="select_make">Select Make</string>
+    <string name="model">Model</string>
+    <string name="select_model">Select Model</string>
+    <string name="type">Type</string>
+    <string name="select_type">Select Type</string>
+    <string name="color">Color</string>
+    <string name="select_color">Select Color</string>
+    <string name="year">Year</string>
+    <string name="select_year">Select Year</string>
+    <string name="fuel">Fuel</string>
+    <string name="select_fuel">Select Fuel</string>
+    <string name="seats">Seats</string>
+    <string name="select_seats">Select Seats</string>
+    <string name="select_price">Select Price</string>
+    <string name="price">Price</string>
+    <string name="descr">Description</string>
+    <string name="provide_description">Provide Description</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

@@ -1,0 +1,64 @@
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/profile_image_divider"
+        android:orientation="horizontal"
+        android:padding="@dimen/profile_images_scrollview_padding"
+        android:showDividers="middle">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/imageFirst"
+                style="@style/ProfileImageStyle"
+                android:src="@drawable/painting" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/imageSecond"
+                style="@style/ProfileImageStyle"
+                android:src="@drawable/painting" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/imageThird"
+                style="@style/ProfileImageStyle"
+                android:src="@drawable/painting" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/imageFourth"
+                style="@style/ProfileImageStyle"
+                android:src="@drawable/painting" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/imageFifth"
+                style="@style/ProfileImageStyle"
+                android:src="@drawable/painting" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</HorizontalScrollView>
