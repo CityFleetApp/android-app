@@ -36,6 +36,7 @@ import com.citifleet.util.PrefUtil;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 import com.citifleet.view.login.LoginFlowActivity;
+import com.citifleet.view.main.HelpFragment;
 import com.citifleet.view.main.benefits.BenefitsFragment;
 import com.citifleet.view.main.dashboard.DashboardPresenter.DashboardView;
 import com.citifleet.view.main.legalaid.LegalAidFragment;
@@ -211,7 +212,7 @@ public class DashboardFragment extends BaseFragment implements DashboardView {
 
     @OnClick(R.id.helpBtn)
     void onHelpBtnBtnClick() {
-
+        ((BaseActivity) getActivity()).changeFragment(new HelpFragment(), true);
     }
 
     @OnClick(R.id.settingsBtn)
