@@ -2,6 +2,7 @@ package com.citifleet.network;
 
 import com.citifleet.model.AddContactsBody;
 import com.citifleet.model.Benefit;
+import com.citifleet.model.DriverDocument;
 import com.citifleet.model.LegalAidLocation;
 import com.citifleet.model.LegalAidPerson;
 import com.citifleet.model.LoginInfo;
@@ -101,4 +102,11 @@ public interface NetworkService {
 
     @POST("notifications/{id}/mark-seen/")
     Call<Void> getNotificationById(@Path("id") int id);
+
+    @GET("documents/")
+    Call<List<DriverDocument>> getDocuments();
+
+    @DELETE("documents/{id}/")
+    Call<Void> deleteDocument(@Path("id") int id);
+
 }

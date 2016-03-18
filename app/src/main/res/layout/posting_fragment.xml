@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/post_background"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/vehiclesBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true">
+
+            <TextView
+                style="@style/DashBtnStyle"
+                android:drawableLeft="@drawable/car_selected"
+                android:text="@string/vechicles_for_rent_sale"
+                android:textAllCaps="false" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="@dimen/add_friends_padding_left"
+                android:src="@drawable/add" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/lineColor" />
+
+        <RelativeLayout
+            android:id="@+id/jobsOfferBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true">
+
+            <TextView
+                style="@style/DashBtnStyle"
+                android:drawableLeft="@drawable/buss_selected"
+                android:text="@string/job_offers"
+                android:textAllCaps="false" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="@dimen/add_friends_padding_left"
+                android:src="@drawable/add" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/lineColor" />
+
+        <RelativeLayout
+            android:id="@+id/generalGoodsBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true">
+
+            <TextView
+                style="@style/DashBtnStyle"
+                android:drawableLeft="@drawable/gear_wheel_selected"
+                android:text="@string/general_goods"
+                android:textAllCaps="false" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="@dimen/add_friends_padding_left"
+                android:src="@drawable/add" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/lineColor" />
+
+        <RelativeLayout
+            android:id="@+id/managePostsBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true">
+
+            <TextView
+                style="@style/DashBtnStyle"
+                android:drawableLeft="@drawable/open_mail_selected"
+                android:text="@string/manage_previous_posts"
+                android:textAllCaps="false" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="@dimen/add_friends_padding_left"
+                android:src="@drawable/add" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/lineColor" />
+
+    </LinearLayout>
+
+</LinearLayout>
