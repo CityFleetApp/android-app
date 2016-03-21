@@ -33,21 +33,21 @@ public class SettingsPresenter {
     }
 
     public void changeStatusVisible(boolean visible) {
-        if (settings.isVisible() != visible) {
+        if (settings!=null &&settings.isVisible() != visible) {
             settings.setVisible(visible);
             putChangesToServer();
         }
     }
 
     public void changeNotificationsEnabled(boolean enabled) {
-        if (settings.isNotificationsEnabled() != enabled) {
+        if (settings!=null && settings.isNotificationsEnabled() != enabled) {
             settings.setNotificationsEnabled(enabled);
             putChangesToServer();
         }
     }
 
     public void changeChatPrivacy(boolean chatPrivacy) {
-        if (settings.isChatPrivacy() != chatPrivacy) {
+        if (settings!=null &&settings.isChatPrivacy() != chatPrivacy) {
             settings.setChatPrivacy(chatPrivacy);
             putChangesToServer();
         }

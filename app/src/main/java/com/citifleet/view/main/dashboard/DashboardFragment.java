@@ -40,6 +40,7 @@ import com.citifleet.view.main.HelpFragment;
 import com.citifleet.view.main.benefits.BenefitsFragment;
 import com.citifleet.view.main.dashboard.DashboardPresenter.DashboardView;
 import com.citifleet.view.main.legalaid.LegalAidFragment;
+import com.citifleet.view.main.posting.PostingFragment;
 import com.citifleet.view.main.profile.ProfileFragment;
 import com.citifleet.view.main.settings.SettingsFragment;
 import com.facebook.AccessToken;
@@ -182,7 +183,7 @@ public class DashboardFragment extends BaseFragment implements DashboardView {
 
     @OnClick(R.id.postingBtn)
     void onPostingBtnClick() {
-
+        ((BaseActivity) getActivity()).changeFragment(new PostingFragment(), true);
     }
 
     @OnClick(R.id.earningsBtn)

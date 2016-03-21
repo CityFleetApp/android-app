@@ -35,7 +35,7 @@ public class HelpFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.help_fragment, container, false);
         ButterKnife.bind(this, view);
-        title.setText(R.string.help);
+        title.setText(R.string.help_faq);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new FrameWebViewClient());
         webView.loadUrl(getResources().getString(R.string.endpoint) + Constants.HELP_URL_PATH);

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.citifleet.R;
+import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 
 import butterknife.Bind;
@@ -44,7 +45,7 @@ public class PostingFragment extends BaseFragment {
 
     @OnClick(R.id.vehiclesBtn)
     void onVehiclesBtnClick() {
-
+        ((BaseActivity) getActivity()).changeFragment(new PostintRentSaleFragment(), true);
     }
 
     @OnClick(R.id.jobsOfferBtn)

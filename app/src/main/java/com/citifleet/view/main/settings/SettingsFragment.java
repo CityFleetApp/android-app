@@ -25,6 +25,7 @@ import com.citifleet.util.Constants;
 import com.citifleet.util.PermissionUtil;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
+import com.citifleet.view.main.HelpFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -133,6 +134,7 @@ public class SettingsFragment extends BaseFragment implements SettingsPresenter.
 
     @OnClick(R.id.helpFaqBtn)
     void onHelpFaqBtnClick() {
+        ((BaseActivity) getActivity()).changeFragment(new HelpFragment(), true);
     }
 
     @OnCheckedChanged(R.id.statusVisibleSwitch)
@@ -167,7 +169,7 @@ public class SettingsFragment extends BaseFragment implements SettingsPresenter.
 
     @Override
     public void setLoading(boolean isLoading) {
-    //    progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        //    progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
     }
 
     @Override
