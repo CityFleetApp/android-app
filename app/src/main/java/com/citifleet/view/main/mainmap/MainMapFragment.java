@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -49,7 +50,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -79,6 +81,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     private MainMapPresenter presenter;
     @BindString(R.string.default_error_mes)
     String defaultErrorMes;
+    private Place selectedPlace;
 
     @Nullable
     @Override
@@ -206,6 +209,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+        map.getUiSettings().setMapToolbarEnabled(false);
     }
 
     private void selectButton(View view) {
@@ -257,7 +261,14 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     @OnClick(R.id.directBtn)
     void onDirectBtnClick() {
-
+        if (selectedPlace != null && currentLocation!=null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("http://maps.google.com/maps?saddr=").append(currentLocation.getLatitude()).append(",").append(currentLocation.getLongitude()).
+                    append("&daddr=").append(selectedPlace.getLatLng().latitude).append(",").append(selectedPlace.getLatLng().longitude);
+            Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                    Uri.parse(sb.toString()));
+            startActivity(intent);
+        }
     }
 
     @OnClick(R.id.addFriendBtn)
@@ -275,13 +286,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     @OnClick(R.id.searchBtn)
     void onSearchBtnClick() {
         try {
-            LatLngBounds bounds = null;
-            if (currentLocation != null) {
-                bounds = new LatLngBounds(new LatLng(currentLocation.getLatitude() -1, currentLocation.getLongitude() -1),
-                        new LatLng(currentLocation.getLatitude() + 1, currentLocation.getLongitude() + 1));
-
-            }
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setBoundsBias(bounds).build(getActivity());
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(getActivity());
             startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
         } catch (GooglePlayServicesRepairableException e) {
             Log.e(MainMapFragment.class.getName(), e.getMessage());
@@ -352,8 +357,11 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             case PLACE_AUTOCOMPLETE_REQUEST_CODE:
                 switch (resultCode) {
                     case Activity.RESULT_OK:
-                        Place place = PlaceAutocomplete.getPlace(getActivity(), data);
-                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), Constants.ZOOM_LEVEL));
+                        selectedPlace = PlaceAutocomplete.getPlace(getActivity(), data);
+                        Marker marker = map.addMarker(new MarkerOptions()
+                                .position(selectedPlace.getLatLng())
+                                .title(selectedPlace.getName().toString()));
+                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedPlace.getLatLng(), Constants.ZOOM_LEVEL));
                         break;
                     case PlaceAutocomplete.RESULT_ERROR:
                         Status status = PlaceAutocomplete.getStatus(getActivity(), data);
