@@ -117,4 +117,15 @@ public interface NetworkService {
     @FormUrlEncoded
     @PATCH("users/settings/")
     Call<Settings> changeSettings(@Field("notifications_enabled") boolean notificationsEnabled, @Field("chat_privacy") boolean chatPrivacy, @Field("visible") boolean visible);
+
+    @FormUrlEncoded
+    @POST("users/devicesdevice/gcm/")
+    Call<Void> registerForGcm(@Field("registration_id") String registrationId, @Field("device_id") String deviceId);
+
+    @DELETE("users/devicesdevice/gcm/{registration_id}/")
+    Call<Void> unregisterFromGcm(@Path("registration_id") String registrationId);
+
+    @FormUrlEncoded
+    @PATCH("users/devicesdevice/gcm/{registration_id}/")
+    Call<Void> updateToken(@Field("registration_id") String registrationId);
 }

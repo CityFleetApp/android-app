@@ -3,6 +3,8 @@ package com.citifleet.util;
 public class Constants {
     public static final String PREFS_NAME = "UserPrefs";
     public static final String PREFS_TOKEN = "token";
+    public static final String PREFS_SEND_TOKEN_TO_SERVER = "send_token_to_server";
+    public static final String PREFS_GCM_TOKEN = "gcm_token";
     public static final float ZOOM_LEVEL = 12.0f;
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
@@ -26,4 +28,5 @@ public class Constants {
     public static final float ENABLED_LAYOUT_ALPHA = 1f;
     public static final String HELP_URL_PATH = "help/";
     public static final String POSTING_TYPE_TAG = "posting_type";
+    public static final String GCM_REGISTRATION_TYPE_TAG = "gcm_registration_type";
 }

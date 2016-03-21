@@ -28,9 +28,11 @@ import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.gcm.RegistrationIntentService;
 import com.citifleet.util.CircleTransform;
 import com.citifleet.util.CommonUtils;
 import com.citifleet.util.Constants;
+import com.citifleet.util.GcmRegistrationTypes;
 import com.citifleet.util.PermissionUtil;
 import com.citifleet.util.PrefUtil;
 import com.citifleet.view.BaseActivity;
@@ -226,6 +228,8 @@ public class DashboardFragment extends BaseFragment implements DashboardView {
     void onSignoutBtnClick() {
         PrefUtil.clearAllPrefs(getActivity());
         logoutFromSocialNetworks();
+        unregisterFromPushNotifications();
+
         Intent i = new Intent(getActivity(), LoginFlowActivity.class);
         startActivity(i);
 
@@ -233,6 +237,12 @@ public class DashboardFragment extends BaseFragment implements DashboardView {
         broadcastIntent.setAction(Constants.ACTION_LOGOUT);
         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(broadcastIntent);
 
+    }
+
+    private void unregisterFromPushNotifications() {
+        Intent intent = new Intent(getActivity(), RegistrationIntentService.class);
+        intent.putExtra(Constants.GCM_REGISTRATION_TYPE_TAG, GcmRegistrationTypes.UNREGISTER);
+        getActivity().startService(intent);
     }
 
     private void logoutFromSocialNetworks() {
