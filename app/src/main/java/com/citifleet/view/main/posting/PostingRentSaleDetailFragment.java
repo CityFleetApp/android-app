@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.citifleet.R;
 import com.citifleet.model.PostingType;
 import com.citifleet.util.Constants;
-import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 
 import butterknife.Bind;
@@ -18,18 +17,20 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by vika on 18.03.16.
+ * Created by vika on 21.03.16.
  */
-public class PostintRentSaleFragment extends BaseFragment {
+public class PostingRentSaleDetailFragment extends BaseFragment {
     @Bind(R.id.title)
     TextView title;
+    private PostingType postingType;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.post_rent_sale_fragment, container, false);
+        View view = inflater.inflate(R.layout.rent_fragment, container, false);
         ButterKnife.bind(this, view);
-        title.setText(R.string.post);
+        postingType = (PostingType) getArguments().getSerializable(Constants.POSTING_TYPE_TAG);
+        title.setText(postingType == PostingType.RENT ? R.string.rent : R.string.sale);
         return view;
     }
 
@@ -42,24 +43,5 @@ public class PostintRentSaleFragment extends BaseFragment {
     @OnClick(R.id.backBtn)
     void onBackBtnClick() {
         getActivity().onBackPressed();
-    }
-
-
-    @OnClick(R.id.rentBtn)
-    void onRentBtnClick() {
-        showDetailFragment(PostingType.RENT);
-    }
-
-    @OnClick(R.id.saleBtn)
-    void onSaleBtnClick() {
-        showDetailFragment(PostingType.SALE);
-    }
-
-    private void showDetailFragment(PostingType type) {
-        PostingRentSaleDetailFragment fragment = new PostingRentSaleDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.POSTING_TYPE_TAG, type);
-        fragment.setArguments(bundle);
-        ((BaseActivity) getActivity()).changeFragment(fragment, true);
     }
 }

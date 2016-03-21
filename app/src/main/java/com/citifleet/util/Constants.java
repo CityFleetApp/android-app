@@ -25,4 +25,5 @@ public class Constants {
     public static final float DISABLED_LAYOUT_ALPHA = 0.5f;
     public static final float ENABLED_LAYOUT_ALPHA = 1f;
     public static final String HELP_URL_PATH = "help/";
+    public static final String POSTING_TYPE_TAG = "posting_type";
 }

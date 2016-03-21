@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.Size;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,8 +62,6 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
     EditText confirmPasswordEt;
     @Bind(R.id.signupBtn)
     Button signupBtn;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.progressBar)

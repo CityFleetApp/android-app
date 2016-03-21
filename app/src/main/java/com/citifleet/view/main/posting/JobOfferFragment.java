@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.citifleet.R;
-import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 
 import butterknife.Bind;
@@ -16,18 +15,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by vika on 18.03.16.
+ * Created by vika on 21.03.16.
  */
-public class PostingFragment extends BaseFragment {
+public class JobOfferFragment extends BaseFragment {
     @Bind(R.id.title)
     TextView title;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.posting_fragment, container, false);
+        View view = inflater.inflate(R.layout.job_offer_fragment, container, false);
         ButterKnife.bind(this, view);
-        title.setText(R.string.post);
+        title.setText(R.string.job_offer);
         return view;
     }
 
@@ -43,23 +42,4 @@ public class PostingFragment extends BaseFragment {
     }
 
 
-    @OnClick(R.id.vehiclesBtn)
-    void onVehiclesBtnClick() {
-        ((BaseActivity) getActivity()).changeFragment(new PostintRentSaleFragment(), true);
-    }
-
-    @OnClick(R.id.jobsOfferBtn)
-    void onJobOffersBtnClick() {
-        ((BaseActivity) getActivity()).changeFragment(new JobOfferFragment(), true);
-    }
-
-    @OnClick(R.id.generalGoodsBtn)
-    void onGeneralGoodsBtnClick() {
-        ((BaseActivity) getActivity()).changeFragment(new GeneralGoodsFragment(), true);
-    }
-
-    @OnClick(R.id.managePostsBtn)
-    void onManagePostsBtn() {
-
-    }
 }
