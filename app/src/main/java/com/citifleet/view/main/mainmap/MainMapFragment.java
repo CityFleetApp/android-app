@@ -30,6 +30,8 @@ import com.citifleet.view.main.addfriends.AddFriendsFragment;
 import com.citifleet.view.main.dashboard.DashboardFragment;
 import com.citifleet.view.main.notifications.NotificationsFragment;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -40,11 +42,14 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -55,6 +60,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, ResultCallback<LocationSettingsResult>, MainMapPresenter.MainMapView {
     public static final int REQUEST_LOCATION_UPDATES = 111;
     public static final int REQUEST_CHECK_SETTINGS = 222;
+    private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     @Bind(R.id.dashboardBtn)
     TextView dashboardBtn;
     @Bind(R.id.marketplaceBtn)
@@ -268,7 +274,20 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     @OnClick(R.id.searchBtn)
     void onSearchBtnClick() {
+        try {
+            LatLngBounds bounds = null;
+            if (currentLocation != null) {
+                bounds = new LatLngBounds(new LatLng(currentLocation.getLatitude() -1, currentLocation.getLongitude() -1),
+                        new LatLng(currentLocation.getLatitude() + 1, currentLocation.getLongitude() + 1));
 
+            }
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setBoundsBias(bounds).build(getActivity());
+            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (GooglePlayServicesRepairableException e) {
+            Log.e(MainMapFragment.class.getName(), e.getMessage());
+        } catch (GooglePlayServicesNotAvailableException e) {
+            Log.e(MainMapFragment.class.getName(), e.getMessage());
+        }
     }
 
     @OnClick(R.id.menuBtn)
@@ -328,6 +347,17 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                         startLocationUpdates();
                         break;
                     case Activity.RESULT_CANCELED:
+                        break;
+                }
+            case PLACE_AUTOCOMPLETE_REQUEST_CODE:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        Place place = PlaceAutocomplete.getPlace(getActivity(), data);
+                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), Constants.ZOOM_LEVEL));
+                        break;
+                    case PlaceAutocomplete.RESULT_ERROR:
+                        Status status = PlaceAutocomplete.getStatus(getActivity(), data);
+                        Log.d(MainMapFragment.class.getName(), status.getStatusMessage());
                         break;
                 }
                 break;
