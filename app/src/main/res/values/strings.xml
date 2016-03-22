@@ -163,6 +163,17 @@
     <string name="select_vehicle_type">Select Vehicle Type</string>
     <string name="suite_tie">Suite/Tie</string>
     <string name="select_suite_tie">Select Suite/Tie</string>
+    <string name="exp_date">Exp Date</string>
+    <string name="save">Save</string>
+    <string name="doc_management">DOC Management</string>
+    <string name="dmv_licenese">DMV Licenese</string>
+    <string name="insurance">Insurance</string>
+    <string name="diamond_card">Diamond Card</string>
+    <string name="insurance_certificate">Insurance certificate</string>
+    <string name="tlc_plate_number">TLC Plate Number</string>
+    <string name="drug_test">Drug Test</string>
+    <string name="certificate_of_liability">Certificate Of Liability</string>
+    <string name="plate_number">Plate #</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

@@ -106,11 +106,11 @@
                 android:background="@color/lineColor" />
 
             <TextView
-                android:id="@+id/earningsBtn"
+                android:id="@+id/docManagementBtn"
                 style="@style/DashBtnStyle"
                 android:clickable="true"
                 android:drawableLeft="@drawable/earnings_btn_selector"
-                android:text="@string/earnings" />
+                android:text="@string/doc_management" />
 
             <View
                 android:layout_width="match_parent"

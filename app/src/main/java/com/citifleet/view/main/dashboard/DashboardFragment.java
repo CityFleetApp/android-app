@@ -39,6 +39,7 @@ import com.citifleet.view.login.LoginFlowActivity;
 import com.citifleet.view.main.HelpFragment;
 import com.citifleet.view.main.benefits.BenefitsFragment;
 import com.citifleet.view.main.dashboard.DashboardPresenter.DashboardView;
+import com.citifleet.view.main.docmanagement.DocManagementFragment;
 import com.citifleet.view.main.legalaid.LegalAidFragment;
 import com.citifleet.view.main.posting.PostingFragment;
 import com.citifleet.view.main.profile.ProfileFragment;
@@ -186,9 +187,9 @@ public class DashboardFragment extends BaseFragment implements DashboardView {
         ((BaseActivity) getActivity()).changeFragment(new PostingFragment(), true);
     }
 
-    @OnClick(R.id.earningsBtn)
-    void onEarningsBtnClick() {
-
+    @OnClick(R.id.docManagementBtn)
+    void onDocManagementBtnClick() {
+        ((BaseActivity) getActivity()).changeFragment(new DocManagementFragment(), true);
     }
 
     @OnClick(R.id.inviteDriverBtn)

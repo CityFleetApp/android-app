@@ -136,4 +136,43 @@
         <item name="android:clickable">true</item>
         <item name="android:background">@android:color/white</item>
     </style>
+
+    <style name="DocTitleStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/green_color_text</item>
+        <item name="android:textSize">@dimen/docmanagement_title_text_size</item>
+    </style>
+
+    <style name="DocExpDateStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/docmanagement_margintop</item>
+        <item name="android:clickable">false</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:focusable">false</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:focusableInTouchMode">false</item>
+        <item name="android:textColor">@color/text_color_grey</item>
+        <item name="android:textColorHint">@color/report_divider_color</item>
+        <item name="android:textSize">@dimen/docmanagement_title_text_size</item>
+    </style>
+
+    <style name="DocSaveBtnStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/splash_btn_margin_small</item>
+        <item name="android:background">@drawable/red_btn_selector</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingTop">@dimen/button_padding_small</item>
+        <item name="android:paddingBottom">@dimen/button_padding_small</item>
+        <item name="android:paddingLeft">@dimen/button_padding</item>
+        <item name="android:paddingRight">@dimen/button_padding</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/doc_management_button_text_size</item>
+    </style>
 </resources>

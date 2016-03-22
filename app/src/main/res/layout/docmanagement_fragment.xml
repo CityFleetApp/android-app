@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@android:color/white"
     android:layout_height="match_parent">
 
     <include layout="@layout/toolbar" />
@@ -13,10 +14,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:divider="@drawable/vertical_divider"
+            android:orientation="vertical"
+            android:showDividers="middle">
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:padding="@dimen/docmanagement_padding"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -24,9 +28,294 @@
                     style="@style/ProfileImageStyle"
                     android:src="@drawable/painting" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/docmanagement_padding"
+                    android:layout_toLeftOf="@+id/doc1SaveBtn"
+                    android:layout_toRightOf="@+id/doc1Image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/doc1Title"
+                        style="@style/DocTitleStyle"
+                        android:text="@string/dmv_licenese" />
+
+                    <EditText
+                        android:id="@+id/doc1ExpDate"
+                        style="@style/DocExpDateStyle"
+                        android:layout_below="@+id/doc1Title"
+                        android:hint="@string/exp_date" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/doc1SaveBtn"
+                    style="@style/DocSaveBtnStyle"
+                    android:text="@string/save" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/docmanagement_padding"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/doc2Image"
+                    style="@style/ProfileImageStyle"
+                    android:src="@drawable/painting" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/docmanagement_padding"
+                    android:layout_toLeftOf="@+id/doc2SaveBtn"
+                    android:layout_toRightOf="@+id/doc2Image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/doc2Title"
+                        style="@style/DocTitleStyle"
+                        android:text="@string/hack_license" />
+
+                    <EditText
+                        android:id="@+id/doc2ExpDate"
+                        style="@style/DocExpDateStyle"
+                        android:layout_below="@+id/doc1Title"
+                        android:hint="@string/exp_date" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/doc2SaveBtn"
+                    style="@style/DocSaveBtnStyle"
+                    android:text="@string/save" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/docmanagement_padding"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/doc3Image"
+                    style="@style/ProfileImageStyle"
+                    android:src="@drawable/painting" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/docmanagement_padding"
+                    android:layout_toLeftOf="@+id/doc3SaveBtn"
+                    android:layout_toRightOf="@+id/doc3Image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/doc3Title"
+                        style="@style/DocTitleStyle"
+                        android:text="@string/insurance" />
+
+                    <EditText
+                        android:id="@+id/doc3ExpDate"
+                        style="@style/DocExpDateStyle"
+                        android:layout_below="@+id/doc1Title"
+                        android:hint="@string/exp_date" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/doc3SaveBtn"
+                    style="@style/DocSaveBtnStyle"
+                    android:text="@string/save" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/docmanagement_padding"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/doc4Image"
+                    style="@style/ProfileImageStyle"
+                    android:src="@drawable/painting" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/docmanagement_padding"
+                    android:layout_toLeftOf="@+id/doc4SaveBtn"
+                    android:layout_toRightOf="@+id/doc4Image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/doc4Title"
+                        style="@style/DocTitleStyle"
+                        android:text="@string/diamond_card" />
+
+                    <EditText
+                        android:id="@+id/doc4ExpDate"
+                        style="@style/DocExpDateStyle"
+                        android:layout_below="@+id/doc1Title"
+                        android:hint="@string/exp_date" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/doc4SaveBtn"
+                    style="@style/DocSaveBtnStyle"
+                    android:text="@string/save" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/docmanagement_padding"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/doc5Image"
+                    style="@style/ProfileImageStyle"
+                    android:src="@drawable/painting" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/docmanagement_padding"
+                    android:layout_toLeftOf="@+id/doc5SaveBtn"
+                    android:layout_toRightOf="@+id/doc5Image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/doc5Title"
+                        style="@style/DocTitleStyle"
+                        android:text="@string/insurance_certificate" />
+
+                    <EditText
+                        android:id="@+id/doc5ExpDate"
+                        style="@style/DocExpDateStyle"
+                        android:layout_below="@+id/doc1Title"
+                        android:hint="@string/exp_date" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/doc5SaveBtn"
+                    style="@style/DocSaveBtnStyle"
+                    android:text="@string/save" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/docmanagement_padding"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/doc6Image"
+                    style="@style/ProfileImageStyle"
+                    android:src="@drawable/painting" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/docmanagement_padding"
+                    android:layout_toLeftOf="@+id/doc6SaveBtn"
+                    android:layout_toRightOf="@+id/doc6Image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/doc6Title"
+                        style="@style/DocTitleStyle"
+                        android:text="@string/certificate_of_liability" />
+
+                    <EditText
+                        android:id="@+id/doc6ExpDate"
+                        style="@style/DocExpDateStyle"
+                        android:layout_below="@+id/doc1Title"
+                        android:hint="@string/exp_date" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/doc6SaveBtn"
+                    style="@style/DocSaveBtnStyle"
+                    android:text="@string/save" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/docmanagement_padding"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/doc7Image"
+                    style="@style/ProfileImageStyle"
+                    android:src="@drawable/painting" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/docmanagement_padding"
+                    android:layout_toLeftOf="@+id/doc7SaveBtn"
+                    android:layout_toRightOf="@+id/doc7Image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/doc7Title"
+                        style="@style/DocTitleStyle"
+                        android:text="@string/tlc_plate_number" />
+
+                    <EditText
+                        android:id="@+id/doc7ExpDate"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:cursorVisible="true"
+                        android:focusableInTouchMode="true"
+                        style="@style/DocExpDateStyle"
+                        android:layout_below="@+id/doc1Title"
+                        android:hint="@string/plate_number" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/doc7SaveBtn"
+                    style="@style/DocSaveBtnStyle"
+                    android:text="@string/save" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="@dimen/docmanagement_padding"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/doc8Image"
+                    style="@style/ProfileImageStyle"
+                    android:src="@drawable/painting" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/docmanagement_padding"
+                    android:layout_toLeftOf="@+id/doc8SaveBtn"
+                    android:layout_toRightOf="@+id/doc8Image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/doc8Title"
+                        style="@style/DocTitleStyle"
+                        android:text="@string/drug_test" />
+
+                    <EditText
+                        android:id="@+id/doc8ExpDate"
+                        style="@style/DocExpDateStyle"
+                        android:layout_below="@+id/doc1Title"
+                        android:hint="@string/exp_date" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/doc8SaveBtn"
+                    style="@style/DocSaveBtnStyle"
+                    android:text="@string/save" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
