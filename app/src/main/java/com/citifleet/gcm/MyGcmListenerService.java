@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.citifleet.R;
 import com.citifleet.view.main.MainActivity;
 import com.google.android.gms.gcm.GcmListenerService;
 
@@ -41,6 +42,7 @@ public class MyGcmListenerService extends GcmListenerService {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle("GCM Message")
+                .setSmallIcon(R.drawable.alert)
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
