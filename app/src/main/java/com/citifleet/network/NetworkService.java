@@ -2,7 +2,7 @@ package com.citifleet.network;
 
 import com.citifleet.model.AddContactsBody;
 import com.citifleet.model.Benefit;
-import com.citifleet.model.DriverDocument;
+import com.citifleet.model.Document;
 import com.citifleet.model.LegalAidLocation;
 import com.citifleet.model.LegalAidPerson;
 import com.citifleet.model.LoginInfo;
@@ -106,10 +106,17 @@ public interface NetworkService {
     Call<Void> getNotificationById(@Path("id") int id);
 
     @GET("documents/")
-    Call<List<DriverDocument>> getDocuments();
+    Call<List<Document>> getDocuments();
 
-    @DELETE("documents/{id}/")
-    Call<Void> deleteDocument(@Path("id") int id);
+    @Multipart
+    @POST("documents/")
+    Call<Document> createDocument(@Part("file\"; filename=\"image.png\" ") RequestBody file, @Part("expiry_date") RequestBody expiryDate,
+                                  @Part("plate_number") RequestBody plateNumber, @Part("document_type") RequestBody documentType);
+
+    @Multipart
+    @PATCH("documents/{id}/")
+    Call<Document> updateDocument(@Path("id") int id, @Part("file\"; filename=\"image.png\" ") RequestBody file, @Part("expiry_date") RequestBody expiryDate,
+                                  @Part("plate_number") RequestBody plateNumber, @Part("document_type") RequestBody documentType);
 
     @GET("users/settings/")
     Call<Settings> getSettings();

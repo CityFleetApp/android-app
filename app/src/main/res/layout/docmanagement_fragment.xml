@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@android:color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
     <include layout="@layout/toolbar" />
 
@@ -20,8 +20,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:padding="@dimen/docmanagement_padding"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/docmanagement_padding">
 
                 <ImageView
                     android:id="@+id/doc1Image"
@@ -57,8 +57,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:padding="@dimen/docmanagement_padding"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/docmanagement_padding">
 
                 <ImageView
                     android:id="@+id/doc2Image"
@@ -94,8 +94,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:padding="@dimen/docmanagement_padding"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/docmanagement_padding">
 
                 <ImageView
                     android:id="@+id/doc3Image"
@@ -131,8 +131,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:padding="@dimen/docmanagement_padding"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/docmanagement_padding">
 
                 <ImageView
                     android:id="@+id/doc4Image"
@@ -168,8 +168,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:padding="@dimen/docmanagement_padding"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/docmanagement_padding">
 
                 <ImageView
                     android:id="@+id/doc5Image"
@@ -205,8 +205,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:padding="@dimen/docmanagement_padding"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/docmanagement_padding">
 
                 <ImageView
                     android:id="@+id/doc6Image"
@@ -242,8 +242,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:padding="@dimen/docmanagement_padding"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/docmanagement_padding">
 
                 <ImageView
                     android:id="@+id/doc7Image"
@@ -265,14 +265,16 @@
                         android:text="@string/tlc_plate_number" />
 
                     <EditText
-                        android:id="@+id/doc7ExpDate"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:cursorVisible="true"
-                        android:focusableInTouchMode="true"
+                        android:id="@+id/doc7PlateNumber"
                         style="@style/DocExpDateStyle"
                         android:layout_below="@+id/doc1Title"
-                        android:hint="@string/plate_number" />
+                        android:clickable="true"
+                        android:cursorVisible="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:imeOptions="actionDone"
+                        android:hint="@string/plate_number"
+                        android:inputType="number" />
                 </LinearLayout>
 
                 <Button
@@ -283,8 +285,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:padding="@dimen/docmanagement_padding"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/docmanagement_padding">
 
                 <ImageView
                     android:id="@+id/doc8Image"
@@ -320,11 +322,17 @@
         </LinearLayout>
     </ScrollView>
 
-    <ProgressBar
+    <RelativeLayout
         android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -53,9 +53,6 @@ public class NetworkManager {
         return networkClient;
     }
 
-    public void setNetworkClient(NetworkService networkClient) {
-        this.networkClient = networkClient;
-    }
 
     public boolean isConnectedOrConnecting() {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
