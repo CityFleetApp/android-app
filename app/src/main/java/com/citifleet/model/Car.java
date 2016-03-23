@@ -15,6 +15,7 @@ public class Car {
     private String price;
     private String description;
     private boolean rent;
+    private String photo;
 
     public int getId() {
         return id;
@@ -102,5 +103,13 @@ public class Car {
 
     public void setRent(boolean rent) {
         this.rent = rent;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

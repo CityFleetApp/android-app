@@ -19,7 +19,7 @@ import butterknife.OnClick;
 /**
  * Created by vika on 23.03.16.
  */
-public class MarketPlaceRentSaleFragment extends BaseFragment {
+public class BuyRentTabbedFragment extends BaseFragment {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.tabs)

@@ -2,16 +2,21 @@ package com.citifleet.view.main.marketplace;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.citifleet.R;
 import com.citifleet.model.Car;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -22,6 +27,24 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
     private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.carImage)
+        ImageView carImage;
+        @Bind(R.id.carPrice)
+        TextView carPrice;
+        @Bind(R.id.carTitle)
+        TextView carTitle;
+        @Bind(R.id.colorLbl)
+        TextView colorLbl;
+        @Bind(R.id.fuelLbl)
+        TextView fuelLbl;
+        @Bind(R.id.modelLbl)
+        TextView modelLbl;
+        @Bind(R.id.seatsLbl)
+        TextView seatsLbl;
+        @Bind(R.id.typeLbl)
+        TextView typeLbl;
+        @Bind(R.id.detailsLbl)
+        TextView detailsLbl;
 
         public ViewHolder(View v) {
             super(v);
@@ -48,10 +71,16 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Car car = list.get(position);
-//        if (!TextUtils.isEmpty(benefit.getImage())) {
-//            Picasso.with(context).load(benefit.getImage()).into(holder.benefitImage);
-//        }
-//        holder.benefitName.setText(benefit.getName());
+        if (!TextUtils.isEmpty(car.getPhoto())) {
+            Picasso.with(context).load(car.getPhoto()).into(holder.carImage);
+        }
+        holder.carPrice.setText(car.getPrice());
+        holder.carTitle.setText(car.getDescription());
+        holder.colorLbl.setText(car.getColor());
+        holder.fuelLbl.setText(car.getFuel());
+        holder.seatsLbl.setText(String.valueOf(car.getSeats()));
+        holder.typeLbl.setText(car.getType());
+        holder.modelLbl.setText(car.getModel());
     }
 
     @Override

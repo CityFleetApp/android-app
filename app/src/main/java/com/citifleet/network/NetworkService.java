@@ -2,6 +2,7 @@ package com.citifleet.network;
 
 import com.citifleet.model.AddContactsBody;
 import com.citifleet.model.Benefit;
+import com.citifleet.model.Car;
 import com.citifleet.model.Document;
 import com.citifleet.model.LegalAidLocation;
 import com.citifleet.model.LegalAidPerson;
@@ -124,4 +125,10 @@ public interface NetworkService {
     @FormUrlEncoded
     @PATCH("users/settings/")
     Call<Settings> changeSettings(@Field("notifications_enabled") boolean notificationsEnabled, @Field("chat_privacy") boolean chatPrivacy, @Field("visible") boolean visible);
+
+    @GET("marketplace/cars/sale/")
+    Call<List<Car>> getCarsForSale();
+
+    @GET("marketplace/cars/rent/")
+    Call<List<Car>> getCarsForRent();
 }

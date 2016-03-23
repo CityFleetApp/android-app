@@ -3,7 +3,8 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardElevation="@dimen/benefits_elevation">
+    card_view:cardElevation="@dimen/benefits_elevation"
+    card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,7 +24,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/carImage"
+            android:background="@color/black_transparent"
+            android:ellipsize="end"
             android:padding="@dimen/marketplace_item_padding"
+            android:singleLine="true"
             android:text="2015 Cadillac Escalade"
             android:textColor="@android:color/white"
             android:textSize="@dimen/marketplace_item_title_size" />
@@ -42,81 +46,96 @@
             android:textSize="@dimen/marketplace_price_textsize" />
 
         <LinearLayout
-            android:id="@+id/firstRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/carImage"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="@dimen/marketplace_item_padding">
 
-            <TextView
-                android:id="@+id/colorLbl"
-                style="@style/MarketPlaceTextStyle"
-                android:drawableLeft="@drawable/paint_big"
-                android:text="Black" />
+            <LinearLayout
+                android:id="@+id/firstRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/carImage"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/colorLbl"
+                    style="@style/MarketPlaceTextStyle"
+                    android:drawableLeft="@drawable/paint_big"
+                    android:text="Black" />
+
+                <TextView
+                    android:id="@+id/fuelLbl"
+                    style="@style/MarketPlaceTextStyle"
+                    android:drawableLeft="@drawable/speed"
+                    android:text="Gasoline" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/secondRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/firstRow"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/bottom_menu_drawable_padding">
+
+                <TextView
+                    android:id="@+id/modelLbl"
+                    style="@style/MarketPlaceTextStyle"
+                    android:drawableLeft="@drawable/car_white_small"
+                    android:text="SUV" />
+
+                <TextView
+                    android:id="@+id/seatsLbl"
+                    style="@style/MarketPlaceTextStyle"
+                    android:drawableLeft="@drawable/belt"
+                    android:text="Seats" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/gasolineLbl"
+                android:id="@+id/typeLbl"
                 style="@style/MarketPlaceTextStyle"
-                android:drawableLeft="@drawable/speed"
-                android:text="Gasoline" />
+                android:layout_width="wrap_content"
+                android:layout_below="@+id/secondRow"
+                android:drawableLeft="@drawable/bucket"
+                android:paddingTop="@dimen/bottom_menu_drawable_padding"
+                android:text="Uber" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/typeLbl"
+                android:layout_marginTop="@dimen/bottom_menu_drawable_padding"
+                android:background="@color/marketplace_divider" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bottom_menu_drawable_padding">
+
+                <TextView
+                    android:id="@+id/detailsLbl"
+                    style="@style/MarketPlaceTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/copy"
+                    android:text="@string/details" />
+
+                <ImageView
+                    android:id="@+id/arrowImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/detailsLbl"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_down_red" />
+            </RelativeLayout>
+
+
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/secondRow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/firstRow"
-            android:orientation="horizontal"
-            android:padding="@dimen/marketplace_item_padding">
 
-            <TextView
-                android:id="@+id/SUVlbl"
-                style="@style/MarketPlaceTextStyle"
-                android:drawableLeft="@drawable/car_white_small"
-                android:text="SUV" />
-
-            <TextView
-                android:id="@+id/seatsLbl"
-                style="@style/MarketPlaceTextStyle"
-                android:drawableLeft="@drawable/belt"
-                android:text="Seats" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/uberLbl"
-            style="@style/MarketPlaceTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_below="@+id/secondRow"
-            android:drawableLeft="@drawable/bucket"
-            android:padding="@dimen/marketplace_item_padding"
-            android:text="Uber" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/uberLbl"
-            android:layout_marginLeft="@dimen/marketplace_item_padding"
-            android:layout_marginRight="@dimen/marketplace_item_padding"
-            android:background="@color/marketplace_divider" />
-
-        <TextView
-            android:id="@+id/detailsLbl"
-            style="@style/MarketPlaceTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_below="@+id/divider"
-            android:drawableLeft="@drawable/copy"
-            android:padding="@dimen/marketplace_item_padding"
-            android:text="@string/details" />
-
-        <ImageView
-            android:id="@+id/arrowImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/detailsLbl"
-            android:layout_alignParentRight="true"
-            android:padding="@dimen/marketplace_item_padding"
-            android:src="@drawable/arrow_down_red" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

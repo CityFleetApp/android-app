@@ -1,8 +1,12 @@
 package com.citifleet.view.main.marketplace;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.citifleet.model.PostingType;
+import com.citifleet.util.Constants;
 
 /**
  * Created by vika on 23.03.16.
@@ -17,7 +21,11 @@ public class RentSalePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new MarketPlaceBuyRentFragment();
+        Fragment fragment = new BuyRentDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.POSTING_TYPE_TAG, position == 0 ? PostingType.SALE : PostingType.RENT);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override

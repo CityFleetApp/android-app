@@ -114,9 +114,7 @@ public class BenefitsFragment extends BaseFragment implements BenefitPresenter.B
 
     @Override
     public void updateBenefitsList(final List<Benefit> benefits) {
-        adapter = new BenefitsAdapter(getActivity());
         adapter.setBenefitList(benefits);
-        benefitsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 }
