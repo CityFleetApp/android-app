@@ -175,4 +175,25 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/doc_management_button_text_size</item>
     </style>
+
+    <style name="MarketPlaceTextStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_columnSpan">1</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:drawablePadding">@dimen/marketplace_item_padding</item>
+        <item name="android:textColor">@color/marketplace_text_color</item>
+        <item name="android:textSize">@dimen/marketplace_price_textsize</item>
+    </style>
+
+    <style name="MarketplaceTabStyle" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/MarketplaceTextApperance</item>
+        <item name="tabSelectedTextColor">@color/green_color</item>
+    </style>
+
+    <style name="MarketplaceTextApperance" parent="TextAppearance.Design.Tab">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>

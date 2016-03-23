@@ -26,7 +26,7 @@ import com.citifleet.R;
 import com.citifleet.util.Constants;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
-import com.citifleet.view.main.MarketPlaceFragment;
+import com.citifleet.view.main.marketplace.MarketPlaceFragment;
 import com.citifleet.view.main.addfriends.AddFriendsFragment;
 import com.citifleet.view.main.dashboard.DashboardFragment;
 import com.citifleet.view.main.notifications.NotificationsFragment;

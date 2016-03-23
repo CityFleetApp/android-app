@@ -178,9 +178,14 @@
     <string name="plate_number_empty">Please enter Plate Number</string>
     <string name="ext_date_empty">Please enter expiration date</string>
     <string name="enter_all_fields">Please enter all fields</string>
+    <string name="details">Details</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>
         <item>Cancel</item>
+    </string-array>
+    <string-array name="rent_sale_marketplace">
+        <item>Buy</item>
+        <item>Rent</item>
     </string-array>
 </resources>

@@ -36,5 +36,6 @@
     <color name="black_transparent">#80000000</color>
     <color name="legalaid_background">#f3f4f8</color>
     <color name="date_text_color">#747474</color>
-
+    <color name="marketplace_text_color">#828282</color>
+    <color name="marketplace_divider">#f1f1f1</color>
 </resources>

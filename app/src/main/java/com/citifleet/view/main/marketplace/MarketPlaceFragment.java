@@ -1,4 +1,4 @@
-package com.citifleet.view.main;
+package com.citifleet.view.main.marketplace;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -45,7 +46,7 @@ public class MarketPlaceFragment extends BaseFragment {
 
     @OnClick(R.id.carsForRentBtn)
     void onCarsForRentBtnClick() {
-
+        ((BaseActivity) getActivity()).changeFragment(new MarketPlaceRentSaleFragment(), true);
     }
 
     @OnClick(R.id.generalGoodsForSaleBtn)

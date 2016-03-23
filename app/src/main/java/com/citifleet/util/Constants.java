@@ -31,4 +31,5 @@ public class Constants {
     public static final String DOC_IMAGE_PATH = "doc_image_path";
     public static final String DOC_IMAGE_FRAGMENT_TAG = "doc_image_fragment_tag";
     public static final String HTTP_SCHEME= "http";
+    public static final int BUY_RENT_COLUMNS_COUNT = 2;
 }

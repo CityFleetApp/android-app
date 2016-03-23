@@ -102,4 +102,8 @@
     <dimen name="docmanagement_padding">14dp</dimen>
     <dimen name="docmanagement_margintop">5dp</dimen>
     <dimen name="docmanagement_texfield_size">11sp</dimen>
+    <dimen name="marketplace_item_title_size">15sp</dimen>
+    <dimen name="marketplace_item_padding">9dp</dimen>
+    <dimen name="marketplace_price_textsize">12sp</dimen>
+    <dimen name="ribbon_padding">7dp</dimen>
 </resources>
