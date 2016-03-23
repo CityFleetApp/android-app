@@ -110,7 +110,7 @@
                 style="@style/DashBtnStyle"
                 android:clickable="true"
                 android:drawableLeft="@drawable/earnings_btn_selector"
-                android:text="@string/doc_management" />
+                android:text="@string/documents" />
 
             <View
                 android:layout_width="match_parent"
