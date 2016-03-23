@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -43,6 +44,7 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import butterknife.OnTextChanged;
 
 /**
@@ -84,8 +86,13 @@ public class DocManagementFragment extends BaseFragment implements DocManagement
 
     @OnClick(R.id.backBtn)
     void onBackBtnClick() {
-        getActivity().onBackPressed();
+        FragmentManager fragmentManager = getChildFragmentManager();
+        fragmentManager.popBackStack();
+        if (fragmentManager.getBackStackEntryCount() == 0) {
+            getActivity().onBackPressed();
+        }
     }
+
 
     @Override
     public void onDestroyView() {
@@ -98,6 +105,25 @@ public class DocManagementFragment extends BaseFragment implements DocManagement
         int clickedPosition = getClickedImagePosition(view);
         positionToUpdate = clickedPosition;
         showPickImageDialog();
+    }
+
+    @OnLongClick({R.id.doc1Image, R.id.doc2Image, R.id.doc3Image, R.id.doc4Image, R.id.doc5Image, R.id.doc6Image, R.id.doc7Image, R.id.doc8Image})
+    boolean onImageLongClick(View view) {
+        int clickedPosition = getClickedImagePosition(view);
+        Document document = documentsList[clickedPosition];
+        if (document != null && document.getId() != 0) {
+            FragmentManager fm = getChildFragmentManager();
+            ImageDialogFragment fragment = (ImageDialogFragment) fm.findFragmentByTag(Constants.DOC_IMAGE_FRAGMENT_TAG);
+            if (fragment == null) {
+                fragment = new ImageDialogFragment();
+            }
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.DOC_IMAGE_PATH, document.getFile());
+            fragment.setArguments(bundle);
+            fm.beginTransaction().add(R.id.childFragmentContainer, fragment, Constants.DOC_IMAGE_FRAGMENT_TAG).addToBackStack(null).commit();
+            return true;
+        }
+        return false;
     }
 
     @OnClick({R.id.doc1ExpDate, R.id.doc2ExpDate, R.id.doc3ExpDate, R.id.doc4ExpDate, R.id.doc5ExpDate, R.id.doc6ExpDate, R.id.doc8ExpDate})

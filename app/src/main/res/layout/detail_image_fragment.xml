@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/imageCont"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/imageCont"
+    android:background="@android:color/black"
     android:orientation="vertical">
 
     <ProgressBar
@@ -11,11 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
+
     <ImageView
-        android:id="@+id/bigImage"
+        android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop" />
+
 </RelativeLayout>

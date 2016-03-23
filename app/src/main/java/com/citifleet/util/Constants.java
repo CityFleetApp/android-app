@@ -28,4 +28,7 @@ public class Constants {
     public static final int DOCUMENTS_TYPES_COUNT = 8;
     public static final int DOCUMENT_PLATE_NUMBER_POSITION = 6;
     public static final String POSTING_TYPE_TAG = "posting_type";
+    public static final String DOC_IMAGE_PATH = "doc_image_path";
+    public static final String DOC_IMAGE_FRAGMENT_TAG = "doc_image_fragment_tag";
+    public static final String HTTP_SCHEME= "http";
 }

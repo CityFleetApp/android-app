@@ -334,5 +334,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
     </RelativeLayout>
-
+    <FrameLayout
+        android:id="@+id/childFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_height="match_parent" />
 </RelativeLayout>
