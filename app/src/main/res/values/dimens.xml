@@ -107,4 +107,10 @@
     <dimen name="marketplace_item_padding">9dp</dimen>
     <dimen name="marketplace_price_textsize">10sp</dimen>
     <dimen name="ribbon_padding">7dp</dimen>
+    <dimen name="job_offer_padding_left">14dp</dimen>
+    <dimen name="job_offer_padding_top">18dp</dimen>
+    <dimen name="small_corner_radius">1dp</dimen>
+    <dimen name="green_background_padding">2dp</dimen>
+    <dimen name="job_offer_small_padding">10dp</dimen>
+    <dimen name="job_info_padding">15dp</dimen>
 </resources>

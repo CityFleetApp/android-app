@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/job_offer_padding_top"
+    android:paddingLeft="@dimen/job_offer_padding_left"
+    android:paddingRight="@dimen/job_offer_padding_left"
+    android:paddingTop="@dimen/job_offer_padding_top"
+    android:background="@drawable/transparent_selector"
+    android:clickable="true"
+    tools:ignore="MissingPrefix">
+
+    <ImageView
+        android:id="@+id/caseIcon"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:src="@drawable/buss_big" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/caseIcon"
+        android:layout_alignTop="@id/caseIcon"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toRightOf="@+id/caseIcon"
+        android:background="@color/job_offer_divider" />
+
+    <LinearLayout
+        android:id="@+id/firstRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/arrow"
+        android:layout_toRightOf="@+id/line"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/timePrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3:35 PM | $150"
+            android:textColor="@color/add_friends_text_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/covered"
+            fontPath="@string/fontLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/job_offer_small_padding"
+            android:layout_marginRight="@dimen/job_offer_small_padding"
+            android:background="@drawable/green_rectangle_rounded_corners"
+            android:padding="@dimen/green_background_padding"
+            android:text="Covered"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="8sp" />
+
+        <TextView
+            android:id="@+id/date"
+            fontPath="@string/fontLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/notificationType"
+            android:layout_toRightOf="@+id/notificationType"
+            android:drawableLeft="@drawable/calendar_small"
+            android:drawablePadding="@dimen/notification_drawable_padding"
+            android:text="10/17/2912"
+            android:textColor="@color/date_text_color"
+            android:textSize="@dimen/date_text_label"
+            tools:ignore="MissingPrefix" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstRow"
+        android:layout_toLeftOf="@+id/arrow"
+        android:textColor="@color/date_text_color"
+        android:textSize="@dimen/reg_edittext_lbl_textsize"
+        android:text="Need a car for"
+        android:layout_toRightOf="@+id/line"
+        android:ellipsize="end"
+        android:singleLine="true" />
+
+    <ImageView
+        android:id="@+id/arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/arrow_right_green" />
+</RelativeLayout>

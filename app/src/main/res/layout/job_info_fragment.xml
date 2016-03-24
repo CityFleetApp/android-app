@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@drawable/vertical_divider"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/job_info_padding">
+
+                    <TextView
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/calendar"
+                        android:text="@string/date"
+                        android:textColor="@color/green_color_text" />
+
+                    <TextView
+                        android:id="@+id/dateLbl"
+                        style="@style/RegistrationEdittextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10/15/16" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/job_info_padding">
+
+                    <TextView
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/clock"
+                        android:text="@string/time"
+                        android:textColor="@color/green_color_text" />
+
+                    <TextView
+                        android:id="@+id/timeLbl"
+                        style="@style/RegistrationEdittextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="03:15 PM" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/job_info_padding">
+
+                <TextView
+                    style="@style/RegistrationEdittextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/map_pin"
+                    android:text="@string/pickup_address"
+                    android:textColor="@color/green_color_text" />
+
+                <TextView
+                    android:id="@+id/pickupAddressLbl"
+                    style="@style/RegistrationEdittextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="301 Park Ave, New York" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/job_info_padding">
+
+                <TextView
+                    style="@style/RegistrationEdittextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/map_pin"
+                    android:text="@string/drop_off_address"
+                    android:textColor="@color/green_color_text" />
+
+                <TextView
+                    android:id="@+id/dropOffLbl"
+                    style="@style/RegistrationEdittextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="301 Park Ave, New York" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/job_info_padding">
+
+                    <TextView
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/dollar"
+                        android:text="@string/your_pay"
+                        android:textColor="@color/green_color_text" />
+
+                    <TextView
+                        android:id="@+id/payLbl"
+                        style="@style/RegistrationEdittextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$150" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/job_info_padding">
+
+                    <TextView
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/dollar"
+                        android:text="@string/tolls"
+                        android:textColor="@color/green_color_text" />
+
+                    <TextView
+                        android:id="@+id/tollsLbl"
+                        style="@style/RegistrationEdittextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$8.00" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/job_info_padding">
+
+                    <TextView
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/hanf"
+                        android:text="@string/gratuity"
+                        android:textColor="@color/green_color_text" />
+
+                    <TextView
+                        android:id="@+id/gratuityLbl"
+                        style="@style/RegistrationEdittextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$150" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/job_info_padding">
+
+                    <TextView
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/car"
+                        android:text="@string/vehicle_type"
+                        android:textColor="@color/green_color_text" />
+
+                    <TextView
+                        android:id="@+id/vehicleTypeLbl"
+                        style="@style/RegistrationEdittextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$8.00" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/job_info_padding">
+
+                    <TextView
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/smoking"
+                        android:text="Suite/Tie"
+                        android:textColor="@color/green_color_text" />
+
+                    <TextView
+                        android:id="@+id/suitTieLbl"
+                        style="@style/RegistrationEdittextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$150" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/job_info_padding">
+
+                    <TextView
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/houses"
+                        android:text="@string/company_personal"
+                        android:textColor="@color/green_color_text" />
+
+                    <TextView
+                        android:id="@+id/companyPersonalLbl"
+                        style="@style/RegistrationEdittextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$8.00" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/job_info_padding">
+
+                <TextView
+                    style="@style/RegistrationEdittextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/buss_big"
+                    android:text="@string/job_type"
+                    android:textColor="@color/green_color_text" />
+
+                <TextView
+                    android:id="@+id/jobTypeLbl"
+                    style="@style/RegistrationEdittextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$8.00" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/requestBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/reg_edittext_padding"
+                android:layout_marginLeft="@dimen/splash_btn_margin_small"
+                android:layout_marginRight="@dimen/splash_btn_margin_small"
+                android:layout_marginTop="@dimen/reg_edittext_padding"
+                android:background="@drawable/green_btn_background"
+                android:text="@string/request_job"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size" />
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+</RelativeLayout>

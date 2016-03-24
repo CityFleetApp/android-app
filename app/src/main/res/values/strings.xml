@@ -179,6 +179,12 @@
     <string name="ext_date_empty">Please enter expiration date</string>
     <string name="enter_all_fields">Please enter all fields</string>
     <string name="details">Details</string>
+    <string name="drop_off_address">Drop Off Address</string>
+    <string name="your_pay">Your Pay</string>
+    <string name="tolls">Tolls</string>
+    <string name="company_personal">Company/Personal</string>
+    <string name="job_type">Job Type</string>
+    <string name="request_job">Request job</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>
