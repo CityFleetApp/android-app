@@ -8,8 +8,6 @@ import com.citifleet.model.Document;
 import com.citifleet.model.LegalAidLocation;
 import com.citifleet.model.LegalAidPerson;
 import com.citifleet.model.LoginInfo;
-import com.citifleet.model.Make;
-import com.citifleet.model.Model;
 import com.citifleet.model.Notification;
 import com.citifleet.model.ProfileImage;
 import com.citifleet.model.Settings;
@@ -136,15 +134,15 @@ public interface NetworkService {
     Call<List<Car>> getCarsForRent();
 
     @GET("marketplace/cars/make/")
-    Call<List<Make>> getCarMakes();
+    Call<List<CarOption>> getCarMakes();
 
-    @GET("marketplace/cars/model/{id}/")
-    Call<List<Model>> getCardModels();
+    @GET("marketplace/cars/model/")
+    Call<List<CarOption>> getCardModels(@Query("id") int id);
 
     @GET("marketplace/seats/")
     Call<List<CarOption>> getCarSeats();
 
-    @GET("marketplace/color/")
+    @GET("marketplace/colors/")
     Call<List<CarOption>> getCarColors();
 
     @GET("marketplace/types/")

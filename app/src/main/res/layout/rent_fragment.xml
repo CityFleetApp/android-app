@@ -13,329 +13,358 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:id="@+id/makeBtn"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/reg_edittext_padding">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/makeTitle"
-                    style="@style/RegistrationEdittextLabelStyle"
-                    android:drawableLeft="@drawable/star_green_make"
-                    android:text="@string/make" />
-
-                <TextView
-                    android:id="@+id/makeText"
-                    style="@style/RegistrationEdittextStyle"
-                    fontPath="@string/fontLight"
-                    android:layout_below="@+id/makeTitle"
-                    android:layout_toLeftOf="@+id/arrowMake"
-                    android:text="@string/select_make"
-                    tools:ignore="MissingPrefix" />
-
-                <ImageView
-                    android:id="@+id/arrowMake"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/makeBtn"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow_down" />
-            </RelativeLayout>
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lineColor" />
+                    <TextView
+                        android:id="@+id/makeTitle"
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/star_green_make"
+                        android:text="@string/make" />
 
-            <RelativeLayout
-                android:id="@+id/modelBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/reg_edittext_padding">
+                    <TextView
+                        android:id="@+id/makeText"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:layout_below="@+id/makeTitle"
+                        android:layout_toLeftOf="@+id/arrowMake"
+                        android:text="@string/select_make"
+                        tools:ignore="MissingPrefix" />
 
-                <TextView
-                    android:id="@+id/modelTitle"
-                    style="@style/RegistrationEdittextLabelStyle"
-                    android:drawableLeft="@drawable/car"
-                    android:text="@string/model" />
+                    <ImageView
+                        android:id="@+id/arrowMake"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/arrow_down" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/modelText"
-                    style="@style/RegistrationEdittextStyle"
-                    fontPath="@string/fontLight"
-                    android:layout_below="@+id/modelTitle"
-                    android:layout_toLeftOf="@+id/arrowModel"
-                    android:text="@string/select_model"
-                    tools:ignore="MissingPrefix" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
 
-                <ImageView
-                    android:id="@+id/arrowModel"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/modelBtn"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow_down" />
-            </RelativeLayout>
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lineColor" />
+                    <TextView
+                        android:id="@+id/modelTitle"
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/car"
+                        android:text="@string/model" />
 
-            <RelativeLayout
-                android:id="@+id/typeBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/reg_edittext_padding">
+                    <TextView
+                        android:id="@+id/modelText"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:layout_below="@+id/modelTitle"
+                        android:layout_toLeftOf="@+id/arrowModel"
+                        android:text="@string/select_model"
+                        tools:ignore="MissingPrefix" />
 
-                <TextView
-                    android:id="@+id/typeTitle"
-                    style="@style/RegistrationEdittextLabelStyle"
-                    android:drawableLeft="@drawable/scrool"
-                    android:text="@string/type" />
+                    <ImageView
+                        android:id="@+id/arrowModel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/arrow_down" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/typeText"
-                    style="@style/RegistrationEdittextStyle"
-                    fontPath="@string/fontLight"
-                    android:layout_below="@+id/typeTitle"
-                    android:layout_toLeftOf="@+id/arrowType"
-                    android:text="@string/select_type"
-                    tools:ignore="MissingPrefix" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
 
-                <ImageView
-                    android:id="@+id/arrowType"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/typeBtn"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow_down" />
-            </RelativeLayout>
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lineColor" />
+                    <TextView
+                        android:id="@+id/typeTitle"
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/scrool"
+                        android:text="@string/type" />
+
+                    <TextView
+                        android:id="@+id/typeText"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:layout_below="@+id/typeTitle"
+                        android:layout_toLeftOf="@+id/arrowType"
+                        android:text="@string/select_type"
+                        tools:ignore="MissingPrefix" />
+
+                    <ImageView
+                        android:id="@+id/arrowType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/arrow_down" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
 
 
-            <RelativeLayout
-                android:id="@+id/colorBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/reg_edittext_padding">
-
-                <TextView
-                    android:id="@+id/colorTitle"
-                    style="@style/RegistrationEdittextLabelStyle"
-                    android:drawableLeft="@drawable/paint"
-                    android:text="@string/color" />
-
-                <TextView
-                    android:id="@+id/colorText"
-                    style="@style/RegistrationEdittextStyle"
-                    fontPath="@string/fontLight"
-                    android:layout_below="@+id/colorTitle"
-                    android:layout_toLeftOf="@+id/arrowColor"
-                    android:text="@string/select_color"
-                    tools:ignore="MissingPrefix" />
-
-                <ImageView
-                    android:id="@+id/arrowColor"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/colorBtn"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow_down" />
-            </RelativeLayout>
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lineColor" />
+                    <TextView
+                        android:id="@+id/colorTitle"
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/paint"
+                        android:text="@string/color" />
 
-            <RelativeLayout
-                android:id="@+id/yearBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/reg_edittext_padding">
+                    <TextView
+                        android:id="@+id/colorText"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:layout_below="@+id/colorTitle"
+                        android:layout_toLeftOf="@+id/arrowColor"
+                        android:text="@string/select_color"
+                        tools:ignore="MissingPrefix" />
 
-                <TextView
-                    android:id="@+id/yearTitle"
-                    style="@style/RegistrationEdittextLabelStyle"
-                    android:drawableLeft="@drawable/calendar"
-                    android:text="@string/year" />
+                    <ImageView
+                        android:id="@+id/arrowColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/arrow_down" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/yearText"
-                    style="@style/RegistrationEdittextStyle"
-                    fontPath="@string/fontLight"
-                    android:layout_below="@+id/yearTitle"
-                    android:layout_toLeftOf="@+id/arrowYear"
-                    android:text="@string/select_year"
-                    tools:ignore="MissingPrefix" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
 
-                <ImageView
-                    android:id="@+id/arrowYear"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/yearBtn"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow_down" />
-            </RelativeLayout>
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lineColor" />
+                    <TextView
+                        android:id="@+id/yearTitle"
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/calendar"
+                        android:text="@string/year" />
 
-            <RelativeLayout
-                android:id="@+id/fuelBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/reg_edittext_padding">
+                    <TextView
+                        android:id="@+id/yearText"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:layout_below="@+id/yearTitle"
+                        android:layout_toLeftOf="@+id/arrowYear"
+                        android:text="@string/select_year"
+                        tools:ignore="MissingPrefix" />
 
-                <TextView
-                    android:id="@+id/fuelTitle"
-                    style="@style/RegistrationEdittextLabelStyle"
-                    android:drawableLeft="@drawable/gas"
-                    android:text="@string/fuel" />
+                    <ImageView
+                        android:id="@+id/arrowYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/arrow_down" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/fuelText"
-                    style="@style/RegistrationEdittextStyle"
-                    fontPath="@string/fontLight"
-                    android:layout_below="@+id/fuelTitle"
-                    android:layout_toLeftOf="@+id/arrowFuel"
-                    android:text="@string/select_fuel"
-                    tools:ignore="MissingPrefix" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
 
-                <ImageView
-                    android:id="@+id/arrowFuel"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/fuelBtn"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow_down" />
-            </RelativeLayout>
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lineColor" />
+                    <TextView
+                        android:id="@+id/fuelTitle"
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/gas"
+                        android:text="@string/fuel" />
 
-            <RelativeLayout
-                android:id="@+id/seatsBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/reg_edittext_padding">
+                    <TextView
+                        android:id="@+id/fuelText"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:layout_below="@+id/fuelTitle"
+                        android:layout_toLeftOf="@+id/arrowFuel"
+                        android:text="@string/select_fuel"
+                        tools:ignore="MissingPrefix" />
 
-                <TextView
-                    android:id="@+id/seatsTitle"
-                    style="@style/RegistrationEdittextLabelStyle"
-                    android:drawableLeft="@drawable/seat"
-                    android:text="@string/seats" />
+                    <ImageView
+                        android:id="@+id/arrowFuel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/arrow_down" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/seatsText"
-                    style="@style/RegistrationEdittextStyle"
-                    fontPath="@string/fontLight"
-                    android:layout_below="@+id/seatsTitle"
-                    android:layout_toLeftOf="@+id/seatsArrow"
-                    android:text="@string/select_seats"
-                    tools:ignore="MissingPrefix" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
 
-                <ImageView
-                    android:id="@+id/seatsArrow"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/seatsBtn"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow_down" />
-            </RelativeLayout>
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lineColor" />
+                    <TextView
+                        android:id="@+id/seatsTitle"
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/seat"
+                        android:text="@string/seats" />
 
-            <RelativeLayout
-                android:id="@+id/priceBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/reg_edittext_padding">
+                    <TextView
+                        android:id="@+id/seatsText"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:layout_below="@+id/seatsTitle"
+                        android:layout_toLeftOf="@+id/seatsArrow"
+                        android:text="@string/select_seats"
+                        tools:ignore="MissingPrefix" />
 
-                <TextView
-                    android:id="@+id/priceTitle"
-                    style="@style/RegistrationEdittextLabelStyle"
-                    android:drawableLeft="@drawable/price"
-                    android:text="@string/price" />
+                    <ImageView
+                        android:id="@+id/seatsArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/arrow_down" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/priceText"
-                    style="@style/RegistrationEdittextStyle"
-                    fontPath="@string/fontLight"
-                    android:layout_below="@+id/priceTitle"
-                    android:layout_toLeftOf="@+id/priceArrow"
-                    android:text="@string/select_price"
-                    tools:ignore="MissingPrefix" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
 
-                <ImageView
-                    android:id="@+id/priceArrow"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/priceBtn"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow_down" />
-            </RelativeLayout>
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lineColor" />
+                    <TextView
+                        android:id="@+id/priceTitle"
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/price"
+                        android:text="@string/price" />
 
-            <RelativeLayout
+                    <EditText
+                        android:id="@+id/priceText"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:layout_below="@+id/priceTitle"
+                        android:hint="@string/select_price"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        tools:ignore="MissingPrefix" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
+
+                    <TextView
+                        android:id="@+id/descrTitle"
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/edit"
+                        android:text="@string/descr" />
+
+                    <EditText
+                        android:id="@+id/descrET"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:layout_below="@+id/descrTitle"
+                        android:hint="@string/provide_description"
+                        android:inputType="text"
+                        tools:ignore="MissingPrefix" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
+
+                <include layout="@layout/photos_list_picker" />
+
+                <Button
+                    android:id="@+id/postBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/reg_edittext_padding"
+                    android:layout_marginLeft="@dimen/splash_btn_margin_small"
+                    android:layout_marginRight="@dimen/splash_btn_margin_small"
+                    android:layout_marginTop="@dimen/reg_edittext_padding"
+                    android:background="@drawable/red_btn_selector"
+                    android:text="@string/post"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size" />
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/reg_edittext_padding">
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/descrTitle"
-                    style="@style/RegistrationEdittextLabelStyle"
-                    android:drawableLeft="@drawable/edit"
-                    android:text="@string/descr" />
-
-                <EditText
-                    android:id="@+id/descrET"
-                    style="@style/RegistrationEdittextStyle"
-                    fontPath="@string/fontLight"
-                    android:layout_below="@+id/descrTitle"
-                    android:hint="@string/provide_description"
-                    android:inputType="text"
-                    tools:ignore="MissingPrefix" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lineColor" />
-
-            <include layout="@layout/photos_list_picker" />
-        </LinearLayout>
     </ScrollView>
 </LinearLayout>
