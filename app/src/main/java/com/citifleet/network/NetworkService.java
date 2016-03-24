@@ -150,4 +150,6 @@ public interface NetworkService {
 
     @GET("marketplace/fuel/")
     Call<List<CarOption>> getCarFuels();
+
+
 }

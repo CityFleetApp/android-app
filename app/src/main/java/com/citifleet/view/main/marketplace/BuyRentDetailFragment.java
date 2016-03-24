@@ -15,7 +15,6 @@ import com.citifleet.R;
 import com.citifleet.model.Car;
 import com.citifleet.model.PostingType;
 import com.citifleet.util.Constants;
-import com.citifleet.util.RecycleViewClickListener;
 import com.citifleet.view.BaseFragment;
 
 import java.util.List;
@@ -51,13 +50,6 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
         presenter.loadCarList(type);
         return view;
     }
-
-    private RecycleViewClickListener.OnItemClickListener onItemClickListener = new RecycleViewClickListener.OnItemClickListener() {
-        @Override
-        public void onItemClick(View view, int position) {
-
-        }
-    };
 
     @Override
     public void onDestroyView() {

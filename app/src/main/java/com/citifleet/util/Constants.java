@@ -33,4 +33,5 @@ public class Constants {
     public static final String HTTP_SCHEME = "http";
     public static final int BUY_RENT_COLUMNS_COUNT = 2;
     public static final int MIN_POSTING_YEAR = 2009;
+    public static final int POSTING_IMAGES_NUMBER = 5;
 }
