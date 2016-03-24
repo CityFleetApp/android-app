@@ -3,10 +3,13 @@ package com.citifleet.network;
 import com.citifleet.model.AddContactsBody;
 import com.citifleet.model.Benefit;
 import com.citifleet.model.Car;
+import com.citifleet.model.CarOption;
 import com.citifleet.model.Document;
 import com.citifleet.model.LegalAidLocation;
 import com.citifleet.model.LegalAidPerson;
 import com.citifleet.model.LoginInfo;
+import com.citifleet.model.Make;
+import com.citifleet.model.Model;
 import com.citifleet.model.Notification;
 import com.citifleet.model.ProfileImage;
 import com.citifleet.model.Settings;
@@ -131,4 +134,22 @@ public interface NetworkService {
 
     @GET("marketplace/cars/rent/")
     Call<List<Car>> getCarsForRent();
+
+    @GET("marketplace/cars/make/")
+    Call<List<Make>> getCarMakes();
+
+    @GET("marketplace/cars/model/{id}/")
+    Call<List<Model>> getCardModels();
+
+    @GET("marketplace/seats/")
+    Call<List<CarOption>> getCarSeats();
+
+    @GET("marketplace/color/")
+    Call<List<CarOption>> getCarColors();
+
+    @GET("marketplace/types/")
+    Call<List<CarOption>> getCarTypes();
+
+    @GET("marketplace/fuel/")
+    Call<List<CarOption>> getCarFuels();
 }

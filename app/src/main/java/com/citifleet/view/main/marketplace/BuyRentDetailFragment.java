@@ -46,7 +46,7 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
         adapter = new BuyRentAdapter(getActivity());
         marketplaceList.setAdapter(adapter);
         //marketplaceList.addItemDecoration(new SpacesItemDecoration((int) getResources().getDimension(R.dimen.marketplace_space)));
-        marketplaceList.addOnItemTouchListener(new RecycleViewClickListener(getActivity(), onItemClickListener));
+       // marketplaceList.addOnItemTouchListener(new RecycleViewClickListener(getActivity(), onItemClickListener));
         presenter = new BuyRentPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.loadCarList(type);
         return view;

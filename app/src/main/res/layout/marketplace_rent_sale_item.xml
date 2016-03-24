@@ -110,30 +110,47 @@
                 android:layout_marginTop="@dimen/bottom_menu_drawable_padding"
                 android:background="@color/marketplace_divider" />
 
-            <RelativeLayout
+            <LinearLayout
+                android:clickable="true"
+                android:id="@+id/carDetailsBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/bottom_menu_drawable_padding">
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/bottom_menu_drawable_padding">
+
+                    <TextView
+                        android:id="@+id/detailsLbl"
+                        style="@style/MarketPlaceTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/copy"
+                        android:text="@string/details" />
+
+                    <ImageView
+                        android:id="@+id/arrowImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/detailsLbl"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/arrow_details_selector" />
+                </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/detailsLbl"
+                    android:id="@+id/detailsText"
                     style="@style/MarketPlaceTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/copy"
-                    android:text="@string/details" />
-
-                <ImageView
-                    android:id="@+id/arrowImage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/detailsLbl"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow_down_red" />
-            </RelativeLayout>
-
-
+                    android:layout_marginTop="@dimen/bottom_menu_drawable_padding"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:singleLine="false"
+                    android:text="long long long long long long long long long long longlong long long long longlong long long long longlong long long long longlong long long long longlong long long long long long long long long long long long long long long long long long long long long text" />
+            </LinearLayout>
         </LinearLayout>
 
 

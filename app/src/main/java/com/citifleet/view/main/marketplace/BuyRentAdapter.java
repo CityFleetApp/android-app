@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.citifleet.R;
@@ -45,6 +46,13 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
         TextView typeLbl;
         @Bind(R.id.detailsLbl)
         TextView detailsLbl;
+        @Bind(R.id.detailsText)
+        TextView detailsText;
+        @Bind(R.id.carDetailsBtn)
+        LinearLayout carDetailsBtn;
+        @Bind(R.id.arrowImage)
+        ImageView arrowImage;
+        boolean isDetailsExpanded = false;
 
         public ViewHolder(View v) {
             super(v);
@@ -69,18 +77,41 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Car car = list.get(position);
         if (!TextUtils.isEmpty(car.getPhoto())) {
             Picasso.with(context).load(car.getPhoto()).into(holder.carImage);
         }
         holder.carPrice.setText(car.getPrice());
-        holder.carTitle.setText(car.getDescription());
+        holder.carTitle.setText(car.getYear() + " " + car.getMake() + " " + car.getModel());
         holder.colorLbl.setText(car.getColor());
         holder.fuelLbl.setText(car.getFuel());
         holder.seatsLbl.setText(String.valueOf(car.getSeats()));
         holder.typeLbl.setText(car.getType());
         holder.modelLbl.setText(car.getModel());
+        holder.detailsText.setText(car.getDescription());
+        if (holder.isDetailsExpanded) {
+            holder.detailsText.setVisibility(View.VISIBLE);
+            holder.arrowImage.setSelected(true);
+        } else {
+            holder.detailsText.setVisibility(View.GONE);
+            holder.arrowImage.setSelected(false);
+        }
+        holder.carDetailsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.isDetailsExpanded){
+                    holder.detailsText.setVisibility(View.GONE);
+                    holder.arrowImage.setSelected(false);
+                    holder.isDetailsExpanded = false;
+                } else{
+                    holder.detailsText.setVisibility(View.VISIBLE);
+                    holder.arrowImage.setSelected(true);
+                    holder.isDetailsExpanded = true;
+                }
+
+            }
+        });
     }
 
     @Override
