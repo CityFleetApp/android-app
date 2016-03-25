@@ -34,4 +34,5 @@ public class Constants {
     public static final int BUY_RENT_COLUMNS_COUNT = 2;
     public static final int MIN_POSTING_YEAR = 2009;
     public static final int POSTING_IMAGES_NUMBER = 5;
+    public static final int IMAGE_WIDTH = 1440;
 }

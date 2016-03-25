@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.citifleet.R;
@@ -78,9 +79,22 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Car car = list.get(position);
-        if (!TextUtils.isEmpty(car.getPhoto())) {
-            Picasso.with(context).load(car.getPhoto()).into(holder.carImage);
+        final Car car = list.get(position);
+        holder.carImage.post(new Runnable() {
+            @Override
+            public void run() {
+                int[] dimensions = car.getDimensions();
+                int width = dimensions[0];
+                int height = dimensions[1];
+                int viewHeight = holder.carImage.getWidth() * height / width;
+                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.carImage.getLayoutParams();
+                lp.height = viewHeight;
+                holder.carImage.setLayoutParams(lp);
+            }
+        });
+
+        if (car.getPhotos() != null && !car.getPhotos().isEmpty() && !TextUtils.isEmpty(car.getPhotos().get(0))) {
+            Picasso.with(context).load(car.getPhotos().get(0)).fit().centerCrop().into(holder.carImage);
         }
         holder.carPrice.setText(car.getPrice());
         holder.carTitle.setText(car.getYear() + " " + car.getMake() + " " + car.getModel());
@@ -100,11 +114,11 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
         holder.carDetailsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.isDetailsExpanded){
+                if (holder.isDetailsExpanded) {
                     holder.detailsText.setVisibility(View.GONE);
                     holder.arrowImage.setSelected(false);
                     holder.isDetailsExpanded = false;
-                } else{
+                } else {
                     holder.detailsText.setVisibility(View.VISIBLE);
                     holder.arrowImage.setSelected(true);
                     holder.isDetailsExpanded = true;

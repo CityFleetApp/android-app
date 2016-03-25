@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -81,6 +82,8 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     List<ImageButton> images;
     @BindString(R.string.pick_image_title)
     String pickImageTitle;
+    @Bind(R.id.postBtn)
+    Button postBtn;
     private PostingType postingType;
     private PostingRentSaleDetailPresenter presenter;
     private List<CarOption> makeList;
@@ -157,9 +160,21 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     void onPostBtnClick() {
         if (selectedMakeId == -1 || selectedModelId == -1 || selectedTypeId == -1 || selectedSeatsId == -1 || selectedFuelId == -1 || selectedColorId == -1 ||
                 TextUtils.isEmpty(yearText.getText().toString()) || TextUtils.isEmpty(price.getText().toString()) || TextUtils.isEmpty(descr.getText().toString())) {
-            Toast.makeText(getActivity(), "Fill all the fields!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.posting_empty, Toast.LENGTH_SHORT).show();
         } else {
-
+            int images = 0;
+            for (int i = 0; i < imageUrls.length; i++) {
+                if (imageUrls[i] != null) {
+                    images++;
+                }
+            }
+            if (images == 0) {
+                Toast.makeText(getActivity(), R.string.one_image, Toast.LENGTH_SHORT).show();
+            } else {
+                presenter.createPost(postingType, selectedMakeId, selectedModelId, selectedTypeId, selectedColorId, Integer.valueOf(yearText.getText().toString()),
+                        selectedFuelId, selectedSeatsId, Double.parseDouble(price.getText().toString()),
+                        descr.getText().toString(), imageUrls);
+            }
         }
     }
 
@@ -273,11 +288,13 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
 
     @Override
     public void startLoading() {
+        postBtn.setEnabled(false);
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void stopLoading() {
+        postBtn.setEnabled(true);
         progressBar.setVisibility(View.GONE);
     }
 
@@ -325,6 +342,11 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     @Override
     public void onSeatsLoaded(List<CarOption> seatsList) {
         this.seatsList = seatsList;
+    }
+
+    @Override
+    public void onPostCreatesSuccessfully() {
+        getActivity().onBackPressed();
     }
 
     @OnClick({R.id.imageFirst, R.id.imageSecond, R.id.imageThird, R.id.imageFourth, R.id.imageFifth})

@@ -15,6 +15,7 @@ import com.citifleet.model.UserImages;
 import com.citifleet.model.UserInfo;
 
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -28,6 +29,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -151,5 +153,13 @@ public interface NetworkService {
     @GET("marketplace/fuel/")
     Call<List<CarOption>> getCarFuels();
 
+    @Multipart
+    @POST("marketplace/cars/posting/rent/")
+    Call<Void> postRentCar(@PartMap() Map<String,RequestBody>  files, @Part("make") int make, @Part("model") int model, @Part("type") int type, @Part("color") int color,
+                           @Part("year") int year, @Part("fuel") int fuel, @Part("seats") int seats, @Part("price") double price, @Part("description") RequestBody description);
 
+    @Multipart
+    @POST("marketplace/cars/posting/sale/")
+    Call<Void> postSaleCar(@PartMap() Map<String,RequestBody>  files, @Part("make") int make, @Part("model") int model, @Part("type") int type, @Part("color") int color,
+                           @Part("year") int year, @Part("fuel") int fuel, @Part("seats") int seats, @Part("price") double price, @Part("description") RequestBody description);
 }

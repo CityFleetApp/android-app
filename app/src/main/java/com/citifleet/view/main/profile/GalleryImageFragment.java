@@ -94,7 +94,7 @@ public class GalleryImageFragment extends BaseFragment {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
             setLoading(false);
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 imagesList.remove(pager.getCurrentItem());
                 if (imagesList.size() == 0) {
                     getActivity().onBackPressed();

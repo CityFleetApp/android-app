@@ -1,5 +1,8 @@
 package com.citifleet.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by vika on 23.03.16.
  */
@@ -15,7 +18,8 @@ public class Car {
     private String price;
     private String description;
     private boolean rent;
-    private String photo;
+    private int[] dimensions = new int[2];
+    private List<String> photos = new ArrayList<String>();
 
     public int getId() {
         return id;
@@ -105,11 +109,19 @@ public class Car {
         this.rent = rent;
     }
 
-    public String getPhoto() {
-        return photo;
+    public List<String> getPhotos() {
+        return photos;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
+    }
+
+    public int[] getDimensions() {
+        return dimensions;
+    }
+
+    public void setDimensions(int[] dimensions) {
+        this.dimensions = dimensions;
     }
 }

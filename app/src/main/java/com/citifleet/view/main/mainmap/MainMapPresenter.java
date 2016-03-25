@@ -33,7 +33,7 @@ public class MainMapPresenter {
         @Override
         public void onResponse(Call<Object> call, Response<Object> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onReportSuccess();
             } else {
                 view.onReportFailure(NetworkErrorUtil.gerErrorMessage(response));

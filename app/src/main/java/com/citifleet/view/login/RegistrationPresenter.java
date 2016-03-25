@@ -34,7 +34,7 @@ public class RegistrationPresenter {
         @Override
         public void onResponse(Call<LoginInfo> call, Response<LoginInfo> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onSignUpSuccess(response.body().getToken());
             } else {
                 view.onSignUpFailure(NetworkErrorUtil.gerErrorMessage(response));

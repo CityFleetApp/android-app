@@ -40,7 +40,7 @@ public class BenefitPresenter {
         @Override
         public void onResponse(Call<List<Benefit>> call, Response<List<Benefit>> response) {
             view.stopLoading();
-            if (!response.isSuccess()) {
+            if (!response.isSuccessful()) {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             } else {
                 view.updateBenefitsList(response.body());

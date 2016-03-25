@@ -185,6 +185,8 @@
     <string name="company_personal">Company/Personal</string>
     <string name="job_type">Job Type</string>
     <string name="request_job">Request job</string>
+    <string name="posting_empty">Fill all the fields!</string>
+    <string name="one_image">Post need to have at least 1 image</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

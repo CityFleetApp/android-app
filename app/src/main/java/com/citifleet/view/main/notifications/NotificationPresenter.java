@@ -65,7 +65,7 @@ public class NotificationPresenter {
         @Override
         public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 notifications = response.body();
                 view.onNotificationsLoaded(notifications);
             } else {
@@ -83,7 +83,7 @@ public class NotificationPresenter {
     Callback<Void> markSeenNotificationCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
-            if (!response.isSuccess()) {
+            if (!response.isSuccessful()) {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
         }
