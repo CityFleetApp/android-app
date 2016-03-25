@@ -113,4 +113,7 @@
     <dimen name="green_background_padding">2dp</dimen>
     <dimen name="job_offer_small_padding">10dp</dimen>
     <dimen name="job_info_padding">15dp</dimen>
+    <dimen name="reset_password_margin_2">60dp</dimen>
+    <dimen name="reset_password_margin_1">65dp</dimen>
+    <dimen name="reset_password_lbl_text_size">20sp</dimen>
 </resources>

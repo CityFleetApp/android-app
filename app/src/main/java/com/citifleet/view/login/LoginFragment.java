@@ -15,6 +15,7 @@ import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.util.CommonUtils;
 import com.citifleet.util.PrefUtil;
+import com.citifleet.view.BaseActivity;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -28,21 +29,21 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LoginFragment extends Fragment implements Validator.ValidationListener, LoginPresenter.LoginView {
-    private Validator      validator;
+    private Validator validator;
     private LoginPresenter presenter;
     @NotEmpty
     @Email
     @Bind(R.id.email)
-    EditText    email;
+    EditText email;
     @NotEmpty
     @Bind(R.id.password)
-    EditText    password;
+    EditText password;
     @Bind(R.id.loginBtn)
-    Button      loginBtn;
+    Button loginBtn;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
     @BindString(R.string.default_error_mes)
-    String      defaultErrorMes;
+    String defaultErrorMes;
 
     @Nullable
     @Override
@@ -58,6 +59,11 @@ public class LoginFragment extends Fragment implements Validator.ValidationListe
     @OnClick(R.id.loginBtn)
     void loginBtnClick() {
         validator.validate();
+    }
+
+    @OnClick(R.id.forgotPasswordBtn)
+    void onForgotPasswordBtnClick() {
+        ((BaseActivity)getActivity()).changeFragment(new ResetPasswordFragment(), true);
     }
 
     @Override

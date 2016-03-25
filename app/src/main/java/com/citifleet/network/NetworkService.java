@@ -49,6 +49,10 @@ public interface NetworkService {
     @POST("reports/")
     Call<Object> report(@Field("report_type") int reportType, @Field("lat") double lat, @Field("lng") double lng);
 
+    @FormUrlEncoded
+    @POST("users/reset-password/")
+    Call<Void> resetPassword(@Field("email") String email);
+
     @Multipart
     @PUT("users/upload-avatar/")
     Call<ProfileImage> uploadAvatar(@Part("avatar\"; filename=\"image.png\" ") RequestBody file, @Part("description") RequestBody description);
@@ -155,11 +159,11 @@ public interface NetworkService {
 
     @Multipart
     @POST("marketplace/cars/posting/rent/")
-    Call<Void> postRentCar(@PartMap() Map<String,RequestBody>  files, @Part("make") int make, @Part("model") int model, @Part("type") int type, @Part("color") int color,
+    Call<Void> postRentCar(@PartMap() Map<String, RequestBody> files, @Part("make") int make, @Part("model") int model, @Part("type") int type, @Part("color") int color,
                            @Part("year") int year, @Part("fuel") int fuel, @Part("seats") int seats, @Part("price") double price, @Part("description") RequestBody description);
 
     @Multipart
     @POST("marketplace/cars/posting/sale/")
-    Call<Void> postSaleCar(@PartMap() Map<String,RequestBody>  files, @Part("make") int make, @Part("model") int model, @Part("type") int type, @Part("color") int color,
+    Call<Void> postSaleCar(@PartMap() Map<String, RequestBody> files, @Part("make") int make, @Part("model") int model, @Part("type") int type, @Part("color") int color,
                            @Part("year") int year, @Part("fuel") int fuel, @Part("seats") int seats, @Part("price") double price, @Part("description") RequestBody description);
 }
