@@ -166,4 +166,9 @@ public interface NetworkService {
     @POST("marketplace/cars/posting/sale/")
     Call<Void> postSaleCar(@PartMap() Map<String, RequestBody> files, @Part("make") int make, @Part("model") int model, @Part("type") int type, @Part("color") int color,
                            @Part("year") int year, @Part("fuel") int fuel, @Part("seats") int seats, @Part("price") double price, @Part("description") RequestBody description);
+
+    @Multipart
+    @POST("marketplace/goods/posting/")
+    Call<Void> postGood(@PartMap() Map<String, RequestBody> files, @Part("price") double price, @Part("condition") int condition,
+                        @Part("item") RequestBody item, @Part("description") RequestBody description);
 }

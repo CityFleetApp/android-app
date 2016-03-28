@@ -200,4 +200,10 @@
         <item>Buy</item>
         <item>Rent</item>
     </string-array>
+    <string-array name="general_goods_conditions">
+        <item>Brand New (Never Used)</item>
+        <item>New (Slightly Used)</item>
+        <item>Used (Good Condition)</item>
+        <item>Used</item>
+    </string-array>
 </resources>

@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.citifleet.model.CarOption;
 import com.citifleet.model.PostingType;
 import com.citifleet.util.CommonUtils;
 import com.citifleet.util.Constants;
+import com.citifleet.util.DecimalDigitsInputFilter;
 import com.citifleet.util.PermissionUtil;
 import com.citifleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
@@ -94,12 +96,12 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     private List<CarOption> colorsList;
     private List<String> yearList;
     private String[] imageUrls = new String[Constants.POSTING_IMAGES_NUMBER];
-    private int selectedMakeId = -1;
-    private int selectedModelId = -1;
-    private int selectedTypeId = -1;
-    private int selectedColorId = -1;
-    private int selectedFuelId = -1;
-    private int selectedSeatsId = -1;
+    private int selectedMakeId = Constants.DEFAULT_UNSELECTED_POSITION;
+    private int selectedModelId = Constants.DEFAULT_UNSELECTED_POSITION;
+    private int selectedTypeId = Constants.DEFAULT_UNSELECTED_POSITION;
+    private int selectedColorId = Constants.DEFAULT_UNSELECTED_POSITION;
+    private int selectedFuelId = Constants.DEFAULT_UNSELECTED_POSITION;
+    private int selectedSeatsId = Constants.DEFAULT_UNSELECTED_POSITION;
     private int positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
 
     @Nullable
@@ -112,6 +114,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
         presenter = new PostingRentSaleDetailPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.init();
         enableModelBtn(false);
+        price.setFilters(new InputFilter[]{new DecimalDigitsInputFilter()});
         return view;
     }
 
