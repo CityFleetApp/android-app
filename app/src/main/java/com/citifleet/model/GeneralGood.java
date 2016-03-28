@@ -1,15 +1,19 @@
 package com.citifleet.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by vika on 24.03.16.
  */
 public class GeneralGood {
     private int id;
-    private int year;
-    private String type;
+    private String item;
+    private String condition;
     private String description;
-    private String photo;
     private String price;
+    private int[] dimensions = new int[2];
+    private List<String> photos = new ArrayList<String>();
 
     public int getId() {
         return id;
@@ -19,12 +23,20 @@ public class GeneralGood {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getItem() {
+        return item;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 
     public String getDescription() {
@@ -35,14 +47,6 @@ public class GeneralGood {
         this.description = description;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
     public String getPrice() {
         return price;
     }
@@ -51,11 +55,19 @@ public class GeneralGood {
         this.price = price;
     }
 
-    public int getYear() {
-        return year;
+    public int[] getDimensions() {
+        return dimensions;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setDimensions(int[] dimensions) {
+        this.dimensions = dimensions;
+    }
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
     }
 }

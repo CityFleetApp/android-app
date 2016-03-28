@@ -5,6 +5,7 @@ import com.citifleet.model.Benefit;
 import com.citifleet.model.Car;
 import com.citifleet.model.CarOption;
 import com.citifleet.model.Document;
+import com.citifleet.model.GeneralGood;
 import com.citifleet.model.LegalAidLocation;
 import com.citifleet.model.LegalAidPerson;
 import com.citifleet.model.LoginInfo;
@@ -156,6 +157,9 @@ public interface NetworkService {
 
     @GET("marketplace/fuel/")
     Call<List<CarOption>> getCarFuels();
+
+    @GET("marketplace/goods/")
+    Call<List<GeneralGood>> getGoods();
 
     @Multipart
     @POST("marketplace/cars/posting/rent/")

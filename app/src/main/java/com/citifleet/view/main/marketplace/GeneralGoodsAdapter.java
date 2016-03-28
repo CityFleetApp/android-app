@@ -6,8 +6,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.citifleet.R;
@@ -42,6 +44,7 @@ public class GeneralGoodsAdapter extends RecyclerView.Adapter<GeneralGoodsAdapte
         LinearLayout goodsDetailsBtn;
         @Bind(R.id.arrowImage)
         ImageView arrowImage;
+
         boolean isDetailsExpanded = false;
 
         public ViewHolder(View v) {
@@ -68,36 +71,55 @@ public class GeneralGoodsAdapter extends RecyclerView.Adapter<GeneralGoodsAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        GeneralGood generalGood = list.get(position);
-        if (!TextUtils.isEmpty(generalGood.getPhoto())) {
-            Picasso.with(context).load(generalGood.getPhoto()).into(holder.goodsImage);
+        final GeneralGood generalGood = list.get(position);
+        holder.goodsImage.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    holder.goodsImage.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                } else {
+                    holder.goodsImage.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
+                int[] dimensions = generalGood.getDimensions();
+                int width = dimensions[0];
+                int height = dimensions[1];
+                int viewHeight = holder.goodsImage.getWidth() * height / width;
+                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.goodsImage.getLayoutParams();
+                lp.height = viewHeight;
+                holder.goodsImage.setLayoutParams(lp);
+            }
+        });
+        if (generalGood.getPhotos() != null && !generalGood.getPhotos().isEmpty() && !TextUtils.isEmpty(generalGood.getPhotos().get(0))) {
+            Picasso.with(context).load(generalGood.getPhotos().get(0)).into(holder.goodsImage);
         }
+
         holder.goodsPrice.setText(generalGood.getPrice());
-   //     holder.goodsTitle.setText(generalGood.getYear() + " " + car.getMake() + " " + car.getModel());
-//        holder.typeLbl.setText(.getType());
-//        holder.detailsText.setText(car.getDescription());
-//        if (holder.isDetailsExpanded) {
-//            holder.detailsText.setVisibility(View.VISIBLE);
-//            holder.arrowImage.setSelected(true);
-//        } else {
-//            holder.detailsText.setVisibility(View.GONE);
-//            holder.arrowImage.setSelected(false);
-//        }
-//        holder.goodsDetailsBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (holder.isDetailsExpanded) {
-//                    holder.detailsText.setVisibility(View.GONE);
-//                    holder.arrowImage.setSelected(false);
-//                    holder.isDetailsExpanded = false;
-//                } else {
-//                    holder.detailsText.setVisibility(View.VISIBLE);
-//                    holder.arrowImage.setSelected(true);
-//                    holder.isDetailsExpanded = true;
-//                }
-//
-//            }
-//        });
+        holder.goodsTitle.setText(generalGood.getItem());
+        holder.typeLbl.setText(generalGood.getCondition());
+        holder.detailsText.setText(generalGood.getDescription());
+
+        if (holder.isDetailsExpanded) {
+            holder.detailsText.setVisibility(View.VISIBLE);
+            holder.arrowImage.setSelected(true);
+        } else {
+            holder.detailsText.setVisibility(View.GONE);
+            holder.arrowImage.setSelected(false);
+        }
+        holder.goodsDetailsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.isDetailsExpanded) {
+                    holder.detailsText.setVisibility(View.GONE);
+                    holder.arrowImage.setSelected(false);
+                    holder.isDetailsExpanded = false;
+                } else {
+                    holder.detailsText.setVisibility(View.VISIBLE);
+                    holder.arrowImage.setSelected(true);
+                    holder.isDetailsExpanded = true;
+                }
+
+            }
+        });
     }
 
     @Override
