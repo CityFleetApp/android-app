@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.citifleet.model.GeneralGood;
 import com.citifleet.model.JobOffer;
+import com.citifleet.model.JobOfferStatus;
 import com.citifleet.model.Notification;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
@@ -46,15 +47,21 @@ public class JobOffersPresenter {
     }
 
     public void onAvailableJobOffersBtnClicked() {
-        if (jobOfferList != null) {
-            availableJobOfferList = new ArrayList<JobOffer>();
-            for (JobOffer jobOffer : jobOfferList) {
-//                if (n.isUnseen()) {
-//                    unreadNotifications.add(n);
-//                }
-            }
+        if (availableJobOfferList != null) {
             view.onListLoaded(availableJobOfferList);
         }
+    }
+
+    private void getAvailableJobsCount() {
+        availableJobOfferList = new ArrayList<JobOffer>();
+        if (jobOfferList != null) {
+            for (JobOffer jobOffer : jobOfferList) {
+                if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.AVAILABLE.name())) {
+                    availableJobOfferList.add(jobOffer);
+                }
+            }
+        }
+        view.setAvailableJobsCount(availableJobOfferList.size());
     }
 
     private Callback<List<JobOffer>> jobsCallback = new Callback<List<JobOffer>>() {
@@ -67,6 +74,7 @@ public class JobOffersPresenter {
             } else {
                 jobOfferList = response.body();
                 view.onListLoaded(jobOfferList);
+                getAvailableJobsCount();
             }
         }
 
@@ -88,5 +96,7 @@ public class JobOffersPresenter {
         void onNetworkError();
 
         void onListLoaded(List<JobOffer> jobOfferList);
+
+        void setAvailableJobsCount(int count);
     }
 }

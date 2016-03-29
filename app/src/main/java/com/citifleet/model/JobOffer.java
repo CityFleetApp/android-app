@@ -2,9 +2,12 @@ package com.citifleet.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by vika on 28.03.16.
  */
+@Parcel
 public class JobOffer {
     private int id;
     @SerializedName("pickup_datetime")
@@ -13,13 +16,14 @@ public class JobOffer {
     private String pickupAddress;
     private String destination;
     private double fare;
-    private double gratuity;
+    private String gratuity;
     @SerializedName("vehicle_type")
     private String vehicleType;
     private boolean suite;
     @SerializedName("job_type")
     private String jobType;
     private String instructions;
+    private String status;
 
     public int getId() {
         return id;
@@ -61,11 +65,11 @@ public class JobOffer {
         this.fare = fare;
     }
 
-    public double getGratuity() {
+    public String getGratuity() {
         return gratuity;
     }
 
-    public void setGratuity(double gratuity) {
+    public void setGratuity(String gratuity) {
         this.gratuity = gratuity;
     }
 
@@ -99,5 +103,13 @@ public class JobOffer {
 
     public void setInstructions(String instructions) {
         this.instructions = instructions;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

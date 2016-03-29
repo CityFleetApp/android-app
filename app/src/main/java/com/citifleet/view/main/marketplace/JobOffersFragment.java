@@ -16,7 +16,10 @@ import com.citifleet.R;
 import com.citifleet.model.JobOffer;
 import com.citifleet.util.Constants;
 import com.citifleet.util.DividerItemDecoration;
+import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -99,6 +102,11 @@ public class JobOffersFragment extends BaseFragment implements JobOffersPresente
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void setAvailableJobsCount(int count) {
+        availableBtnLbl.setText(getString(R.string.jobs_available, count));
+    }
+
     @OnClick(R.id.allBtn)
     void onAllBtnClick() {
         presenter.onAllJobOffersBtnClicked();
@@ -118,6 +126,10 @@ public class JobOffersFragment extends BaseFragment implements JobOffersPresente
 
     @Override
     public void onItemClick(JobOffer item) {
-
+        JobInfoFragment fragment = new JobInfoFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.JOB_OFFER_TAG, Parcels.wrap(item));
+        fragment.setArguments(args);
+        ((BaseActivity) getActivity()).changeFragment(fragment, true);
     }
 }

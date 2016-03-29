@@ -192,6 +192,11 @@
     <string name="reset_password_hint">Please enter your email address and\nwe\'ll send you an email to reset your\npassword.</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="time_price">%1$s | $%2$s</string>
+    <string name="dollar_price">$%1$s</string>
+    <string name="job_info">Job Info</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="jobs_available">%1$d Jobs Available</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

@@ -185,4 +185,8 @@ public interface NetworkService {
     Call<Void> postJobOffer(@Field("pickup_datetime") String datetime, @Field("pickup_address") String address, @Field("destination") String destination, @Field("fare") double fare,
                             @Field("gratuity") double gratuity, @Field("vehicle_type") int vehicleType, @Field("suite") boolean suite, @Field("job_type") int jobType,
                             @Field("instructions") String instructions);
+
+
+    @POST("marketplace/offers/{id}/request_job/")
+    Call<Void> requestJob(@Path("id") int id);
 }
