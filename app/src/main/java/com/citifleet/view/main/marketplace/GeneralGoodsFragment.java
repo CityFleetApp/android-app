@@ -47,7 +47,7 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
         marketplaceList.setAdapter(adapter);
         presenter = new GeneralGoodsPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.loadGeneralGoodsList();
-        title.setText(R.string.general_goods);
+        title.setText(R.string.general_goods_for_sale);
         return view;
     }
 

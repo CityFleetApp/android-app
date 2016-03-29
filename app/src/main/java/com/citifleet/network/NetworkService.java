@@ -10,6 +10,7 @@ import com.citifleet.model.LegalAidLocation;
 import com.citifleet.model.LegalAidPerson;
 import com.citifleet.model.LoginInfo;
 import com.citifleet.model.Notification;
+import com.citifleet.model.JobOffer;
 import com.citifleet.model.ProfileImage;
 import com.citifleet.model.Settings;
 import com.citifleet.model.UserImages;
@@ -161,6 +162,9 @@ public interface NetworkService {
     @GET("marketplace/goods/")
     Call<List<GeneralGood>> getGoods();
 
+    @GET("marketplace/offers/")
+    Call<List<JobOffer>> getOffers();
+
     @Multipart
     @POST("marketplace/cars/posting/rent/")
     Call<Void> postRentCar(@PartMap() Map<String, RequestBody> files, @Part("make") int make, @Part("model") int model, @Part("type") int type, @Part("color") int color,
@@ -175,4 +179,10 @@ public interface NetworkService {
     @POST("marketplace/goods/posting/")
     Call<Void> postGood(@PartMap() Map<String, RequestBody> files, @Part("price") double price, @Part("condition") int condition,
                         @Part("item") RequestBody item, @Part("description") RequestBody description);
+
+    @FormUrlEncoded
+    @POST("marketplace/offers/posting/")
+    Call<Void> postJobOffer(@Field("pickup_datetime") String datetime, @Field("pickup_address") String address, @Field("destination") String destination, @Field("fare") double fare,
+                            @Field("gratuity") double gratuity, @Field("vehicle_type") int vehicleType, @Field("suite") boolean suite, @Field("job_type") int jobType,
+                            @Field("instructions") String instructions);
 }

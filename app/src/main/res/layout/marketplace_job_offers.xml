@@ -7,7 +7,7 @@
     <include layout="@layout/toolbar" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/notificationsListView"
+        android:id="@+id/jobsListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomBar"
@@ -53,7 +53,7 @@
             android:background="@color/report_divider_color" />
 
         <RelativeLayout
-            android:id="@+id/unreadBtn"
+            android:id="@+id/availableBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -61,7 +61,7 @@
             android:clickable="true">
 
             <TextView
-                android:id="@+id/unreadBtnLbl"
+                android:id="@+id/availableBtnLbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

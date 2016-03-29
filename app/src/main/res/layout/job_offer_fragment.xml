@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
     tools:ignore="MissingPrefix">
-
     <include layout="@layout/toolbar" />
 
     <ScrollView
@@ -224,6 +223,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/lineColor" />
+
+            <Button
+                android:id="@+id/postBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/reg_edittext_padding"
+                android:layout_marginLeft="@dimen/splash_btn_margin_small"
+                android:layout_marginRight="@dimen/splash_btn_margin_small"
+                android:layout_marginTop="@dimen/reg_edittext_padding"
+                android:background="@drawable/red_btn_selector"
+                android:text="@string/post"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+</RelativeLayout>

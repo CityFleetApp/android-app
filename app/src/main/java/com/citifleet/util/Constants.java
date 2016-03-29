@@ -37,4 +37,7 @@ public class Constants {
     public static final int IMAGE_WIDTH = 1440;
     public static final int MAX_PRICE=4;
     public static final int MAX_PRICE_DEC_PLACES = 2;
+    public static final String INPUT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    public static final String OUTPUT_TIME_FORMAT = "hh:mm aa";
+    public static final String OUTPUT_DATE_FORMAT = "mm/dd/yyyy";
 }

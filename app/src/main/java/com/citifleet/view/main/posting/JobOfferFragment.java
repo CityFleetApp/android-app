@@ -1,14 +1,18 @@
 package com.citifleet.view.main.posting;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.citifleet.R;
 import com.citifleet.view.BaseFragment;
+
+import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,6 +24,22 @@ import butterknife.OnClick;
 public class JobOfferFragment extends BaseFragment {
     @Bind(R.id.title)
     TextView title;
+    @Bind(R.id.dateText)
+    TextView dateText;
+    @Bind(R.id.timeText)
+    TextView timeText;
+    @Bind(R.id.pickupText)
+    TextView pickupText;
+    @Bind(R.id.destinationText)
+    TextView destinationText;
+    @Bind(R.id.fareET)
+    EditText fareEt;
+    @Bind(R.id.gratuityET)
+    EditText gratuityEt;
+    @Bind(R.id.vehicleTypeText)
+    TextView vehicleTypeText;
+    @Bind(R.id.suiteText)
+    TextView suiteText;
 
     @Nullable
     @Override
@@ -28,6 +48,37 @@ public class JobOfferFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         title.setText(R.string.job_offer);
         return view;
+    }
+
+    @OnClick(R.id.dateBtn)
+    void onDateBtnClick() {
+        Calendar dateAndTime = Calendar.getInstance();
+        dateAndTime.add(Calendar.DAY_OF_YEAR, 1);
+    }
+
+    @OnClick(R.id.timeBtn)
+    void onTimeBtnClick() {
+
+    }
+
+    @OnClick(R.id.pickupBtn)
+    void onPickupBtnClick() {
+
+    }
+
+    @OnClick(R.id.destinationBtn)
+    void onDestinationBtnClick() {
+
+    }
+
+    @OnClick(R.id.vehicleTypeBtn)
+    void vehicleTypeBtn() {
+
+    }
+
+    @OnClick(R.id.suiteBtn)
+    void suiteBtnClick() {
+
     }
 
     @Override

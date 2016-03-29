@@ -56,7 +56,7 @@ public class MarketPlaceFragment extends BaseFragment {
 
     @OnClick(R.id.jobsOfferBtn)
     void jobsOfferBtnClick() {
-
+        ((BaseActivity) getActivity()).changeFragment(new JobOffersFragment(), true);
     }
 
     @Override
