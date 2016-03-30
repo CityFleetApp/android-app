@@ -1,9 +1,12 @@
 package com.citifleet.view.main.marketplace;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,8 @@ import com.citifleet.model.GeneralGood;
 import com.citifleet.util.Constants;
 import com.citifleet.view.BaseFragment;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -26,7 +31,7 @@ import butterknife.OnClick;
 /**
  * Created by vika on 24.03.16.
  */
-public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPresenter.GeneralGoodsView {
+public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPresenter.GeneralGoodsView, GeneralGoodsAdapter.OnItemClickListener {
     @Bind(R.id.marketplaceList)
     RecyclerView marketplaceList;
     @Bind(R.id.progressBar)
@@ -47,6 +52,7 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
         marketplaceList.setAdapter(adapter);
         presenter = new GeneralGoodsPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.loadGeneralGoodsList();
+        adapter.setClickListener(this);
         title.setText(R.string.general_goods_for_sale);
         return view;
     }
@@ -93,4 +99,25 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onItemClicked(GeneralGood generalGood, View view) {
+        Fragment detailFragment = new GeneralGoodDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.GENERAL_GOODS_TAG, Parcels.wrap(generalGood));
+        detailFragment.setArguments(bundle);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            detailFragment.setSharedElementEnterTransition(new DetailsTransition());
+            detailFragment.setEnterTransition(new Fade());
+            setExitTransition(new Fade());
+            detailFragment.setSharedElementReturnTransition(new DetailsTransition());
+        }
+
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .addSharedElement(view, getString(R.string.general_goods_transition_name))
+                .replace(R.id.fragmentContainer, detailFragment)
+                .addToBackStack(null)
+                .commit();
+    }
 }

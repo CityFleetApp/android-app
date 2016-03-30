@@ -25,11 +25,13 @@ public class RentSaleGalleryPagerAdapter extends PagerAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
     private List<String> images;
+    private String picassoTag;
 
-    public RentSaleGalleryPagerAdapter(Context context, List<String > images) {
+    public RentSaleGalleryPagerAdapter(Context context, List<String> images, String picassoTag) {
         this.images = images;
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.picassoTag = picassoTag;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class RentSaleGalleryPagerAdapter extends PagerAdapter {
         View itemView = layoutInflater.inflate(R.layout.rent_sale_image_item, container, false);
         final ImageView imageView = (ImageView) itemView.findViewById(R.id.carImage);
         final ProgressBar progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
-        Picasso.with(context).load(images.get(position)).tag(RentSaleItemFragment.class).into(imageView, new Callback() {
+        Picasso.with(context).load(images.get(position)).tag(picassoTag).into(imageView, new Callback() {
             @Override
             public void onSuccess() {
                 progressBar.setVisibility(View.GONE);

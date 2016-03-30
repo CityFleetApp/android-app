@@ -1,6 +1,7 @@
 package com.citifleet.view.main.marketplace;
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.citifleet.R;
+import com.citifleet.model.Car;
 import com.citifleet.model.GeneralGood;
 import com.squareup.picasso.Picasso;
 
@@ -28,6 +30,15 @@ import butterknife.ButterKnife;
 public class GeneralGoodsAdapter extends RecyclerView.Adapter<GeneralGoodsAdapter.ViewHolder> {
     private List<GeneralGood> list = new ArrayList<GeneralGood>();
     private Context context;
+    private OnItemClickListener clickListener;
+
+    public interface OnItemClickListener {
+        void onItemClicked(GeneralGood generalGood, View view);
+    }
+
+    public void setClickListener(OnItemClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.goodsImage)
@@ -44,7 +55,8 @@ public class GeneralGoodsAdapter extends RecyclerView.Adapter<GeneralGoodsAdapte
         LinearLayout goodsDetailsBtn;
         @Bind(R.id.arrowImage)
         ImageView arrowImage;
-
+        @Bind(R.id.container)
+        RelativeLayout container;
         boolean isDetailsExpanded = false;
 
         public ViewHolder(View v) {
@@ -120,6 +132,15 @@ public class GeneralGoodsAdapter extends RecyclerView.Adapter<GeneralGoodsAdapte
 
             }
         });
+        if (clickListener != null) {
+            holder.goodsImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickListener.onItemClicked(generalGood, holder.container);
+                }
+            });
+        }
+        ViewCompat.setTransitionName(holder.container, String.valueOf(position) + "_container");
     }
 
     @Override

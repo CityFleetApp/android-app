@@ -1,11 +1,14 @@
 package com.citifleet.model;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by vika on 24.03.16.
  */
+@Parcel
 public class GeneralGood {
     private int id;
     private String item;

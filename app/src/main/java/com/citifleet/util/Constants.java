@@ -43,5 +43,5 @@ public class Constants {
     public static final String OUTPUT_DATE_FORMAT = "mm/dd/yyyy";
     public static final String JOB_OFFER_TAG = "job_offer_tag";
     public static final String CAR_RENT_SALE_TAG = "car_rent_sale_tag";
-
+    public static final String GENERAL_GOODS_TAG = "general_goods_tag";
 }

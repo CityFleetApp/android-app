@@ -195,6 +195,7 @@
     <string name="dollar_price">$%1$s</string>
     <string name="job_info">Job Info</string>
     <string name="rent_sale_transition_name">carImagePagerTransitionName</string>
+    <string name="general_goods_transition_name">generalGoodTransionName</string>
     <string name="job_date">%1$d/%2$d/%3$d</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
