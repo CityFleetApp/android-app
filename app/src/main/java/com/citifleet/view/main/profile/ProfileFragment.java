@@ -32,6 +32,7 @@ import com.citifleet.model.UserInfo;
 import com.citifleet.util.CircleTransform;
 import com.citifleet.util.CommonUtils;
 import com.citifleet.util.Constants;
+import com.citifleet.util.ImagePickerUtil;
 import com.citifleet.util.PermissionUtil;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
@@ -52,11 +53,7 @@ import jp.wasabeef.picasso.transformations.BlurTransformation;
 /**
  * Created by vika on 11.03.16.
  */
-public class ProfileFragment extends BaseFragment implements ProfilePresenter.ProfileView {
-    private static final int REQUEST_CAMERA = 333;
-    private static final int SELECT_FILE = 444;
-    private static final int REQUEST_PERMISSION_CAMERA = 1;
-    private static final int REQUEST_PERMISSION_GALLERY = 2;
+public class ProfileFragment extends BaseFragment implements ProfilePresenter.ProfileView, ImagePickerUtil.ImageResultListener {
     @Bind(R.id.profileImage)
     ImageView profileImage;
     @Bind(R.id.bigProfileImage)
@@ -87,6 +84,7 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
     List<ImageButton> images;
     private ProfilePresenter presenter;
     private List<UserImages> imagesList;
+    private ImagePickerUtil imagePickerUtil;
     private int positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
 
     @Nullable
@@ -97,6 +95,7 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
         presenter = new ProfilePresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.init();
         title.setText(getString(R.string.profile));
+        imagePickerUtil = new ImagePickerUtil(this, images, getString(R.string.car_profile), this);
         return view;
     }
 
@@ -175,7 +174,11 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
     public void updateImageFromList(UserImages userImages) {
         if (positionToUpdateImage != Constants.DEFAULT_UNSELECTED_POSITION) {
             Picasso.with(getContext()).load(userImages.getFile()).into(images.get(positionToUpdateImage));
-            imagesList.add(positionToUpdateImage, userImages);
+            if (imagesList.size() < positionToUpdateImage) {
+                imagesList.add(userImages);
+            } else {
+                imagesList.add(positionToUpdateImage, userImages);
+            }
             positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
         }
     }
@@ -198,94 +201,19 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
         }
     }
 
-    private void showPickImageDialog() {
-        final String[] items = getResources().getStringArray(R.array.pick_image_options);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(pickImageTitle);
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (item == 0) {
-                    checkPermissionsForCamera();
-                } else if (item == 1) {
-                    checkPermissionsForGallery();
-                } else {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
-
-    private void checkPermissionsForGallery() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // permissions have not been granted.
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_GALLERY);
-        } else {
-            launchGallery();
-        }
-    }
-
-    private void checkPermissionsForCamera() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // permissions have not been granted.
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_PERMISSION_CAMERA);
-        } else {
-            launchCamera();
-        }
-    }
-
-    private void launchCamera() {
-        Intent intent = new Intent(Constants.ACTION_PICK_IMAGE_CAMERA);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(getFileForProfileFromCamera()));
-        startActivityForResult(intent, REQUEST_CAMERA);
-    }
-
-    private void launchGallery() {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, SELECT_FILE);
-    }
-
-    private File getFileForProfileFromCamera() {
-        return new File(Environment.getExternalStorageDirectory() + File.separator + "car.png"); //TODO rename file?
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_PERMISSION_CAMERA) {
-            if (PermissionUtil.verifyPermissions(grantResults)) {
-                // All required permissions have been granted
-                launchCamera();
-            }
-        } else if (requestCode == REQUEST_PERMISSION_GALLERY) {
-            if (PermissionUtil.verifyPermissions(grantResults)) {
-                launchGallery();
-            }
+        if (imagePickerUtil.isImagePickerPermissionResultCode(requestCode)) {
+            imagePickerUtil.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case SELECT_FILE:
-                if (resultCode == Activity.RESULT_OK) {
-                    updateImageOnServer(CommonUtils.getImagePath(data.getData(), getContext()));
-                } else {
-                    positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
-                }
-                break;
-            case REQUEST_CAMERA:
-                if (resultCode == Activity.RESULT_OK) {
-                    updateImageOnServer(getFileForProfileFromCamera().getAbsolutePath());
-                } else {
-                    positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
-                }
-                break;
+        if (imagePickerUtil.isImagePickerRequestResultCode(requestCode)) {
+            imagePickerUtil.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -294,13 +222,12 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
     }
 
     @OnClick({R.id.imageFirst, R.id.imageSecond, R.id.imageThird, R.id.imageFourth, R.id.imageFifth})
-    void onImageClick(View view) {
+    void onImageClick(ImageView view) {
         int clickedPosition = getClickedPosition(view);
         if (imagesList != null && imagesList.size() > clickedPosition && imagesList.get(clickedPosition) != null) {
             showGallery(clickedPosition);
         } else {
-            positionToUpdateImage = clickedPosition;
-            showPickImageDialog();
+            imagePickerUtil.onImageClick(view);
         }
     }
 
@@ -346,5 +273,16 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
         bundle.putInt(Constants.IMAGES_SELECTED_TAG, position);
         fragment.setArguments(bundle);
         ((BaseActivity) getActivity()).changeFragment(fragment, true);
+    }
+
+    @Override
+    public void onImageReceived(String url, int position) {
+        positionToUpdateImage = position;
+        updateImageOnServer(url);
+    }
+
+    @Override
+    public void onImageCanceledOrFailed(int position) {
+
     }
 }

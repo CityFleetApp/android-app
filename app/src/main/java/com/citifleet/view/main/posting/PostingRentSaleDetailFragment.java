@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,6 +36,7 @@ import com.citifleet.model.PostingType;
 import com.citifleet.util.CommonUtils;
 import com.citifleet.util.Constants;
 import com.citifleet.util.DecimalDigitsInputFilter;
+import com.citifleet.util.ImagePickerUtil;
 import com.citifleet.util.PermissionUtil;
 import com.citifleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
@@ -51,7 +54,7 @@ import butterknife.OnClick;
 /**
  * Created by vika on 21.03.16.
  */
-public class PostingRentSaleDetailFragment extends BaseFragment implements PostingRentSaleDetailPresenter.PostingRentSaleDetailView {
+public class PostingRentSaleDetailFragment extends BaseFragment implements PostingRentSaleDetailPresenter.PostingRentSaleDetailView, ImagePickerUtil.ImageResultListener {
     private static final int REQUEST_CAMERA = 555;
     private static final int SELECT_FILE = 666;
     private static final int REQUEST_PERMISSION_CAMERA = 1;
@@ -102,7 +105,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     private int selectedColorId = Constants.DEFAULT_UNSELECTED_POSITION;
     private int selectedFuelId = Constants.DEFAULT_UNSELECTED_POSITION;
     private int selectedSeatsId = Constants.DEFAULT_UNSELECTED_POSITION;
-    private int positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
+    private ImagePickerUtil imagePickerUtil;
 
     @Nullable
     @Override
@@ -115,6 +118,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
         presenter.init();
         enableModelBtn(false);
         price.setFilters(new InputFilter[]{new DecimalDigitsInputFilter()});
+        imagePickerUtil = new ImagePickerUtil(this, images, getString(R.string.car_posting_image_name), this);
         return view;
     }
 
@@ -353,111 +357,34 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     }
 
     @OnClick({R.id.imageFirst, R.id.imageSecond, R.id.imageThird, R.id.imageFourth, R.id.imageFifth})
-    void onImageClick(View view) {
-        int clickedPosition = getClickedPosition(view);
-        positionToUpdateImage = clickedPosition;
-        showPickImageDialog();
+    void onImageClick(ImageView view) {
+        imagePickerUtil.onImageClick(view);
     }
 
-    private int getClickedPosition(View view) {
-        int clickedPosition = Constants.DEFAULT_UNSELECTED_POSITION;
-        for (ImageButton imageButton : images) {
-            if (imageButton.getId() == view.getId()) {
-                clickedPosition = images.indexOf(imageButton);
-                break;
-            }
-        }
-        return clickedPosition;
-    }
-
-    private void showPickImageDialog() {
-        final String[] items = getResources().getStringArray(R.array.pick_image_options);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(pickImageTitle);
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (item == 0) {
-                    checkPermissionsForCamera();
-                } else if (item == 1) {
-                    checkPermissionsForGallery();
-                } else {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
-
-    private void checkPermissionsForGallery() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // permissions have not been granted.
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_GALLERY);
-        } else {
-            launchGallery();
-        }
-    }
-
-    private void checkPermissionsForCamera() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // permissions have not been granted.
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_PERMISSION_CAMERA);
-        } else {
-            launchCamera();
-        }
-    }
-
-    private void launchCamera() {
-        Intent intent = new Intent(Constants.ACTION_PICK_IMAGE_CAMERA);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(getFileForProfileFromCamera()));
-        startActivityForResult(intent, REQUEST_CAMERA);
-    }
-
-    private void launchGallery() {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, SELECT_FILE);
-    }
-
-    private File getFileForProfileFromCamera() {
-        return new File(Environment.getExternalStorageDirectory() + File.separator + "car_posting_" + positionToUpdateImage + ".png"); //TODO rename file?
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_PERMISSION_CAMERA) {
-            if (PermissionUtil.verifyPermissions(grantResults)) {
-                // All required permissions have been granted
-                launchCamera();
-            }
-        } else if (requestCode == REQUEST_PERMISSION_GALLERY) {
-            if (PermissionUtil.verifyPermissions(grantResults)) {
-                launchGallery();
-            }
+        if (imagePickerUtil.isImagePickerPermissionResultCode(requestCode)) {
+            imagePickerUtil.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case SELECT_FILE:
-                if (resultCode == Activity.RESULT_OK) {
-                    imageUrls[positionToUpdateImage] = CommonUtils.getImagePath(data.getData(), getContext());
-                    Picasso.with(getContext()).load(new File(imageUrls[positionToUpdateImage])).fit().centerCrop().into(images.get(positionToUpdateImage));
-                    positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
-                }
-                break;
-            case REQUEST_CAMERA:
-                if (resultCode == Activity.RESULT_OK) {
-                    imageUrls[positionToUpdateImage] = getFileForProfileFromCamera().getAbsolutePath();
-                    Picasso.with(getContext()).load(new File(imageUrls[positionToUpdateImage])).fit().centerCrop().into(images.get(positionToUpdateImage));
-                    positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
-                }
-                break;
+        if (imagePickerUtil.isImagePickerRequestResultCode(requestCode)) {
+            imagePickerUtil.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void onImageReceived(String url, int position) {
+        imageUrls[position] = url;
+        Picasso.with(getContext()).load(new File(imageUrls[position])).fit().centerCrop().into(images.get(position));
+    }
+
+    @Override
+    public void onImageCanceledOrFailed(int position) {
+
     }
 }

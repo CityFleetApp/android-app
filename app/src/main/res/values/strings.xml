@@ -203,6 +203,9 @@
     <string name="select_job_type">Select Job Type</string>
     <string name="instructions">Instructions</string>
     <string name="enter_instructions">Enter Instructions</string>
+    <string name="car_posting_image_name">car_posting</string>
+    <string name="general_good_posting_name">general_good_posting</string>
+    <string name="car_profile">car_profile</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>
