@@ -1,12 +1,16 @@
 package com.citifleet.view.main.marketplace;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -15,7 +19,10 @@ import com.citifleet.R;
 import com.citifleet.model.Car;
 import com.citifleet.model.PostingType;
 import com.citifleet.util.Constants;
+import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -25,7 +32,7 @@ import butterknife.ButterKnife;
 /**
  * Created by vika on 23.03.16.
  */
-public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresenter.BuyRentView {
+public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresenter.BuyRentView, BuyRentAdapter.OnItemClickListener {
     @Bind(R.id.marketplaceList)
     RecyclerView marketplaceList;
     @Bind(R.id.progressBar)
@@ -44,8 +51,9 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
         marketplaceList.setLayoutManager(layoutManager);
         adapter = new BuyRentAdapter(getActivity());
         marketplaceList.setAdapter(adapter);
+        adapter.setClickListener(this);
         //marketplaceList.addItemDecoration(new SpacesItemDecoration((int) getResources().getDimension(R.dimen.marketplace_space)));
-       // marketplaceList.addOnItemTouchListener(new RecycleViewClickListener(getActivity(), onItemClickListener));
+        // marketplaceList.addOnItemTouchListener(new RecycleViewClickListener(getActivity(), onItemClickListener));
         presenter = new BuyRentPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.loadCarList(type);
         return view;
@@ -86,5 +94,28 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
     public void onListLoaded(List<Car> carList) {
         adapter.setList(carList);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClicked(Car car, View imageView) {
+        Fragment detailFragment = new RentSaleItemFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.CAR_RENT_SALE_TAG, Parcels.wrap(car));
+        detailFragment.setArguments(bundle);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            detailFragment.setSharedElementEnterTransition(new DetailsTransition());
+            detailFragment.setEnterTransition(new Fade());
+            setExitTransition(new Fade());
+            detailFragment.setSharedElementReturnTransition(new DetailsTransition());
+        }
+
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .addSharedElement(imageView, getString(R.string.rent_sale_transition_name))
+                .replace(R.id.fragmentContainer, detailFragment)
+                .addToBackStack(null)
+                .commit();
+
     }
 }

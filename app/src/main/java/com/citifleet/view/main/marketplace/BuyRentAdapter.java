@@ -1,6 +1,8 @@
 package com.citifleet.view.main.marketplace;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -27,6 +29,15 @@ import butterknife.ButterKnife;
 public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHolder> {
     private List<Car> list = new ArrayList<Car>();
     private Context context;
+    private OnItemClickListener clickListener;
+
+    public interface OnItemClickListener {
+        void onItemClicked(Car car, View view);
+    }
+
+    public void setClickListener(OnItemClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.carImage)
@@ -53,6 +64,8 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
         LinearLayout carDetailsBtn;
         @Bind(R.id.arrowImage)
         ImageView arrowImage;
+        @Bind(R.id.container)
+        RelativeLayout container;
         boolean isDetailsExpanded = false;
 
         public ViewHolder(View v) {
@@ -126,6 +139,15 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
 
             }
         });
+        if (clickListener != null) {
+            holder.carImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickListener.onItemClicked(car, holder.container);
+                }
+            });
+        }
+        ViewCompat.setTransitionName(holder.container, String.valueOf(position) + "_container");
     }
 
     @Override

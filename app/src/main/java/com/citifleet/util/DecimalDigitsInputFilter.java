@@ -10,9 +10,21 @@ import java.util.regex.Pattern;
  * Created by vika on 28.03.16.
  */
 public class DecimalDigitsInputFilter implements InputFilter {
+    private int maxSymbols = Constants.MAX_PRICE;
+
+    private String pattern = "(0|[1-9]{1}[0-9]{0," + (maxSymbols - 1) + "})?(\\.[0-9]{0,2})?";
+
+    public void setMaxSymbols(int maxSymbols) {
+        this.maxSymbols = maxSymbols;
+    }
 
 
-    private static final String pattern = "(0|[1-9]{1}[0-9]{0,"+(Constants.MAX_PRICE-1)+"})?(\\.[0-9]{0,2})?";
+    public DecimalDigitsInputFilter(int maxSymbols) {
+        this.maxSymbols = maxSymbols;
+    }
+
+    public DecimalDigitsInputFilter() {
+    }
 
     @Override
     public CharSequence filter(CharSequence source, int start, int end,

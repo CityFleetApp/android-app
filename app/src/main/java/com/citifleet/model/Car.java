@@ -1,11 +1,14 @@
 package com.citifleet.model;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by vika on 23.03.16.
  */
+@Parcel
 public class Car {
     private int id;
     private String make;

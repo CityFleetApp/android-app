@@ -116,4 +116,5 @@
     <dimen name="reset_password_margin_2">60dp</dimen>
     <dimen name="reset_password_margin_1">65dp</dimen>
     <dimen name="reset_password_lbl_text_size">20sp</dimen>
+    <dimen name="rent_sale_pager_height">270dp</dimen>
 </resources>
