@@ -206,6 +206,14 @@
     <string name="car_posting_image_name">car_posting</string>
     <string name="general_good_posting_name">general_good_posting</string>
     <string name="car_profile">car_profile</string>
+    <string name="enter_something_about_yourself">Enter Something About Yourself</string>
+    <string name="enter_make_amp_model_car_you_drive"><![CDATA[Enter Make & Model Car You Drive]]></string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="edit_account">Edit account</string>
+    <string name="phone_number">Phone number</string>
+    <string name="enter_phone_number">Enter Phone Number</string>
+    <string name="enter_username">Enter username</string>
+    <string name="profile_image_name">profile_image</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

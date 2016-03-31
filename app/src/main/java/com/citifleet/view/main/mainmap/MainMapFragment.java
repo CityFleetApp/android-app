@@ -224,8 +224,11 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     void dashboardBtnClick() {
         if (!dashboardBtn.isSelected()) {
             selectButton(dashboardBtn);
-            //TODO
         }
+        ((BaseActivity) getActivity()).changeFragmentWithAnimation(new DashboardFragment(), true, R.anim.slide_up,
+                R.anim.slide_down,
+                R.anim.slide_up,
+                R.anim.slide_down);
     }
 
     @OnClick(R.id.marketplaceBtn)
@@ -301,8 +304,6 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                 R.anim.slide_down,
                 R.anim.slide_up,
                 R.anim.slide_down);
-
-
     }
 
     public void onReportDialogClosed() {

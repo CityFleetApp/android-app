@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/add_friends_color"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dash_header_height"
+                    android:layout_gravity="center"
+                    android:background="@color/green_color"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/bigProfileImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:alpha="0.4"
+                        android:scaleType="centerCrop" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+
+                        <ImageView
+                            android:id="@+id/profileImage"
+                            android:layout_width="@dimen/profile_image_height"
+                            android:layout_height="@dimen/profile_image_height"
+                            android:layout_centerHorizontal="true"
+                            android:layout_margin="@dimen/profile_name_padding"
+                            android:scaleType="centerCrop" />
+
+                        <ImageButton
+                            android:id="@+id/cameraBtn"
+                            android:layout_width="@dimen/camera_btn_size"
+                            android:layout_height="@dimen/camera_btn_size"
+                            android:layout_alignBottom="@+id/profileImage"
+                            android:layout_alignRight="@+id/profileImage"
+                            android:layout_marginBottom="@dimen/camera_profile_margin"
+                            android:layout_marginRight="@dimen/camera_profile_margin"
+                            android:background="@drawable/camera_selector"
+                            android:elevation="@dimen/direct_btn_elevation"
+                            android:src="@drawable/photo_white" />
+
+                        <TextView
+                            android:id="@+id/profileFullName"
+                            fontPath="@string/fontLight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/profileImage"
+                            android:layout_centerHorizontal="true"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/profile_name_textsize"
+                            tools:ignore="MissingPrefix" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/add_friends_padding_top_lbl"
+                    android:paddingLeft="@dimen/add_friends_padding_left"
+                    android:paddingTop="@dimen/add_friends_padding_top_lbl"
+                    android:text="@string/edit_profile"
+                    android:textAllCaps="true"
+                    android:textColor="@color/add_friend_lbl_color"
+                    android:textSize="@dimen/add_friends_text_size_lbl" />
+
+                <LinearLayout
+                    android:id="@+id/bioBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
+
+                    <TextView
+                        android:id="@+id/bioTitle"
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/paste"
+                        android:text="@string/bio" />
+
+                    <EditText
+                        android:id="@+id/bioEt"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:hint="@string/enter_something_about_yourself"
+                        android:inputType="numberDecimal"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/drivesBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/divider"
+                    android:background="@android:color/white"
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
+
+                    <TextView
+                        android:id="@+id/drivesTitle"
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/car_selected"
+                        android:text="@string/drives" />
+
+                    <TextView
+                        android:id="@+id/drivesLbl"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:hint="@string/enter_make_amp_model_car_you_drive"
+                        android:inputType="numberDecimal"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/add_friends_padding_top_lbl"
+                    android:paddingLeft="@dimen/add_friends_padding_left"
+                    android:paddingTop="@dimen/add_friends_padding_top_lbl"
+                    android:text="@string/edit_account"
+                    android:textAllCaps="true"
+                    android:textColor="@color/add_friend_lbl_color"
+                    android:textSize="@dimen/add_friends_text_size_lbl" />
+
+                <LinearLayout
+                    android:id="@+id/usernameBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
+
+                    <TextView
+                        android:id="@+id/usernameTitle"
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/shield"
+                        android:text="@string/username" />
+
+                    <EditText
+                        android:id="@+id/usernameEt"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:hint="@string/enter_username"
+                        android:inputType="numberDecimal"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/phoneNumberBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/divider"
+                    android:background="@android:color/white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/reg_edittext_padding">
+
+                    <TextView
+                        android:id="@+id/phoneTitle"
+                        style="@style/RegistrationEdittextLabelStyle"
+                        android:drawableLeft="@drawable/call"
+                        android:text="@string/phone_number" />
+
+                    <EditText
+                        android:id="@+id/phoneEt"
+                        style="@style/RegistrationEdittextStyle"
+                        fontPath="@string/fontLight"
+                        android:hint="@string/enter_phone_number"
+                        android:inputType="numberDecimal"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/divider"
+                    android:background="@android:color/white">
+
+                    <Button
+                        android:id="@+id/saveBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/password"
+                        android:layout_marginLeft="@dimen/splash_btn_margin_small"
+                        android:layout_marginRight="@dimen/splash_btn_margin_small"
+                        android:layout_marginTop="@dimen/splash_btn_margin_small"
+                        android:layout_marginBottom="@dimen/splash_btn_margin_small"
+                        android:background="@drawable/green_btn_selector"
+                        android:minHeight="0dp"
+                        android:padding="@dimen/button_padding"
+                        android:text="@string/save"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

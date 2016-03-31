@@ -119,7 +119,7 @@ public class SettingsFragment extends BaseFragment implements SettingsPresenter.
 
     @OnClick(R.id.profileBtn)
     void onProfileBtnClick() {
-
+        ((BaseActivity)getActivity()).changeFragment(new EditUserProfileFragment(), true);
     }
 
     @OnClick(R.id.changePasswordBtn)

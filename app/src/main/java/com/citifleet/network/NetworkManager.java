@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.citifleet.R;
 import com.citifleet.util.PrefUtil;
+import com.citifleet.view.main.settings.EditUserProfilePresenter;
 
 import java.io.IOException;
 
