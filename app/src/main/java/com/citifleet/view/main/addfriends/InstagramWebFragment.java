@@ -17,10 +17,11 @@ import com.citifleet.R;
 import com.citifleet.util.InstagramLoginEvent;
 import com.citifleet.view.BaseFragment;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 public class InstagramWebFragment extends BaseFragment implements InstagramLoginPresenter.InstagramLoginView {
     @Bind(R.id.webView)

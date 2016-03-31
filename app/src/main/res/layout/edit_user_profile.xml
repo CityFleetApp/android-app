@@ -108,7 +108,7 @@
                         style="@style/RegistrationEdittextStyle"
                         fontPath="@string/fontLight"
                         android:hint="@string/enter_something_about_yourself"
-                        android:inputType="numberDecimal"
+                        android:inputType="text"
                         tools:ignore="MissingPrefix" />
                 </LinearLayout>
 
@@ -133,7 +133,6 @@
                         style="@style/RegistrationEdittextStyle"
                         fontPath="@string/fontLight"
                         android:hint="@string/enter_make_amp_model_car_you_drive"
-                        android:inputType="numberDecimal"
                         tools:ignore="MissingPrefix" />
                 </LinearLayout>
 
@@ -168,7 +167,7 @@
                         style="@style/RegistrationEdittextStyle"
                         fontPath="@string/fontLight"
                         android:hint="@string/enter_username"
-                        android:inputType="numberDecimal"
+                        android:inputType="text"
                         tools:ignore="MissingPrefix" />
                 </LinearLayout>
 
@@ -192,7 +191,7 @@
                         style="@style/RegistrationEdittextStyle"
                         fontPath="@string/fontLight"
                         android:hint="@string/enter_phone_number"
-                        android:inputType="numberDecimal"
+                        android:inputType="phone"
                         tools:ignore="MissingPrefix" />
                 </LinearLayout>
 

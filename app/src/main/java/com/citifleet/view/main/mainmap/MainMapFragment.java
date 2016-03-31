@@ -99,7 +99,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             }
             mapFragment.getMapAsync(this);
         }
-        dashboardBtn.performClick();
+        selectButton(dashboardBtn);
         buildGoogleApiClient();
 
         return view;

@@ -40,6 +40,9 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +52,6 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 public class AddFriendsFragment extends BaseFragment implements AddFriendsPresenter.AddFriendsView {
     private static final int REQUEST_PERMISSION_CONTACTS = 1;
@@ -177,7 +179,7 @@ public class AddFriendsFragment extends BaseFragment implements AddFriendsPresen
     @Override
     public void onResume() {
         super.onResume();
-        EventBus.getDefault().registerSticky(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -186,7 +188,7 @@ public class AddFriendsFragment extends BaseFragment implements AddFriendsPresen
         EventBus.getDefault().unregister(this);
     }
 
-
+    @Subscribe(sticky = true)
     public void onEvent(InstagramLoginEvent event) {
         //TODO uncomment later    presenter.addInstagramFriends(event.getToken());
         EventBus.getDefault().removeStickyEvent(event);

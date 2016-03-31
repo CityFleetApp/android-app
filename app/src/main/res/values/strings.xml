@@ -214,6 +214,10 @@
     <string name="enter_phone_number">Enter Phone Number</string>
     <string name="enter_username">Enter username</string>
     <string name="profile_image_name">profile_image</string>
+    <string name="username_empty">Username can\'t be empty!</string>
+    <string name="done">Done</string>
+    <string name="please_enter_model">Please enter car model!</string>
+    <string name="nothing">Nothing changed!</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>
