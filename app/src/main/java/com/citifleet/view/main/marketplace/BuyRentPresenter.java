@@ -3,7 +3,7 @@ package com.citifleet.view.main.marketplace;
 import android.util.Log;
 
 import com.citifleet.model.Car;
-import com.citifleet.model.PostingType;
+import com.citifleet.model.CarPostingType;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 
@@ -24,11 +24,11 @@ public class BuyRentPresenter {
         this.view = view;
     }
 
-    public void loadCarList(PostingType type) {
+    public void loadCarList(CarPostingType type) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
             Call<List<Car>> call;
-            if (type == PostingType.RENT) {
+            if (type == CarPostingType.RENT) {
                 call = networkManager.getNetworkClient().getCarsForRent();
             } else {
                 call = networkManager.getNetworkClient().getCarsForSale();

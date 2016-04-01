@@ -9,6 +9,7 @@ import com.citifleet.model.GeneralGood;
 import com.citifleet.model.LegalAidLocation;
 import com.citifleet.model.LegalAidPerson;
 import com.citifleet.model.LoginInfo;
+import com.citifleet.model.ManagePostModel;
 import com.citifleet.model.Notification;
 import com.citifleet.model.JobOffer;
 import com.citifleet.model.ProfileImage;
@@ -196,6 +197,11 @@ public interface NetworkService {
                             @Field("gratuity") double gratuity, @Field("vehicle_type") int vehicleType, @Field("suite") boolean suite, @Field("job_type") int jobType,
                             @Field("instructions") String instructions);
 
+    @FormUrlEncoded
+    @PATCH("marketplace/offers/posting/{id}/")
+    Call<Void> editJobOffer(@Path("id") String id, @Field("pickup_datetime") String datetime, @Field("pickup_address") String pickupAddress, @Field("destination") String destination, @Field("fare") double fare,
+                            @Field("gratuity") double gratuity, @Field("vehicle_type") int vehicleType, @Field("suite") boolean suite, @Field("job_type") int jobType,
+                            @Field("instructions") String instructions);
     @GET("users/profile/")
     Call<UserEditInfo> getUserProfileInfo();
 
@@ -204,5 +210,8 @@ public interface NetworkService {
     Call<Void> updateUserProfileInfo(@Field("bio") String bio, @Field("username") String username, @Field("phone") String phone,
                                      @Field("car_make") String carMake, @Field("car_model") String carModel, @Field("car_type") String carType, @Field("car_color") String carColor,
                                      @Field("car_year") String carYear);
+
+    @GET("marketplace/manage-posts/")
+    Call<List<ManagePostModel>> getManagePosts();
 }
 

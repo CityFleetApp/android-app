@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.citifleet.R;
-import com.citifleet.model.PostingType;
+import com.citifleet.model.CarPostingType;
 import com.citifleet.util.Constants;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
@@ -47,15 +47,15 @@ public class PostintRentSaleFragment extends BaseFragment {
 
     @OnClick(R.id.rentBtn)
     void onRentBtnClick() {
-        showDetailFragment(PostingType.RENT);
+        showDetailFragment(CarPostingType.RENT);
     }
 
     @OnClick(R.id.saleBtn)
     void onSaleBtnClick() {
-        showDetailFragment(PostingType.SALE);
+        showDetailFragment(CarPostingType.SALE);
     }
 
-    private void showDetailFragment(PostingType type) {
+    private void showDetailFragment(CarPostingType type) {
         PostingRentSaleDetailFragment fragment = new PostingRentSaleDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.POSTING_TYPE_TAG, type);

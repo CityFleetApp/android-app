@@ -276,14 +276,24 @@ public class DashboardFragment extends BaseFragment implements DashboardView {
     }
 
     public void updateImage(String url) {
-        if (!TextUtils.isEmpty(url)) {
+        if (!TextUtils.isEmpty(url) && getActivity()!=null) {
             int frameSize = getResources().getDimensionPixelSize(R.dimen.profile_image_frame);
             int screenWidth = getResources().getDisplayMetrics().widthPixels;
             TypedValue outValue = new TypedValue();
             getResources().getValue(R.dimen.profile_image_blur_radius_percent, outValue, true);
             int blurradius = (int) (screenWidth * outValue.getFloat());
-            Picasso.with(getActivity()).load(url).transform(new CircleTransform(frameSize)).fit().centerCrop().into(profileImage);
-            Picasso.with(getActivity()).load(url).transform(new BlurTransformation(getContext(), blurradius)).fit().centerCrop().into(bigProfileImage);
+            Picasso.Builder builder = new Picasso.Builder(getContext());
+            builder.listener(new Picasso.Listener()
+            {
+                @Override
+                public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
+                {
+                    exception.printStackTrace();
+                }
+            });
+            builder.build().load(url).transform(new CircleTransform(frameSize)).fit().centerCrop().into(profileImage);
+          //  Picasso.with(getActivity()).load(url).transform(new CircleTransform(frameSize)).fit().centerCrop().into(profileImage);
+            builder.build().load(url).transform(new BlurTransformation(getContext(), blurradius)).fit().centerCrop().into(bigProfileImage);
         }
     }
 

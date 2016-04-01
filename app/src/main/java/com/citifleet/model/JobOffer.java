@@ -1,5 +1,7 @@
 package com.citifleet.model;
 
+import com.citifleet.util.Constants;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
@@ -24,6 +26,10 @@ public class JobOffer {
     private String jobType;
     private String instructions;
     private String status;
+    @Expose
+    private int vehicleTypeId = Constants.DEFAULT_UNSELECTED_POSITION;
+    @Expose
+    private int jobTypeId = Constants.DEFAULT_UNSELECTED_POSITION;
 
     public int getId() {
         return id;
@@ -111,5 +117,21 @@ public class JobOffer {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getVehicleTypeId() {
+        return vehicleTypeId;
+    }
+
+    public void setVehicleTypeId(int vehicleTypeId) {
+        this.vehicleTypeId = vehicleTypeId;
+    }
+
+    public int getJobTypeId() {
+        return jobTypeId;
+    }
+
+    public void setJobTypeId(int jobTypeId) {
+        this.jobTypeId = jobTypeId;
     }
 }

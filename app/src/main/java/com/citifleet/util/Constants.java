@@ -38,9 +38,9 @@ public class Constants {
     public static final int MAX_PRICE = 4;
     public static final int JOB_OFFER_MAX_FARE = 3;
     public static final int MAX_PRICE_DEC_PLACES = 2;
-    public static final String INPUT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    public static final String INPUT_DATETIME_FORMAT= "yyyy-MM-dd'T'HH:mm:ss";
     public static final String OUTPUT_TIME_FORMAT = "hh:mm aa";
-    public static final String OUTPUT_DATE_FORMAT = "mm/dd/yyyy";
+    public static final String OUTPUT_DATE_FORMAT = "MM/dd/yyyy";
     public static final String JOB_OFFER_TAG = "job_offer_tag";
     public static final String CAR_RENT_SALE_TAG = "car_rent_sale_tag";
     public static final String GENERAL_GOODS_TAG = "general_goods_tag";

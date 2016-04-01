@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/transparent_selector"
+    android:clickable="true"
+    android:padding="@dimen/reg_edittext_padding">
+
+    <ImageView
+        android:id="@+id/postTypeImage"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_alignTop="@+id/postTitle"
+        android:layout_alignBottom="@+id/postTitle"
+        android:scaleType="center"
+        android:layout_height="match_parent"
+        android:src="@drawable/car" />
+
+    <TextView
+        android:id="@+id/postTitle"
+        style="@style/RegistrationEdittextLabelStyle"
+        android:layout_toLeftOf="@+id/date"
+        android:layout_toRightOf="@+id/postTypeImage"
+        android:layout_marginLeft="@dimen/notification_button_padding"
+        android:text="Post title" />
+
+    <TextView
+        android:id="@+id/postTypeText"
+        style="@style/RegistrationEdittextStyle"
+        fontPath="@string/fontLight"
+        android:layout_below="@+id/postTitle"
+        android:layout_toLeftOf="@+id/arrowLocation"
+        android:singleLine="true"
+        android:text="Title"
+        tools:ignore="MissingPrefix" />
+
+    <TextView
+        android:id="@+id/date"
+        fontPath="@string/fontLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/postTitle"
+        android:drawableLeft="@drawable/calendar_small"
+        android:drawablePadding="@dimen/notification_drawable_padding"
+        android:paddingLeft="@dimen/reg_edittext_drawable_padding"
+        android:text="10/17/2912"
+        android:layout_toLeftOf="@+id/arrowPost"
+        android:layout_marginRight="@dimen/notification_button_padding"
+        android:textColor="@color/date_text_color"
+        android:textSize="@dimen/date_text_label"
+        tools:ignore="MissingPrefix" />
+
+    <ImageView
+        android:id="@+id/arrowPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/arrow_right_green" />
+</RelativeLayout>

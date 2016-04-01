@@ -5,7 +5,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.citifleet.model.CarOption;
-import com.citifleet.model.PostingType;
+import com.citifleet.model.CarPostingType;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 import com.citifleet.util.ScaleImageHelper;
@@ -57,7 +57,7 @@ public class PostingRentSaleDetailPresenter {
         }
     }
 
-    public void createPost(final PostingType postingType, final int make, final int model, final int type, final int color, final int year, final int fuel, final int seats, final double price, final String description, String[] imageUrls) {
+    public void createPost(final CarPostingType postingType, final int make, final int model, final int type, final int color, final int year, final int fuel, final int seats, final double price, final String description, String[] imageUrls) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
             getImagesRequestBodies(imageUrls, new Handler() {
@@ -67,7 +67,7 @@ public class PostingRentSaleDetailPresenter {
                     HashMap<String, RequestBody> imagesMap = (HashMap<String, RequestBody>) msg.obj;
                     RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), description);
                     Call<Void> call;
-                    if (postingType == PostingType.RENT) {
+                    if (postingType == CarPostingType.RENT) {
                         call = networkManager.getNetworkClient().postRentCar(imagesMap, make, model, type, color, year, fuel, seats, price, descrBody);
                     } else {
                         call = networkManager.getNetworkClient().postSaleCar(imagesMap, make, model, type, color, year, fuel, seats, price, descrBody);

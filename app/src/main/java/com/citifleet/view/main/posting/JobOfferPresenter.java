@@ -1,8 +1,10 @@
 package com.citifleet.view.main.posting;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.citifleet.model.CarOption;
+import com.citifleet.model.JobOffer;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 
@@ -36,11 +38,18 @@ public class JobOfferPresenter {
         }
     }
 
-    public void postJobOffer(String datetime, String pickupAddress, String destination, double fare, double gratuity, int vehicleType, boolean suite,
-                             int jobType, String instructions) {
+    public void postJobOffer(JobOffer jobOffer, boolean isEditMode) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
-            Call<Void> postingCall = networkManager.getNetworkClient().postJobOffer(datetime, pickupAddress, destination, fare, gratuity, vehicleType, suite, jobType, instructions);
+            double gratuity = TextUtils.isEmpty(jobOffer.getGratuity()) ? 0 : Double.parseDouble(jobOffer.getGratuity());
+            Call<Void> postingCall;
+            if (!isEditMode) {
+                postingCall = networkManager.getNetworkClient().postJobOffer(jobOffer.getDateTime(), jobOffer.getPickupAddress(), jobOffer.getDestination(),
+                        jobOffer.getFare(), gratuity, jobOffer.getVehicleTypeId(), jobOffer.isSuite(), jobOffer.getJobTypeId(), jobOffer.getInstructions());
+            } else {
+                postingCall = networkManager.getNetworkClient().editJobOffer(String.valueOf(jobOffer.getId()), jobOffer.getDateTime(), jobOffer.getPickupAddress(), jobOffer.getDestination(),
+                        jobOffer.getFare(), gratuity, jobOffer.getVehicleTypeId(), jobOffer.isSuite(), jobOffer.getJobTypeId(), jobOffer.getInstructions());
+            }
             postingCall.enqueue(postingListener);
         } else {
             view.onNetworkError();

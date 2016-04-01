@@ -60,6 +60,6 @@ public class PostingFragment extends BaseFragment {
 
     @OnClick(R.id.managePostsBtn)
     void onManagePostsBtn() {
-
+        ((BaseActivity) getActivity()).changeFragment(new ManagePostsFragment(), true);
     }
 }

@@ -1,20 +1,13 @@
 package com.citifleet.view.main.settings;
 
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
 import com.citifleet.model.CarOption;
-import com.citifleet.model.PostingType;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
-import com.citifleet.util.ScaleImageHelper;
 
-import java.util.HashMap;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

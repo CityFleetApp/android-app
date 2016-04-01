@@ -62,7 +62,7 @@ dependencies {
     }
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.mobsandgeeks:android-saripaar:2.0-SNAPSHOT'
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.squareup.picasso:picasso:2.6.0-SNAPSHOT'
     compile 'com.facebook.android:facebook-android-sdk:4.+'
     compile 'jp.wasabeef:picasso-transformations:2.0.0'
     compile('com.twitter.sdk.android:twitter:1.13.0@aar') {

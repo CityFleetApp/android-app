@@ -1,8 +1,17 @@
 package com.citifleet.model;
 
 /**
- * Created by vika on 21.03.16.
+ * Created by vika on 01.04.16.
  */
 public enum PostingType {
-    RENT, SALE;
+    RENT_SALE_CAR("car"), GENERAL_GOOD("goods"), JOB_OFFER("offer");
+    private String apiName;
+
+    PostingType(String apiName) {
+        this.apiName = apiName;
+    }
+
+    public String getApiName() {
+        return apiName;
+    }
 }

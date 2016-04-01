@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +25,15 @@ import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.CarOption;
 import com.citifleet.model.JobOffer;
+import com.citifleet.model.ManagePostModel;
 import com.citifleet.util.Constants;
 import com.citifleet.util.DecimalDigitsInputFilter;
 import com.citifleet.view.BaseFragment;
+import com.citifleet.view.main.marketplace.JobInfoFragment;
 
+import org.parceler.Parcels;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,6 +49,7 @@ import butterknife.OnClick;
  */
 public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.PostingJobOfferView {
     SimpleDateFormat formatter = new SimpleDateFormat(Constants.OUTPUT_TIME_FORMAT);
+    SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.OUTPUT_DATE_FORMAT);
     SimpleDateFormat outputFormatter = new SimpleDateFormat(Constants.INPUT_DATETIME_FORMAT);
     @Bind(R.id.title)
     TextView title;
@@ -70,14 +77,16 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
     TextView jobTypeText;
     @Bind(R.id.instructionsET)
     EditText instructionsET;
-    private Calendar selectedDateTimeCalendar = Calendar.getInstance();
-    //  private String selectedDate, selectedTime;
-    private boolean selectedSuiteTie;
-    private int selectedJobType = Constants.DEFAULT_UNSELECTED_POSITION, selectedVehicleType = Constants.DEFAULT_UNSELECTED_POSITION;
+
     private List<String> stringOptions;
-    private JobOfferPresenter presenter;
     private List<CarOption> vehicleTypes;
     private List<CarOption> jobTypes;
+
+    private Calendar selectedDateTimeCalendar = Calendar.getInstance();
+    private boolean isEditMode = false;
+    private JobOffer jobOffer;
+
+    private JobOfferPresenter presenter;
 
     @Nullable
     @Override
@@ -85,11 +94,38 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
         View view = inflater.inflate(R.layout.job_offer_fragment, container, false);
         ButterKnife.bind(this, view);
         title.setText(R.string.job_offer);
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(Constants.JOB_OFFER_TAG)) {
+            isEditMode = true;
+            jobOffer = Parcels.unwrap(getArguments().getParcelable(Constants.JOB_OFFER_TAG));
+            initWithEditValues();
+        } else {
+            jobOffer = new JobOffer();
+        }
         presenter = new JobOfferPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.loadVehicleAndJobTypes();
         fareEt.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(Constants.JOB_OFFER_MAX_FARE)});
         gratuityEt.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(Constants.JOB_OFFER_MAX_FARE)});
         return view;
+    }
+
+    private void initWithEditValues() {
+        try {
+            Date date = outputFormatter.parse(jobOffer.getDateTime());
+            selectedDateTimeCalendar.setTime(date);
+            dateText.setText(dateFormat.format(date));
+            timeText.setText(formatter.format(date));
+        } catch (ParseException e) {
+            Log.e(JobOfferFragment.class.getName(), e.getMessage());
+        }
+        pickupText.setText(jobOffer.getPickupAddress());
+        destinationText.setText(jobOffer.getDestination());
+        fareEt.setText(String.valueOf(jobOffer.getFare()));
+        gratuityEt.setText(String.valueOf(jobOffer.getGratuity()));
+        suiteText.setText(jobOffer.isSuite() ? getString(R.string.yes) : getString(R.string.no));
+        instructionsET.setText(jobOffer.getInstructions());
+        vehicleTypeText.setText(jobOffer.getVehicleType());
+        jobTypeText.setText(jobOffer.getJobType());
     }
 
     @OnClick(R.id.dateBtn)
@@ -104,15 +140,18 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
     void onPostBtnClick() {
         if (dateText.equals(getString(R.string.select_date)) || timeText.equals(getString(R.string.select_time)) ||
                 TextUtils.isEmpty(pickupText.getText()) || TextUtils.isEmpty(destinationText.getText())
-                || TextUtils.isEmpty(fareEt.getText()) || selectedJobType == Constants.DEFAULT_UNSELECTED_POSITION ||
-                selectedVehicleType == Constants.DEFAULT_UNSELECTED_POSITION || TextUtils.isEmpty(instructionsET.getText())) {
+                || TextUtils.isEmpty(fareEt.getText()) || jobOffer.getJobTypeId() == Constants.DEFAULT_UNSELECTED_POSITION ||
+                jobOffer.getVehicleTypeId() == Constants.DEFAULT_UNSELECTED_POSITION || TextUtils.isEmpty(instructionsET.getText())) {
             Toast.makeText(getActivity(), R.string.posting_empty, Toast.LENGTH_SHORT).show();
         } else {
-            String datetime = outputFormatter.format(selectedDateTimeCalendar.getTime());
             double fare = Double.parseDouble(fareEt.getText().toString());
-            double gratuity = TextUtils.isEmpty(gratuityEt.getText().toString()) ? 0 : Double.parseDouble(gratuityEt.getText().toString());
-            presenter.postJobOffer(datetime, pickupText.getText().toString(), destinationText.getText().toString(), fare, gratuity, selectedVehicleType, selectedSuiteTie, selectedJobType,
-                    instructionsET.getText().toString());
+            jobOffer.setPickupAddress(pickupText.getText().toString());
+            jobOffer.setDestination(destinationText.getText().toString());
+            jobOffer.setFare(fare);
+            jobOffer.setInstructions(instructionsET.getText().toString());
+            String datetime = outputFormatter.format(selectedDateTimeCalendar.getTime());
+            jobOffer.setDateTime(datetime);
+            presenter.postJobOffer(jobOffer, isEditMode);
         }
     }
 
@@ -151,7 +190,7 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
     private DialogInterface.OnClickListener vehicleTypeClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            selectedVehicleType = vehicleTypes.get(which).getId();
+            jobOffer.setVehicleTypeId(vehicleTypes.get(which).getId());
             vehicleTypeText.setText(vehicleTypes.get(which).getName());
         }
     };
@@ -159,7 +198,7 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
     private DialogInterface.OnClickListener jobTypeClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            selectedJobType = jobTypes.get(which).getId();
+            jobOffer.setJobTypeId(jobTypes.get(which).getId());
             jobTypeText.setText(jobTypes.get(which).getName());
         }
     };
@@ -193,7 +232,7 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
     private DialogInterface.OnClickListener suiteListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            selectedSuiteTie = (which == 0);
+            jobOffer.setSuite(which == 0);
             suiteText.setText(stringOptions.get(which));
         }
     };
@@ -250,11 +289,27 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
     @Override
     public void onVehicleTypesLoaded(List<CarOption> carOptions) {
         vehicleTypes = carOptions;
+        if (isEditMode) {
+            for (CarOption car : carOptions) {
+                if (car.getName().equals(jobOffer.getVehicleType())) {
+                    jobOffer.setVehicleTypeId(car.getId());
+                    break;
+                }
+            }
+        }
     }
 
     @Override
     public void onJobTypesLoaded(List<CarOption> carOptions) {
         jobTypes = carOptions;
+        if (isEditMode) {
+            for (CarOption car : carOptions) {
+                if (car.getName().equals(jobOffer.getJobType())) {
+                    jobOffer.setJobTypeId(car.getId());
+                    break;
+                }
+            }
+        }
     }
 
     @Override

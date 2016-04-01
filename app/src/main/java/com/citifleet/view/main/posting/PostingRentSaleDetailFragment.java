@@ -1,18 +1,10 @@
 package com.citifleet.view.main.posting;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -32,12 +24,10 @@ import android.widget.Toast;
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.CarOption;
-import com.citifleet.model.PostingType;
-import com.citifleet.util.CommonUtils;
+import com.citifleet.model.CarPostingType;
 import com.citifleet.util.Constants;
 import com.citifleet.util.DecimalDigitsInputFilter;
 import com.citifleet.util.ImagePickerUtil;
-import com.citifleet.util.PermissionUtil;
 import com.citifleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
 
@@ -89,7 +79,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     String pickImageTitle;
     @Bind(R.id.postBtn)
     Button postBtn;
-    private PostingType postingType;
+    private CarPostingType postingType;
     private PostingRentSaleDetailPresenter presenter;
     private List<CarOption> makeList;
     private List<CarOption> modelList;
@@ -112,8 +102,8 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.rent_fragment, container, false);
         ButterKnife.bind(this, view);
-        postingType = (PostingType) getArguments().getSerializable(Constants.POSTING_TYPE_TAG);
-        title.setText(postingType == PostingType.RENT ? R.string.rent : R.string.sale);
+        postingType = (CarPostingType) getArguments().getSerializable(Constants.POSTING_TYPE_TAG);
+        title.setText(postingType == CarPostingType.RENT ? R.string.rent : R.string.sale);
         presenter = new PostingRentSaleDetailPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.init();
         enableModelBtn(false);

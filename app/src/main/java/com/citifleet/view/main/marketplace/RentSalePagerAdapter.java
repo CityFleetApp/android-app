@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.citifleet.model.PostingType;
+import com.citifleet.model.CarPostingType;
 import com.citifleet.util.Constants;
 
 /**
@@ -23,7 +23,7 @@ public class RentSalePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Fragment fragment = new BuyRentDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.POSTING_TYPE_TAG, position == 0 ? PostingType.SALE : PostingType.RENT);
+        bundle.putSerializable(Constants.POSTING_TYPE_TAG, position == 0 ? CarPostingType.SALE : CarPostingType.RENT);
         fragment.setArguments(bundle);
         return fragment;
     }
