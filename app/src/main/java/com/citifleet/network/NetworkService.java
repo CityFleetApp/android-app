@@ -178,8 +178,19 @@ public interface NetworkService {
                            @Part("year") int year, @Part("fuel") int fuel, @Part("seats") int seats, @Part("price") double price, @Part("description") RequestBody description);
 
     @Multipart
+    @PATCH("marketplace/cars/posting/sale/{id}/")
+    Call<Void> editSaleCar(@Path("id") int id, @PartMap() Map<String, RequestBody> files, @Part("make") int make, @Part("model") int model, @Part("type") int type, @Part("color") int color,
+                           @Part("year") int year, @Part("fuel") int fuel, @Part("seats") int seats, @Part("price") double price, @Part("description") RequestBody description);
+
+
+    @Multipart
     @POST("marketplace/goods/posting/")
     Call<Void> postGood(@PartMap() Map<String, RequestBody> files, @Part("price") double price, @Part("condition") int condition,
+                        @Part("item") RequestBody item, @Part("description") RequestBody description);
+
+    @Multipart
+    @PATCH("marketplace/goods/posting/{id}/")
+    Call<Void> editGood(@Path("id") int id, @Part("price") double price, @Part("condition") int condition,
                         @Part("item") RequestBody item, @Part("description") RequestBody description);
 
     @POST("marketplace/offers/{id}/request_job/")
@@ -202,6 +213,7 @@ public interface NetworkService {
     Call<Void> editJobOffer(@Path("id") String id, @Field("pickup_datetime") String datetime, @Field("pickup_address") String pickupAddress, @Field("destination") String destination, @Field("fare") double fare,
                             @Field("gratuity") double gratuity, @Field("vehicle_type") int vehicleType, @Field("suite") boolean suite, @Field("job_type") int jobType,
                             @Field("instructions") String instructions);
+
     @GET("users/profile/")
     Call<UserEditInfo> getUserProfileInfo();
 

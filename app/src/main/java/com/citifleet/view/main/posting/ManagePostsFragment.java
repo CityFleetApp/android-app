@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.model.Car;
+import com.citifleet.model.CarPostingType;
+import com.citifleet.model.GeneralGood;
 import com.citifleet.model.JobOffer;
 import com.citifleet.model.ManagePostModel;
 import com.citifleet.model.PostingType;
@@ -24,6 +27,7 @@ import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 import com.citifleet.view.main.benefits.BenefitPresenter;
 import com.citifleet.view.main.benefits.BenefitsAdapter;
+import com.citifleet.view.main.marketplace.*;
 
 import org.parceler.Parcels;
 
@@ -77,24 +81,69 @@ public class ManagePostsFragment extends BaseFragment implements ManagePostsAdap
     @Override
     public void onItemClick(ManagePostModel item) {
         if (item.getPostingType().equals(PostingType.JOB_OFFER.getApiName())) {
-            JobOffer jobOffer = new JobOffer();
-            jobOffer.setId(item.getId());
-            jobOffer.setDateTime(item.getPickupDatetime());
-            jobOffer.setSuite(item.isSuite());
-            jobOffer.setJobType(item.getJobType());
-            jobOffer.setVehicleType(item.getVehicleType());
-            jobOffer.setPickupAddress(item.getPickupAddress());
-            jobOffer.setDestination(item.getDestination());
-            jobOffer.setFare(Double.parseDouble(item.getFare()));
-            jobOffer.setGratuity(item.getGratuity());
-            jobOffer.setInstructions(item.getInstructions());
-            jobOffer.setStatus(item.getStatus());
             JobOfferFragment fragment = new JobOfferFragment();
             Bundle args = new Bundle();
-            args.putParcelable(Constants.JOB_OFFER_TAG, Parcels.wrap(jobOffer));
+            args.putParcelable(Constants.JOB_OFFER_TAG, Parcels.wrap(getJobOfferFromManagePostModel(item)));
+            fragment.setArguments(args);
+            ((BaseActivity) getActivity()).changeFragment(fragment, true);
+        } else if (item.getPostingType().equals(PostingType.GENERAL_GOOD.getApiName())) {
+            GeneralGoodsFragment fragment = new GeneralGoodsFragment();
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.GENERAL_GOODS_TAG, Parcels.wrap(getGenGoodFromManagePostModel(item)));
+            fragment.setArguments(args);
+            ((BaseActivity) getActivity()).changeFragment(fragment, true);
+        } else {
+            BuyRentDetailFragment fragment = new BuyRentDetailFragment();
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.CAR_RENT_SALE_TAG, Parcels.wrap(getCarFromManagePostModel(item)));
+            args.putSerializable(Constants.POSTING_TYPE_TAG, item.isRent() ? CarPostingType.RENT : CarPostingType.SALE);
             fragment.setArguments(args);
             ((BaseActivity) getActivity()).changeFragment(fragment, true);
         }
+    }
+
+    private Car getCarFromManagePostModel(ManagePostModel item) {
+        Car car = new Car();
+        car.setId(item.getId());
+        car.setPhotos(item.getPhotos());
+        car.setPrice(item.getPrice());
+        car.setDescription(item.getDescription());
+        car.setColor(item.getColor());
+        car.setFuel(item.getFuel());
+        car.setMake(item.getMake());
+        car.setModel(item.getModel());
+        car.setType(item.getType());
+        car.setRent(item.isRent());
+        car.setSeats(item.getSeats());
+        car.setYear(item.getYear());
+        return car;
+    }
+
+    private GeneralGood getGenGoodFromManagePostModel(ManagePostModel item) {
+        GeneralGood generalGood = new GeneralGood();
+        generalGood.setId(item.getId());
+        generalGood.setCondition(item.getCondition());
+        generalGood.setDescription(item.getDescription());
+        generalGood.setItem(item.getItem());
+        generalGood.setPhotos(item.getPhotos());
+        generalGood.setPrice(item.getPrice());
+        return generalGood;
+    }
+
+    private JobOffer getJobOfferFromManagePostModel(ManagePostModel item) {
+        JobOffer jobOffer = new JobOffer();
+        jobOffer.setId(item.getId());
+        jobOffer.setDateTime(item.getPickupDatetime());
+        jobOffer.setSuite(item.isSuite());
+        jobOffer.setJobType(item.getJobType());
+        jobOffer.setVehicleType(item.getVehicleType());
+        jobOffer.setPickupAddress(item.getPickupAddress());
+        jobOffer.setDestination(item.getDestination());
+        jobOffer.setFare(Double.parseDouble(item.getFare()));
+        jobOffer.setGratuity(item.getGratuity());
+        jobOffer.setInstructions(item.getInstructions());
+        jobOffer.setStatus(item.getStatus());
+        return jobOffer;
     }
 
     @Override

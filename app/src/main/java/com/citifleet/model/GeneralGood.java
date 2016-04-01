@@ -1,5 +1,8 @@
 package com.citifleet.model;
 
+import com.citifleet.util.Constants;
+import com.google.gson.annotations.Expose;
+
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
@@ -17,6 +20,9 @@ public class GeneralGood {
     private String price;
     private int[] dimensions = new int[2];
     private List<String> photos = new ArrayList<String>();
+
+    @Expose
+    private int conditionId = Constants.DEFAULT_UNSELECTED_POSITION;
 
     public int getId() {
         return id;
@@ -72,5 +78,13 @@ public class GeneralGood {
 
     public void setPhotos(List<String> photos) {
         this.photos = photos;
+    }
+
+    public int getConditionId() {
+        return conditionId;
+    }
+
+    public void setConditionId(int conditionId) {
+        this.conditionId = conditionId;
     }
 }
