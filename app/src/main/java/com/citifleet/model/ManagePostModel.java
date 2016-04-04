@@ -3,6 +3,7 @@ package com.citifleet.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.concurrent.Phaser;
 
 /**
  * Created by vika on 31.03.16.
@@ -25,7 +26,7 @@ public class ManagePostModel {
     private String price;
     private String description;
     private boolean rent;
-    private List<String> photos;
+    private List<Photo> photos;
     private int[] dimensions;
 
     //goods fields
@@ -153,11 +154,11 @@ public class ManagePostModel {
         this.rent = rent;
     }
 
-    public List<String> getPhotos() {
+    public List<Photo> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<String> photos) {
+    public void setPhotos(List<Photo> photos) {
         this.photos = photos;
     }
 

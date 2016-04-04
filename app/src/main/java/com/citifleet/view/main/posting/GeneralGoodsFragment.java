@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -24,13 +25,16 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.GeneralGood;
+import com.citifleet.model.ImageState;
 import com.citifleet.model.JobOffer;
+import com.citifleet.model.Photo;
 import com.citifleet.util.CommonUtils;
 import com.citifleet.util.Constants;
 import com.citifleet.util.DecimalDigitsInputFilter;
@@ -42,6 +46,7 @@ import com.squareup.picasso.Picasso;
 import org.parceler.Parcels;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,6 +54,7 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * Created by vika on 21.03.16.
@@ -71,11 +77,11 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
     @Bind(R.id.postBtn)
     Button postBtn;
     @Bind(R.id.progressBar)
-    ProgressBar progressBar;
-    private String[] imageUrls = new String[Constants.POSTING_IMAGES_NUMBER];
+    RelativeLayout progressBar;
+    private Photo[] imageUrls = new Photo[Constants.POSTING_IMAGES_NUMBER];
+    private List<Integer> photosToDelete = new ArrayList<Integer>();
     private PostingGeneralGoodsPresenter presenter;
     private ImagePickerUtil imagePickerUtil;
-
     private boolean isEditMode = false;
     private GeneralGood generalGood;
 
@@ -105,8 +111,9 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
         priceEt.setText(generalGood.getPrice());
         condition.setText(generalGood.getCondition());
         if (generalGood.getPhotos().size() > 0) {
+            imageUrls = generalGood.getPhotos().toArray(imageUrls);
             for (int i = 0; i < generalGood.getPhotos().size(); i++) {
-                Picasso.with(getContext()).load(generalGood.getPhotos().get(i)).centerCrop().fit().into(images.get(i));
+                Picasso.with(getContext()).load(generalGood.getPhotos().get(i).getUrl()).centerCrop().fit().into(images.get(i));
             }
         }
         final String[] conditions = getResources().getStringArray(R.array.general_goods_conditions);
@@ -130,14 +137,14 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
                     images++;
                 }
             }
-            if (images == 0 && !isEditMode) {
+            if (images == 0) {
                 Toast.makeText(getActivity(), R.string.one_image, Toast.LENGTH_SHORT).show();
             } else {
                 generalGood.setPrice(priceEt.getText().toString());
                 generalGood.setDescription(descrEt.getText().toString());
                 generalGood.setItem(itemEt.getText().toString());
                 generalGood.setPhotos(Arrays.asList(imageUrls));
-                presenter.createPost(generalGood, isEditMode);
+                presenter.createPost(generalGood, isEditMode, photosToDelete);
             }
         }
     }
@@ -161,7 +168,53 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
 
     @OnClick({R.id.imageFirst, R.id.imageSecond, R.id.imageThird, R.id.imageFourth, R.id.imageFifth})
     void onImageClick(ImageView view) {
-        imagePickerUtil.onImageClick(view);
+        int position = getClickedPosition(view);
+        if (imageUrls[position] == null || imageUrls[position].getId() == 0) {
+            imagePickerUtil.onImageClick(view);
+        }
+    }
+
+
+    @OnLongClick({R.id.imageFirst, R.id.imageSecond, R.id.imageThird, R.id.imageFourth, R.id.imageFifth})
+    boolean onLongImageClick(final View view) {
+        final int clickedPosition = getClickedPosition(view);
+        if (imageUrls[clickedPosition] != null) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(getString(R.string.delete_dialog_title))
+                    .setMessage(getString(R.string.delete_dialog_message))
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteImage(clickedPosition);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    })
+                    .show();
+            return true;
+        }
+        return false;
+    }
+
+    private void deleteImage(int position) {
+        if (imageUrls[position].getId() != 0) {
+            photosToDelete.add(imageUrls[position].getId());
+        }
+        imageUrls[position]=null;
+        images.get(position).setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.painting));
+    }
+
+    private int getClickedPosition(View view) {
+        int clickedPosition = Constants.DEFAULT_UNSELECTED_POSITION;
+        for (ImageButton imageButton : images) {
+            if (imageButton.getId() == view.getId()) {
+                clickedPosition = images.indexOf(imageButton);
+                break;
+            }
+        }
+        return clickedPosition;
     }
 
     @Override
@@ -177,17 +230,6 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
         if (imagePickerUtil.isImagePickerRequestResultCode(requestCode)) {
             imagePickerUtil.onActivityResult(requestCode, resultCode, data);
         }
-    }
-
-    private int getClickedPosition(View view) {
-        int clickedPosition = Constants.DEFAULT_UNSELECTED_POSITION;
-        for (ImageButton imageButton : images) {
-            if (imageButton.getId() == view.getId()) {
-                clickedPosition = images.indexOf(imageButton);
-                break;
-            }
-        }
-        return clickedPosition;
     }
 
     @Override
@@ -235,8 +277,10 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
 
     @Override
     public void onImageReceived(String url, int position) {
-        imageUrls[position] = url;
-        Picasso.with(getContext()).load(new File(imageUrls[position])).fit().centerCrop().into(images.get(position));
+        Photo photo = new Photo();
+        photo.setUrl(url);
+        imageUrls[position] = photo;
+        Picasso.with(getContext()).load(new File(imageUrls[position].getUrl())).fit().centerCrop().into(images.get(position));
     }
 
     @Override

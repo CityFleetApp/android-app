@@ -7,6 +7,7 @@ import android.util.Log;
 import com.citifleet.model.Car;
 import com.citifleet.model.CarOption;
 import com.citifleet.model.CarPostingType;
+import com.citifleet.model.Photo;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 import com.citifleet.util.ScaleImageHelper;
@@ -96,7 +97,7 @@ public class PostingRentSaleDetailPresenter {
         }
     }
 
-    private void getImagesRequestBodies(final List<String> imageUrls, final Handler handler) {
+    private void getImagesRequestBodies(final List<Photo> imageUrls, final Handler handler) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -104,7 +105,7 @@ public class PostingRentSaleDetailPresenter {
                 final HashMap<String, RequestBody> imagesMap = new HashMap<String, RequestBody>();
                 for (int i = 0; i < imageUrls.size(); i++) {
                     if (imageUrls.get(i) != null) {
-                        byte[] bytes = scaleImageHelper.getScaledImageBytes(imageUrls.get(i));
+                        byte[] bytes = scaleImageHelper.getScaledImageBytes(imageUrls.get(i).getUrl());
                         RequestBody fileRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), bytes);
                         imagesMap.put("photos[" + i + "]\"; filename=\"image.png\" ", fileRequestBody);
                     }

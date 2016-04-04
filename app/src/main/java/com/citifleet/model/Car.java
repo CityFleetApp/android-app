@@ -25,7 +25,7 @@ public class Car {
     private String description;
     private boolean rent;
     private int[] dimensions = new int[2];
-    private List<String> photos = new ArrayList<String>();
+    private List<Photo> photos = new ArrayList<Photo>();
 
     @Expose
     private int makeId = Constants.DEFAULT_UNSELECTED_POSITION;
@@ -128,11 +128,11 @@ public class Car {
         this.rent = rent;
     }
 
-    public List<String> getPhotos() {
+    public List<Photo> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<String> photos) {
+    public void setPhotos(List<Photo> photos) {
         this.photos = photos;
     }
 

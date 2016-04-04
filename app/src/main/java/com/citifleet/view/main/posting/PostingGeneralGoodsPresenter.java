@@ -5,10 +5,12 @@ import android.os.Message;
 import android.util.Log;
 
 import com.citifleet.model.GeneralGood;
+import com.citifleet.model.Photo;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 import com.citifleet.util.ScaleImageHelper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,30 +26,39 @@ import retrofit2.Response;
 public class PostingGeneralGoodsPresenter {
     private NetworkManager networkManager;
     private PostingGeneralGoodsDetailView view;
+    private int imagesUpdatingCount = 0;
+    private boolean isUpdatingPost = false;
 
     public PostingGeneralGoodsPresenter(NetworkManager networkManager, PostingGeneralGoodsDetailView view) {
         this.networkManager = networkManager;
         this.view = view;
     }
 
-    public void createPost(final GeneralGood generalGood, boolean isEditMode) {
+    public void createPost(final GeneralGood generalGood, final boolean isEditMode, List<Integer> photoIdToDelete) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
-            if (isEditMode) {
-                RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getDescription());
-                RequestBody itemBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getItem());
-                Call<Void> call = networkManager.getNetworkClient().editGood(generalGood.getId(), Double.parseDouble(generalGood.getPrice()), generalGood.getConditionId(), itemBody, descrBody);
-                call.enqueue(createPostCallback);
+            List<Photo> newPhotos = new ArrayList<Photo>();
+            for (Photo photo : generalGood.getPhotos()) {
+                if (photo != null && photo.getId() == 0) {
+                    newPhotos.add(photo);
+                }
+            }
+            for (Integer integer : photoIdToDelete) {
+                Call<Void> call = networkManager.getNetworkClient().deletePhotoFromGoodsPost(integer);
+                call.enqueue(editPhotoCallback);
+            }
+            if (isEditMode && newPhotos.isEmpty()) {
+                updatePost(generalGood, null);
             } else {
-                getImagesRequestBodies(generalGood.getPhotos(), new Handler() {
+                getImagesRequestBodies(newPhotos, new Handler() {
                     @Override
                     public void handleMessage(Message msg) {
                         super.handleMessage(msg);
-                        HashMap<String, RequestBody> imagesMap = (HashMap<String, RequestBody>) msg.obj;
-                        RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getDescription());
-                        RequestBody itemBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getItem());
-                        Call<Void> call = networkManager.getNetworkClient().postGood(imagesMap, Double.parseDouble(generalGood.getPrice()), generalGood.getConditionId(), itemBody, descrBody);
-                        call.enqueue(createPostCallback);
+                        if (isEditMode) {
+                            updatePost(generalGood, (HashMap<String, RequestBody>) msg.obj);
+                        } else {
+                            createPost(generalGood, (HashMap<String, RequestBody>) msg.obj);
+                        }
                     }
                 });
             }
@@ -56,13 +67,40 @@ public class PostingGeneralGoodsPresenter {
         }
     }
 
-    private Callback<Void> createPostCallback = new Callback<Void>() {
+    private void updatePost(GeneralGood generalGood, HashMap<String, RequestBody> imagesMap) {
+        RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getDescription());
+        RequestBody itemBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getItem());
+        Call<Void> call = networkManager.getNetworkClient().editGood(generalGood.getId(), Double.parseDouble(generalGood.getPrice()), generalGood.getConditionId(),
+                itemBody, descrBody);
+        call.enqueue(createPostCallback);
+        isUpdatingPost = true;
+        for (RequestBody requestBody : imagesMap.values()) {
+            imagesUpdatingCount++;
+            Call<Void> callEditPhotos = networkManager.getNetworkClient().editPhotoFromGoodsPost(requestBody, generalGood.getId());
+            callEditPhotos.enqueue(editPhotoCallback);
+        }
+
+    }
+
+    private void createPost(GeneralGood generalGood, HashMap<String, RequestBody> imagesMap) {
+        RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getDescription());
+        RequestBody itemBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getItem());
+        Call<Void> call = networkManager.getNetworkClient().postGood(imagesMap, Double.parseDouble(generalGood.getPrice()), generalGood.getConditionId(), itemBody, descrBody);
+        call.enqueue(createPostCallback);
+    }
+
+
+    private Callback<Void> editPhotoCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
-            view.stopLoading();
             if (response.isSuccessful()) {
-                view.onPostCreatesSuccessfully();
+                imagesUpdatingCount--;
+                if (imagesUpdatingCount == 0) {
+                    view.stopLoading();
+                    view.onPostCreatesSuccessfully();
+                }
             } else {
+                view.stopLoading();
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
         }
@@ -75,7 +113,29 @@ public class PostingGeneralGoodsPresenter {
         }
     };
 
-    private void getImagesRequestBodies(final List<String> imageUrls, final Handler handler) {
+    private Callback<Void> createPostCallback = new Callback<Void>() {
+        @Override
+        public void onResponse(Call<Void> call, Response<Void> response) {
+            if (response.isSuccessful()) {
+                if (!isUpdatingPost || (isUpdatingPost && imagesUpdatingCount == 0)) {
+                    view.onPostCreatesSuccessfully();
+                    view.stopLoading();
+                }
+            } else {
+                view.stopLoading();
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Void> call, Throwable t) {
+            view.stopLoading();
+            Log.e(PostingGeneralGoodsPresenter.class.getName(), t.getMessage());
+            view.onFailure(t.getMessage());
+        }
+    };
+
+    private void getImagesRequestBodies(final List<Photo> imageUrls, final Handler handler) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -83,7 +143,7 @@ public class PostingGeneralGoodsPresenter {
                 final HashMap<String, RequestBody> imagesMap = new HashMap<String, RequestBody>();
                 for (int i = 0; i < imageUrls.size(); i++) {
                     if (imageUrls.get(i) != null) {
-                        byte[] bytes = scaleImageHelper.getScaledImageBytes(imageUrls.get(i));
+                        byte[] bytes = scaleImageHelper.getScaledImageBytes(imageUrls.get(i).getUrl());
                         RequestBody fileRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), bytes);
                         imagesMap.put("photos[" + i + "]\"; filename=\"image.png\" ", fileRequestBody);
                     }

@@ -27,6 +27,7 @@ import com.citifleet.model.Car;
 import com.citifleet.model.CarOption;
 import com.citifleet.model.CarPostingType;
 import com.citifleet.model.JobOffer;
+import com.citifleet.model.Photo;
 import com.citifleet.util.Constants;
 import com.citifleet.util.DecimalDigitsInputFilter;
 import com.citifleet.util.ImagePickerUtil;
@@ -92,7 +93,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     private List<CarOption> fuelsList;
     private List<CarOption> colorsList;
     private List<String> yearList;
-    private String[] imageUrls = new String[Constants.POSTING_IMAGES_NUMBER];
+    private Photo[] imageUrls = new Photo[Constants.POSTING_IMAGES_NUMBER];
     private ImagePickerUtil imagePickerUtil;
 
     @Nullable
@@ -130,7 +131,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
         descr.setText(car.getDescription());
         if (car.getPhotos().size() > 0) {
             for (int i = 0; i < car.getPhotos().size(); i++) {
-                Picasso.with(getContext()).load(car.getPhotos().get(i)).centerCrop().fit().into(images.get(i));
+                Picasso.with(getContext()).load(car.getPhotos().get(i).getUrl()).centerCrop().fit().into(images.get(i));
             }
         }
     }
@@ -189,7 +190,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
                     images++;
                 }
             }
-            if (images == 0 && !isEditMode) {
+            if (images == 0) {
                 Toast.makeText(getActivity(), R.string.one_image, Toast.LENGTH_SHORT).show();
             } else {
                 car.setYear(Integer.valueOf(yearText.getText().toString()));
@@ -444,8 +445,10 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
 
     @Override
     public void onImageReceived(String url, int position) {
-        imageUrls[position] = url;
-        Picasso.with(getContext()).load(new File(imageUrls[position])).fit().centerCrop().into(images.get(position));
+        Photo photo = new Photo();
+        photo.setUrl(url);
+        imageUrls[position] = photo;
+        Picasso.with(getContext()).load(new File(imageUrls[position].getUrl())).fit().centerCrop().into(images.get(position));
     }
 
     @Override

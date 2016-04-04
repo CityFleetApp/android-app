@@ -52,7 +52,8 @@ public class ManagePostsPresenter  {
 
         @Override
         public void onFailure(Call<List<ManagePostModel>> call, Throwable t) {
-            Log.e(ManagePostsPresenter.class.getName(), t.getMessage());
+         //   Log.e(ManagePostsPresenter.class.getName(), t.getMessage());
+            t.printStackTrace();
             view.stopLoading();
             view.onFailure(t.getMessage());
         }

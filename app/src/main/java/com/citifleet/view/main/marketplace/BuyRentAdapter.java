@@ -106,8 +106,8 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
             }
         });
 
-        if (car.getPhotos() != null && !car.getPhotos().isEmpty() && !TextUtils.isEmpty(car.getPhotos().get(0))) {
-            Picasso.with(context).load(car.getPhotos().get(0)).fit().centerCrop().into(holder.carImage);
+        if (car.getPhotos() != null && !car.getPhotos().isEmpty() && !TextUtils.isEmpty(car.getPhotos().get(0).getUrl())) {
+            Picasso.with(context).load(car.getPhotos().get(0).getUrl()).fit().centerCrop().into(holder.carImage);
         }
         holder.carPrice.setText(car.getPrice());
         holder.carTitle.setText(car.getYear() + " " + car.getMake() + " " + car.getModel());

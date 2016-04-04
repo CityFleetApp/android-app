@@ -229,5 +229,21 @@ public interface NetworkService {
 
     @GET("marketplace/manage-posts/")
     Call<List<ManagePostModel>> getManagePosts();
+
+    @DELETE("marketplace/goodsphotos/{id}/")
+    Call<Void> deletePhotoFromGoodsPost(@Path("id") int id);
+
+    @Multipart
+    @POST("marketplace/goodsphotos/{id}/")
+    Call<Void> editPhotoFromGoodsPost(@Part("file\"; filename=\"image.png\" ") RequestBody file, @Part("goods") int goodsId);
+
+    @DELETE("marketplace/carphotos/{id}/")
+    Call<Void> deletePhotoFromCarPost(@Path("id") int id);
+
+    @Multipart
+    @POST("marketplace/carphotos/{id}/")
+    Call<Void> editPhotoFromCarPost(@Path("id") int id, @Part("file\"; filename=\"image.png\" ") RequestBody file, @Part("car") int carsId);
+
+
 }
 

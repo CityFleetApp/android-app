@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.citifleet.R;
+import com.citifleet.model.Photo;
 import com.citifleet.model.UserImages;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -24,10 +25,10 @@ import java.util.List;
 public class RentSaleGalleryPagerAdapter extends PagerAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
-    private List<String> images;
+    private List<Photo> images;
     private String picassoTag;
 
-    public RentSaleGalleryPagerAdapter(Context context, List<String> images, String picassoTag) {
+    public RentSaleGalleryPagerAdapter(Context context, List<Photo> images, String picassoTag) {
         this.images = images;
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -50,7 +51,7 @@ public class RentSaleGalleryPagerAdapter extends PagerAdapter {
         View itemView = layoutInflater.inflate(R.layout.rent_sale_image_item, container, false);
         final ImageView imageView = (ImageView) itemView.findViewById(R.id.carImage);
         final ProgressBar progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
-        Picasso.with(context).load(images.get(position)).tag(picassoTag).into(imageView, new Callback() {
+        Picasso.with(context).load(images.get(position).getUrl()).tag(picassoTag).into(imageView, new Callback() {
             @Override
             public void onSuccess() {
                 progressBar.setVisibility(View.GONE);

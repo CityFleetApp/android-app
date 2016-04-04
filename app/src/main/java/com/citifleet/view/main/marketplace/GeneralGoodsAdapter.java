@@ -101,8 +101,8 @@ public class GeneralGoodsAdapter extends RecyclerView.Adapter<GeneralGoodsAdapte
                 holder.goodsImage.setLayoutParams(lp);
             }
         });
-        if (generalGood.getPhotos() != null && !generalGood.getPhotos().isEmpty() && !TextUtils.isEmpty(generalGood.getPhotos().get(0))) {
-            Picasso.with(context).load(generalGood.getPhotos().get(0)).into(holder.goodsImage);
+        if (generalGood.getPhotos() != null && !generalGood.getPhotos().isEmpty() && !TextUtils.isEmpty(generalGood.getPhotos().get(0).getUrl())) {
+            Picasso.with(context).load(generalGood.getPhotos().get(0).getUrl()).into(holder.goodsImage);
         }
 
         holder.goodsPrice.setText(generalGood.getPrice());

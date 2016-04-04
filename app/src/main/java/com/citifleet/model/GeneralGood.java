@@ -19,8 +19,7 @@ public class GeneralGood {
     private String description;
     private String price;
     private int[] dimensions = new int[2];
-    private List<String> photos = new ArrayList<String>();
-
+    private List<Photo> photos = new ArrayList<Photo>();
     @Expose
     private int conditionId = Constants.DEFAULT_UNSELECTED_POSITION;
 
@@ -72,11 +71,11 @@ public class GeneralGood {
         this.dimensions = dimensions;
     }
 
-    public List<String> getPhotos() {
+    public List<Photo> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<String> photos) {
+    public void setPhotos(List<Photo> photos) {
         this.photos = photos;
     }
 
