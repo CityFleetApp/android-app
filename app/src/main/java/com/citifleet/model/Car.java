@@ -1,5 +1,8 @@
 package com.citifleet.model;
 
+import com.citifleet.util.Constants;
+import com.google.gson.annotations.Expose;
+
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
@@ -23,6 +26,19 @@ public class Car {
     private boolean rent;
     private int[] dimensions = new int[2];
     private List<String> photos = new ArrayList<String>();
+
+    @Expose
+    private int makeId = Constants.DEFAULT_UNSELECTED_POSITION;
+    @Expose
+    private int modelId = Constants.DEFAULT_UNSELECTED_POSITION;
+    @Expose
+    private int typeId = Constants.DEFAULT_UNSELECTED_POSITION;
+    @Expose
+    private int colorId = Constants.DEFAULT_UNSELECTED_POSITION;
+    @Expose
+    private int fuelId = Constants.DEFAULT_UNSELECTED_POSITION;
+    @Expose
+    private int seatsId = Constants.DEFAULT_UNSELECTED_POSITION;
 
     public int getId() {
         return id;
@@ -126,5 +142,53 @@ public class Car {
 
     public void setDimensions(int[] dimensions) {
         this.dimensions = dimensions;
+    }
+
+    public int getMakeId() {
+        return makeId;
+    }
+
+    public void setMakeId(int makeId) {
+        this.makeId = makeId;
+    }
+
+    public int getModelId() {
+        return modelId;
+    }
+
+    public void setModelId(int modelId) {
+        this.modelId = modelId;
+    }
+
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
+
+    public int getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(int colorId) {
+        this.colorId = colorId;
+    }
+
+    public int getFuelId() {
+        return fuelId;
+    }
+
+    public void setFuelId(int fuelId) {
+        this.fuelId = fuelId;
+    }
+
+    public int getSeatsId() {
+        return seatsId;
+    }
+
+    public void setSeatsId(int seatsId) {
+        this.seatsId = seatsId;
     }
 }

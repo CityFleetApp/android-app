@@ -93,7 +93,7 @@ public class ManagePostsFragment extends BaseFragment implements ManagePostsAdap
             fragment.setArguments(args);
             ((BaseActivity) getActivity()).changeFragment(fragment, true);
         } else {
-            BuyRentDetailFragment fragment = new BuyRentDetailFragment();
+            PostingRentSaleDetailFragment fragment = new PostingRentSaleDetailFragment();
             Bundle args = new Bundle();
             args.putParcelable(Constants.CAR_RENT_SALE_TAG, Parcels.wrap(getCarFromManagePostModel(item)));
             args.putSerializable(Constants.POSTING_TYPE_TAG, item.isRent() ? CarPostingType.RENT : CarPostingType.SALE);

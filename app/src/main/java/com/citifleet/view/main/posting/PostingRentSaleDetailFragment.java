@@ -23,16 +23,21 @@ import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.model.Car;
 import com.citifleet.model.CarOption;
 import com.citifleet.model.CarPostingType;
+import com.citifleet.model.JobOffer;
 import com.citifleet.util.Constants;
 import com.citifleet.util.DecimalDigitsInputFilter;
 import com.citifleet.util.ImagePickerUtil;
 import com.citifleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
 
+import org.parceler.Parcels;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -45,10 +50,6 @@ import butterknife.OnClick;
  * Created by vika on 21.03.16.
  */
 public class PostingRentSaleDetailFragment extends BaseFragment implements PostingRentSaleDetailPresenter.PostingRentSaleDetailView, ImagePickerUtil.ImageResultListener {
-    private static final int REQUEST_CAMERA = 555;
-    private static final int SELECT_FILE = 666;
-    private static final int REQUEST_PERMISSION_CAMERA = 1;
-    private static final int REQUEST_PERMISSION_GALLERY = 2;
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.progressBar)
@@ -80,6 +81,9 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     @Bind(R.id.postBtn)
     Button postBtn;
     private CarPostingType postingType;
+    private Car car;
+    private boolean isEditMode = false;
+
     private PostingRentSaleDetailPresenter presenter;
     private List<CarOption> makeList;
     private List<CarOption> modelList;
@@ -89,12 +93,6 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     private List<CarOption> colorsList;
     private List<String> yearList;
     private String[] imageUrls = new String[Constants.POSTING_IMAGES_NUMBER];
-    private int selectedMakeId = Constants.DEFAULT_UNSELECTED_POSITION;
-    private int selectedModelId = Constants.DEFAULT_UNSELECTED_POSITION;
-    private int selectedTypeId = Constants.DEFAULT_UNSELECTED_POSITION;
-    private int selectedColorId = Constants.DEFAULT_UNSELECTED_POSITION;
-    private int selectedFuelId = Constants.DEFAULT_UNSELECTED_POSITION;
-    private int selectedSeatsId = Constants.DEFAULT_UNSELECTED_POSITION;
     private ImagePickerUtil imagePickerUtil;
 
     @Nullable
@@ -102,14 +100,39 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.rent_fragment, container, false);
         ButterKnife.bind(this, view);
-        postingType = (CarPostingType) getArguments().getSerializable(Constants.POSTING_TYPE_TAG);
+        Bundle args = getArguments();
+        postingType = (CarPostingType) args.getSerializable(Constants.POSTING_TYPE_TAG);
+        if (args != null && args.containsKey(Constants.CAR_RENT_SALE_TAG)) {
+            isEditMode = true;
+            car = Parcels.unwrap(getArguments().getParcelable(Constants.CAR_RENT_SALE_TAG));
+            initWithEditValues();
+        } else {
+            car = new Car();
+            enableModelBtn(false);
+        }
         title.setText(postingType == CarPostingType.RENT ? R.string.rent : R.string.sale);
         presenter = new PostingRentSaleDetailPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.init();
-        enableModelBtn(false);
         price.setFilters(new InputFilter[]{new DecimalDigitsInputFilter()});
         imagePickerUtil = new ImagePickerUtil(this, images, getString(R.string.car_posting_image_name), this);
         return view;
+    }
+
+    private void initWithEditValues() {
+        makeText.setText(car.getMake());
+        modelText.setText(car.getModel());
+        typeText.setText(car.getType());
+        colorText.setText(car.getColor());
+        fuelText.setText(car.getFuel());
+        seatsText.setText(String.valueOf(car.getSeats()));
+        yearText.setText(String.valueOf(car.getYear()));
+        price.setText(car.getPrice());
+        descr.setText(car.getDescription());
+        if (car.getPhotos().size() > 0) {
+            for (int i = 0; i < car.getPhotos().size(); i++) {
+                Picasso.with(getContext()).load(car.getPhotos().get(i)).centerCrop().fit().into(images.get(i));
+            }
+        }
     }
 
     private void enableModelBtn(boolean enable) {
@@ -155,7 +178,8 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
 
     @OnClick(R.id.postBtn)
     void onPostBtnClick() {
-        if (selectedMakeId == -1 || selectedModelId == -1 || selectedTypeId == -1 || selectedSeatsId == -1 || selectedFuelId == -1 || selectedColorId == -1 ||
+        if (car.getMakeId() == Constants.DEFAULT_UNSELECTED_POSITION || car.getModelId() == Constants.DEFAULT_UNSELECTED_POSITION || car.getTypeId() == Constants.DEFAULT_UNSELECTED_POSITION
+                || car.getSeatsId() == Constants.DEFAULT_UNSELECTED_POSITION || car.getFuelId() == Constants.DEFAULT_UNSELECTED_POSITION || car.getColorId() == Constants.DEFAULT_UNSELECTED_POSITION ||
                 TextUtils.isEmpty(yearText.getText().toString()) || TextUtils.isEmpty(price.getText().toString()) || TextUtils.isEmpty(descr.getText().toString())) {
             Toast.makeText(getActivity(), R.string.posting_empty, Toast.LENGTH_SHORT).show();
         } else {
@@ -165,12 +189,14 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
                     images++;
                 }
             }
-            if (images == 0) {
+            if (images == 0 && !isEditMode) {
                 Toast.makeText(getActivity(), R.string.one_image, Toast.LENGTH_SHORT).show();
             } else {
-                presenter.createPost(postingType, selectedMakeId, selectedModelId, selectedTypeId, selectedColorId, Integer.valueOf(yearText.getText().toString()),
-                        selectedFuelId, selectedSeatsId, Double.parseDouble(price.getText().toString()),
-                        descr.getText().toString(), imageUrls);
+                car.setYear(Integer.valueOf(yearText.getText().toString()));
+                car.setPrice(price.getText().toString());
+                car.setDescription(descr.getText().toString());
+                car.setPhotos(Arrays.asList(imageUrls));
+                presenter.createPost(postingType, car, isEditMode);
             }
         }
     }
@@ -225,14 +251,14 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     private DialogInterface.OnClickListener makeListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            if (makeList.get(which).getId() != selectedMakeId) {
-                selectedMakeId = makeList.get(which).getId();
+            if (makeList.get(which).getId() != car.getMakeId()) {
+                car.setMakeId(makeList.get(which).getId());
                 makeText.setText(makeList.get(which).getName());
                 if (modelList != null) {
                     modelList.clear();
                     modelText.setText(getString(R.string.select_model));
                 }
-                presenter.getCarModelsByMakeId(selectedMakeId);
+                presenter.getCarModelsByMakeId(car.getMakeId());
             }
         }
     };
@@ -240,35 +266,35 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
         @Override
         public void onClick(DialogInterface dialog, int which) {
             modelText.setText(modelList.get(which).getName());
-            selectedModelId = modelList.get(which).getId();
+            car.setModelId(modelList.get(which).getId());
         }
     };
     private DialogInterface.OnClickListener typeListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             typeText.setText(typesList.get(which).getName());
-            selectedTypeId = typesList.get(which).getId();
+            car.setTypeId(typesList.get(which).getId());
         }
     };
     private DialogInterface.OnClickListener colorListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             colorText.setText(colorsList.get(which).getName());
-            selectedColorId = colorsList.get(which).getId();
+            car.setColorId(colorsList.get(which).getId());
         }
     };
     private DialogInterface.OnClickListener fuelListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             fuelText.setText(fuelsList.get(which).getName());
-            selectedFuelId = fuelsList.get(which).getId();
+            car.setFuelId(fuelsList.get(which).getId());
         }
     };
     private DialogInterface.OnClickListener seatsListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             seatsText.setText(seatsList.get(which).getName());
-            selectedSeatsId = seatsList.get(which).getId();
+            car.setSeatsId(seatsList.get(which).getId());
         }
     };
     private DialogInterface.OnClickListener dateListener = new DialogInterface.OnClickListener() {
@@ -313,32 +339,81 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     @Override
     public void onMakesLoaded(List<CarOption> makeList) {
         this.makeList = makeList;
+        if (isEditMode) {
+            for (CarOption make : makeList) {
+                if (make.getName().equals(car.getMake())) {
+                    car.setMakeId(make.getId());
+                    break;
+                }
+            }
+            presenter.getCarModelsByMakeId(car.getMakeId());
+        }
     }
 
     @Override
     public void onModelLoaded(List<CarOption> modelList) {
         this.modelList = modelList;
         enableModelBtn(true);
+        if (isEditMode) {
+            for (CarOption model : modelList) {
+                if (model.getName().equals(car.getModel())) {
+                    car.setModelId(model.getId());
+                    break;
+                }
+            }
+        }
     }
 
     @Override
     public void onTypeLoaded(List<CarOption> typeList) {
         this.typesList = typeList;
+        if (isEditMode) {
+            for (CarOption type : typeList) {
+                if (type.getName().equals(car.getType())) {
+                    car.setTypeId(type.getId());
+                    break;
+                }
+            }
+        }
     }
 
     @Override
     public void onFuelLoaded(List<CarOption> fuelList) {
         this.fuelsList = fuelList;
+        if (isEditMode) {
+            for (CarOption fuel : fuelList) {
+                if (fuel.getName().equals(car.getFuel())) {
+                    car.setFuelId(fuel.getId());
+                    break;
+                }
+            }
+        }
     }
 
     @Override
     public void onColorLoaded(List<CarOption> colorList) {
         this.colorsList = colorList;
+        if (isEditMode) {
+            for (CarOption color : colorList) {
+                if (color.getName().equals(car.getColor())) {
+                    car.setColorId(color.getId());
+                    break;
+                }
+            }
+        }
     }
 
     @Override
     public void onSeatsLoaded(List<CarOption> seatsList) {
         this.seatsList = seatsList;
+        if (isEditMode) {
+            for (CarOption seats : seatsList) {
+                if (seats.getId() == car.getSeats()) {
+                    car.setSeatsId(seats.getId());
+                    break;
+                }
+            }
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.citifleet.model.Car;
 import com.citifleet.model.CarOption;
 import com.citifleet.model.CarPostingType;
 import com.citifleet.network.NetworkErrorUtil;
@@ -57,38 +58,53 @@ public class PostingRentSaleDetailPresenter {
         }
     }
 
-    public void createPost(final CarPostingType postingType, final int make, final int model, final int type, final int color, final int year, final int fuel, final int seats, final double price, final String description, String[] imageUrls) {
+    public void createPost(final CarPostingType postingType, final Car car, boolean isEditMode) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
-            getImagesRequestBodies(imageUrls, new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    HashMap<String, RequestBody> imagesMap = (HashMap<String, RequestBody>) msg.obj;
-                    RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), description);
-                    Call<Void> call;
-                    if (postingType == CarPostingType.RENT) {
-                        call = networkManager.getNetworkClient().postRentCar(imagesMap, make, model, type, color, year, fuel, seats, price, descrBody);
-                    } else {
-                        call = networkManager.getNetworkClient().postSaleCar(imagesMap, make, model, type, color, year, fuel, seats, price, descrBody);
-                    }
-                    call.enqueue(createPostCallback);
+            if (isEditMode) {
+                Call<Void> call;
+                RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), car.getDescription());
+                if (postingType == CarPostingType.RENT) {
+                    call = networkManager.getNetworkClient().editRentCar(car.getId(), car.getMakeId(), car.getModelId(), car.getTypeId(), car.getColorId(),
+                            car.getYear(), car.getFuelId(), car.getSeatsId(), Double.parseDouble(car.getPrice()), descrBody);
+                } else {
+                    call = networkManager.getNetworkClient().editSaleCar(car.getId(), car.getMakeId(), car.getModelId(), car.getTypeId(), car.getColorId(),
+                            car.getYear(), car.getFuelId(), car.getSeatsId(), Double.parseDouble(car.getPrice()), descrBody);
                 }
-            });
+                call.enqueue(createPostCallback);
+            } else {
+                getImagesRequestBodies(car.getPhotos(), new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        HashMap<String, RequestBody> imagesMap = (HashMap<String, RequestBody>) msg.obj;
+                        RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), car.getDescription());
+                        Call<Void> call;
+                        if (postingType == CarPostingType.RENT) {
+                            call = networkManager.getNetworkClient().postRentCar(imagesMap, car.getMakeId(), car.getModelId(), car.getTypeId(), car.getColorId(),
+                                    car.getYear(), car.getFuelId(), car.getSeatsId(), Double.parseDouble(car.getPrice()), descrBody);
+                        } else {
+                            call = networkManager.getNetworkClient().postSaleCar(imagesMap, car.getMakeId(), car.getModelId(), car.getTypeId(), car.getColorId(),
+                                    car.getYear(), car.getFuelId(), car.getSeatsId(), Double.parseDouble(car.getPrice()), descrBody);
+                        }
+                        call.enqueue(createPostCallback);
+                    }
+                });
+            }
         } else {
             view.onNetworkError();
         }
     }
 
-    private void getImagesRequestBodies(final String[] imageUrls, final Handler handler) {
+    private void getImagesRequestBodies(final List<String> imageUrls, final Handler handler) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 ScaleImageHelper scaleImageHelper = new ScaleImageHelper();
                 final HashMap<String, RequestBody> imagesMap = new HashMap<String, RequestBody>();
-                for (int i = 0; i < imageUrls.length; i++) {
-                    if (imageUrls[i] != null) {
-                        byte[] bytes = scaleImageHelper.getScaledImageBytes(imageUrls[i]);
+                for (int i = 0; i < imageUrls.size(); i++) {
+                    if (imageUrls.get(i) != null) {
+                        byte[] bytes = scaleImageHelper.getScaledImageBytes(imageUrls.get(i));
                         RequestBody fileRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), bytes);
                         imagesMap.put("photos[" + i + "]\"; filename=\"image.png\" ", fileRequestBody);
                     }

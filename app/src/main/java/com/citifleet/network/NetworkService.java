@@ -179,9 +179,13 @@ public interface NetworkService {
 
     @Multipart
     @PATCH("marketplace/cars/posting/sale/{id}/")
-    Call<Void> editSaleCar(@Path("id") int id, @PartMap() Map<String, RequestBody> files, @Part("make") int make, @Part("model") int model, @Part("type") int type, @Part("color") int color,
+    Call<Void> editSaleCar(@Path("id") int id, @Part("make") int make, @Part("model") int model, @Part("type") int type, @Part("color") int color,
                            @Part("year") int year, @Part("fuel") int fuel, @Part("seats") int seats, @Part("price") double price, @Part("description") RequestBody description);
 
+    @Multipart
+    @PATCH("marketplace/cars/posting/rent/{id}/")
+    Call<Void> editRentCar(@Path("id") int id, @Part("make") int make, @Part("model") int model, @Part("type") int type, @Part("color") int color,
+                           @Part("year") int year, @Part("fuel") int fuel, @Part("seats") int seats, @Part("price") double price, @Part("description") RequestBody description);
 
     @Multipart
     @POST("marketplace/goods/posting/")

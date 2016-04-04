@@ -276,7 +276,7 @@ public class DashboardFragment extends BaseFragment implements DashboardView {
     }
 
     public void updateImage(String url) {
-        if (!TextUtils.isEmpty(url) && getActivity() != null) {
+        if (!TextUtils.isEmpty(url) && getActivity() != null && profileImage != null) {
             int frameSize = getResources().getDimensionPixelSize(R.dimen.profile_image_frame);
             int screenWidth = getResources().getDisplayMetrics().widthPixels;
             TypedValue outValue = new TypedValue();
