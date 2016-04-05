@@ -33,7 +33,8 @@ public class NetworkManager {
             public Response intercept(Chain chain) throws IOException {
                 Request request;
                 if (!TextUtils.isEmpty(PrefUtil.getToken(context))) {
-                    request = chain.request().newBuilder().addHeader("Authorization", context.getString(R.string.token_header) + PrefUtil.getToken(context)).build();
+                    request = chain.request().newBuilder().addHeader("Authorization", context.getString(R.string.token_header) + PrefUtil.getToken(context)).
+                            addHeader("User-Agent", context.getString(R.string.app_name)).build();
                     Log.d(NetworkManager.class.getName(), "Token " + PrefUtil.getToken(context));
                 } else {
                     request = chain.request();

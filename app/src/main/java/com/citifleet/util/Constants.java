@@ -3,10 +3,11 @@ package com.citifleet.util;
 public class Constants {
     public static final String PREFS_NAME = "UserPrefs";
     public static final String PREFS_TOKEN = "token";
-    public static final float ZOOM_LEVEL = 12.0f;
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
+    public static final float ZOOM_LEVEL = 16.0f;
+    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 5000;
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
             UPDATE_INTERVAL_IN_MILLISECONDS / 2;
+    public static final int MAP_DISPLACEMENT = 10;
     public static final String REPORT_DIALOG_TAG = "report_dialog";
     public static final String BENEFITS_BARCODE_TAG = "barcode_dialog";
     public static final int REPORT_TARGET_FRAGMENT = 100;
@@ -38,7 +39,7 @@ public class Constants {
     public static final int MAX_PRICE = 4;
     public static final int JOB_OFFER_MAX_FARE = 3;
     public static final int MAX_PRICE_DEC_PLACES = 2;
-    public static final String INPUT_DATETIME_FORMAT= "yyyy-MM-dd'T'HH:mm:ss";
+    public static final String INPUT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String OUTPUT_TIME_FORMAT = "hh:mm aa";
     public static final String OUTPUT_DATE_FORMAT = "MM/dd/yyyy";
     public static final String JOB_OFFER_TAG = "job_offer_tag";

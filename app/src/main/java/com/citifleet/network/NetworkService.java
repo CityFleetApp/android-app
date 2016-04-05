@@ -13,6 +13,7 @@ import com.citifleet.model.ManagePostModel;
 import com.citifleet.model.Notification;
 import com.citifleet.model.JobOffer;
 import com.citifleet.model.ProfileImage;
+import com.citifleet.model.Report;
 import com.citifleet.model.UserEditInfo;
 import com.citifleet.model.Settings;
 import com.citifleet.model.UserImages;
@@ -50,8 +51,11 @@ public interface NetworkService {
                            @Field("password_confirm") String passwordConfirm);
 
     @FormUrlEncoded
-    @POST("reports/")
+    @POST("reports/nearby/")
     Call<Object> report(@Field("report_type") int reportType, @Field("lat") double lat, @Field("lng") double lng);
+
+    @GET("reports/nearby/")
+    Call<List<Report>> getReportsNearby(@Query("lat") double lat, @Query("lng") double lng);
 
     @FormUrlEncoded
     @POST("users/reset-password/")

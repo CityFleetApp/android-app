@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.model.Report;
+import com.citifleet.model.ReportType;
 import com.citifleet.util.Constants;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
@@ -49,9 +51,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -82,6 +88,8 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     @BindString(R.string.default_error_mes)
     String defaultErrorMes;
     private Place selectedPlace;
+    private List<Report> nearbyReportsList = new ArrayList<Report>();
+    private List<Marker> nearbyReportMarkersList = new ArrayList<Marker>();
 
     @Nullable
     @Override
@@ -132,8 +140,9 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     protected void createLocationRequest() {
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(Constants.UPDATE_INTERVAL_IN_MILLISECONDS);
-        locationRequest.setFastestInterval(Constants.FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+//        locationRequest.setInterval(Constants.UPDATE_INTERVAL_IN_MILLISECONDS);
+//        locationRequest.setFastestInterval(Constants.FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+        locationRequest.setSmallestDisplacement(Constants.MAP_DISPLACEMENT);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
@@ -210,6 +219,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         map.getUiSettings().setMapToolbarEnabled(false);
+        map.getUiSettings().setCompassEnabled(false);
     }
 
     private void selectButton(View view) {
@@ -264,7 +274,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     @OnClick(R.id.directBtn)
     void onDirectBtnClick() {
-        if (selectedPlace != null && currentLocation!=null) {
+        if (selectedPlace != null && currentLocation != null) {
             StringBuilder sb = new StringBuilder();
             sb.append("http://maps.google.com/maps?saddr=").append(currentLocation.getLatitude()).append(",").append(currentLocation.getLongitude()).
                     append("&daddr=").append(selectedPlace.getLatLng().latitude).append(",").append(selectedPlace.getLatLng().longitude);
@@ -307,14 +317,14 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     public void onReportDialogClosed() {
-        dashboardBtnClick();
+        selectButton(dashboardBtn);
     }
 
     public void onReportItemClick(int position) {
         double lat = currentLocation == null ? 0 : currentLocation.getLatitude();
         double longt = currentLocation == null ? 0 : currentLocation.getLongitude();
         presenter.sendReport(position + 1, lat, longt);
-        dashboardBtnClick();
+        selectButton(dashboardBtn);
     }
 
     @Override
@@ -340,7 +350,13 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     @Override
     public void onLocationChanged(Location location) {
+        boolean needToAnimateZoom = currentLocation == null;
         currentLocation = location;
+        if (needToAnimateZoom) {
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), Constants.ZOOM_LEVEL));
+        }
+        presenter.loadReportsNearby(currentLocation.getLatitude(), currentLocation.getLongitude());
+        Toast.makeText(getContext(), "Location updated", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -405,7 +421,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     @Override
-    public void onReportFailure(String error) {
+    public void onPostReportFailure(String error) {
         if (getActivity() != null) {
             if (error == null) {
                 error = defaultErrorMes;
@@ -415,12 +431,28 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     @Override
-    public void onReportSuccess() {
+    public void onPostReportSuccess() {
 
     }
 
     @Override
     public void onNetworkError() {
         Toast.makeText(getActivity(), getString(R.string.networkMesMoInternet), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onReportsNearbyLoaded(List<Report> reportList) {
+        nearbyReportsList.clear(); //TODO check difference
+        nearbyReportsList.addAll(reportList);
+        for (Marker marker : nearbyReportMarkersList) {
+            marker.remove();
+        }
+        for (Report report : nearbyReportsList) {
+            int iconResId = ReportType.values()[report.getReportType() - 1].getPinIconResId();
+            Marker marker = map.addMarker(new MarkerOptions()
+                    .position(new LatLng(report.getLat(), report.getLng()))
+                    .icon(BitmapDescriptorFactory.fromResource(iconResId)));
+            nearbyReportMarkersList.add(marker);
+        }
     }
 }
