@@ -7,9 +7,9 @@
     card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/container">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/goodsImage"
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/testprofile" />
+            android:src="@drawable/painting_big" />
 
         <TextView
             android:id="@+id/goodsTitle"
@@ -71,10 +71,10 @@
                 android:background="@color/marketplace_divider" />
 
             <LinearLayout
-                android:clickable="true"
                 android:id="@+id/goodsDetailsBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:orientation="vertical">
 
                 <RelativeLayout

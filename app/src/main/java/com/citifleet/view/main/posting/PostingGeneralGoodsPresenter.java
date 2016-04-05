@@ -45,7 +45,7 @@ public class PostingGeneralGoodsPresenter {
             }
             for (Integer integer : photoIdToDelete) {
                 Call<Void> call = networkManager.getNetworkClient().deletePhotoFromGoodsPost(integer);
-                call.enqueue(editPhotoCallback);
+                call.enqueue(deletePhotoCallback);
             }
             if (isEditMode && newPhotos.isEmpty()) {
                 updatePost(generalGood, null);
@@ -68,28 +68,43 @@ public class PostingGeneralGoodsPresenter {
     }
 
     private void updatePost(GeneralGood generalGood, HashMap<String, RequestBody> imagesMap) {
+        isUpdatingPost = true;
+        imagesUpdatingCount = 0;
         RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getDescription());
         RequestBody itemBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getItem());
         Call<Void> call = networkManager.getNetworkClient().editGood(generalGood.getId(), Double.parseDouble(generalGood.getPrice()), generalGood.getConditionId(),
                 itemBody, descrBody);
         call.enqueue(createPostCallback);
-        isUpdatingPost = true;
-        for (RequestBody requestBody : imagesMap.values()) {
-            imagesUpdatingCount++;
-            Call<Void> callEditPhotos = networkManager.getNetworkClient().editPhotoFromGoodsPost(requestBody, generalGood.getId());
-            callEditPhotos.enqueue(editPhotoCallback);
+        if (imagesMap != null) {
+            for (RequestBody requestBody : imagesMap.values()) {
+                imagesUpdatingCount++;
+                Call<Void> callEditPhotos = networkManager.getNetworkClient().editPhotoFromGoodsPost(requestBody, generalGood.getId());
+                callEditPhotos.enqueue(editPhotoCallback);
+            }
         }
-
     }
 
     private void createPost(GeneralGood generalGood, HashMap<String, RequestBody> imagesMap) {
+        isUpdatingPost = false;
         RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getDescription());
         RequestBody itemBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getItem());
         Call<Void> call = networkManager.getNetworkClient().postGood(imagesMap, Double.parseDouble(generalGood.getPrice()), generalGood.getConditionId(), itemBody, descrBody);
         call.enqueue(createPostCallback);
     }
 
+    private Callback<Void> deletePhotoCallback = new Callback<Void>() {
+        @Override
+        public void onResponse(Call<Void> call, Response<Void> response) {
+            if (!response.isSuccessful()) {
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
 
+        @Override
+        public void onFailure(Call<Void> call, Throwable t) {
+            Log.e(PostingGeneralGoodsPresenter.class.getName(), t.getMessage());
+        }
+    };
     private Callback<Void> editPhotoCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {

@@ -84,25 +84,28 @@ public class GeneralGoodsAdapter extends RecyclerView.Adapter<GeneralGoodsAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final GeneralGood generalGood = list.get(position);
-        holder.goodsImage.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                    holder.goodsImage.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                } else {
-                    holder.goodsImage.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+        final int[] dimensions = generalGood.getDimensions();
+        if (dimensions != null) {
+            holder.goodsImage.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                        holder.goodsImage.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    } else {
+                        holder.goodsImage.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    }
+                    int width = dimensions[0];
+                    int height = dimensions[1];
+                    int viewHeight = holder.goodsImage.getWidth() * height / width;
+                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.goodsImage.getLayoutParams();
+                    lp.height = viewHeight;
+                    holder.goodsImage.setLayoutParams(lp);
+
                 }
-                int[] dimensions = generalGood.getDimensions();
-                int width = dimensions[0];
-                int height = dimensions[1];
-                int viewHeight = holder.goodsImage.getWidth() * height / width;
-                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.goodsImage.getLayoutParams();
-                lp.height = viewHeight;
-                holder.goodsImage.setLayoutParams(lp);
-            }
-        });
+            });
+        }
         if (generalGood.getPhotos() != null && !generalGood.getPhotos().isEmpty() && !TextUtils.isEmpty(generalGood.getPhotos().get(0).getUrl())) {
-            Picasso.with(context).load(generalGood.getPhotos().get(0).getUrl()).into(holder.goodsImage);
+            Picasso.with(context).load(generalGood.getPhotos().get(0).getUrl()).error(R.drawable.painting_big).into(holder.goodsImage);
         }
 
         holder.goodsPrice.setText(generalGood.getPrice());

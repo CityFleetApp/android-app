@@ -234,15 +234,15 @@ public interface NetworkService {
     Call<Void> deletePhotoFromGoodsPost(@Path("id") int id);
 
     @Multipart
-    @POST("marketplace/goodsphotos/{id}/")
+    @POST("marketplace/goodsphotos/")
     Call<Void> editPhotoFromGoodsPost(@Part("file\"; filename=\"image.png\" ") RequestBody file, @Part("goods") int goodsId);
 
     @DELETE("marketplace/carphotos/{id}/")
     Call<Void> deletePhotoFromCarPost(@Path("id") int id);
 
     @Multipart
-    @POST("marketplace/carphotos/{id}/")
-    Call<Void> editPhotoFromCarPost(@Path("id") int id, @Part("file\"; filename=\"image.png\" ") RequestBody file, @Part("car") int carsId);
+    @POST("marketplace/carphotos/")
+    Call<Void> editPhotoFromCarPost(@Part("file\"; filename=\"image.png\" ") RequestBody file, @Part("car") int carsId);
 
 
 }

@@ -12,11 +12,14 @@ import android.widget.TextView;
 
 import com.citifleet.R;
 import com.citifleet.model.GeneralGood;
+import com.citifleet.model.Photo;
 import com.citifleet.util.Constants;
 import com.citifleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,7 +51,12 @@ public class GeneralGoodDetailFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         title.setText(R.string.marketplace);
         generalGood = Parcels.unwrap(getArguments().getParcelable(Constants.GENERAL_GOODS_TAG));
-        adapter = new RentSaleGalleryPagerAdapter(getContext(), generalGood.getPhotos(), GeneralGoodDetailFragment.class.getName());
+        List<Photo> photoList = generalGood.getPhotos();
+        if(photoList.isEmpty()){
+            photoList.add(new Photo());
+            photoList.get(0).setUrl("error");
+        }
+        adapter = new RentSaleGalleryPagerAdapter(getContext(), photoList, GeneralGoodDetailFragment.class.getName());
         goodsImagePager.setAdapter(adapter);
         goodsPrice.setText(generalGood.getPrice());
         goodsTitle.setText(generalGood.getItem());

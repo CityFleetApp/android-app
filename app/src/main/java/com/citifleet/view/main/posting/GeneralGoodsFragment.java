@@ -131,21 +131,11 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
                 || generalGood.getConditionId() == Constants.DEFAULT_UNSELECTED_POSITION) {
             Toast.makeText(getActivity(), R.string.posting_empty, Toast.LENGTH_SHORT).show();
         } else {
-            int images = 0;
-            for (int i = 0; i < imageUrls.length; i++) {
-                if (imageUrls[i] != null) {
-                    images++;
-                }
-            }
-            if (images == 0) {
-                Toast.makeText(getActivity(), R.string.one_image, Toast.LENGTH_SHORT).show();
-            } else {
-                generalGood.setPrice(priceEt.getText().toString());
-                generalGood.setDescription(descrEt.getText().toString());
-                generalGood.setItem(itemEt.getText().toString());
-                generalGood.setPhotos(Arrays.asList(imageUrls));
-                presenter.createPost(generalGood, isEditMode, photosToDelete);
-            }
+            generalGood.setPrice(priceEt.getText().toString());
+            generalGood.setDescription(descrEt.getText().toString());
+            generalGood.setItem(itemEt.getText().toString());
+            generalGood.setPhotos(Arrays.asList(imageUrls));
+            presenter.createPost(generalGood, isEditMode, photosToDelete);
         }
     }
 
@@ -202,7 +192,7 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
         if (imageUrls[position].getId() != 0) {
             photosToDelete.add(imageUrls[position].getId());
         }
-        imageUrls[position]=null;
+        imageUrls[position] = null;
         images.get(position).setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.painting));
     }
 
