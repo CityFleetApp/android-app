@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -46,6 +47,7 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * Created by vika on 21.03.16.
@@ -94,6 +96,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     private List<CarOption> colorsList;
     private List<String> yearList;
     private Photo[] imageUrls = new Photo[Constants.POSTING_IMAGES_NUMBER];
+    private List<Integer> photosToDelete = new ArrayList<Integer>();
     private ImagePickerUtil imagePickerUtil;
 
     @Nullable
@@ -130,6 +133,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
         price.setText(car.getPrice());
         descr.setText(car.getDescription());
         if (car.getPhotos().size() > 0) {
+            imageUrls = car.getPhotos().toArray(imageUrls);
             for (int i = 0; i < car.getPhotos().size(); i++) {
                 Picasso.with(getContext()).load(car.getPhotos().get(i).getUrl()).centerCrop().fit().into(images.get(i));
             }
@@ -184,21 +188,11 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
                 TextUtils.isEmpty(yearText.getText().toString()) || TextUtils.isEmpty(price.getText().toString()) || TextUtils.isEmpty(descr.getText().toString())) {
             Toast.makeText(getActivity(), R.string.posting_empty, Toast.LENGTH_SHORT).show();
         } else {
-            int images = 0;
-            for (int i = 0; i < imageUrls.length; i++) {
-                if (imageUrls[i] != null) {
-                    images++;
-                }
-            }
-            if (images == 0) {
-                Toast.makeText(getActivity(), R.string.one_image, Toast.LENGTH_SHORT).show();
-            } else {
-                car.setYear(Integer.valueOf(yearText.getText().toString()));
-                car.setPrice(price.getText().toString());
-                car.setDescription(descr.getText().toString());
-                car.setPhotos(Arrays.asList(imageUrls));
-                presenter.createPost(postingType, car, isEditMode);
-            }
+            car.setYear(Integer.valueOf(yearText.getText().toString()));
+            car.setPrice(price.getText().toString());
+            car.setDescription(descr.getText().toString());
+            car.setPhotos(Arrays.asList(imageUrls));
+            presenter.createPost(postingType, car, isEditMode, photosToDelete);
         }
     }
 
@@ -254,6 +248,8 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
         public void onClick(DialogInterface dialog, int which) {
             if (makeList.get(which).getId() != car.getMakeId()) {
                 car.setMakeId(makeList.get(which).getId());
+                car.setModelId(Constants.DEFAULT_UNSELECTED_POSITION);
+                car.setModel(null);
                 makeText.setText(makeList.get(which).getName());
                 if (modelList != null) {
                     modelList.clear();
@@ -424,9 +420,42 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
 
     @OnClick({R.id.imageFirst, R.id.imageSecond, R.id.imageThird, R.id.imageFourth, R.id.imageFifth})
     void onImageClick(ImageView view) {
-        imagePickerUtil.onImageClick(view);
+        int position = imagePickerUtil.getClickedPosition(view);
+        if (imageUrls[position] == null || imageUrls[position].getId() == 0) {
+            imagePickerUtil.onImageClick(view);
+        }
     }
 
+    @OnLongClick({R.id.imageFirst, R.id.imageSecond, R.id.imageThird, R.id.imageFourth, R.id.imageFifth})
+    boolean onLongImageClick(final View view) {
+        final int clickedPosition = imagePickerUtil.getClickedPosition(view);
+        if (imageUrls[clickedPosition] != null) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(getString(R.string.delete_dialog_title))
+                    .setMessage(getString(R.string.delete_dialog_message))
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteImage(clickedPosition);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    })
+                    .show();
+            return true;
+        }
+        return false;
+    }
+
+    private void deleteImage(int position) {
+        if (imageUrls[position].getId() != 0) {
+            photosToDelete.add(imageUrls[position].getId());
+        }
+        imageUrls[position] = null;
+        images.get(position).setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.painting));
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

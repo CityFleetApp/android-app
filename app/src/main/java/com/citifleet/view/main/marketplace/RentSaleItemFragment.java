@@ -12,11 +12,14 @@ import android.widget.TextView;
 
 import com.citifleet.R;
 import com.citifleet.model.Car;
+import com.citifleet.model.Photo;
 import com.citifleet.util.Constants;
 import com.citifleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -57,6 +60,11 @@ public class RentSaleItemFragment extends BaseFragment {
 
         title.setText(R.string.marketplace);
         car = Parcels.unwrap(getArguments().getParcelable(Constants.CAR_RENT_SALE_TAG));
+        List<Photo> photoList = car.getPhotos();
+        if(photoList.isEmpty()){
+            photoList.add(new Photo());
+            photoList.get(0).setUrl("error");
+        }
         adapter = new RentSaleGalleryPagerAdapter(getContext(), car.getPhotos(), RentSaleItemFragment.class.getName());
         carImagePager.setAdapter(adapter);
         carPrice.setText(car.getPrice());

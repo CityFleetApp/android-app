@@ -94,7 +94,7 @@ public class ImagePickerUtil {
         return (resultCode == REQUEST_PERMISSION_CAMERA || resultCode == REQUEST_PERMISSION_GALLERY);
     }
 
-    private int getClickedPosition(View view) {
+    public int getClickedPosition(View view) {
         int clickedPosition = Constants.DEFAULT_UNSELECTED_POSITION;
         for (ImageView imageButton : images) {
             if (imageButton.getId() == view.getId()) {

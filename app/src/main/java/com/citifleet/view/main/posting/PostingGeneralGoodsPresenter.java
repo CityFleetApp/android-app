@@ -57,7 +57,7 @@ public class PostingGeneralGoodsPresenter {
                         if (isEditMode) {
                             updatePost(generalGood, (HashMap<String, RequestBody>) msg.obj);
                         } else {
-                            createPost(generalGood, (HashMap<String, RequestBody>) msg.obj);
+                            createNewPost(generalGood, (HashMap<String, RequestBody>) msg.obj);
                         }
                     }
                 });
@@ -84,7 +84,7 @@ public class PostingGeneralGoodsPresenter {
         }
     }
 
-    private void createPost(GeneralGood generalGood, HashMap<String, RequestBody> imagesMap) {
+    private void createNewPost(GeneralGood generalGood, HashMap<String, RequestBody> imagesMap) {
         isUpdatingPost = false;
         RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getDescription());
         RequestBody itemBody = RequestBody.create(MediaType.parse("text/plain"), generalGood.getItem());

@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/testprofile" />
+            android:src="@drawable/painting_big" />
 
         <TextView
             android:id="@+id/carTitle"

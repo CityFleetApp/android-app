@@ -108,7 +108,7 @@ public class GeneralGoodsAdapter extends RecyclerView.Adapter<GeneralGoodsAdapte
             Picasso.with(context).load(generalGood.getPhotos().get(0).getUrl()).error(R.drawable.painting_big).into(holder.goodsImage);
         }
 
-        holder.goodsPrice.setText(generalGood.getPrice());
+        holder.goodsPrice.setText(context.getString(R.string.dollar_price, generalGood.getPrice()));
         holder.goodsTitle.setText(generalGood.getItem());
         holder.typeLbl.setText(generalGood.getCondition());
         holder.detailsText.setText(generalGood.getDescription());

@@ -12,6 +12,7 @@ import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 import com.citifleet.util.ScaleImageHelper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,6 +28,8 @@ import retrofit2.Response;
 public class PostingRentSaleDetailPresenter {
     private NetworkManager networkManager;
     private PostingRentSaleDetailView view;
+    private int imagesUpdatingCount = 0;
+    private boolean isUpdatingPost = false;
 
     public PostingRentSaleDetailPresenter(NetworkManager networkManager, PostingRentSaleDetailView view) {
         this.networkManager = networkManager;
@@ -59,42 +62,73 @@ public class PostingRentSaleDetailPresenter {
         }
     }
 
-    public void createPost(final CarPostingType postingType, final Car car, boolean isEditMode) {
+    public void createPost(final CarPostingType postingType, final Car car, final boolean isEditMode, List<Integer> photoIdToDelete) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
-            if (isEditMode) {
-                Call<Void> call;
-                RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), car.getDescription());
-                if (postingType == CarPostingType.RENT) {
-                    call = networkManager.getNetworkClient().editRentCar(car.getId(), car.getMakeId(), car.getModelId(), car.getTypeId(), car.getColorId(),
-                            car.getYear(), car.getFuelId(), car.getSeatsId(), Double.parseDouble(car.getPrice()), descrBody);
-                } else {
-                    call = networkManager.getNetworkClient().editSaleCar(car.getId(), car.getMakeId(), car.getModelId(), car.getTypeId(), car.getColorId(),
-                            car.getYear(), car.getFuelId(), car.getSeatsId(), Double.parseDouble(car.getPrice()), descrBody);
+            List<Photo> newPhotos = new ArrayList<Photo>();
+            for (Photo photo : car.getPhotos()) {
+                if (photo != null && photo.getId() == 0) {
+                    newPhotos.add(photo);
                 }
-                call.enqueue(createPostCallback);
+            }
+            for (Integer integer : photoIdToDelete) {
+                Call<Void> call = networkManager.getNetworkClient().deletePhotoFromCarPost(integer);
+                call.enqueue(deletePhotoCallback);
+            }
+            if (isEditMode && newPhotos.isEmpty()) {
+                updatePost(postingType, car, null);
             } else {
-                getImagesRequestBodies(car.getPhotos(), new Handler() {
+                getImagesRequestBodies(newPhotos, new Handler() {
                     @Override
                     public void handleMessage(Message msg) {
                         super.handleMessage(msg);
-                        HashMap<String, RequestBody> imagesMap = (HashMap<String, RequestBody>) msg.obj;
-                        RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), car.getDescription());
-                        Call<Void> call;
-                        if (postingType == CarPostingType.RENT) {
-                            call = networkManager.getNetworkClient().postRentCar(imagesMap, car.getMakeId(), car.getModelId(), car.getTypeId(), car.getColorId(),
-                                    car.getYear(), car.getFuelId(), car.getSeatsId(), Double.parseDouble(car.getPrice()), descrBody);
+                        if (isEditMode) {
+                            updatePost(postingType, car, (HashMap<String, RequestBody>) msg.obj);
                         } else {
-                            call = networkManager.getNetworkClient().postSaleCar(imagesMap, car.getMakeId(), car.getModelId(), car.getTypeId(), car.getColorId(),
-                                    car.getYear(), car.getFuelId(), car.getSeatsId(), Double.parseDouble(car.getPrice()), descrBody);
+                            createNewPost(postingType, car, (HashMap<String, RequestBody>) msg.obj);
                         }
-                        call.enqueue(createPostCallback);
                     }
                 });
             }
         } else {
             view.onNetworkError();
         }
+    }
+
+    private void updatePost(CarPostingType postingType, Car car, HashMap<String, RequestBody> imagesMap) {
+        isUpdatingPost = true;
+        imagesUpdatingCount = 0;
+        RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), car.getDescription());
+        Call<Void> call;
+        if (postingType == CarPostingType.RENT) {
+            call = networkManager.getNetworkClient().editRentCar(car.getId(), car.getMakeId(), car.getModelId(), car.getTypeId(), car.getColorId(),
+                    car.getYear(), car.getFuelId(), car.getSeatsId(), Double.parseDouble(car.getPrice()), descrBody);
+        } else {
+            call = networkManager.getNetworkClient().editSaleCar(car.getId(), car.getMakeId(), car.getModelId(), car.getTypeId(), car.getColorId(),
+                    car.getYear(), car.getFuelId(), car.getSeatsId(), Double.parseDouble(car.getPrice()), descrBody);
+        }
+        call.enqueue(createPostCallback);
+        if (imagesMap != null) {
+            for (RequestBody requestBody : imagesMap.values()) {
+                imagesUpdatingCount++;
+                Call<Void> callEditPhotos = networkManager.getNetworkClient().editPhotoFromCarPost(requestBody, car.getId());
+                callEditPhotos.enqueue(editPhotoCallback);
+            }
+        }
+    }
+
+    private void createNewPost(CarPostingType postingType, Car car, HashMap<String, RequestBody> imagesMap) {
+        isUpdatingPost = false;
+        RequestBody descrBody = RequestBody.create(MediaType.parse("text/plain"), car.getDescription());
+        Call<Void> call;
+        if (postingType == CarPostingType.RENT) {
+            call = networkManager.getNetworkClient().postRentCar(imagesMap, car.getMakeId(), car.getModelId(), car.getTypeId(), car.getColorId(),
+                    car.getYear(), car.getFuelId(), car.getSeatsId(), Double.parseDouble(car.getPrice()), descrBody);
+        } else {
+            call = networkManager.getNetworkClient().postSaleCar(imagesMap, car.getMakeId(), car.getModelId(), car.getTypeId(), car.getColorId(),
+                    car.getYear(), car.getFuelId(), car.getSeatsId(), Double.parseDouble(car.getPrice()), descrBody);
+        }
+        call.enqueue(createPostCallback);
     }
 
     private void getImagesRequestBodies(final List<Photo> imageUrls, final Handler handler) {
@@ -118,13 +152,51 @@ public class PostingRentSaleDetailPresenter {
         new Thread(runnable).start();
     }
 
+    private Callback<Void> deletePhotoCallback = new Callback<Void>() {
+        @Override
+        public void onResponse(Call<Void> call, Response<Void> response) {
+            if (!response.isSuccessful()) {
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Void> call, Throwable t) {
+            Log.e(PostingRentSaleDetailFragment.class.getName(), t.getMessage());
+        }
+    };
+    private Callback<Void> editPhotoCallback = new Callback<Void>() {
+        @Override
+        public void onResponse(Call<Void> call, Response<Void> response) {
+            if (response.isSuccessful()) {
+                imagesUpdatingCount--;
+                if (imagesUpdatingCount == 0) {
+                    view.stopLoading();
+                    view.onPostCreatesSuccessfully();
+                }
+            } else {
+                view.stopLoading();
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Void> call, Throwable t) {
+            view.stopLoading();
+            Log.e(PostingRentSaleDetailFragment.class.getName(), t.getMessage());
+            view.onFailure(t.getMessage());
+        }
+    };
     private Callback<Void> createPostCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
-            view.stopLoading();
             if (response.isSuccessful()) {
-                view.onPostCreatesSuccessfully();
+                if (!isUpdatingPost || (isUpdatingPost && imagesUpdatingCount == 0)) {
+                    view.onPostCreatesSuccessfully();
+                    view.stopLoading();
+                }
             } else {
+                view.stopLoading();
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
         }
