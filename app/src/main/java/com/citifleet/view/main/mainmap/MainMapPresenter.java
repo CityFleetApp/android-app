@@ -32,6 +32,21 @@ public class MainMapPresenter {
         }
     }
 
+    public void confirmDenyReport(int reportId, boolean isConfirmReport) {
+        if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
+            Call<Void> call;
+            if (isConfirmReport) {
+                call = networkManager.getNetworkClient().confirmReport(reportId);
+            } else {
+                call = networkManager.getNetworkClient().denyReport(reportId);
+            }
+            call.enqueue(confirmDenyReportCallback);
+        } else {
+            view.onNetworkError();
+        }
+    }
+
     public void sendReport(int reportType, double lat, double longt) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
@@ -42,14 +57,30 @@ public class MainMapPresenter {
         }
     }
 
-    Callback<List<Report>> nearbyReportsCallback = new Callback<List<Report>>() {
+    private Callback<Void> confirmDenyReportCallback = new Callback<Void>() {
+        @Override
+        public void onResponse(Call<Void> call, Response<Void> response) {
+            view.stopLoading();
+            if (!response.isSuccess()) {
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Void> call, Throwable t) {
+            Log.e(LoginPresenter.class.getName(), t.getMessage());
+            view.stopLoading();
+            view.onFailure(t.getMessage());
+        }
+    };
+    private Callback<List<Report>> nearbyReportsCallback = new Callback<List<Report>>() {
         @Override
         public void onResponse(Call<List<Report>> call, Response<List<Report>> response) {
             view.stopLoading();
             if (response.isSuccess()) {
                 view.onReportsNearbyLoaded(response.body());
             } else {
-                view.onPostReportFailure(NetworkErrorUtil.gerErrorMessage(response));
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
         }
 
@@ -57,17 +88,17 @@ public class MainMapPresenter {
         public void onFailure(Call<List<Report>> call, Throwable t) {
             Log.e(LoginPresenter.class.getName(), t.getMessage());
             view.stopLoading();
-            view.onPostReportFailure(t.getMessage());
+            view.onFailure(t.getMessage());
         }
     };
-    Callback<Object> reportCallback = new Callback<Object>() {
+    private Callback<Object> reportCallback = new Callback<Object>() {
         @Override
         public void onResponse(Call<Object> call, Response<Object> response) {
             view.stopLoading();
             if (response.isSuccess()) {
                 view.onPostReportSuccess();
             } else {
-                view.onPostReportFailure(NetworkErrorUtil.gerErrorMessage(response));
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
         }
 
@@ -75,7 +106,7 @@ public class MainMapPresenter {
         public void onFailure(Call<Object> call, Throwable t) {
             Log.e(LoginPresenter.class.getName(), t.getMessage());
             view.stopLoading();
-            view.onPostReportFailure(t.getMessage());
+            view.onFailure(t.getMessage());
         }
     };
 
@@ -84,7 +115,7 @@ public class MainMapPresenter {
 
         void stopLoading();
 
-        void onPostReportFailure(String error);
+        void onFailure(String error);
 
         void onPostReportSuccess();
 

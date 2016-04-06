@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+
+    <com.citifleet.view.main.mainmap.MapWrapperLayout
+        android:id="@+id/map_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!--&lt;!&ndash;<fragment&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/map"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;class="com.google.android.gms.maps.MapFragment" />&ndash;&gt;-->
     <FrameLayout
         android:id="@+id/mapFragment"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomButtonsCont"/>
-
+        android:layout_above="@+id/bottomButtonsCont" />
+    </com.citifleet.view.main.mainmap.MapWrapperLayout>
+    <!--<include layout="@layout/near_report_dialog"  />-->
 
     <ImageButton
         android:id="@+id/directBtn"
@@ -23,7 +35,7 @@
         android:background="@drawable/direct_selector"
         android:elevation="@dimen/direct_btn_elevation"
         android:src="@drawable/direct"
-        android:tint="@android:color/white"/>
+        android:tint="@android:color/white" />
 
     <ImageButton
         android:id="@+id/addFriendBtn"
@@ -36,7 +48,7 @@
         android:background="@drawable/add_friend_selector"
         android:elevation="@dimen/direct_btn_elevation"
         android:src="@drawable/add_friend"
-        android:tint="@android:color/white"/>
+        android:tint="@android:color/white" />
 
     <ImageButton
         android:id="@+id/menuBtn"
@@ -49,7 +61,7 @@
         android:background="@drawable/menu_burger_selector"
         android:elevation="@dimen/direct_btn_elevation"
         android:src="@drawable/menu_burger"
-        android:tint="@android:color/white"/>
+        android:tint="@android:color/white" />
 
 
     <ImageButton
@@ -63,7 +75,7 @@
         android:background="@drawable/menu_burger_selector"
         android:elevation="@dimen/direct_btn_elevation"
         android:src="@drawable/search"
-        android:tint="@android:color/white"/>
+        android:tint="@android:color/white" />
 
     <ImageButton
         android:id="@+id/gpsBtn"
@@ -76,7 +88,7 @@
         android:background="@drawable/menu_burger_selector"
         android:elevation="@dimen/direct_btn_elevation"
         android:src="@drawable/gps"
-        android:tint="@android:color/white"/>
+        android:tint="@android:color/white" />
 
     <LinearLayout
         android:id="@+id/bottomButtonsCont"
@@ -90,25 +102,25 @@
             android:id="@+id/dashboardBtn"
             style="@style/BottomPanelButton"
             android:drawableTop="@drawable/dashboard_selector"
-            android:text="@string/dashboard"/>
+            android:text="@string/dashboard" />
 
         <TextView
             android:id="@+id/marketplaceBtn"
             style="@style/BottomPanelButton"
             android:drawableTop="@drawable/marketplace_selector"
-            android:text="@string/marketplace"/>
+            android:text="@string/marketplace" />
 
         <TextView
             android:id="@+id/notificationBtn"
             style="@style/BottomPanelButton"
             android:drawableTop="@drawable/notification_selector"
-            android:text="@string/notification"/>
+            android:text="@string/notification" />
 
         <TextView
             android:id="@+id/reportBtn"
             style="@style/BottomPanelButton"
             android:drawableTop="@drawable/report_selector"
-            android:text="@string/report"/>
+            android:text="@string/report" />
 
     </LinearLayout>
 
@@ -117,5 +129,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </RelativeLayout>

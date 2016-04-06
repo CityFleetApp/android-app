@@ -222,6 +222,7 @@
     <string name="still_here">Still here</string>
     <string name="not_here">Not here</string>
     <string name="in_miles">In %1$s miles</string>
+
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

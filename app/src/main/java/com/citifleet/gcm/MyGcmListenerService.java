@@ -30,7 +30,7 @@ public class MyGcmListenerService extends GcmListenerService {
         }
 
         //TODO process or show notification
-        sendNotification(message);
+       // sendNotification(message);
     }
 
     private void sendNotification(String message) {

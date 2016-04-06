@@ -259,4 +259,12 @@ public interface NetworkService {
     @FormUrlEncoded
     @PATCH("users/devicesdevice/gcm/{registration_id}/")
     Call<Void> updateToken(@Field("registration_id") String registrationId);
+
+
+    @POST("reports/map/{id}/confirm_report/")
+    Call<Void> confirmReport(@Path("id") int id);
+
+
+    @POST("reports/map/{id}/confirm_report/")
+    Call<Void> denyReport(@Path("id") int id);
 }

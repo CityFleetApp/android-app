@@ -2,9 +2,11 @@ package com.citifleet.view.main.mainmap;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -91,6 +93,10 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     private List<Report> nearbyReportsList = new ArrayList<Report>();
     private List<Marker> nearbyReportMarkersList = new ArrayList<Marker>();
     private boolean needToAnimateZoomToLocation = true;
+    @Bind(R.id.map_relative_layout)
+    public MapWrapperLayout mapWrapperLayout;
+//    @Bind(R.id.nearReportDialog)
+//    CardView nearReportDialog;
 
     @Nullable
     @Override
@@ -110,7 +116,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         }
         selectButton(dashboardBtn);
         buildGoogleApiClient();
-
+       // nearReportDialog.setVisibility(View.GONE);
         return view;
     }
 
@@ -118,7 +124,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         return currentLocation;
     }
 
-    public Report getReportForMarker(Marker marker) {
+    protected Report getReportForMarker(Marker marker) {
         int reportId = Integer.valueOf(marker.getTitle());
         for (Report report : nearbyReportsList) {
             if (report.getId() == reportId) {
@@ -126,6 +132,10 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             }
         }
         return null;
+    }
+
+    protected void onReportConfirmDenyClicked(int reportId, boolean isConfirmed) {
+        presenter.confirmDenyReport(reportId, isConfirmed);
     }
 
     protected void buildLocationSettingsRequest() {
@@ -233,9 +243,47 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+        // MapWrapperLayout initialization
+        // 39 - default marker height
+        // 20 - offset between the default InfoWindow bottom edge and it's content bottom edge
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(getResources(), R.drawable.ic_accident_pin, options);
+        int imageHeight = options.outHeight;
+        mapWrapperLayout.init(map, imageHeight);
         map.getUiSettings().setMapToolbarEnabled(false);
         map.getUiSettings().setCompassEnabled(false);
-        map.setInfoWindowAdapter(new ReportInfoWindowAdapter(this));
+           map.setInfoWindowAdapter(new ReportInfoWindowAdapter(this));
+//        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//            @Override
+//            public boolean onMarkerClick(Marker marker) {
+//                Point point = map.getProjection().toScreenLocation(marker.getPosition());
+//                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) nearReportDialog.getLayoutParams();
+//                BitmapFactory.Options options = new BitmapFactory.Options();
+//                options.inJustDecodeBounds = true;
+//                BitmapFactory.decodeResource(getResources(), R.drawable.ic_accident_pin, options);
+//                int imageHeight = options.outHeight;
+//                int x = point.x - getResources().getDimensionPixelSize(R.dimen.nearby_report_dialog_width) / 2;
+//                int y = point.y - getResources().getDimensionPixelSize(R.dimen.nearby_report_dialog_heigh) - imageHeight;
+//                lp.setMargins(x, y, 0, 0);
+//                nearReportDialog.setLayoutParams(lp);
+//                nearReportDialog.setVisibility(View.VISIBLE);
+//                return true;
+//            }
+//        });
+//        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//            @Override
+//            public void onMapClick(LatLng latLng) {
+//                if (nearReportDialog.getVisibility() == View.VISIBLE) {
+//                    nearReportDialog.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+    }
+
+    public static int getPixelsFromDp(Context context, float dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
     }
 
     private void selectButton(View view) {
@@ -437,7 +485,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     @Override
-    public void onPostReportFailure(String error) {
+    public void onFailure(String error) {
         if (getActivity() != null) {
             if (error == null) {
                 error = defaultErrorMes;

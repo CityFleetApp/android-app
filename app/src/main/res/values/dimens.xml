@@ -120,4 +120,6 @@
     <dimen name="dialog_report_title_text_size">20sp</dimen>
     <dimen name="icon_drawable_padding">10dp</dimen>
     <dimen name="report_dialog_button_textsize">12sp</dimen>
+    <dimen name="nearby_report_dialog_width">200dp</dimen>
+    <dimen name="nearby_report_dialog_heigh">100dp</dimen>
 </resources>
