@@ -64,7 +64,7 @@ public class LegalAidPresenter {
         @Override
         public void onResponse(Call<List<LegalAidLocation>> call, Response<List<LegalAidLocation>> response) {
             view.stopLoading();
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.onLocationLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -82,7 +82,7 @@ public class LegalAidPresenter {
         @Override
         public void onResponse(Call<List<LegalAidPerson>> call, Response<List<LegalAidPerson>> response) {
             view.stopLoading();
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.onPersonsLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));

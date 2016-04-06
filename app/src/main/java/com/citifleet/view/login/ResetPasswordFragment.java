@@ -65,7 +65,7 @@ public class ResetPasswordFragment extends Fragment implements Validator.Validat
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
             setLoading(false);
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 getActivity().onBackPressed();
             } else {
                 String error = NetworkErrorUtil.gerErrorMessage(response);

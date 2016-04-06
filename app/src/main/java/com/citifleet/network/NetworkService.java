@@ -6,16 +6,16 @@ import com.citifleet.model.Car;
 import com.citifleet.model.CarOption;
 import com.citifleet.model.Document;
 import com.citifleet.model.GeneralGood;
+import com.citifleet.model.JobOffer;
 import com.citifleet.model.LegalAidLocation;
 import com.citifleet.model.LegalAidPerson;
 import com.citifleet.model.LoginInfo;
 import com.citifleet.model.ManagePostModel;
 import com.citifleet.model.Notification;
-import com.citifleet.model.JobOffer;
 import com.citifleet.model.ProfileImage;
 import com.citifleet.model.Report;
-import com.citifleet.model.UserEditInfo;
 import com.citifleet.model.Settings;
+import com.citifleet.model.UserEditInfo;
 import com.citifleet.model.UserImages;
 import com.citifleet.model.UserInfo;
 
@@ -249,5 +249,14 @@ public interface NetworkService {
     Call<Void> editPhotoFromCarPost(@Part("file\"; filename=\"image.png\" ") RequestBody file, @Part("car") int carsId);
 
 
-}
+    @FormUrlEncoded
+    @POST("users/devicesdevice/gcm/")
+    Call<Void> registerForGcm(@Field("registration_id") String registrationId, @Field("device_id") String deviceId);
 
+    @DELETE("users/devicesdevice/gcm/{registration_id}/")
+    Call<Void> unregisterFromGcm(@Path("registration_id") String registrationId);
+
+    @FormUrlEncoded
+    @PATCH("users/devicesdevice/gcm/{registration_id}/")
+    Call<Void> updateToken(@Field("registration_id") String registrationId);
+}

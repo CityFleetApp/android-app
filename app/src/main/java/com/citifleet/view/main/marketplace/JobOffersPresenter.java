@@ -69,7 +69,7 @@ public class JobOffersPresenter {
         @Override
         public void onResponse(Call<List<JobOffer>> call, retrofit2.Response<List<JobOffer>> response) {
             view.stopLoading();
-            if (!response.isSuccessful()) {
+            if (!response.isSuccess()) {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             } else {
                 jobOfferList = response.body();

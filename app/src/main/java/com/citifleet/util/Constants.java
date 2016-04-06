@@ -47,4 +47,6 @@ public class Constants {
     public static final String GENERAL_GOODS_TAG = "general_goods_tag";
     public static final String EDIT_USER_INFO_TAG = "edit_user_info_tag";
     public static final float METERS_IN_MILE = 1609.344f;
+    public static final String GCM_REGISTRATION_TYPE_TAG = "gcm_reg_type_tag";
+    public static final String PREFS_SEND_TOKEN_TO_SERVER = "prefs_send_token_to_server";
 }

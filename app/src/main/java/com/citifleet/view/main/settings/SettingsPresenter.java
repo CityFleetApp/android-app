@@ -68,7 +68,7 @@ public class SettingsPresenter {
         @Override
         public void onResponse(Call<Settings> call, Response<Settings> response) {
             view.setLoading(false);
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 settings = response.body();
                 view.setStatusVisible(settings.isVisible());
                 view.setNotificationsEnabled(settings.isNotificationsEnabled());

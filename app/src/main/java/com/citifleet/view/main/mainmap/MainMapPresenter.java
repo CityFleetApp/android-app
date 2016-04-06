@@ -46,7 +46,7 @@ public class MainMapPresenter {
         @Override
         public void onResponse(Call<List<Report>> call, Response<List<Report>> response) {
             view.stopLoading();
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.onReportsNearbyLoaded(response.body());
             } else {
                 view.onPostReportFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -64,7 +64,7 @@ public class MainMapPresenter {
         @Override
         public void onResponse(Call<Object> call, Response<Object> response) {
             view.stopLoading();
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.onPostReportSuccess();
             } else {
                 view.onPostReportFailure(NetworkErrorUtil.gerErrorMessage(response));

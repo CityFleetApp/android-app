@@ -68,7 +68,7 @@ public class ProfilePresenter {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
             view.stopLoading();
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.onDeleteImageSuccess();
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -85,7 +85,7 @@ public class ProfilePresenter {
         @Override
         public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
             view.stopLoading();
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.updateImage(response.body().getAvatarUrl());
                 view.setUserInfo(response.body());
             } else {
@@ -105,7 +105,7 @@ public class ProfilePresenter {
         @Override
         public void onResponse(Call<UserImages> call, Response<UserImages> response) {
             view.stopLoading();
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.updateImageFromList(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -122,7 +122,7 @@ public class ProfilePresenter {
     Callback<List<UserImages>> getUserImagesCallback = new Callback<List<UserImages>>() {
         @Override
         public void onResponse(Call<List<UserImages>> call, Response<List<UserImages>> response) {
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.onUserImagesLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));

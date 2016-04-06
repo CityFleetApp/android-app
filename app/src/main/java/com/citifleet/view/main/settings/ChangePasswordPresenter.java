@@ -34,7 +34,7 @@ public class ChangePasswordPresenter {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
             view.setLoading(false);
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.onSuccess();
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));

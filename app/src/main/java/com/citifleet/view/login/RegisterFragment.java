@@ -1,6 +1,7 @@
 package com.citifleet.view.login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.Size;
@@ -17,8 +18,10 @@ import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.gcm.RegistrationIntentService;
 import com.citifleet.util.CommonUtils;
 import com.citifleet.util.Constants;
+import com.citifleet.util.GcmRegistrationTypes;
 import com.citifleet.util.PrefUtil;
 import com.mobsandgeeks.saripaar.QuickRule;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -127,6 +130,9 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
     @Override
     public void onSignUpSuccess(String token) {
         PrefUtil.setToken(getContext(), token);
+        Intent intent = new Intent(getActivity(), RegistrationIntentService.class);
+        intent.putExtra(Constants.GCM_REGISTRATION_TYPE_TAG, GcmRegistrationTypes.REGISTER);
+        getActivity().startService(intent);
         ((LoginFlowActivity) getActivity()).startMainScreen();
     }
 

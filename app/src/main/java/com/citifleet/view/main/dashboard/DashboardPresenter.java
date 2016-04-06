@@ -51,7 +51,7 @@ public class DashboardPresenter {
         @Override
         public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
             view.stopLoading();
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.updateImage(response.body().getAvatarUrl());
                 view.setName(response.body().getFullName());
             } else {
@@ -70,7 +70,7 @@ public class DashboardPresenter {
         @Override
         public void onResponse(Call<ProfileImage> call, Response<ProfileImage> response) {
             view.stopLoading();
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.updateImage(response.body().getAvatar());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));

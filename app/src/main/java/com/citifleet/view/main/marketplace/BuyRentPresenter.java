@@ -45,7 +45,7 @@ public class BuyRentPresenter {
         @Override
         public void onResponse(Call<List<Car>> call, retrofit2.Response<List<Car>> response) {
             view.stopLoading();
-            if (!response.isSuccessful()) {
+            if (!response.isSuccess()) {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             } else {
                 view.onListLoaded(response.body());

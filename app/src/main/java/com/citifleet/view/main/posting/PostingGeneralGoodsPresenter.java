@@ -95,7 +95,7 @@ public class PostingGeneralGoodsPresenter {
     private Callback<Void> deletePhotoCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
-            if (!response.isSuccessful()) {
+            if (!response.isSuccess()) {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
         }
@@ -108,7 +108,7 @@ public class PostingGeneralGoodsPresenter {
     private Callback<Void> editPhotoCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 imagesUpdatingCount--;
                 if (imagesUpdatingCount == 0) {
                     view.stopLoading();
@@ -131,7 +131,7 @@ public class PostingGeneralGoodsPresenter {
     private Callback<Void> createPostCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 if (!isUpdatingPost || (isUpdatingPost && imagesUpdatingCount == 0)) {
                     view.onPostCreatesSuccessfully();
                     view.stopLoading();

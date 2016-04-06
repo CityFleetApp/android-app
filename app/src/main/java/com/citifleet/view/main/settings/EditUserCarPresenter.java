@@ -49,7 +49,7 @@ public class EditUserCarPresenter {
     private Callback<List<CarOption>> makeCallback = new Callback<List<CarOption>>() {
         @Override
         public void onResponse(Call<List<CarOption>> call, Response<List<CarOption>> response) {
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.onMakesLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -65,7 +65,7 @@ public class EditUserCarPresenter {
     private Callback<List<CarOption>> modelCallback = new Callback<List<CarOption>>() {
         @Override
         public void onResponse(Call<List<CarOption>> call, Response<List<CarOption>> response) {
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.onModelLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -82,7 +82,7 @@ public class EditUserCarPresenter {
     private Callback<List<CarOption>> colorCallback = new Callback<List<CarOption>>() {
         @Override
         public void onResponse(Call<List<CarOption>> call, Response<List<CarOption>> response) {
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.onColorLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -98,7 +98,7 @@ public class EditUserCarPresenter {
     private Callback<List<CarOption>> typesCallback = new Callback<List<CarOption>>() {
         @Override
         public void onResponse(Call<List<CarOption>> call, Response<List<CarOption>> response) {
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 view.onTypeLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));

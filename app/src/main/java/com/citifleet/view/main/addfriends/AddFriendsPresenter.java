@@ -70,7 +70,7 @@ public class AddFriendsPresenter {
         @Override
         public void onResponse(Call<List<UserInfo>> call, Response<List<UserInfo>> response) {
             view.stopLoading();
-            if (!response.isSuccessful()) {
+            if (!response.isSuccess()) {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
         }

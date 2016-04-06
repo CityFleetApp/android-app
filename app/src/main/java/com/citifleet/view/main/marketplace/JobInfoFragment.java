@@ -113,7 +113,7 @@ public class JobInfoFragment extends BaseFragment {
     private Callback<Void> callback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
-            if (response.isSuccessful()) {
+            if (response.isSuccess()) {
                 getActivity().onBackPressed();
             } else {
                 String error = NetworkErrorUtil.gerErrorMessage(response);
