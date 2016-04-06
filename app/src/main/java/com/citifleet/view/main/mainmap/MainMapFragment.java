@@ -28,9 +28,9 @@ import com.citifleet.model.ReportType;
 import com.citifleet.util.Constants;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
-import com.citifleet.view.main.marketplace.MarketPlaceFragment;
 import com.citifleet.view.main.addfriends.AddFriendsFragment;
 import com.citifleet.view.main.dashboard.DashboardFragment;
+import com.citifleet.view.main.marketplace.MarketPlaceFragment;
 import com.citifleet.view.main.notifications.NotificationsFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -90,6 +90,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     private Place selectedPlace;
     private List<Report> nearbyReportsList = new ArrayList<Report>();
     private List<Marker> nearbyReportMarkersList = new ArrayList<Marker>();
+    private boolean needToAnimateZoomToLocation = true;
 
     @Nullable
     @Override
@@ -111,6 +112,20 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         buildGoogleApiClient();
 
         return view;
+    }
+
+    protected Location getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public Report getReportForMarker(Marker marker) {
+        int reportId = Integer.valueOf(marker.getTitle());
+        for (Report report : nearbyReportsList) {
+            if (report.getId() == reportId) {
+                return report;
+            }
+        }
+        return null;
     }
 
     protected void buildLocationSettingsRequest() {
@@ -220,6 +235,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         map = googleMap;
         map.getUiSettings().setMapToolbarEnabled(false);
         map.getUiSettings().setCompassEnabled(false);
+        map.setInfoWindowAdapter(new ReportInfoWindowAdapter(this));
     }
 
     private void selectButton(View view) {
@@ -350,10 +366,10 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     @Override
     public void onLocationChanged(Location location) {
-        boolean needToAnimateZoom = currentLocation == null;
         currentLocation = location;
-        if (needToAnimateZoom) {
+        if (needToAnimateZoomToLocation) {
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), Constants.ZOOM_LEVEL));
+            needToAnimateZoomToLocation = false;
         }
         presenter.loadReportsNearby(currentLocation.getLatitude(), currentLocation.getLongitude());
         Toast.makeText(getContext(), "Location updated", Toast.LENGTH_SHORT).show();
@@ -451,7 +467,8 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             int iconResId = ReportType.values()[report.getReportType() - 1].getPinIconResId();
             Marker marker = map.addMarker(new MarkerOptions()
                     .position(new LatLng(report.getLat(), report.getLng()))
-                    .icon(BitmapDescriptorFactory.fromResource(iconResId)));
+                    .icon(BitmapDescriptorFactory.fromResource(iconResId))
+                    .title(String.valueOf(report.getId())));
             nearbyReportMarkersList.add(marker);
         }
     }
