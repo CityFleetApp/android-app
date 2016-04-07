@@ -80,6 +80,8 @@
 
     <include layout="@layout/near_report_dialog" />
 
+    <include layout="@layout/friends_map_dialog" />
+
     <LinearLayout
         android:id="@+id/bottomButtonsCont"
         android:layout_width="match_parent"

@@ -87,7 +87,10 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     String defaultErrorMes;
     @Bind(R.id.nearReportDialog)
     LinearLayout nearReportDialog;
+    @Bind(R.id.nearFriendDialog)
+    LinearLayout nearFriendDialog;
     private NearbyReportDialogView nearbyReportDialogView;
+    private NearbyFriendMapDialogView nearbyFriendMapDialogView;
     private GoogleMap map;
     protected GoogleApiClient googleApiClient;
     protected LocationRequest locationRequest;
@@ -100,7 +103,6 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     private List<Marker> nearbyReportMarkersList = new ArrayList<Marker>();
     private List<Marker> nearbyFriendsMarkerList = new ArrayList<Marker>();
     private boolean needToAnimateZoomToLocation = true;
-
 
     @Nullable
     @Override
@@ -121,6 +123,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         selectButton(dashboardBtn);
         buildGoogleApiClient();
         nearbyReportDialogView = new NearbyReportDialogView(this, nearReportDialog);
+        nearbyFriendMapDialogView = new NearbyFriendMapDialogView(this, nearFriendDialog);
         return view;
     }
 
@@ -128,11 +131,21 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         return currentLocation;
     }
 
-    protected Report getReportForMarker(Marker marker) {
+    private Report getReportForMarker(Marker marker) {
         int reportId = Integer.valueOf(marker.getTitle());
         for (Report report : nearbyReportsList) {
             if (report.getId() == reportId) {
                 return report;
+            }
+        }
+        return null;
+    }
+
+    private FriendNearby getFriendForMarker(Marker marker) {
+        int friendId = Integer.valueOf(marker.getTitle());
+        for (FriendNearby friendNearby : nearbyFriendsList) {
+            if (friendNearby.getId() == friendId) {
+                return friendNearby;
             }
         }
         return null;
@@ -252,26 +265,8 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         map.getUiSettings().setMapToolbarEnabled(false);
         map.getUiSettings().setCompassEnabled(false);
         map.getUiSettings().setMyLocationButtonEnabled(false);
-        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                Report report = getReportForMarker(marker);
-                if (!nearbyReportDialogView.isVisible() || (nearbyReportDialogView.isVisible() && nearbyReportDialogView.getSelectedReport() != report)) {
-                    nearbyReportDialogView.show(report, currentLocation);
-                } else {
-                    nearbyReportDialogView.hide();
-                }
-                return true;
-            }
-        });
-        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                if (nearbyReportDialogView.isVisible()) {
-                    nearbyReportDialogView.hide();
-                }
-            }
-        });
+        map.setOnMarkerClickListener(markerClickListener);
+        map.setOnMapClickListener(mapClickListener);
     }
 
     public static int getPixelsFromDp(Context context, float dp) {
@@ -511,7 +506,8 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             Marker marker = map.addMarker(new MarkerOptions()
                     .position(new LatLng(report.getLat(), report.getLng()))
                     .icon(BitmapDescriptorFactory.fromResource(iconResId))
-                    .title(String.valueOf(report.getId())));
+                    .title(String.valueOf(report.getId()))
+                    .snippet("report"));
             nearbyReportMarkersList.add(marker);
         }
     }
@@ -524,7 +520,6 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             marker.remove();
         }
         for (FriendNearby friendNearby : nearbyFriendsList) {
-            // int iconResId = ReportType.values()[report.getReportType() - 1].getPinIconResId();
             View view = getActivity().getLayoutInflater().inflate(R.layout.friend_marker, null);
             TextView name = (TextView) view.findViewById(R.id.markerFriendName);
             name.setText(friendNearby.getFullName());
@@ -539,8 +534,44 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             Marker marker = map.addMarker(new MarkerOptions()
                     .position(new LatLng(friendNearby.getLat(), friendNearby.getLng()))
                     .icon(BitmapDescriptorFactory.fromBitmap(b))
-                    .title(String.valueOf(friendNearby.getId())));
+                    .title(String.valueOf(friendNearby.getId()))
+                    .snippet("friend"));
             nearbyFriendsMarkerList.add(marker);
         }
     }
+
+
+    private GoogleMap.OnMarkerClickListener markerClickListener = new GoogleMap.OnMarkerClickListener() {
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            String type = marker.getSnippet();
+            if (type.equals("report")) {
+                Report report = getReportForMarker(marker);
+                if (!nearbyReportDialogView.isVisible() || (nearbyReportDialogView.isVisible() && !nearbyReportDialogView.getSelectedReport().equals(report))) {
+                    nearbyReportDialogView.show(report, currentLocation);
+                } else {
+                    nearbyReportDialogView.hide();
+                }
+            } else if (type.equals("friend")) {
+                FriendNearby friendNearby = getFriendForMarker(marker);
+                if (!nearbyFriendMapDialogView.isVisible() || (nearbyFriendMapDialogView.isVisible() && !nearbyFriendMapDialogView.getSelectedFriend().equals(friendNearby))) {
+                    nearbyFriendMapDialogView.show(friendNearby);
+                } else {
+                    nearbyFriendMapDialogView.hide();
+                }
+            }
+            return true;
+        }
+    };
+    private GoogleMap.OnMapClickListener mapClickListener = new GoogleMap.OnMapClickListener() {
+        @Override
+        public void onMapClick(LatLng latLng) {
+            if (nearbyReportDialogView.isVisible()) {
+                nearbyReportDialogView.hide();
+            }
+            if (nearbyFriendMapDialogView.isVisible()) {
+                nearbyFriendMapDialogView.hide();
+            }
+        }
+    };
 }

@@ -1,17 +1,10 @@
 package com.citifleet.view.main.profile;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -29,18 +22,15 @@ import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.UserImages;
 import com.citifleet.model.UserInfo;
-import com.citifleet.util.CircleTransform;
-import com.citifleet.util.CommonUtils;
+import com.citifleet.util.CircleFrameTransform;
 import com.citifleet.util.Constants;
 import com.citifleet.util.ImagePickerUtil;
-import com.citifleet.util.PermissionUtil;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
-import java.io.File;
 import java.util.List;
 
 import butterknife.Bind;
@@ -142,7 +132,7 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
             TypedValue outValue = new TypedValue();
             getResources().getValue(R.dimen.profile_image_blur_radius_percent, outValue, true);
             int blurradius = (int) (screenWidth * outValue.getFloat());
-            Picasso.with(getActivity()).load(url).transform(new CircleTransform(frameSize)).fit().centerCrop().into(profileImage);
+            Picasso.with(getActivity()).load(url).transform(new CircleFrameTransform(frameSize)).fit().centerCrop().into(profileImage);
             Picasso.with(getActivity()).load(url).transform(new BlurTransformation(getContext(), blurradius)).fit().centerCrop().into(bigProfileImage);
         }
     }

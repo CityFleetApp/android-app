@@ -19,26 +19,23 @@ import android.widget.Toast;
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.UserEditInfo;
-import com.citifleet.util.CircleTransform;
+import com.citifleet.util.CircleFrameTransform;
 import com.citifleet.util.Constants;
 import com.citifleet.util.EditUserCarEvent;
 import com.citifleet.util.ImagePickerUtil;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
-import com.mobsandgeeks.saripaar.Validator;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 /**
@@ -204,7 +201,7 @@ public class EditUserProfileFragment extends BaseFragment implements EditUserPro
             TypedValue outValue = new TypedValue();
             getResources().getValue(R.dimen.profile_image_blur_radius_percent, outValue, true);
             int blurradius = (int) (screenWidth * outValue.getFloat());
-            Picasso.with(getActivity()).load(url).transform(new CircleTransform(frameSize)).fit().centerCrop().into(profileImage);
+            Picasso.with(getActivity()).load(url).transform(new CircleFrameTransform(frameSize)).fit().centerCrop().into(profileImage);
             Picasso.with(getActivity()).load(url).transform(new BlurTransformation(getContext(), blurradius)).fit().centerCrop().into(bigProfileImage);
         }
     }

@@ -120,9 +120,11 @@
     <dimen name="dialog_report_title_text_size">20sp</dimen>
     <dimen name="icon_drawable_padding">10dp</dimen>
     <dimen name="report_dialog_button_textsize">12sp</dimen>
+    <dimen name="friend_map_dialog_button_textsize">14sp</dimen>
     <dimen name="nearby_report_dialog_width">200dp</dimen>
     <dimen name="nearby_report_dialog_heigh">100dp</dimen>
     <dimen name="user_image_map_dialog_height">60dp</dimen>
     <dimen name="half_of_user_image_map_dialog">30dp</dimen>
     <dimen name="friend_name_marker_text_size">15sp</dimen>
+    <dimen name="max_friend_marker_width">100dp</dimen>
 </resources>
