@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,22 +81,22 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     TextView notificationBtn;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
+    @BindString(R.string.default_error_mes)
+    String defaultErrorMes;
+    @Bind(R.id.nearReportDialog)
+    LinearLayout nearReportDialog;
+    private NearbyReportDialogView nearbyReportDialogView;
     private GoogleMap map;
     protected GoogleApiClient googleApiClient;
     protected LocationRequest locationRequest;
     protected Location currentLocation;
     protected LocationSettingsRequest locationSettingsRequest;
     private MainMapPresenter presenter;
-    @BindString(R.string.default_error_mes)
-    String defaultErrorMes;
     private Place selectedPlace;
     private List<Report> nearbyReportsList = new ArrayList<Report>();
     private List<Marker> nearbyReportMarkersList = new ArrayList<Marker>();
     private boolean needToAnimateZoomToLocation = true;
-    @Bind(R.id.map_relative_layout)
-    public MapWrapperLayout mapWrapperLayout;
-//    @Bind(R.id.nearReportDialog)
-//    CardView nearReportDialog;
+
 
     @Nullable
     @Override
@@ -116,7 +116,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         }
         selectButton(dashboardBtn);
         buildGoogleApiClient();
-       // nearReportDialog.setVisibility(View.GONE);
+        nearbyReportDialogView = new NearbyReportDialogView(this, nearReportDialog);
         return view;
     }
 
@@ -165,8 +165,8 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     protected void createLocationRequest() {
         locationRequest = new LocationRequest();
-//        locationRequest.setInterval(Constants.UPDATE_INTERVAL_IN_MILLISECONDS);
-//        locationRequest.setFastestInterval(Constants.FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+        locationRequest.setInterval(Constants.UPDATE_INTERVAL_IN_MILLISECONDS);
+        locationRequest.setFastestInterval(Constants.FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
         locationRequest.setSmallestDisplacement(Constants.MAP_DISPLACEMENT);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
@@ -234,7 +234,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     @Override
     public void onDestroyView() {
-
+        nearbyReportDialogView.onDestroy();
         map = null;
         ButterKnife.unbind(this);
         super.onDestroyView();
@@ -243,42 +243,28 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        // MapWrapperLayout initialization
-        // 39 - default marker height
-        // 20 - offset between the default InfoWindow bottom edge and it's content bottom edge
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.drawable.ic_accident_pin, options);
-        int imageHeight = options.outHeight;
-        mapWrapperLayout.init(map, imageHeight);
         map.getUiSettings().setMapToolbarEnabled(false);
         map.getUiSettings().setCompassEnabled(false);
-           map.setInfoWindowAdapter(new ReportInfoWindowAdapter(this));
-//        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//            @Override
-//            public boolean onMarkerClick(Marker marker) {
-//                Point point = map.getProjection().toScreenLocation(marker.getPosition());
-//                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) nearReportDialog.getLayoutParams();
-//                BitmapFactory.Options options = new BitmapFactory.Options();
-//                options.inJustDecodeBounds = true;
-//                BitmapFactory.decodeResource(getResources(), R.drawable.ic_accident_pin, options);
-//                int imageHeight = options.outHeight;
-//                int x = point.x - getResources().getDimensionPixelSize(R.dimen.nearby_report_dialog_width) / 2;
-//                int y = point.y - getResources().getDimensionPixelSize(R.dimen.nearby_report_dialog_heigh) - imageHeight;
-//                lp.setMargins(x, y, 0, 0);
-//                nearReportDialog.setLayoutParams(lp);
-//                nearReportDialog.setVisibility(View.VISIBLE);
-//                return true;
-//            }
-//        });
-//        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-//            @Override
-//            public void onMapClick(LatLng latLng) {
-//                if (nearReportDialog.getVisibility() == View.VISIBLE) {
-//                    nearReportDialog.setVisibility(View.GONE);
-//                }
-//            }
-//        });
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Report report = getReportForMarker(marker);
+                if (!nearbyReportDialogView.isVisible() || (nearbyReportDialogView.isVisible() && nearbyReportDialogView.getSelectedReport() != report)) {
+                    nearbyReportDialogView.show(report, currentLocation);
+                } else {
+                    nearbyReportDialogView.hide();
+                }
+                return true;
+            }
+        });
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if (nearbyReportDialogView.isVisible()) {
+                    nearbyReportDialogView.hide();
+                }
+            }
+        });
     }
 
     public static int getPixelsFromDp(Context context, float dp) {

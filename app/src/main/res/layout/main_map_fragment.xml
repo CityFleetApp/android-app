@@ -4,25 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <com.citifleet.view.main.mainmap.MapWrapperLayout
-        android:id="@+id/map_relative_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <!--&lt;!&ndash;<fragment&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@+id/map"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;class="com.google.android.gms.maps.MapFragment" />&ndash;&gt;-->
     <FrameLayout
         android:id="@+id/mapFragment"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomButtonsCont" />
-    </com.citifleet.view.main.mainmap.MapWrapperLayout>
-    <!--<include layout="@layout/near_report_dialog"  />-->
+
 
     <ImageButton
         android:id="@+id/directBtn"
@@ -89,6 +77,8 @@
         android:elevation="@dimen/direct_btn_elevation"
         android:src="@drawable/gps"
         android:tint="@android:color/white" />
+
+    <include layout="@layout/near_report_dialog" />
 
     <LinearLayout
         android:id="@+id/bottomButtonsCont"
