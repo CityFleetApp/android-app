@@ -40,4 +40,5 @@
     <color name="marketplace_divider">#f1f1f1</color>
     <color name="job_offer_divider">#f3f4f8</color>
     <color name="reset_password_color">#e3e8e4</color>
+    <color name="marker_friend_name">#80898d</color>
 </resources>

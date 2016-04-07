@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.model.FriendNearby;
 import com.citifleet.model.Report;
 import com.citifleet.model.ReportType;
 import com.citifleet.util.Constants;
@@ -94,7 +96,9 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     private MainMapPresenter presenter;
     private Place selectedPlace;
     private List<Report> nearbyReportsList = new ArrayList<Report>();
+    private List<FriendNearby> nearbyFriendsList = new ArrayList<FriendNearby>();
     private List<Marker> nearbyReportMarkersList = new ArrayList<Marker>();
+    private List<Marker> nearbyFriendsMarkerList = new ArrayList<Marker>();
     private boolean needToAnimateZoomToLocation = true;
 
 
@@ -176,6 +180,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_UPDATES);
         } else {
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+            map.setMyLocationEnabled(true);
         }
     }
 
@@ -184,6 +189,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         if (requestCode == REQUEST_LOCATION_UPDATES) {
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+                map.setMyLocationEnabled(true);
             } else {
                 //TODO
             }
@@ -245,6 +251,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         map = googleMap;
         map.getUiSettings().setMapToolbarEnabled(false);
         map.getUiSettings().setCompassEnabled(false);
+        map.getUiSettings().setMyLocationButtonEnabled(false);
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -382,6 +389,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         if (currentLocation == null) {
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+                map.setMyLocationEnabled(true);
             }
         }
         checkLocationSettings();
@@ -406,6 +414,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             needToAnimateZoomToLocation = false;
         }
         presenter.loadReportsNearby(currentLocation.getLatitude(), currentLocation.getLongitude());
+        presenter.loadFriendsNearby(currentLocation.getLatitude(), currentLocation.getLongitude());
         Toast.makeText(getContext(), "Location updated", Toast.LENGTH_SHORT).show();
     }
 
@@ -504,6 +513,34 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                     .icon(BitmapDescriptorFactory.fromResource(iconResId))
                     .title(String.valueOf(report.getId())));
             nearbyReportMarkersList.add(marker);
+        }
+    }
+
+    @Override
+    public void onFriendsNearbyLoaded(List<FriendNearby> friendList) {
+        nearbyFriendsList.clear(); //TODO check difference
+        nearbyFriendsList.addAll(friendList);
+        for (Marker marker : nearbyFriendsMarkerList) {
+            marker.remove();
+        }
+        for (FriendNearby friendNearby : nearbyFriendsList) {
+            // int iconResId = ReportType.values()[report.getReportType() - 1].getPinIconResId();
+            View view = getActivity().getLayoutInflater().inflate(R.layout.friend_marker, null);
+            TextView name = (TextView) view.findViewById(R.id.markerFriendName);
+            name.setText(friendNearby.getFullName());
+            view.setDrawingCacheEnabled(true);
+            view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+            view.buildDrawingCache(true);
+            Bitmap b = Bitmap.createBitmap(view.getDrawingCache());
+            view.setDrawingCacheEnabled(false);
+
+            Marker marker = map.addMarker(new MarkerOptions()
+                    .position(new LatLng(friendNearby.getLat(), friendNearby.getLng()))
+                    .icon(BitmapDescriptorFactory.fromBitmap(b))
+                    .title(String.valueOf(friendNearby.getId())));
+            nearbyFriendsMarkerList.add(marker);
         }
     }
 }

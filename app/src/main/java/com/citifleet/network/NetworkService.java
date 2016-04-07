@@ -5,6 +5,7 @@ import com.citifleet.model.Benefit;
 import com.citifleet.model.Car;
 import com.citifleet.model.CarOption;
 import com.citifleet.model.Document;
+import com.citifleet.model.FriendNearby;
 import com.citifleet.model.GeneralGood;
 import com.citifleet.model.JobOffer;
 import com.citifleet.model.LegalAidLocation;
@@ -56,6 +57,9 @@ public interface NetworkService {
 
     @GET("reports/nearby/")
     Call<List<Report>> getReportsNearby(@Query("lat") double lat, @Query("lng") double lng);
+
+    @GET("reports/friends/")
+    Call<List<FriendNearby>> getFriendsNearby(@Query("lat") double lat, @Query("lng") double lng);
 
     @FormUrlEncoded
     @POST("users/reset-password/")
@@ -267,4 +271,6 @@ public interface NetworkService {
 
     @POST("reports/map/{id}/confirm_report/")
     Call<Void> denyReport(@Path("id") int id);
+
+
 }

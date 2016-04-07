@@ -101,7 +101,7 @@ public class NearbyReportDialogView {
         }
     }
 
-    Animator.AnimatorListener openingAnimatorListener = new Animator.AnimatorListener() {
+   private Animator.AnimatorListener openingAnimatorListener = new Animator.AnimatorListener() {
         @Override
         public void onAnimationStart(Animator animation) {
 

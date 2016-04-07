@@ -2,6 +2,7 @@ package com.citifleet.view.main.mainmap;
 
 import android.util.Log;
 
+import com.citifleet.model.FriendNearby;
 import com.citifleet.model.Report;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
@@ -27,6 +28,16 @@ public class MainMapPresenter {
             view.startLoading();
             Call<List<Report>> reportCall = networkManager.getNetworkClient().getReportsNearby(lat, longt);
             reportCall.enqueue(nearbyReportsCallback);
+        } else {
+            view.onNetworkError();
+        }
+    }
+
+    public void loadFriendsNearby(double lat, double longt) {
+        if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
+            Call<List<FriendNearby>> reportCall = networkManager.getNetworkClient().getFriendsNearby(lat, longt);
+            reportCall.enqueue(nearbyFriendsCallback);
         } else {
             view.onNetworkError();
         }
@@ -68,6 +79,24 @@ public class MainMapPresenter {
 
         @Override
         public void onFailure(Call<Void> call, Throwable t) {
+            Log.e(LoginPresenter.class.getName(), t.getMessage());
+            view.stopLoading();
+            view.onFailure(t.getMessage());
+        }
+    };
+    private Callback<List<FriendNearby>> nearbyFriendsCallback = new Callback<List<FriendNearby>>() {
+        @Override
+        public void onResponse(Call<List<FriendNearby>> call, Response<List<FriendNearby>> response) {
+            view.stopLoading();
+            if (response.isSuccess()) {
+                view.onFriendsNearbyLoaded(response.body());
+            } else {
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
+
+        @Override
+        public void onFailure(Call<List<FriendNearby>> call, Throwable t) {
             Log.e(LoginPresenter.class.getName(), t.getMessage());
             view.stopLoading();
             view.onFailure(t.getMessage());
@@ -122,5 +151,7 @@ public class MainMapPresenter {
         void onNetworkError();
 
         void onReportsNearbyLoaded(List<Report> reportList);
+
+        void onFriendsNearbyLoaded(List<FriendNearby> friendList);
     }
 }
