@@ -11,16 +11,24 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.citifleet.R;
+import com.citifleet.model.Report;
+import com.citifleet.util.NewReportAddedEvent;
+import com.citifleet.util.ReportDeletedEvent;
 import com.citifleet.view.main.MainActivity;
 import com.google.android.gms.gcm.GcmListenerService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by vika on 21.03.16.
  */
 public class MyGcmListenerService extends GcmListenerService {
     //    receive push: {"lng":28.4802189,"action":"added","id":115,"type":2,"lat":49.2389835}
+    //receive push: {"lng":28.4802699,"action":"removed","id":126,"report_type":4,"lat":49.2389275}
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
@@ -28,9 +36,20 @@ public class MyGcmListenerService extends GcmListenerService {
 
         JsonParser parser = new JsonParser();
         JsonObject messageObject = parser.parse(message).getAsJsonObject();
-
+        if (messageObject.has("action")) {
+            String action = messageObject.get("action").getAsString();
+            if (action.equals("added")) {
+                Gson gson = new GsonBuilder().create();
+                Report report = gson.fromJson(message, Report.class);
+                EventBus.getDefault().post(new NewReportAddedEvent(report));
+            } else if (action.equals("removed")) {
+                Gson gson = new GsonBuilder().create();
+                Report report = gson.fromJson(message, Report.class);
+                EventBus.getDefault().post(new ReportDeletedEvent(report));
+            }
+        }
         //TODO process or show notification
-        sendNotification(message);
+        // sendNotification(message);
     }
 
     private void sendNotification(String message) {

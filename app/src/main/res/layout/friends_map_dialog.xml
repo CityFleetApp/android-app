@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/bottom_button_color_transparent"
     android:elevation="@dimen/direct_btn_elevation"
+    android:clickable="true"
     android:orientation="vertical"
     android:visibility="invisible">
 

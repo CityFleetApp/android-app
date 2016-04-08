@@ -30,6 +30,8 @@ import com.citifleet.model.FriendNearby;
 import com.citifleet.model.Report;
 import com.citifleet.model.ReportType;
 import com.citifleet.util.Constants;
+import com.citifleet.util.NewReportAddedEvent;
+import com.citifleet.util.ReportDeletedEvent;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 import com.citifleet.view.main.addfriends.AddFriendsFragment;
@@ -59,6 +61,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,6 +132,44 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         return view;
     }
 
+    @Subscribe(sticky = true)
+    public void onEvent(NewReportAddedEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        boolean needToAddReport = true;
+        for (Report report : nearbyReportsList) {
+            if (report.equals(event.getReport())) {
+                needToAddReport = false;
+            }
+        }
+        if (needToAddReport) {
+            addReportMarkerToMap(event.getReport());
+            nearbyReportsList.add(event.getReport());
+        }
+    }
+
+    @Subscribe(sticky = true)
+    public void onEvent(ReportDeletedEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        boolean isRemoved = nearbyReportsList.remove(event.getReport());
+        if (isRemoved) {
+            for (Marker marker : nearbyReportMarkersList) {
+                if (marker.getSnippet().equals(event.getReport().getId())) {
+                    marker.remove();
+                    break;
+                }
+            }
+        }
+    }
+
+    private void addReportMarkerToMap(Report report) {
+        int iconResId = ReportType.values()[report.getReportType() - 1].getPinIconResId();
+        Marker marker = map.addMarker(new MarkerOptions()
+                .position(new LatLng(report.getLat(), report.getLng()))
+                .icon(BitmapDescriptorFactory.fromResource(iconResId))
+                .title(String.valueOf(report.getId()))
+                .snippet("report"));
+        nearbyReportMarkersList.add(marker);
+    }
 
     private Report getReportForMarker(Marker marker) {
         int reportId = Integer.valueOf(marker.getTitle());
@@ -238,6 +281,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         if (googleApiClient.isConnected()) {
             startLocationUpdates();
         }
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -246,6 +290,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         if (googleApiClient.isConnected()) {
             stopLocationUpdates();
         }
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -500,13 +545,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             marker.remove();
         }
         for (Report report : nearbyReportsList) {
-            int iconResId = ReportType.values()[report.getReportType() - 1].getPinIconResId();
-            Marker marker = map.addMarker(new MarkerOptions()
-                    .position(new LatLng(report.getLat(), report.getLng()))
-                    .icon(BitmapDescriptorFactory.fromResource(iconResId))
-                    .title(String.valueOf(report.getId()))
-                    .snippet("report"));
-            nearbyReportMarkersList.add(marker);
+            addReportMarkerToMap(report);
         }
     }
 
@@ -527,7 +566,8 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
             view.buildDrawingCache(true);
             if (view != null && view.getDrawingCache() != null) {
-                Bitmap b = Bitmap.createBitmap(view.getDrawingCache());
+                Bitmap drawingCache = view.getDrawingCache();
+                Bitmap b = Bitmap.createBitmap(drawingCache);
                 view.setDrawingCacheEnabled(false);
                 Marker marker = map.addMarker(new MarkerOptions()
                         .position(new LatLng(friendNearby.getLat(), friendNearby.getLng()))
@@ -535,6 +575,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                         .title(String.valueOf(friendNearby.getId()))
                         .snippet("friend"));
                 b.recycle();
+                drawingCache.recycle();
                 nearbyFriendsMarkerList.add(marker);
             }
 

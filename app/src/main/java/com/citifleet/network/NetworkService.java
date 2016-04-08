@@ -270,7 +270,7 @@ public interface NetworkService {
     Call<Void> confirmReport(@Path("id") int id);
 
 
-    @POST("reports/map/{id}/confirm_report/")
+    @POST("reports/map/{id}/deny_report/")
     Call<Void> denyReport(@Path("id") int id);
 
 

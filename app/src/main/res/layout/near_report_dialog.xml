@@ -7,6 +7,7 @@
     android:divider="@drawable/vertical_divider"
     android:elevation="@dimen/direct_btn_elevation"
     android:orientation="vertical"
+    android:clickable="true"
     android:tint="@android:color/white"
     android:visibility="invisible">
     <!--android:background="@color/bottom_button_color"-->

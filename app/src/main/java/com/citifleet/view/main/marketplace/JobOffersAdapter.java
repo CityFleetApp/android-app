@@ -6,12 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.citifleet.R;
 import com.citifleet.model.JobOffer;
-import com.citifleet.model.Notification;
 import com.citifleet.util.Constants;
 
 import java.text.ParseException;
@@ -90,6 +88,7 @@ public class JobOffersAdapter extends RecyclerView.Adapter<JobOffersAdapter.View
         holder.timePrice.setText(timePrice);
         holder.date.setText(date);
         holder.description.setText(jobOffer.getInstructions());
+        holder.covered.setText(jobOffer.getStatus());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
