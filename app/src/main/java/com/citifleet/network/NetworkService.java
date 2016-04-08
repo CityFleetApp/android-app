@@ -30,6 +30,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -255,10 +256,10 @@ public interface NetworkService {
 
     @FormUrlEncoded
     @POST("users/devicesdevice/gcm/")
-    Call<Void> registerForGcm(@Field("registration_id") String registrationId, @Field("device_id") String deviceId);
+    Call<Void> registerForGcm(@Field("registration_id") String registrationId, @Field("device_id") String deviceId, @Field("active") boolean active);
 
     @DELETE("users/devicesdevice/gcm/{registration_id}/")
-    Call<Void> unregisterFromGcm(@Path("registration_id") String registrationId);
+    Call<Void> unregisterFromGcm(@Header("Authorization") String token, @Path("registration_id") String registrationId);
 
     @FormUrlEncoded
     @PATCH("users/devicesdevice/gcm/{registration_id}/")

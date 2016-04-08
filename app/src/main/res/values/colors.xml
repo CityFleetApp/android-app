@@ -15,6 +15,7 @@
     <color name="reg_edittext_color">#2dc4b5</color>
     <color name="reg_edittext_hintcolor">#a8a8a8</color>
     <color name="bottom_button_color">#011627</color>
+    <color name="bottom_button_color_transparent">#CC011627</color>
     <color name="bottom_button_textcolor">#4e5c69</color>
     <color name="direct_button_color">#102a3b</color>
     <color name="add_friend_button_color">#e71d35</color>

@@ -13,24 +13,24 @@ import android.util.Log;
 import com.citifleet.R;
 import com.citifleet.view.main.MainActivity;
 import com.google.android.gms.gcm.GcmListenerService;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * Created by vika on 21.03.16.
  */
 public class MyGcmListenerService extends GcmListenerService {
-
+    //    receive push: {"lng":28.4802189,"action":"added","id":115,"type":2,"lat":49.2389835}
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
-        Log.d("TAG", "receive push: "+ message);
-        if (from.startsWith("/topics/")) {
-            // message received from some topic.
-        } else {
-            // normal downstream message.
-        }
+        Log.d("TAG", "receive push: " + message);
+
+        JsonParser parser = new JsonParser();
+        JsonObject messageObject = parser.parse(message).getAsJsonObject();
 
         //TODO process or show notification
-       // sendNotification(message);
+        sendNotification(message);
     }
 
     private void sendNotification(String message) {
@@ -39,7 +39,7 @@ public class MyGcmListenerService extends GcmListenerService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle("GCM Message")
                 .setSmallIcon(R.drawable.alert)

@@ -227,22 +227,20 @@ public class DashboardFragment extends BaseFragment implements DashboardView {
 
     @OnClick(R.id.signOutBtn)
     void onSignoutBtnClick() {
+        unregisterFromPushNotifications();
         PrefUtil.clearAllPrefs(getActivity());
         logoutFromSocialNetworks();
-        unregisterFromPushNotifications();
-
-        Intent i = new Intent(getActivity(), LoginFlowActivity.class);
-        startActivity(i);
-
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction(Constants.ACTION_LOGOUT);
         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(broadcastIntent);
-
+        Intent i = new Intent(getActivity(), LoginFlowActivity.class);
+        startActivity(i);
     }
 
     private void unregisterFromPushNotifications() {
         Intent intent = new Intent(getActivity(), RegistrationIntentService.class);
         intent.putExtra(Constants.GCM_REGISTRATION_TYPE_TAG, GcmRegistrationTypes.UNREGISTER);
+        intent.putExtra(Constants.PREFS_TOKEN, PrefUtil.getToken(getActivity()));
         getActivity().startService(intent);
     }
 
