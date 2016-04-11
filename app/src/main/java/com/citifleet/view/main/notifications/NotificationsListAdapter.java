@@ -49,10 +49,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter<Notifications
         this.notifications.addAll(notifications);
     }
 
-    public void setNotificationsList(List<Notification> benefitList) {
-        this.notifications.clear();
-        this.notifications.addAll(benefitList);
-    }
 
     @Override
     public NotificationsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

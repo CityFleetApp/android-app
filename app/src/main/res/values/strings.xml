@@ -224,6 +224,8 @@
     <string name="in_miles">In %1$s miles</string>
     <string name="message_user">Message user</string>
     <string name="enter_your_message">Enter your message...</string>
+    <string name="contacts">Contacts</string>
+    <string name="type_name">Type a name</string>
 
     <string-array name="pick_image_options">
         <item>Take Photo</item>

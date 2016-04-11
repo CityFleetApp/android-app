@@ -29,11 +29,11 @@ import org.greenrobot.eventbus.EventBus;
 public class MyGcmListenerService extends GcmListenerService {
     //    receive push: {"lng":28.4802189,"action":"added","id":115,"type":2,"lat":49.2389835}
     //receive push: {"lng":28.4802699,"action":"removed","id":126,"report_type":4,"lat":49.2389275}
+    //   {"id":13,"title":"Job Offer Created","type":"offer_created"}
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
         Log.d("TAG", "receive push: " + message);
-
         JsonParser parser = new JsonParser();
         JsonObject messageObject = parser.parse(message).getAsJsonObject();
         if (messageObject.has("action")) {

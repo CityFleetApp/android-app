@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/friend_list_margin_top"
+    android:paddingLeft="@dimen/friend_list_margin_left"
+    android:paddingRight="@dimen/friend_list_margin_left"
+    android:paddingTop="@dimen/friend_list_margin_top">
+
+    <ImageView
+        android:id="@+id/friendImage"
+        android:layout_width="@dimen/friends_list_image_height"
+        android:layout_height="@dimen/friends_list_image_height"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/friendImage"
+        android:paddingLeft="@dimen/friends_list_text_padding"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/friendName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="kdkdkk kkk"
+            android:textColor="@color/friend_list_text_color"
+            android:textSize="@dimen/friend_list_name_size" />
+
+        <TextView
+            android:id="@+id/friendNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123 456 789"
+            android:textColor="@color/friend_list_text_color"
+            android:textSize="@dimen/friend_list_phone_size" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/friendLocation"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Nevada"-->
+        <!--android:textColor="@color/friend_list_text_color"-->
+        <!--android:textSize="@dimen/friend_list_phone_size" />-->
+    </LinearLayout>
+
+</RelativeLayout>

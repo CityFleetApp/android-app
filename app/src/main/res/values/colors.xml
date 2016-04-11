@@ -43,4 +43,5 @@
     <color name="reset_password_color">#e3e8e4</color>
     <color name="marker_friend_name">#80898d</color>
     <color name="chat_date_color">#5e5f56</color>
+    <color name="friend_list_text_color">#50555b</color>
 </resources>
