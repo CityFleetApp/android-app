@@ -66,7 +66,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -103,8 +106,8 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     protected LocationSettingsRequest locationSettingsRequest;
     private MainMapPresenter presenter;
     private Place selectedPlace;
-    private List<Report> nearbyReportsList = new ArrayList<Report>();
-    private List<FriendNearby> nearbyFriendsList = new ArrayList<FriendNearby>();
+    private Set<Report> nearbyReportsList = new HashSet<Report>();
+    private Set<FriendNearby> nearbyFriendsList = new HashSet<FriendNearby>();
     private List<Marker> nearbyReportMarkersList = new ArrayList<Marker>();
     private List<Marker> nearbyFriendsMarkerList = new ArrayList<Marker>();
     private boolean needToAnimateZoomToLocation = true;
@@ -539,46 +542,91 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     @Override
     public void onReportsNearbyLoaded(List<Report> reportList) {
-        nearbyReportsList.clear(); //TODO check difference
-        nearbyReportsList.addAll(reportList);
-        for (Marker marker : nearbyReportMarkersList) {
-            marker.remove();
+        //delete markers
+        Iterator<Report> i = nearbyReportsList.iterator();
+        while (i.hasNext()) {
+            Report report = i.next();
+            if (!reportList.contains(report)) {
+                i.remove();
+                deleteMarkerWithReportId(report.getId());
+            }
         }
-        for (Report report : nearbyReportsList) {
-            addReportMarkerToMap(report);
+
+        //add new markers
+        for (Report report : reportList) {
+            boolean isAdded = nearbyReportsList.add(report);
+            if (isAdded) {
+                addReportMarkerToMap(report);
+            }
+        }
+    }
+
+    private void deleteMarkerWithReportId(int reportIdToDelete) {
+        Iterator<Marker> i = nearbyReportMarkersList.iterator();
+        while (i.hasNext()) {
+            Marker marker = i.next();
+            int reportId = Integer.valueOf(marker.getTitle());
+            if (reportId == reportIdToDelete) {
+                marker.remove();
+                i.remove();
+            }
+        }
+    }
+
+    private void deleteMarkerWithFriendId(int friendIdToDelete) {
+        Iterator<Marker> i = nearbyFriendsMarkerList.iterator();
+        while (i.hasNext()) {
+            Marker marker = i.next();
+            int reportId = Integer.valueOf(marker.getTitle());
+            if (reportId == friendIdToDelete) {
+                marker.remove();
+                i.remove();
+            }
+        }
+    }
+
+    private void addFriendMarkerToMap(FriendNearby friendNearby) {
+        View view = getActivity().getLayoutInflater().inflate(R.layout.friend_marker, null);
+        TextView name = (TextView) view.findViewById(R.id.markerFriendName);
+        name.setText(friendNearby.getFullName());
+        view.setDrawingCacheEnabled(true);
+        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        view.buildDrawingCache(true);
+        if (view != null && view.getDrawingCache() != null) {
+            Bitmap drawingCache = view.getDrawingCache();
+            Bitmap b = Bitmap.createBitmap(drawingCache);
+            view.setDrawingCacheEnabled(false);
+            Marker marker = map.addMarker(new MarkerOptions()
+                    .position(new LatLng(friendNearby.getLat(), friendNearby.getLng()))
+                    .icon(BitmapDescriptorFactory.fromBitmap(b))
+                    .title(String.valueOf(friendNearby.getId()))
+                    .snippet("friend"));
+            b.recycle();
+            drawingCache.recycle();
+            nearbyFriendsMarkerList.add(marker);
         }
     }
 
     @Override
     public void onFriendsNearbyLoaded(List<FriendNearby> friendList) {
-        nearbyFriendsList.clear(); //TODO check difference
-        nearbyFriendsList.addAll(friendList);
-        for (Marker marker : nearbyFriendsMarkerList) {
-            marker.remove();
-        }
-        for (FriendNearby friendNearby : nearbyFriendsList) {
-            View view = getActivity().getLayoutInflater().inflate(R.layout.friend_marker, null);
-            TextView name = (TextView) view.findViewById(R.id.markerFriendName);
-            name.setText(friendNearby.getFullName());
-            view.setDrawingCacheEnabled(true);
-            view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-            view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-            view.buildDrawingCache(true);
-            if (view != null && view.getDrawingCache() != null) {
-                Bitmap drawingCache = view.getDrawingCache();
-                Bitmap b = Bitmap.createBitmap(drawingCache);
-                view.setDrawingCacheEnabled(false);
-                Marker marker = map.addMarker(new MarkerOptions()
-                        .position(new LatLng(friendNearby.getLat(), friendNearby.getLng()))
-                        .icon(BitmapDescriptorFactory.fromBitmap(b))
-                        .title(String.valueOf(friendNearby.getId()))
-                        .snippet("friend"));
-                b.recycle();
-                drawingCache.recycle();
-                nearbyFriendsMarkerList.add(marker);
+        //delete markers
+        Iterator<FriendNearby> i = nearbyFriendsList.iterator();
+        while (i.hasNext()) {
+            FriendNearby friendNearby = i.next();
+            if (!friendList.contains(friendNearby)) {
+                i.remove();
+                deleteMarkerWithFriendId(friendNearby.getId());
             }
+        }
 
+        //add new markers
+        for (FriendNearby friendNearby : friendList) {
+            boolean isAdded = nearbyFriendsList.add(friendNearby);
+            if (isAdded) {
+                addFriendMarkerToMap(friendNearby);
+            }
         }
     }
 

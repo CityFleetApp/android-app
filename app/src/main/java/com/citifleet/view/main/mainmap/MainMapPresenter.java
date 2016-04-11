@@ -25,7 +25,7 @@ public class MainMapPresenter {
 
     public void loadReportsNearby(double lat, double longt) {
         if (networkManager.isConnectedOrConnecting()) {
-            view.startLoading();
+            //   view.startLoading();
             Call<List<Report>> reportCall = networkManager.getNetworkClient().getReportsNearby(lat, longt);
             reportCall.enqueue(nearbyReportsCallback);
         } else {
@@ -35,7 +35,7 @@ public class MainMapPresenter {
 
     public void loadFriendsNearby(double lat, double longt) {
         if (networkManager.isConnectedOrConnecting()) {
-            view.startLoading();
+            // view.startLoading();
             Call<List<FriendNearby>> reportCall = networkManager.getNetworkClient().getFriendsNearby(lat, longt);
             reportCall.enqueue(nearbyFriendsCallback);
         } else {
@@ -87,7 +87,7 @@ public class MainMapPresenter {
     private Callback<List<FriendNearby>> nearbyFriendsCallback = new Callback<List<FriendNearby>>() {
         @Override
         public void onResponse(Call<List<FriendNearby>> call, Response<List<FriendNearby>> response) {
-            view.stopLoading();
+            //          view.stopLoading();
             if (response.isSuccess()) {
                 view.onFriendsNearbyLoaded(response.body());
             } else {
@@ -98,14 +98,14 @@ public class MainMapPresenter {
         @Override
         public void onFailure(Call<List<FriendNearby>> call, Throwable t) {
             Log.e(LoginPresenter.class.getName(), t.getMessage());
-            view.stopLoading();
+            //    view.stopLoading();
             view.onFailure(t.getMessage());
         }
     };
     private Callback<List<Report>> nearbyReportsCallback = new Callback<List<Report>>() {
         @Override
         public void onResponse(Call<List<Report>> call, Response<List<Report>> response) {
-            view.stopLoading();
+            //  view.stopLoading();
             if (response.isSuccess()) {
                 view.onReportsNearbyLoaded(response.body());
             } else {
