@@ -223,6 +223,7 @@
     <string name="not_here">Not here</string>
     <string name="in_miles">In %1$s miles</string>
     <string name="message_user">Message user</string>
+    <string name="enter_your_message">Enter your message...</string>
 
     <string-array name="pick_image_options">
         <item>Take Photo</item>

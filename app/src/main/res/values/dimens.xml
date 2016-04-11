@@ -127,4 +127,16 @@
     <dimen name="half_of_user_image_map_dialog">30dp</dimen>
     <dimen name="friend_name_marker_text_size">15sp</dimen>
     <dimen name="max_friend_marker_width">100dp</dimen>
+    <dimen name="chat_image_height">60dp</dimen>
+    <dimen name="chat_item_margin_left">20dp</dimen>
+    <dimen name="chat_item_margin_right">15dp</dimen>
+    <dimen name="chat_item_margin_top">8dp</dimen>
+    <dimen name="chat_bubble_text_size">13sp</dimen>
+    <dimen name="chat_message_padding">20dp</dimen>
+    <dimen name="chat_date_text_size">8sp</dimen>
+    <dimen name="chat_date_margin">8dp</dimen>
+    <dimen name="chat_message_margin_top">5dp</dimen>
+    <dimen name="chat_message_margin">12dp</dimen>
+    <dimen name="chat_image_button_padding">14dp</dimen>
+    <dimen name="new_message_text_size">12sp</dimen>
 </resources>

@@ -42,4 +42,5 @@
     <color name="job_offer_divider">#f3f4f8</color>
     <color name="reset_password_color">#e3e8e4</color>
     <color name="marker_friend_name">#80898d</color>
+    <color name="chat_date_color">#5e5f56</color>
 </resources>

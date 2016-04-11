@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/chat_item_margin_left"
+    android:paddingRight="@dimen/chat_item_margin_right"
+    android:paddingTop="@dimen/chat_item_margin_top">
+
+    <ImageView
+        android:id="@+id/authorImage"
+        android:layout_width="@dimen/chat_image_height"
+        android:layout_height="@dimen/chat_image_height"
+        android:layout_alignParentLeft="true"
+        android:background="@color/benefit_name_background"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/chatMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/chat_message_margin_top"
+        android:layout_toRightOf="@+id/authorImage"
+        android:background="@drawable/bubble_orange"
+        android:layout_marginLeft="@dimen/chat_message_margin"
+        android:gravity="center_vertical|left"
+        android:text="This is such a cool event I wish I can do it every week"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/chat_bubble_text_size" />
+
+    <TextView
+        android:id="@+id/chatTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/chatMessage"
+        android:layout_below="@+id/chatMessage"
+        android:gravity="right"
+        android:padding="@dimen/chat_date_margin"
+        android:text="Lisa wrote 20 min ago"
+        android:textColor="@color/chat_date_color"
+        android:textSize="@dimen/chat_date_text_size" />
+</RelativeLayout>
