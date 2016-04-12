@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by vika on 11.04.16.
  */
-public class Friend {
+public class ChatFriend {
     private int id;
     @SerializedName("full_name")
     private String name;

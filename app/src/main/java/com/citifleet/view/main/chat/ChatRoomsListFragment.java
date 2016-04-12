@@ -7,13 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.ChatFriend;
+import com.citifleet.model.ChatRoom;
 import com.citifleet.util.DividerItemDecoration;
 import com.citifleet.view.BaseFragment;
 
@@ -21,43 +21,36 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnTextChanged;
 
 /**
- * Created by vika on 11.04.16.
+ * Created by vika on 12.04.16.
  */
-public class FriendsListFragment extends BaseFragment implements FriendsListAdapter.OnItemClickListener, FriendsListPresenter.FriendsListView {
-    @Bind(R.id.searchField)
-    EditText searchField;
+public class ChatRoomsListFragment extends BaseFragment implements FriendsListAdapter.OnItemClickListener, ChatRoomsAdapter.OnItemClickListener, ChatRoomPresenter.ChatRoomsListView {
     @Bind(R.id.contactsList)
     RecyclerView contactsList;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
-    private FriendsListAdapter adapter;
-    private FriendsListPresenter presenter;
+    private ChatRoomsAdapter adapter;
+    private ChatRoomPresenter presenter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.friends_list_fragment, container, false);
         ButterKnife.bind(this, view);
-        adapter = new FriendsListAdapter(this);
+        adapter = new ChatRoomsAdapter(this);
         contactsList.setLayoutManager(new LinearLayoutManager(getContext()));
         contactsList.setAdapter(adapter);
         contactsList.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.white_list_divider));
         contactsList.setNestedScrollingEnabled(false);
-        presenter = new FriendsListPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
-        presenter.loadAllFriends();
+        presenter = new ChatRoomPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
+        presenter.loadAllChatRooms();
         return view;
     }
 
     @Override
     public void onItemClick(ChatFriend item) {
 
-    }
-    @OnTextChanged(R.id.searchField)
-    void onSearchTextChanged(CharSequence cs) {
-        adapter.getFilter().filter(cs);
     }
 
     @Override
@@ -86,9 +79,13 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
     }
 
     @Override
-    public void onFriendsLoaded(List<ChatFriend> friends) {
-        searchField.getText().clear();
-        adapter.setList(friends);
+    public void onChatRoomsListLoaded(List<ChatRoom> chatRooms) {
+        adapter.setList(chatRooms);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(ChatRoom item) {
+
     }
 }

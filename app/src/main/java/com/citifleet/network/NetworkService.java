@@ -4,8 +4,9 @@ import com.citifleet.model.AddContactsBody;
 import com.citifleet.model.Benefit;
 import com.citifleet.model.Car;
 import com.citifleet.model.CarOption;
+import com.citifleet.model.ChatFriend;
+import com.citifleet.model.ChatRoom;
 import com.citifleet.model.Document;
-import com.citifleet.model.Friend;
 import com.citifleet.model.FriendNearby;
 import com.citifleet.model.GeneralGood;
 import com.citifleet.model.JobOffer;
@@ -274,6 +275,11 @@ public interface NetworkService {
     @POST("reports/map/{id}/deny_report/")
     Call<Void> denyReport(@Path("id") int id);
 
-    @GET("chatfriends/")
-    Call<List<Friend>> getChatFriends();
+    @GET("chat/friends/")
+    Call<List<ChatFriend>> getChatFriends();
+
+    @GET("chat/rooms/")
+    Call<List<ChatRoom>> getChatRooms();
+
+
 }

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.citifleet.R;
-import com.citifleet.model.Friend;
+import com.citifleet.model.ChatFriend;
 import com.citifleet.util.CircleTransform;
 import com.squareup.picasso.Picasso;
 
@@ -25,14 +25,14 @@ import butterknife.ButterKnife;
  * Created by vika on 11.04.16.
  */
 public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.ViewHolder> implements Filterable {
-    private List<Friend> friendList = new ArrayList<Friend>();
-    private List<Friend> origFriendsList = new ArrayList<Friend>();
+    private List<ChatFriend> friendList = new ArrayList<ChatFriend>();
+    private List<ChatFriend> origFriendsList = new ArrayList<ChatFriend>();
 
     private OnItemClickListener listener;
     private ContactFilter filter;
 
     public interface OnItemClickListener {
-        void onItemClick(Friend item);
+        void onItemClick(ChatFriend item);
     }
 
     public FriendsListAdapter(OnItemClickListener listener) {
@@ -53,7 +53,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
         }
     }
 
-    public void setList(List<Friend> friendList) {
+    public void setList(List<ChatFriend> friendList) {
         this.friendList.clear();
         this.friendList.addAll(friendList);
         this.origFriendsList.clear();
@@ -69,7 +69,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Friend friend = friendList.get(position);
+        final ChatFriend friend = friendList.get(position);
         if (!TextUtils.isEmpty(friend.getPhoto())) {
             Picasso.with(holder.itemView.getContext()).load(friend.getPhoto()).transform(new CircleTransform()).fit().centerCrop().into(holder.friendImage);
         } else {
@@ -106,8 +106,8 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
                 results.values = origFriendsList;
                 results.count = origFriendsList.size();
             } else {
-                List<Friend> tempListItems = new ArrayList<Friend>();
-                for (Friend friend : origFriendsList) {
+                List<ChatFriend> tempListItems = new ArrayList<ChatFriend>();
+                for (ChatFriend friend : origFriendsList) {
                     if (friend.getName().toLowerCase().contains(constraint.toString().toLowerCase()))
                         tempListItems.add(friend);
                 }
@@ -119,7 +119,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            friendList = (List<Friend>) results.values;
+            friendList = (List<ChatFriend>) results.values;
             notifyDataSetChanged();
         }
 

@@ -12,22 +12,13 @@
         android:background="@color/benefits_background"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/searchField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:hint="@string/type_name" />
-
         <TextView
             android:id="@+id/contactsLbl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/searchField"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="@string/contacts"
+            android:text="@string/recent_chats"
             android:textAllCaps="true"
             android:textColor="@color/green_color_text" />
 
