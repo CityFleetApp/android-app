@@ -8,8 +8,10 @@ import java.util.List;
  * Created by vika on 12.04.16.
  */
 public class ChatRoom {
+    private int id;
     private String name;
     private String label;
+    @SerializedName("participants_info")
     private List<ChatFriend> participants;
     @SerializedName("last_message")
     private String lastMessage;
@@ -54,5 +56,13 @@ public class ChatRoom {
 
     public void setLastMessageTimestamp(String lastMessageTimestamp) {
         this.lastMessageTimestamp = lastMessageTimestamp;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

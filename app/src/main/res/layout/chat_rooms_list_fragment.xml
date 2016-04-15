@@ -30,7 +30,6 @@
             android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

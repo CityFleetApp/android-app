@@ -18,7 +18,6 @@ import retrofit2.Response;
 public class ChatRoomPresenter {
     private ChatRoomsListView view;
     private NetworkManager networkManager;
-    private List<ChatRoom> chatRoomList;
 
     public ChatRoomPresenter(ChatRoomsListView view, NetworkManager networkManager) {
         this.view = view;

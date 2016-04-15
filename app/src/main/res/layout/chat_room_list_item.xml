@@ -18,16 +18,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/chatImage"
-        android:paddingLeft="@dimen/friends_list_text_padding"
         android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:layout_toRightOf="@+id/chatImage"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/friends_list_text_padding">
 
         <TextView
             android:id="@+id/chatName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="kdkdkk kkk"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:textColor="@color/friend_list_text_color"
             android:textSize="@dimen/friend_list_name_size" />
 
@@ -35,17 +36,20 @@
             android:id="@+id/chatResentMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="123 456 789"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="2"
+            android:maxLines="2"
             android:textColor="@color/friend_list_text_color"
             android:textSize="@dimen/friend_list_phone_size" />
 
         <TextView
             android:id="@+id/chatResentMessageTime"
+            fontPath="@string/fontLight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nevada"
             android:layout_gravity="right"
-            fontPath = "@string/fontLight"
             android:textColor="@color/date_text_color"
             android:textSize="@dimen/date_text_label"
             tools:ignore="MissingPrefix" />

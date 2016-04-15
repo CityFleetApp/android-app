@@ -17,7 +17,11 @@ public class FriendsListPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new FriendsListFragment();
+        if (position == 0) {
+            return new FriendsListFragment();
+        } else {
+            return new ChatRoomsListFragment();
+        }
     }
 
     @Override

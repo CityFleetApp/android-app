@@ -36,12 +36,12 @@ public class ChatRoomsListFragment extends BaseFragment implements FriendsListAd
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.friends_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.chat_rooms_list_fragment, container, false);
         ButterKnife.bind(this, view);
         adapter = new ChatRoomsAdapter(this);
         contactsList.setLayoutManager(new LinearLayoutManager(getContext()));
         contactsList.setAdapter(adapter);
-        contactsList.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.white_list_divider));
+        contactsList.addItemDecoration(new DividerItemDecoration(getContext()));
         contactsList.setNestedScrollingEnabled(false);
         presenter = new ChatRoomPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
         presenter.loadAllChatRooms();

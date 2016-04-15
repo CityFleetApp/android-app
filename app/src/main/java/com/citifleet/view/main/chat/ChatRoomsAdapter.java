@@ -1,6 +1,7 @@
 package com.citifleet.view.main.chat;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,12 +71,17 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         }
         String chatNameString = chatName.substring(0, chatName.lastIndexOf(","));
         holder.chatName.setText(chatNameString);
-        holder.chatResentMessage.setText(chatRoom.getLastMessage());
+        if (!TextUtils.isEmpty(chatRoom.getLastMessage())) {
+            holder.chatResentMessage.setText(chatRoom.getLastMessage());
 //        Date date = new Date();
 //        date.setTime(Long.parseLong(chatRoom.getLastMessageTimestamp()));
 //        Calendar calendar = Calendar.getInstance();
 //        String dateTime="";
-        holder.chatResentMessageTime.setText(chatRoom.getLastMessageTimestamp());
+            holder.chatResentMessageTime.setText(chatRoom.getLastMessageTimestamp());
+        } else {
+            holder.chatResentMessage.setText(R.string.no_messages);
+            holder.chatResentMessageTime.setText("");
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

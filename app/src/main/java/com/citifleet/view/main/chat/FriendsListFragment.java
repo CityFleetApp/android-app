@@ -44,7 +44,7 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
         adapter = new FriendsListAdapter(this);
         contactsList.setLayoutManager(new LinearLayoutManager(getContext()));
         contactsList.setAdapter(adapter);
-        contactsList.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.white_list_divider));
+        contactsList.addItemDecoration(new DividerItemDecoration(getContext()));
         contactsList.setNestedScrollingEnabled(false);
         presenter = new FriendsListPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
         presenter.loadAllFriends();
@@ -55,6 +55,7 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
     public void onItemClick(ChatFriend item) {
 
     }
+
     @OnTextChanged(R.id.searchField)
     void onSearchTextChanged(CharSequence cs) {
         adapter.getFilter().filter(cs);

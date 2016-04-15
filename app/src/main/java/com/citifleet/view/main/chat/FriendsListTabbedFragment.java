@@ -40,8 +40,30 @@ public class FriendsListTabbedFragment extends BaseFragment {
         tabs.setupWithViewPager(viewPager);
         tabs.getTabAt(0).setIcon(ContextCompat.getDrawable(getContext(), R.drawable.user));
         tabs.getTabAt(1).setIcon(ContextCompat.getDrawable(getContext(), R.drawable.clock));
+        tabs.setOnTabSelectedListener(onTabSelectedListener);
         return view;
     }
+
+    private TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            if (tab.getPosition() == 0) {
+                title.setText(R.string.contacts);
+            } else {
+                title.setText(R.string.recent_chats);
+            }
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+
+        }
+    };
 
     @OnClick(R.id.backBtn)
     void onBackBtnClick() {
