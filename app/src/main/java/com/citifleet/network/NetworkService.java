@@ -281,5 +281,8 @@ public interface NetworkService {
     @GET("chat/rooms/")
     Call<List<ChatRoom>> getChatRooms();
 
+    @FormUrlEncoded
+    @POST("chat/rooms/")
+    Call<Object> createChatRoom(@Field("name") String name, @Field("participants") int[] participantsIds);
 
 }

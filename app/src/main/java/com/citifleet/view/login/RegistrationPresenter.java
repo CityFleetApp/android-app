@@ -35,7 +35,7 @@ public class RegistrationPresenter {
         public void onResponse(Call<LoginInfo> call, Response<LoginInfo> response) {
             view.stopLoading();
             if (response.isSuccess()) {
-                view.onSignUpSuccess(response.body().getToken());
+                view.onSignUpSuccess(response.body().getToken(),response.body().getId());
             } else {
                 view.onSignUpFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
@@ -50,7 +50,7 @@ public class RegistrationPresenter {
     };
 
     public interface RegistrationView {
-        void onSignUpSuccess(String token);
+        void onSignUpSuccess(String token, int id);
 
         void startLoading();
 

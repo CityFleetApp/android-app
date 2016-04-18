@@ -18,7 +18,6 @@ import retrofit2.Response;
 public class FriendsListPresenter {
     private FriendsListView view;
     private NetworkManager networkManager;
-    private List<ChatFriend> friendList;
 
     public FriendsListPresenter(FriendsListView view, NetworkManager networkManager) {
         this.view = view;
@@ -36,6 +35,9 @@ public class FriendsListPresenter {
         }
     }
 
+    public void createChatRoom(int participantId) {
+
+    }
 
     Callback<List<ChatFriend>> friendCallback = new Callback<List<ChatFriend>>() {
         @Override

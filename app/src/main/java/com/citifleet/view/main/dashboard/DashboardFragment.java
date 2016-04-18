@@ -40,7 +40,7 @@ import com.citifleet.view.BaseFragment;
 import com.citifleet.view.login.LoginFlowActivity;
 import com.citifleet.view.main.HelpFragment;
 import com.citifleet.view.main.benefits.BenefitsFragment;
-import com.citifleet.view.main.chat.FriendsListTabbedFragment;
+import com.citifleet.view.main.chat.ChatActivity;
 import com.citifleet.view.main.dashboard.DashboardPresenter.DashboardView;
 import com.citifleet.view.main.docmanagement.DocManagementFragment;
 import com.citifleet.view.main.legalaid.LegalAidFragment;
@@ -202,7 +202,9 @@ public class DashboardFragment extends BaseFragment implements DashboardView {
 
     @OnClick(R.id.chatBtn)
     void onChatBtnBtnClick() {
-        ((BaseActivity) getActivity()).changeFragment(new FriendsListTabbedFragment(), true);
+        //  ((BaseActivity) getActivity()).changeFragment(new FriendsListTabbedFragment(), true);
+        Intent i = new Intent(getActivity(), ChatActivity.class);
+        getActivity().startActivity(i);
     }
 
     @OnClick(R.id.benefitsBtn)

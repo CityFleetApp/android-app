@@ -12,7 +12,7 @@ import retrofit2.Response;
 
 public class LoginPresenter {
     private NetworkManager networkManager;
-    private LoginView      view;
+    private LoginView view;
 
     public LoginPresenter(NetworkManager networkManager, LoginView loginView) {
         this.networkManager = networkManager;
@@ -34,7 +34,7 @@ public class LoginPresenter {
         public void onResponse(Call<LoginInfo> call, Response<LoginInfo> response) {
             view.stopLoading();
             if (response.isSuccess()) {
-                view.onLoginSuccess(response.body().getToken());
+                view.onLoginSuccess(response.body().getToken(), response.body().getId());
             } else {
                 view.onLoginFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
@@ -49,7 +49,7 @@ public class LoginPresenter {
     };
 
     public interface LoginView {
-        void onLoginSuccess(String token);
+        void onLoginSuccess(String token, int id);
 
         void startLoading();
 

@@ -13,6 +13,16 @@ public class PrefUtil {
         SharedPreferences settings = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
         settings.edit().putString(Constants.PREFS_TOKEN, token).commit();
     }
+
+    public static void setId(Context context, int id){
+        SharedPreferences settings = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
+        settings.edit().putInt(Constants.PREFS_ID, id).commit();
+    }
+
+    public static int getId(Context context){
+        SharedPreferences settings = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
+        return settings.getInt(Constants.PREFS_ID, 0);
+    }
 //    public static String getGcmToken(Context context) {
 //        SharedPreferences settings = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
 //        return settings.getString(Constants.PREFS_GCM_TOKEN, null);

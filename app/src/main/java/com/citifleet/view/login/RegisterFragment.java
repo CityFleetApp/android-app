@@ -128,8 +128,9 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
     };
 
     @Override
-    public void onSignUpSuccess(String token) {
+    public void onSignUpSuccess(String token,int id) {
         PrefUtil.setToken(getContext(), token);
+        PrefUtil.setId(getContext(), id);
         Intent intent = new Intent(getActivity(), RegistrationIntentService.class);
         intent.putExtra(Constants.GCM_REGISTRATION_TYPE_TAG, GcmRegistrationTypes.REGISTER);
         getActivity().startService(intent);

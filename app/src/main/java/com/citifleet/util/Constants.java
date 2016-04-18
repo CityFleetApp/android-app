@@ -3,6 +3,7 @@ package com.citifleet.util;
 public class Constants {
     public static final String PREFS_NAME = "UserPrefs";
     public static final String PREFS_TOKEN = "token";
+    public static final String PREFS_ID = "id";
     public static final float ZOOM_LEVEL = 16.0f;
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
@@ -42,6 +43,7 @@ public class Constants {
     public static final String INPUT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String OUTPUT_TIME_FORMAT = "hh:mm aa";
     public static final String OUTPUT_DATE_FORMAT = "MM/dd/yyyy";
+    public static final String CHAT_DATETIME_FORMAT = "hh:mm aa dd/MM/yyyy";
     public static final String JOB_OFFER_TAG = "job_offer_tag";
     public static final String CAR_RENT_SALE_TAG = "car_rent_sale_tag";
     public static final String GENERAL_GOODS_TAG = "general_goods_tag";

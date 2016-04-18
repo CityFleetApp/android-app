@@ -77,8 +77,9 @@ public class LoginFragment extends Fragment implements Validator.ValidationListe
     }
 
     @Override
-    public void onLoginSuccess(String token) {
+    public void onLoginSuccess(String token, int id) {
         PrefUtil.setToken(getContext(), token);
+        PrefUtil.setId(getContext(), id);
         Intent intent = new Intent(getActivity(), RegistrationIntentService.class);
         intent.putExtra(Constants.GCM_REGISTRATION_TYPE_TAG, GcmRegistrationTypes.REGISTER);
         getActivity().startService(intent);
