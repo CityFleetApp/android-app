@@ -17,7 +17,7 @@ import retrofit2.Response;
 
 public class DashboardPresenter {
     private NetworkManager networkManager;
-    private DashboardView  view;
+    private DashboardView view;
 
     public DashboardPresenter(NetworkManager networkManager, DashboardView view) {
         this.networkManager = networkManager;
@@ -47,7 +47,7 @@ public class DashboardPresenter {
         }
     }
 
-    Callback<UserInfo>     getUserInfoCallback = new Callback<UserInfo>() {
+    Callback<UserInfo> getUserInfoCallback = new Callback<UserInfo>() {
         @Override
         public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
             view.stopLoading();
@@ -61,7 +61,9 @@ public class DashboardPresenter {
 
         @Override
         public void onFailure(Call<UserInfo> call, Throwable t) {
-            Log.e(DashboardPresenter.class.getName(), t.getMessage());
+            if (t.getMessage() != null) {
+                Log.e(DashboardPresenter.class.getName(), t.getMessage());
+            }
             view.stopLoading();
             view.onFailure(t.getMessage());
         }

@@ -11,45 +11,53 @@
         android:id="@+id/chatList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        app:stackFromEnd="true" />
+        android:layout_below="@+id/toolbar" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
     <RelativeLayout
+        android:id="@+id/sendLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
         android:background="@color/black_transparent">
 
         <ImageView
             android:id="@+id/cameraBtn"
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:padding="@dimen/chat_image_button_padding"
             android:src="@drawable/camera" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/okBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:padding="@dimen/chat_image_button_padding"
+            android:background="@android:color/transparent"
             android:src="@drawable/approve" />
 
         <EditText
             android:id="@+id/newMessageEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/cameraBtn"
             android:layout_centerVertical="true"
-            android:hint="@string/enter_your_message"
-            android:textColor="@android:color/white"
-            android:singleLine="true"
-            android:textSize="@dimen/new_message_text_size"
-            android:textColorHint="@android:color/white"
             android:layout_toLeftOf="@+id/okBtn"
-            android:background="@android:color/transparent"/>
+            android:layout_toRightOf="@+id/cameraBtn"
+            android:background="@android:color/transparent"
+            android:hint="@string/enter_your_message"
+            android:singleLine="true"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textSize="@dimen/new_message_text_size" />
     </RelativeLayout>
 </RelativeLayout>

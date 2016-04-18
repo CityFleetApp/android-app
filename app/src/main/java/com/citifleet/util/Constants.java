@@ -52,4 +52,5 @@ public class Constants {
     public static final String GCM_REGISTRATION_TYPE_TAG = "gcm_reg_type_tag";
     public static final String PREFS_SEND_TOKEN_TO_SERVER = "prefs_send_token_to_server";
     public static final int DIALOG_ANIMATION_DURATION = 150;
+    public static final String CHAT_ID_TAG = "chat_id_tag";
 }

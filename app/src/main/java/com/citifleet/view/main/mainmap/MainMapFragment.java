@@ -35,6 +35,7 @@ import com.citifleet.util.ReportDeletedEvent;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 import com.citifleet.view.main.addfriends.AddFriendsFragment;
+import com.citifleet.view.main.chat.ChatActivity;
 import com.citifleet.view.main.dashboard.DashboardFragment;
 import com.citifleet.view.main.marketplace.MarketPlaceFragment;
 import com.citifleet.view.main.notifications.NotificationsFragment;
@@ -196,6 +197,10 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     protected void onReportConfirmDenyClicked(int reportId, boolean isConfirmed) {
         presenter.confirmDenyReport(reportId, isConfirmed);
+    }
+
+    protected void onChatFriend(int friendId) {
+        presenter.createChatRoomWithFriend(friendId);
     }
 
     protected void buildLocationSettingsRequest() {
@@ -628,6 +633,13 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                 addFriendMarkerToMap(friendNearby);
             }
         }
+    }
+
+    @Override
+    public void onChatRoomCreated(int roomId) {
+        Intent i = new Intent(getActivity(), ChatActivity.class);
+        i.putExtra(Constants.CHAT_ID_TAG, roomId);
+        getActivity().startActivity(i);
     }
 
 

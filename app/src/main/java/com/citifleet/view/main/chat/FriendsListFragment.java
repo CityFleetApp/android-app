@@ -15,6 +15,7 @@ import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.ChatFriend;
 import com.citifleet.util.DividerItemDecoration;
+import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
 
     @Override
     public void onItemClick(ChatFriend item) {
-
+        presenter.createChatRoom(item.getId());
     }
 
     @OnTextChanged(R.id.searchField)
@@ -91,5 +92,10 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
         searchField.getText().clear();
         adapter.setList(friends);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onChatRoomCreated(int roomId) {
+        ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(getId()), true);
     }
 }

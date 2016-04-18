@@ -2,11 +2,13 @@ package com.citifleet.view.main.mainmap;
 
 import android.util.Log;
 
+import com.citifleet.model.ChatRoom;
 import com.citifleet.model.FriendNearby;
 import com.citifleet.model.Report;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 import com.citifleet.view.login.LoginPresenter;
+import com.citifleet.view.main.chat.FriendsListPresenter;
 
 import java.util.List;
 
@@ -42,6 +44,35 @@ public class MainMapPresenter {
             view.onNetworkError();
         }
     }
+
+    public void createChatRoomWithFriend(int friendId) {
+        if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
+            Call<ChatRoom> call = networkManager.getNetworkClient().createChatRoom(String.valueOf(friendId), new int[]{friendId});
+            call.enqueue(newChatRoomCallback);
+        } else {
+            view.onNetworkError();
+        }
+    }
+
+    Callback<ChatRoom> newChatRoomCallback = new Callback<ChatRoom>() {
+        @Override
+        public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
+            view.stopLoading();
+            if (response.isSuccess()) {
+                view.onChatRoomCreated(response.body().getId());
+            } else {
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ChatRoom> call, Throwable t) {
+            Log.e(FriendsListPresenter.class.getName(), t.getMessage());
+            view.stopLoading();
+            view.onFailure(t.getMessage());
+        }
+    };
 
     public void confirmDenyReport(int reportId, boolean isConfirmReport) {
         if (networkManager.isConnectedOrConnecting()) {
@@ -153,5 +184,7 @@ public class MainMapPresenter {
         void onReportsNearbyLoaded(List<Report> reportList);
 
         void onFriendsNearbyLoaded(List<FriendNearby> friendList);
+
+        void onChatRoomCreated(int roomId);
     }
 }

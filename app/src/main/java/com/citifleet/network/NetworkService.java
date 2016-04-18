@@ -5,6 +5,7 @@ import com.citifleet.model.Benefit;
 import com.citifleet.model.Car;
 import com.citifleet.model.CarOption;
 import com.citifleet.model.ChatFriend;
+import com.citifleet.model.ChatMessage;
 import com.citifleet.model.ChatRoom;
 import com.citifleet.model.Document;
 import com.citifleet.model.FriendNearby;
@@ -283,6 +284,8 @@ public interface NetworkService {
 
     @FormUrlEncoded
     @POST("chat/rooms/")
-    Call<Object> createChatRoom(@Field("name") String name, @Field("participants") int[] participantsIds);
+    Call<ChatRoom> createChatRoom(@Field("name") String name, @Field("participants") int[] participantsIds);
 
+    @GET("chat/rooms/{id}/messages/")
+    Call<List<ChatMessage>> getChatRoomHistory(@Path("id") int roomId);
 }

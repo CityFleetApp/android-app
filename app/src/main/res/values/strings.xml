@@ -228,6 +228,7 @@
     <string name="type_name">Type a name</string>
     <string name="recent_chats">Recent chats</string>
     <string name="no_messages">No messages</string>
+    <string name="chatting">Chatting</string>
 
     <string-array name="pick_image_options">
         <item>Take Photo</item>

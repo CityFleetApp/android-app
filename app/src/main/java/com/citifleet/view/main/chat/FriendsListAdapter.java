@@ -73,7 +73,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
         if (!TextUtils.isEmpty(friend.getPhoto())) {
             Picasso.with(holder.itemView.getContext()).load(friend.getPhoto()).transform(new CircleTransform()).fit().centerCrop().into(holder.friendImage);
         } else {
-            Picasso.with(holder.itemView.getContext()).load(R.drawable.painting).transform(new CircleTransform()).fit().centerCrop().into(holder.friendImage);
+            Picasso.with(holder.itemView.getContext()).load(R.drawable.default_large).transform(new CircleTransform()).fit().centerCrop().into(holder.friendImage);
         }
         holder.friendName.setText(friend.getName());
         holder.friendNumber.setText(friend.getPhoneNumber());

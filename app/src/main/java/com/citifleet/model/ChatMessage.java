@@ -1,20 +1,16 @@
 package com.citifleet.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
- * Created by vika on 15.04.16.
+ * Created by vika on 18.04.16.
  */
 public class ChatMessage {
-    private String method=ChatMessageTypes.POST_MESSAGE.getName();
     private String text;
     private int room;
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
+    private String created;
+    @SerializedName("author_info")
+    private ChatFriend author;
 
     public String getText() {
         return text;
@@ -30,5 +26,21 @@ public class ChatMessage {
 
     public void setRoom(int room) {
         this.room = room;
+    }
+
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public ChatFriend getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(ChatFriend author) {
+        this.author = author;
     }
 }

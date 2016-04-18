@@ -12,9 +12,9 @@ import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
-import com.citifleet.model.ChatFriend;
 import com.citifleet.model.ChatRoom;
 import com.citifleet.util.DividerItemDecoration;
+import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 
 import java.util.List;
@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 /**
  * Created by vika on 12.04.16.
  */
-public class ChatRoomsListFragment extends BaseFragment implements FriendsListAdapter.OnItemClickListener, ChatRoomsAdapter.OnItemClickListener, ChatRoomPresenter.ChatRoomsListView {
+public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdapter.OnItemClickListener, ChatRoomPresenter.ChatRoomsListView {
     @Bind(R.id.contactsList)
     RecyclerView contactsList;
     @Bind(R.id.progressBar)
@@ -49,18 +49,22 @@ public class ChatRoomsListFragment extends BaseFragment implements FriendsListAd
     }
 
     @Override
-    public void onItemClick(ChatFriend item) {
-
+    public void onItemClick(ChatRoom item) {
+        ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(item.getId()), true);
     }
 
     @Override
     public void startLoading() {
-        progressBar.setVisibility(View.VISIBLE);
+        if (isAdded()) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void stopLoading() {
-        progressBar.setVisibility(View.GONE);
+        if (isAdded()) {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -84,8 +88,10 @@ public class ChatRoomsListFragment extends BaseFragment implements FriendsListAd
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onItemClick(ChatRoom item) {
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

@@ -6,15 +6,24 @@ import android.util.Log;
 
 import com.citifleet.R;
 import com.citifleet.model.ChatMessage;
+import com.citifleet.model.ChatMessageTypes;
+import com.citifleet.util.Constants;
+import com.citifleet.util.NewMessageEvent;
+import com.citifleet.util.PostMessageEvent;
 import com.citifleet.util.PrefUtil;
 import com.citifleet.view.BaseActivity;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketExtension;
 import com.neovisionaries.ws.client.WebSocketFactory;
 import com.neovisionaries.ws.client.WebSocketFrame;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,17 +47,17 @@ public class ChatActivity extends BaseActivity {
         } catch (WebSocketException e) {
             e.printStackTrace();
         }
-
+        EventBus.getDefault().register(this);
+        int roomId = getIntent().getIntExtra(Constants.CHAT_ID_TAG, 0);
+        if (roomId != 0) {
+            changeFragment(ChatDetailFragment.getInstance(roomId), true);
+        }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setText("text");
-        chatMessage.setRoom(6);
+    @Subscribe
+    public void onEvent(PostMessageEvent event) {
         Gson gson = new Gson();
-        String message = gson.toJson(chatMessage);
+        String message = gson.toJson(event.getChatMessageToSend());
         webSocket.sendText(message);
     }
 
@@ -58,6 +67,7 @@ public class ChatActivity extends BaseActivity {
         if (webSocket != null) {
             webSocket.disconnect();
         }
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -67,10 +77,24 @@ public class ChatActivity extends BaseActivity {
 
     private WebSocket connectToWebSocket() throws IOException, WebSocketException {
         return new WebSocketFactory()
-                .createSocket(SERVER+ PrefUtil.getToken(this))
+                .createSocket(SERVER + PrefUtil.getToken(this))
                 .addListener(webSocketListener)
                 .addExtension(WebSocketExtension.PERMESSAGE_DEFLATE)
                 .connectAsynchronously();
+    }
+
+    private void onMessageReceived(String message) {
+        Gson gson = new Gson();
+        JsonObject object = new JsonParser().parse(message).getAsJsonObject();
+        if (object.has("type")) {
+            String method = object.get("type").getAsString();
+            if (method.equals(ChatMessageTypes.RECEIVE_MESSAGE.getName())) {
+                ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
+                EventBus.getDefault().post(new NewMessageEvent(chatMessage));
+            } else {
+                //TODO
+            }
+        }
     }
 
     private WebSocketAdapter webSocketListener = new WebSocketAdapter() {
@@ -95,7 +119,7 @@ public class ChatActivity extends BaseActivity {
         @Override
         public void onTextMessage(WebSocket websocket, String text) throws Exception {
             super.onTextMessage(websocket, text);
-            Log.d("TAG", "message: " + text);
+            onMessageReceived(text);
         }
 
         @Override

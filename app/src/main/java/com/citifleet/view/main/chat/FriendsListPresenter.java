@@ -3,6 +3,7 @@ package com.citifleet.view.main.chat;
 import android.util.Log;
 
 import com.citifleet.model.ChatFriend;
+import com.citifleet.model.ChatRoom;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 
@@ -36,9 +37,33 @@ public class FriendsListPresenter {
     }
 
     public void createChatRoom(int participantId) {
-
+        if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
+            Call<ChatRoom> call = networkManager.getNetworkClient().createChatRoom(String.valueOf(participantId), new int[]{participantId});
+            call.enqueue(newChatRoomCallback);
+        } else {
+            view.onNetworkError();
+        }
     }
 
+    Callback<ChatRoom> newChatRoomCallback = new Callback<ChatRoom>() {
+        @Override
+        public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
+            view.stopLoading();
+            if (response.isSuccess()) {
+                view.onChatRoomCreated(response.body().getId());
+            } else {
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ChatRoom> call, Throwable t) {
+            Log.e(FriendsListPresenter.class.getName(), t.getMessage());
+            view.stopLoading();
+            view.onFailure(t.getMessage());
+        }
+    };
     Callback<List<ChatFriend>> friendCallback = new Callback<List<ChatFriend>>() {
         @Override
         public void onResponse(Call<List<ChatFriend>> call, Response<List<ChatFriend>> response) {
@@ -68,5 +93,7 @@ public class FriendsListPresenter {
         void onNetworkError();
 
         void onFriendsLoaded(List<ChatFriend> friends);
+
+        void onChatRoomCreated(int roomId);
     }
 }

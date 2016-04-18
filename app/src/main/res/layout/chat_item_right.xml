@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingLeft="@dimen/chat_item_margin_right"
     android:paddingRight="@dimen/chat_item_margin_left"
     android:paddingTop="@dimen/chat_item_margin_top">
@@ -11,7 +12,6 @@
         android:layout_width="@dimen/chat_image_height"
         android:layout_height="@dimen/chat_image_height"
         android:layout_alignParentRight="true"
-        android:background="@color/benefit_name_background"
         android:scaleType="centerCrop" />
 
     <TextView
@@ -19,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/chat_message_margin"
-        android:layout_marginTop="@dimen/chat_message_margin_top"
         android:layout_toLeftOf="@+id/authorImage"
         android:background="@drawable/bubble_green"
         android:gravity="center_vertical|left"
@@ -34,8 +33,13 @@
         android:layout_alignLeft="@+id/chatMessage"
         android:layout_below="@+id/chatMessage"
         android:gravity="left"
-        android:padding="@dimen/chat_date_margin"
+        android:paddingLeft="@dimen/chat_date_margin"
+        android:paddingRight="@dimen/chat_date_margin"
+        android:paddingBottom="@dimen/chat_date_margin"
+        android:paddingTop= "5dp"
+        fontPath="@string/fontLight"
         android:text="Lisa wrote 20 min ago"
         android:textColor="@color/chat_date_color"
-        android:textSize="@dimen/chat_date_text_size" />
+        android:textSize="@dimen/chat_date_text_size"
+        tools:ignore="MissingPrefix" />
 </RelativeLayout>

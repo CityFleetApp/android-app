@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by vika on 07.04.16.
@@ -73,11 +74,16 @@ public class NearbyFriendMapDialogView {
         }
     }
 
+    @OnClick(R.id.chatBtn)
+    public void onChatBtnClicked() {
+        fragment.onChatFriend(friendNearby.getId());
+    }
+
     public void show(FriendNearby friendNearby) {
         this.friendNearby = friendNearby;
         if (!TextUtils.isEmpty(friendNearby.getAvatarUrl())) {
             Picasso.with(fragment.getContext()).load(friendNearby.getAvatarUrl()).transform(new CircleTransform()).fit().centerCrop().into(userImage);
-        } else{
+        } else {
             Picasso.with(fragment.getContext()).load(R.drawable.painting).transform(new CircleTransform()).fit().centerCrop().into(userImage);
         }
         userName.setText(friendNearby.getFullName());

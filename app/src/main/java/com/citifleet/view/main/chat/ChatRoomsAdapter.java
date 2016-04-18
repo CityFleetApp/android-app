@@ -88,13 +88,17 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         for (ChatFriend chatFriend : chatRoom.getParticipants()) {
             if (chatFriend.getId() != PrefUtil.getId(holder.itemView.getContext())) {
                 chatName.append(chatFriend.getName()).append(", ");
-                String userPhoto = TextUtils.isEmpty(chatFriend.getPhoto())?"empty":chatFriend.getPhoto();
-                images.add(userPhoto);
+                images.add(chatFriend.getPhoto());
             }
         }
         holder.imageTag = chatRoom.getName() + chatRoom.getId();
-        Picasso.with(holder.itemView.getContext()).load(images.get(0)).error(R.drawable.painting_big).transform(new CircleTransform()).
-                tag(holder.imageTag).into(holder.chatImage);
+        if (TextUtils.isEmpty(images.get(0))) {
+            Picasso.with(holder.itemView.getContext()).load(R.drawable.default_large).transform(new CircleTransform()).
+                    tag(holder.imageTag).into(holder.chatImage);
+        } else {
+            Picasso.with(holder.itemView.getContext()).load(images.get(0)).transform(new CircleTransform()).
+                    tag(holder.imageTag).into(holder.chatImage);
+        }
         String chatNameString = chatName.substring(0, chatName.lastIndexOf(","));
         holder.chatName.setText(chatNameString);
         if (!TextUtils.isEmpty(chatRoom.getLastMessage())) {
