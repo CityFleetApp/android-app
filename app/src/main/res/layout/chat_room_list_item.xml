@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/friend_list_margin_left"
     android:paddingTop="@dimen/friend_list_margin_top">
 
-    <ImageView
+    <com.citifleet.util.ChatRoomImageView
         android:id="@+id/chatImage"
         android:layout_width="@dimen/friends_list_image_height"
         android:layout_height="@dimen/friends_list_image_height"
