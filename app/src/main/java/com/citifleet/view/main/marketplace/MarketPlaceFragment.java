@@ -7,11 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
-import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,7 +60,7 @@ public class MarketPlaceFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
-        refWatcher.watch(this);
+//        RefWatcher refWatcher = CitiFleetApp.getInstance().getRefWatcher();
+//        refWatcher.watch(this);
     }
 }
