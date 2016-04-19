@@ -50,7 +50,9 @@ public class ChatActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         int roomId = getIntent().getIntExtra(Constants.CHAT_ID_TAG, 0);
         if (roomId != 0) {
-            changeFragment(ChatDetailFragment.getInstance(roomId), true);
+            changeFragment(ChatDetailFragment.getInstance(roomId), false);
+        } else {
+            changeFragment(new FriendsListTabbedFragment(), false);
         }
     }
 
@@ -72,7 +74,7 @@ public class ChatActivity extends BaseActivity {
 
     @Override
     protected Fragment getInitFragment() {
-        return new FriendsListTabbedFragment();
+        return null;
     }
 
     private WebSocket connectToWebSocket() throws IOException, WebSocketException {

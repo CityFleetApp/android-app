@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:textColor="@color/date_text_color"
-            android:textSize="@dimen/date_text_label"
+            android:textSize="@dimen/chat_date_text_size"
             tools:ignore="MissingPrefix" />
     </LinearLayout>
 

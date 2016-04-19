@@ -84,7 +84,7 @@ public class NearbyFriendMapDialogView {
         if (!TextUtils.isEmpty(friendNearby.getAvatarUrl())) {
             Picasso.with(fragment.getContext()).load(friendNearby.getAvatarUrl()).transform(new CircleTransform()).fit().centerCrop().into(userImage);
         } else {
-            Picasso.with(fragment.getContext()).load(R.drawable.painting).transform(new CircleTransform()).fit().centerCrop().into(userImage);
+            Picasso.with(fragment.getContext()).load(R.drawable.default_large).transform(new CircleTransform()).fit().centerCrop().into(userImage);
         }
         userName.setText(friendNearby.getFullName());
         if (nearFriendDialog.getVisibility() == View.GONE) {

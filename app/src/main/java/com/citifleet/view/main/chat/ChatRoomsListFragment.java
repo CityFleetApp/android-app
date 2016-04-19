@@ -14,8 +14,12 @@ import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.ChatRoom;
 import com.citifleet.util.DividerItemDecoration;
+import com.citifleet.util.NewMessageEvent;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -38,13 +42,15 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chat_rooms_list_fragment, container, false);
         ButterKnife.bind(this, view);
-        adapter = new ChatRoomsAdapter(this);
+        if(adapter==null) {
+            adapter = new ChatRoomsAdapter(this);
+            presenter = new ChatRoomPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
+            presenter.loadAllChatRooms();
+        }
         contactsList.setLayoutManager(new LinearLayoutManager(getContext()));
         contactsList.setAdapter(adapter);
         contactsList.addItemDecoration(new DividerItemDecoration(getContext()));
         contactsList.setNestedScrollingEnabled(false);
-        presenter = new ChatRoomPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
-        presenter.loadAllChatRooms();
         return view;
     }
 
@@ -58,6 +64,28 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
         if (isAdded()) {
             progressBar.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(final NewMessageEvent event) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.onNewMessage(event.getChatMessage());
+            }
+        });
     }
 
     @Override

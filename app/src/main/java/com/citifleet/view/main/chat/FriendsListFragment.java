@@ -42,13 +42,15 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.friends_list_fragment, container, false);
         ButterKnife.bind(this, view);
-        adapter = new FriendsListAdapter(this);
+        if (adapter == null) {
+            adapter = new FriendsListAdapter(this);
+            presenter = new FriendsListPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
+            presenter.loadAllFriends();
+        }
         contactsList.setLayoutManager(new LinearLayoutManager(getContext()));
         contactsList.setAdapter(adapter);
         contactsList.addItemDecoration(new DividerItemDecoration(getContext()));
         contactsList.setNestedScrollingEnabled(false);
-        presenter = new FriendsListPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
-        presenter.loadAllFriends();
         return view;
     }
 

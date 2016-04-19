@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.citifleet.R;
 import com.citifleet.model.ChatFriend;
+import com.citifleet.model.ChatMessage;
 import com.citifleet.model.ChatRoom;
 import com.citifleet.util.CircleTransform;
 import com.citifleet.util.Constants;
@@ -60,6 +61,23 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         }
 
 
+    }
+
+    public void onNewMessage(ChatMessage chatMessage) {
+        ChatRoom chatRoomWithNewMessage = null;
+        for (ChatRoom chatRoom : chatList) {
+            if (chatRoom.getId() == chatMessage.getRoom()) {
+                chatRoomWithNewMessage = chatRoom;
+                chatRoom.setLastMessage(chatMessage.getText());
+                chatRoom.setLastMessageTimestamp(chatMessage.getCreated());
+                break;
+            }
+        }
+        if (chatRoomWithNewMessage != null) {
+            chatList.remove(chatRoomWithNewMessage);
+            chatList.add(0, chatRoomWithNewMessage);
+        }
+        notifyDataSetChanged();
     }
 
     public void setList(List<ChatRoom> chatList) {
