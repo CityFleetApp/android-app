@@ -63,6 +63,11 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
 
     }
 
+    public void onNewChatRoom(ChatRoom chatRoom) {
+        chatList.add(0, chatRoom);
+        notifyDataSetChanged();
+    }
+
     public void onNewMessage(ChatMessage chatMessage) {
         ChatRoom chatRoomWithNewMessage = null;
         for (ChatRoom chatRoom : chatList) {

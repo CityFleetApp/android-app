@@ -17,10 +17,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/friendImage"
-        android:paddingLeft="@dimen/friends_list_text_padding"
+        android:layout_toLeftOf="@+id/checkbox"
         android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:layout_toRightOf="@+id/friendImage"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/friends_list_text_padding">
 
         <TextView
             android:id="@+id/friendName"
@@ -37,14 +38,13 @@
             android:text="123 456 789"
             android:textColor="@color/friend_list_text_color"
             android:textSize="@dimen/friend_list_phone_size" />
-
-        <!--<TextView-->
-        <!--android:id="@+id/friendLocation"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Nevada"-->
-        <!--android:textColor="@color/friend_list_text_color"-->
-        <!--android:textSize="@dimen/friend_list_phone_size" />-->
     </LinearLayout>
 
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
 </RelativeLayout>

@@ -2,14 +2,15 @@ package com.citifleet.view.main.chat;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
@@ -19,27 +20,29 @@ import com.citifleet.util.DividerItemDecoration;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 /**
- * Created by vika on 11.04.16.
+ * Created by vika on 19.04.16.
  */
-public class FriendsListFragment extends BaseFragment implements FriendsListAdapter.OnItemClickListener, FriendsListPresenter.FriendsListView {
+public class SelectFriendsListFragment extends BaseFragment implements SelectFriendsListAdapter.OnItemClickListener, FriendsListPresenter.FriendsListView {
     @Bind(R.id.searchField)
     EditText searchField;
     @Bind(R.id.contactsList)
     RecyclerView contactsList;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
-    @Bind(R.id.toolbar)
-    AppBarLayout toolbar;
-    private FriendsListAdapter adapter;
+    @Bind(R.id.title)
+    TextView title;
+    @Bind(R.id.okBtn)
+    ImageButton okBtn;
+    private SelectFriendsListAdapter adapter;
     private FriendsListPresenter presenter;
 
     @Nullable
@@ -47,9 +50,9 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.friends_list_fragment, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setVisibility(View.GONE);
+        searchField.setVisibility(View.GONE);
         if (adapter == null) {
-            adapter = new FriendsListAdapter(this);
+            adapter = new SelectFriendsListAdapter(this);
             presenter = new FriendsListPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
             presenter.loadAllFriends();
         }
@@ -57,14 +60,31 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
         contactsList.setAdapter(adapter);
         contactsList.addItemDecoration(new DividerItemDecoration(getContext()));
         contactsList.setNestedScrollingEnabled(false);
+        title.setText(getString(R.string.create_chat_room));
+        okBtn.setVisibility(View.INVISIBLE);
         return view;
     }
 
+    @OnClick(R.id.backBtn)
+    void onBackBtnClick() {
+        getActivity().onBackPressed();
+    }
+
+    @OnClick(R.id.okBtn)
+    void onOkBtnClick() {
+        Set<Integer> participantIds = adapter.getSelectedItemsIds();
+        ((ChatActivity) getActivity()).createChatRoomAndOpen(participantIds);
+    }
+
     @Override
-    public void onItemClick(ChatFriend item) {
-        Set<Integer> set = new LinkedHashSet<Integer>();
-        set.add(item.getId());
-        ((ChatActivity)   getActivity()).createChatRoomAndOpen(set);
+    public void onSelectionCountChanged(int count) {
+        if (count == 0) {
+            okBtn.setVisibility(View.INVISIBLE);
+            title.setText(getString(R.string.create_chat_room));
+        } else {
+            okBtn.setVisibility(View.VISIBLE);
+            title.setText(getString(R.string.selected, count));
+        }
     }
 
     @OnTextChanged(R.id.searchField)
@@ -106,6 +126,6 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
 
     @Override
     public void onChatRoomCreated(int roomId) {
-        ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(roomId), true);
+        ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(getId()), true);
     }
 }

@@ -229,6 +229,8 @@
     <string name="recent_chats">Recent chats</string>
     <string name="no_messages">No messages</string>
     <string name="chatting">Chatting</string>
+    <string name="create_chat_room">Create chat room</string>
+    <string name="selected">%1$s selected</string>
 
     <string-array name="pick_image_options">
         <item>Take Photo</item>

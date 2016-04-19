@@ -15,6 +15,7 @@ import com.citifleet.R;
 import com.citifleet.model.ChatRoom;
 import com.citifleet.util.DividerItemDecoration;
 import com.citifleet.util.NewMessageEvent;
+import com.citifleet.util.RoomInvitationEvent;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 
@@ -25,6 +26,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by vika on 12.04.16.
@@ -42,7 +44,7 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chat_rooms_list_fragment, container, false);
         ButterKnife.bind(this, view);
-        if(adapter==null) {
+        if (adapter == null) {
             adapter = new ChatRoomsAdapter(this);
             presenter = new ChatRoomPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
             presenter.loadAllChatRooms();
@@ -52,6 +54,11 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
         contactsList.addItemDecoration(new DividerItemDecoration(getContext()));
         contactsList.setNestedScrollingEnabled(false);
         return view;
+    }
+
+    @OnClick(R.id.newChatRoomBtn)
+    public void onNewChatRoomBtnClicked() {
+        ((BaseActivity) (getActivity())).changeFragment(new SelectFriendsListFragment(), false);
     }
 
     @Override
@@ -84,6 +91,16 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
             @Override
             public void run() {
                 adapter.onNewMessage(event.getChatMessage());
+            }
+        });
+    }
+
+    @Subscribe
+    public void onEvent(final RoomInvitationEvent event){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.onNewChatRoom(event.getChatRoom());
             }
         });
     }

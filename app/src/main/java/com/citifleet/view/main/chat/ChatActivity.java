@@ -3,14 +3,22 @@ package com.citifleet.view.main.chat;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.ChatMessage;
 import com.citifleet.model.ChatMessageTypes;
+import com.citifleet.model.ChatRoom;
+import com.citifleet.network.NetworkErrorUtil;
+import com.citifleet.network.NetworkManager;
 import com.citifleet.util.Constants;
 import com.citifleet.util.NewMessageEvent;
 import com.citifleet.util.PostMessageEvent;
 import com.citifleet.util.PrefUtil;
+import com.citifleet.util.RoomInvitationEvent;
 import com.citifleet.view.BaseActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -28,6 +36,13 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by vika on 15.04.16.
@@ -35,11 +50,14 @@ import java.util.Map;
 public class ChatActivity extends BaseActivity {
     private static final String SERVER = "ws://104.236.223.160/?token=";
     private WebSocket webSocket;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+        ButterKnife.bind(this);
         try {
             webSocket = connectToWebSocket();
         } catch (IOException e) {
@@ -69,6 +87,7 @@ public class ChatActivity extends BaseActivity {
         if (webSocket != null) {
             webSocket.disconnect();
         }
+        ButterKnife.unbind(this);
         EventBus.getDefault().unregister(this);
     }
 
@@ -85,6 +104,30 @@ public class ChatActivity extends BaseActivity {
                 .connectAsynchronously();
     }
 
+    public void createChatRoomAndOpen(Set<Integer> userIds) {
+        NetworkManager networkManager = CitiFleetApp.getInstance().getNetworkManager();
+        if (networkManager.isConnectedOrConnecting()) {
+            progressBar.setVisibility(View.VISIBLE);
+            StringBuilder chatName = new StringBuilder();
+            int[] participants = new int[userIds.size()];
+            int i = 0;
+            for (Integer userId : userIds) {
+                chatName.append(userId).append(", ");
+                participants[i] = userId;
+                i++;
+            }
+            String chatNameString = chatName.substring(0, chatName.lastIndexOf(","));
+            Call<ChatRoom> call = networkManager.getNetworkClient().createChatRoom(chatNameString, participants);
+            call.enqueue(newChatRoomCallback);
+        } else {
+            onNetworkError();
+        }
+    }
+
+    public void onNetworkError() {
+        Toast.makeText(this, getString(R.string.networkMesMoInternet), Toast.LENGTH_LONG).show();
+    }
+
     private void onMessageReceived(String message) {
         Gson gson = new Gson();
         JsonObject object = new JsonParser().parse(message).getAsJsonObject();
@@ -93,8 +136,9 @@ public class ChatActivity extends BaseActivity {
             if (method.equals(ChatMessageTypes.RECEIVE_MESSAGE.getName())) {
                 ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
                 EventBus.getDefault().post(new NewMessageEvent(chatMessage));
-            } else {
-                //TODO
+            } else if (method.equals(ChatMessageTypes.ROOM_INVITATION.getName())) {
+                ChatRoom chatRoom = gson.fromJson(message, ChatRoom.class);
+                EventBus.getDefault().post(new RoomInvitationEvent(chatRoom));
             }
         }
     }
@@ -149,5 +193,32 @@ public class ChatActivity extends BaseActivity {
             Log.d("TAG", "error" + cause.getMessage());
         }
 
+    };
+
+    public void onFailure(String error) {
+        if (error == null) {
+            error = getString(R.string.default_error_mes);
+        }
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+    }
+
+
+    private Callback<ChatRoom> newChatRoomCallback = new Callback<ChatRoom>() {
+        @Override
+        public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
+            progressBar.setVisibility(View.GONE);
+            if (response.isSuccess()) {
+                changeFragment(ChatDetailFragment.getInstance(response.body().getId()), true);
+            } else {
+                ChatActivity.this.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ChatRoom> call, Throwable t) {
+            Log.e(FriendsListPresenter.class.getName(), t.getMessage());
+            progressBar.setVisibility(View.GONE);
+            ChatActivity.this.onFailure(t.getMessage());
+        }
     };
 }
