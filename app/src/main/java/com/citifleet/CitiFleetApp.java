@@ -15,7 +15,7 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-public class CitiFleetApp extends Application {
+public class CitiFleetApp extends Application{
 
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "9neWixCKXdBBR3hLYCq8BAxS8";
@@ -24,6 +24,7 @@ public class CitiFleetApp extends Application {
     private NetworkManager networkManager;
     private static CitiFleetApp instance;
     private RefWatcher refWatcher;
+    private boolean isChatFragmentRunning = false;
 
     @Override
     public void onCreate() {
@@ -54,4 +55,10 @@ public class CitiFleetApp extends Application {
     public static CitiFleetApp getInstance() {
         return instance;
     }
+
+    public boolean isChatFragmentRunning() {
+        return isChatFragmentRunning;
+    }
+
+
 }

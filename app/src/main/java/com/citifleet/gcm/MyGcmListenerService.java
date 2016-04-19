@@ -11,10 +11,14 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.citifleet.R;
+import com.citifleet.model.ChatMessage;
+import com.citifleet.model.ChatMessageTypes;
 import com.citifleet.model.Report;
+import com.citifleet.util.Constants;
 import com.citifleet.util.NewReportAddedEvent;
 import com.citifleet.util.ReportDeletedEvent;
-import com.citifleet.view.main.MainActivity;
+import com.citifleet.view.main.chat.ChatActivity;
+import com.citifleet.view.main.chat.ChatDetailFragment;
 import com.google.android.gms.gcm.GcmListenerService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,6 +34,8 @@ public class MyGcmListenerService extends GcmListenerService {
     //    receive push: {"lng":28.4802189,"action":"added","id":115,"type":2,"lat":49.2389835}
     //receive push: {"lng":28.4802699,"action":"removed","id":126,"report_type":4,"lat":49.2389275}
     //   {"id":13,"title":"Job Offer Created","type":"offer_created"}
+    //{"author":1,"created":"2016-04-19T14:18:32","text":"Lorem ipsum dolor sit amet, in aeque ancillae incorrupte nec, altera postulant constituam cum in. Illud officiis nam et, hinc regione detraxit est ut. Qui falli labore invenire ea, et ius aliquid accusam accusata. Duo saepe prompta conclusionemque ut. His ei tritani mentitum.  Eos ei scripta inciderint, mea eu wisi error fierent. Cu duo habeo adolescens. Inani putant feugait sed ne, purto veri dicit sea cu. Eum ex impedit senserit scribentur, ex homero lobortis scribentur ius.  Ne quaeque erroribus eum, essent nonumes menandri his cu. Erat inermis sapientem mei eu,","type":"receive_message","room":6,"author_info":{"full_name":"admin","avatar_url":"","phone":"1","id":1}}
+
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
@@ -47,30 +53,37 @@ public class MyGcmListenerService extends GcmListenerService {
                 Report report = gson.fromJson(message, Report.class);
                 EventBus.getDefault().post(new ReportDeletedEvent(report));
             }
+        } else if (messageObject.has("type")) {
+            if (messageObject.get("type").getAsString().equals(ChatMessageTypes.RECEIVE_MESSAGE.getName())) {
+                Gson gson = new GsonBuilder().create();
+                ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
+                showNewMessageNotification(chatMessage);
+            }
         }
-        //TODO process or show notification
-        // sendNotification(message);
     }
 
-    private void sendNotification(String message) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+    private void showNewMessageNotification(ChatMessage chatMessage) {
+        if (!(ChatDetailFragment.isFragmentActive() && ChatDetailFragment.getRoomId()==chatMessage.getRoom())) {
+            Intent intent = new Intent(this, ChatActivity.class);
+            intent.putExtra(Constants.CHAT_ID_TAG, chatMessage.getRoom());
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle("GCM Message")
-                .setSmallIcon(R.drawable.alert)
-                .setContentText(message)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                    .setContentTitle(chatMessage.getAuthor().getName())
+                    .setContentText(chatMessage.getText())
+                    .setSmallIcon(R.drawable.ic_stat_name)
+                    .setAutoCancel(true)
+                    .setSound(defaultSoundUri)
+                    .setContentIntent(pendingIntent);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        }
     }
 }
 

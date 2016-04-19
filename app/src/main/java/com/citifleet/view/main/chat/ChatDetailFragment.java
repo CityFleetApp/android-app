@@ -51,6 +51,8 @@ public class ChatDetailFragment extends BaseFragment {
     @Bind(R.id.newMessageEt)
     EditText newMessageEt;
     private ChatMessagesAdapter adapter;
+    private static boolean isFragmentActive = false;
+    private static int roomId = Constants.DEFAULT_UNSELECTED_POSITION;
 
     @Nullable
     @Override
@@ -68,13 +70,14 @@ public class ChatDetailFragment extends BaseFragment {
         return view;
     }
 
-    public static ChatDetailFragment getInstance(int roomId){
+    public static ChatDetailFragment getInstance(int roomId) {
         ChatDetailFragment chatDetailFragment = new ChatDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.CHAT_ID_TAG, roomId);
         chatDetailFragment.setArguments(bundle);
-        return  chatDetailFragment;
+        return chatDetailFragment;
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -87,13 +90,37 @@ public class ChatDetailFragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        isFragmentActive = true;
+        roomId = chatId;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isFragmentActive = false;
+        roomId = Constants.DEFAULT_UNSELECTED_POSITION;
+    }
+
+    public static boolean isFragmentActive() {
+        return isFragmentActive;
+    }
+
+    public static int getRoomId() {
+        return roomId;
+    }
+
     @Subscribe
     public void onEvent(final NewMessageEvent event) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                adapter.addMessage(event.getChatMessage());
-                chatList.getLayoutManager().scrollToPosition(adapter.getItemCount()-1);
+                if(event.getChatMessage().getRoom()==chatId) {
+                    adapter.addMessage(event.getChatMessage());
+                    chatList.getLayoutManager().scrollToPosition(adapter.getItemCount() - 1);
+                }
             }
         });
     }
