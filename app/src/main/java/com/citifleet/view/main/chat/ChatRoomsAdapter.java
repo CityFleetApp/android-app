@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,6 +41,7 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
     private SimpleDateFormat simpleDateFormatToShow = new SimpleDateFormat(Constants.CHAT_DATETIME_FORMAT);
     private SimpleDateFormat simpleDateFormatFromServer = new SimpleDateFormat(Constants.INPUT_DATETIME_FORMAT);
     private OnItemClickListener listener;
+    private static final int MAX_IMAGES_IN_VIEW = 4;
 
     public interface OnItemClickListener {
         void onItemClick(ChatRoom item);
@@ -59,13 +61,12 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         @Bind(R.id.chatResentMessageTime)
         TextView chatResentMessageTime;
         String imageTag;
+        CustomTarget[] imagesTargets = new CustomTarget[MAX_IMAGES_IN_VIEW];
 
         public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
         }
-
-
     }
 
     public void onNewChatRoom(ChatRoom chatRoom) {
@@ -117,8 +118,8 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
             if (chatFriend.getId() != PrefUtil.getId(holder.itemView.getContext())) {
                 chatName.append(chatFriend.getName()).append(", ");
                 String photo = chatFriend.getPhoto();
-                if(TextUtils.isEmpty(photo)){
-                    photo="empty";
+                if (TextUtils.isEmpty(photo)) {
+                    photo = "empty";
                 }
                 images.add(photo);
             }
@@ -127,33 +128,43 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         Context context = holder.chatImage.getContext();
         int size = context.getResources().getDimensionPixelSize(R.dimen.friends_list_image_height);
         if (images.size() == 0) {
-            holder.chatImage.addBitmap(((BitmapDrawable) ContextCompat.getDrawable(holder.chatImage.getContext(), R.drawable.default_large)).getBitmap());
+            holder.chatImage.setBitmaps(((BitmapDrawable) ContextCompat.getDrawable(holder.chatImage.getContext(), R.drawable.default_large)).getBitmap(), null, null, null);
+            holder.chatImage.invalidate();
         } else if (images.size() == 1) {
-            CustomTarget firstTarget = new CustomTarget(holder.chatImage);
+            CustomTarget firstTarget = new CustomTarget(holder.chatImage, 0, new AtomicInteger(1));
             Picasso.with(holder.itemView.getContext()).load(images.get(0)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(firstTarget);
+            holder.imagesTargets[0] = firstTarget;
         } else if (images.size() == 2) {
-            CustomTarget firstTarget = new CustomTarget(holder.chatImage);
-            CustomTarget secondTarget = new CustomTarget(holder.chatImage);
+            AtomicInteger atomicInteger = new AtomicInteger(2);
+            CustomTarget firstTarget = new CustomTarget(holder.chatImage, 0, atomicInteger);
+            CustomTarget secondTarget = new CustomTarget(holder.chatImage, 1, atomicInteger);
             Picasso.with(holder.itemView.getContext()).load(images.get(0)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(firstTarget);
             Picasso.with(holder.itemView.getContext()).load(images.get(1)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(secondTarget);
+            holder.imagesTargets[0] = firstTarget;
+            holder.imagesTargets[1] = secondTarget;
         } else if (images.size() == 3) {
-            CustomTarget firstTarget = new CustomTarget(holder.chatImage);
-            CustomTarget secondTarget = new CustomTarget(holder.chatImage);
-            CustomTarget thirdTarget = new CustomTarget(holder.chatImage);
+            AtomicInteger atomicInteger = new AtomicInteger(3);
+            CustomTarget firstTarget = new CustomTarget(holder.chatImage, 0, atomicInteger);
+            CustomTarget secondTarget = new CustomTarget(holder.chatImage, 1, atomicInteger);
+            CustomTarget thirdTarget = new CustomTarget(holder.chatImage, 2, atomicInteger);
             Picasso.with(holder.itemView.getContext()).load(images.get(0)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(firstTarget);
             Picasso.with(holder.itemView.getContext()).load(images.get(1)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(secondTarget);
             Picasso.with(holder.itemView.getContext()).load(images.get(2)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(thirdTarget);
+            holder.imagesTargets[0] = firstTarget;
+            holder.imagesTargets[1] = secondTarget;
+            holder.imagesTargets[2] = thirdTarget;
         } else if (images.size() > 3) {
-            CustomTarget firstTarget = new CustomTarget(holder.chatImage);
-            CustomTarget secondTarget = new CustomTarget(holder.chatImage);
-            CustomTarget thirdTarget = new CustomTarget(holder.chatImage);
-            CustomTarget forthTarget = new CustomTarget(holder.chatImage);
+            AtomicInteger atomicInteger = new AtomicInteger(4);
+            CustomTarget firstTarget = new CustomTarget(holder.chatImage, 0, atomicInteger);
+            CustomTarget secondTarget = new CustomTarget(holder.chatImage, 1, atomicInteger);
+            CustomTarget thirdTarget = new CustomTarget(holder.chatImage, 2, atomicInteger);
+            CustomTarget forthTarget = new CustomTarget(holder.chatImage, 3, atomicInteger);
             Picasso.with(holder.itemView.getContext()).load(images.get(0)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(firstTarget);
             Picasso.with(holder.itemView.getContext()).load(images.get(1)).resize(size, size).centerCrop().
@@ -162,15 +173,11 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
                     tag(holder.imageTag).into(thirdTarget);
             Picasso.with(holder.itemView.getContext()).load(images.get(3)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(forthTarget);
+            holder.imagesTargets[0] = firstTarget;
+            holder.imagesTargets[1] = secondTarget;
+            holder.imagesTargets[2] = thirdTarget;
+            holder.imagesTargets[3] = forthTarget;
         }
-
-//        if (TextUtils.isEmpty(images.get(0))) {
-//            Picasso.with(holder.itemView.getContext()).load(R.drawable.default_large).transform(new CircleTransform()).
-//                    tag(holder.imageTag).into(holder.chatImage);
-//        } else {
-//            Picasso.with(holder.itemView.getContext()).load(images.get(0)).transform(new CircleTransform()).
-//                    tag(holder.imageTag).into(holder.chatImage);
-//        }
 
         String chatNameString = chatName.substring(0, chatName.lastIndexOf(","));
         holder.chatName.setText(chatNameString);
@@ -204,25 +211,38 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
 
     private class CustomTarget implements Target {
         private ChatRoomImageView imageView;
+        private final AtomicInteger workCounter;
+        private int position;
 
-        public CustomTarget(ChatRoomImageView imageView) {
+        public CustomTarget(ChatRoomImageView imageView, int position, AtomicInteger workCounter) {
             this.imageView = imageView;
+            this.workCounter = workCounter;
+            this.position = position;
         }
 
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            imageView.addBitmap(bitmap);
+            imageView.setBitmap(bitmap, position);
+            int tasksLeft = workCounter.decrementAndGet();
+            if (tasksLeft == 0) {
+                imageView.invalidate();
+            }
         }
 
         @Override
         public void onBitmapFailed(Drawable errorDrawable) {
-            imageView.addBitmap(((BitmapDrawable) ContextCompat.getDrawable(imageView.getContext(), R.drawable.default_large)).getBitmap());
+            imageView.setBitmap(((BitmapDrawable) ContextCompat.getDrawable(imageView.getContext(), R.drawable.default_large)).getBitmap(), position);
+            int tasksLeft = workCounter.decrementAndGet();
+            if (tasksLeft == 0) {
+                imageView.invalidate();
+            }
         }
 
         @Override
         public void onPrepareLoad(Drawable placeHolderDrawable) {
 
         }
+
     }
 }
 

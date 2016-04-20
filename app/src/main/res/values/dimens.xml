@@ -139,7 +139,7 @@
     <dimen name="chat_message_margin">12dp</dimen>
     <dimen name="chat_image_button_padding">14dp</dimen>
     <dimen name="new_message_text_size">12sp</dimen>
-    <dimen name="friends_list_image_height">50dp</dimen>
+    <dimen name="friends_list_image_height">60dp</dimen>
     <dimen name="friend_list_margin_left">14dp</dimen>
     <dimen name="friend_list_margin_top">6dp</dimen>
     <dimen name="friends_list_text_padding">10dp</dimen>
