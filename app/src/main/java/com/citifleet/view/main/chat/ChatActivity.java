@@ -1,5 +1,6 @@
 package com.citifleet.view.main.chat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,9 +13,11 @@ import com.citifleet.R;
 import com.citifleet.model.ChatMessage;
 import com.citifleet.model.ChatMessageTypes;
 import com.citifleet.model.ChatRoom;
+import com.citifleet.model.MarkRoomAsRead;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 import com.citifleet.util.Constants;
+import com.citifleet.util.MarkMessageSeenEvent;
 import com.citifleet.util.NewMessageEvent;
 import com.citifleet.util.PostMessageEvent;
 import com.citifleet.util.PrefUtil;
@@ -74,10 +77,27 @@ public class ChatActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int roomId = intent.getIntExtra(Constants.CHAT_ID_TAG, 0);
+        if (roomId != 0) {
+            changeFragment(ChatDetailFragment.getInstance(roomId), false);
+            EventBus.getDefault().post(new MarkMessageSeenEvent(new MarkRoomAsRead(roomId)));
+        }
+    }
+
     @Subscribe
     public void onEvent(PostMessageEvent event) {
         Gson gson = new Gson();
         String message = gson.toJson(event.getChatMessageToSend());
+        webSocket.sendText(message);
+    }
+
+    @Subscribe
+    public void onEvent(MarkMessageSeenEvent event) {
+        Gson gson = new Gson();
+        String message = gson.toJson(event.getMarkRoomAsRead());
         webSocket.sendText(message);
     }
 
@@ -104,7 +124,7 @@ public class ChatActivity extends BaseActivity {
                 .connectAsynchronously();
     }
 
-    public void createChatRoomAndOpen(Set<Integer> userIds) {
+    public void createChatRoomAndOpen(Set<Integer> userIds, boolean addToBackStack) {
         NetworkManager networkManager = CitiFleetApp.getInstance().getNetworkManager();
         if (networkManager.isConnectedOrConnecting()) {
             progressBar.setVisibility(View.VISIBLE);
@@ -118,7 +138,9 @@ public class ChatActivity extends BaseActivity {
             }
             String chatNameString = chatName.substring(0, chatName.lastIndexOf(","));
             Call<ChatRoom> call = networkManager.getNetworkClient().createChatRoom(chatNameString, participants);
-            call.enqueue(newChatRoomCallback);
+            CreateChatRoomCallback callback = new CreateChatRoomCallback();
+            callback.setAddToBackStack(addToBackStack);
+            call.enqueue(callback);
         } else {
             onNetworkError();
         }
@@ -202,13 +224,13 @@ public class ChatActivity extends BaseActivity {
         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 
+    private class CreateChatRoomCallback implements Callback<ChatRoom> {
 
-    private Callback<ChatRoom> newChatRoomCallback = new Callback<ChatRoom>() {
         @Override
         public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
             progressBar.setVisibility(View.GONE);
             if (response.isSuccess()) {
-                changeFragment(ChatDetailFragment.getInstance(response.body().getId()), true);
+                changeFragment(ChatDetailFragment.getInstance(response.body().getId()), addToBackStack);
             } else {
                 ChatActivity.this.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
@@ -220,5 +242,12 @@ public class ChatActivity extends BaseActivity {
             progressBar.setVisibility(View.GONE);
             ChatActivity.this.onFailure(t.getMessage());
         }
-    };
+
+        private boolean addToBackStack = false;
+
+        public void setAddToBackStack(boolean addToBackStack) {
+            this.addToBackStack = addToBackStack;
+        }
+    }
+
 }

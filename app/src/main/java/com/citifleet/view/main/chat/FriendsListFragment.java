@@ -64,7 +64,7 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
     public void onItemClick(ChatFriend item) {
         Set<Integer> set = new LinkedHashSet<Integer>();
         set.add(item.getId());
-        ((ChatActivity)   getActivity()).createChatRoomAndOpen(set);
+        ((ChatActivity)   getActivity()).createChatRoomAndOpen(set, true);
     }
 
     @OnTextChanged(R.id.searchField)

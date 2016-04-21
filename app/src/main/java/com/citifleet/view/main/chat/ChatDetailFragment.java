@@ -18,9 +18,11 @@ import com.citifleet.R;
 import com.citifleet.model.ChatMessage;
 import com.citifleet.model.ChatMessageToSend;
 import com.citifleet.model.ChatMessageTypes;
+import com.citifleet.model.MarkRoomAsRead;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 import com.citifleet.util.Constants;
+import com.citifleet.util.MarkMessageSeenEvent;
 import com.citifleet.util.NewMessageEvent;
 import com.citifleet.util.PostMessageEvent;
 import com.citifleet.view.BaseFragment;
@@ -120,6 +122,7 @@ public class ChatDetailFragment extends BaseFragment {
                 if(event.getChatMessage().getRoom()==chatId) {
                     adapter.addMessage(event.getChatMessage());
                     chatList.getLayoutManager().scrollToPosition(adapter.getItemCount() - 1);
+                    EventBus.getDefault().post(new MarkMessageSeenEvent(new MarkRoomAsRead(chatId)));
                 }
             }
         });

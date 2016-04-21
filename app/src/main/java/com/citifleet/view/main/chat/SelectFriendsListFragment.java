@@ -73,7 +73,7 @@ public class SelectFriendsListFragment extends BaseFragment implements SelectFri
     @OnClick(R.id.okBtn)
     void onOkBtnClick() {
         Set<Integer> participantIds = adapter.getSelectedItemsIds();
-        ((ChatActivity) getActivity()).createChatRoomAndOpen(participantIds);
+        ((ChatActivity) getActivity()).createChatRoomAndOpen(participantIds, false);
     }
 
     @Override

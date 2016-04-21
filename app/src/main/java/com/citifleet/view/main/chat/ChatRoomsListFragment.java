@@ -14,6 +14,7 @@ import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.ChatRoom;
 import com.citifleet.util.DividerItemDecoration;
+import com.citifleet.util.MarkMessageSeenEvent;
 import com.citifleet.util.NewMessageEvent;
 import com.citifleet.util.RoomInvitationEvent;
 import com.citifleet.view.BaseActivity;
@@ -45,7 +46,7 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
         View view = inflater.inflate(R.layout.chat_rooms_list_fragment, container, false);
         ButterKnife.bind(this, view);
         if (adapter == null) {
-            adapter = new ChatRoomsAdapter(this);
+            adapter = new ChatRoomsAdapter(this, getContext());
             presenter = new ChatRoomPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
             presenter.loadAllChatRooms();
         }
@@ -58,12 +59,13 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
 
     @OnClick(R.id.newChatRoomBtn)
     public void onNewChatRoomBtnClicked() {
-        ((BaseActivity) (getActivity())).changeFragment(new SelectFriendsListFragment(), false);
+        ((BaseActivity) (getActivity())).changeFragment(new SelectFriendsListFragment(), true);
     }
 
     @Override
     public void onItemClick(ChatRoom item) {
         ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(item.getId()), true);
+        item.setUnseen(0);
     }
 
     @Override
@@ -101,6 +103,17 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
             @Override
             public void run() {
                 adapter.onNewChatRoom(event.getChatRoom());
+            }
+        });
+    }
+
+
+    @Subscribe
+    public void onEvent(final MarkMessageSeenEvent event) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              adapter.markMessageAsSeen(event.getMarkRoomAsRead().getRoom());
             }
         });
     }

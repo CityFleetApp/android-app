@@ -1,5 +1,6 @@
 package com.citifleet.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public class ChatRoom {
     private String lastMessage;
     @SerializedName("last_message_timestamp")
     private String lastMessageTimestamp;
+    @Expose
+    private int unseen;
 
     public String getName() {
         return name;
@@ -64,5 +67,13 @@ public class ChatRoom {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUnseen() {
+        return unseen;
+    }
+
+    public void setUnseen(int unseen) {
+        this.unseen = unseen;
     }
 }

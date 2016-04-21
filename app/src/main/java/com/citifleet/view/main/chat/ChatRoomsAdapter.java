@@ -2,6 +2,7 @@ package com.citifleet.view.main.chat;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -42,13 +43,15 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
     private SimpleDateFormat simpleDateFormatFromServer = new SimpleDateFormat(Constants.INPUT_DATETIME_FORMAT);
     private OnItemClickListener listener;
     private static final int MAX_IMAGES_IN_VIEW = 4;
+    private Context context;
 
     public interface OnItemClickListener {
         void onItemClick(ChatRoom item);
     }
 
-    public ChatRoomsAdapter(OnItemClickListener listener) {
+    public ChatRoomsAdapter(OnItemClickListener listener, Context context) {
         this.listener = listener;
+        this.context = context;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,6 +82,9 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         for (ChatRoom chatRoom : chatList) {
             if (chatRoom.getId() == chatMessage.getRoom()) {
                 chatRoomWithNewMessage = chatRoom;
+                if (chatMessage.getAuthor().getId() != PrefUtil.getId(context)) {
+                    chatRoom.setUnseen(chatRoom.getUnseen() + 1);
+                }
                 chatRoom.setLastMessage(chatMessage.getText());
                 chatRoom.setLastMessageTimestamp(chatMessage.getCreated());
                 break;
@@ -89,6 +95,16 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
             chatList.add(0, chatRoomWithNewMessage);
         }
         notifyDataSetChanged();
+    }
+
+    public void markMessageAsSeen(int roomId) {
+        for (ChatRoom chatRoom : chatList) {
+            if (chatRoom.getId() == roomId) {
+                chatRoom.setUnseen(0);
+                notifyDataSetChanged();
+                break;
+            }
+        }
     }
 
     public void setList(List<ChatRoom> chatList) {
@@ -201,7 +217,11 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
                 listener.onItemClick(chatRoom);
             }
         });
-
+        if (chatRoom.getUnseen() == 0) {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        } else {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.unread_message_color));
+        }
     }
 
     @Override
