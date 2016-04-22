@@ -149,8 +149,6 @@ public class ChatDetailFragment extends BaseFragment {
                     offset++;
                     totalMessagesCount++;
                     adapter.addMessage(event.getChatMessage());
-//                    chatList.getLayoutManager().scrollToPosition(0);
-//                    chatList.getLayoutManager().scrollToPosition(adapter.getItemCount() - 1);
                     EventBus.getDefault().post(new MarkMessageSeenEvent(new MarkRoomAsRead(chatId)));
                 }
             }

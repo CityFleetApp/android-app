@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -42,13 +41,13 @@ import butterknife.OnEditorAction;
 /**
  * Created by vika on 12.04.16.
  */
-public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdapter.OnItemClickListener, ChatRoomPresenter.ChatRoomsListView {
+public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdapter.OnItemClickListener, ChatRoomPresenter.ChatRoomsListView, SearchEditText.EditTextImeBackListener {
     @Bind(R.id.contactsList)
     RecyclerView chatRoomsList;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
     @Bind(R.id.searchField)
-    EditText searchField;
+    SearchEditText searchField;
     private ChatRoomsAdapter adapter;
     private ChatRoomPresenter presenter;
     private EndlessRecyclerOnScrollListener scrollListener;
@@ -67,7 +66,7 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
         chatRoomsList.setAdapter(adapter);
         chatRoomsList.addItemDecoration(new DividerItemDecoration(getContext()));
         setScrollListener((LinearLayoutManager) chatRoomsList.getLayoutManager());
-
+        searchField.setOnEditTextImeBackListener(this);
         return view;
     }
 
@@ -264,5 +263,11 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onImeBack(SearchEditText ctrl, String text) {
+        presenter.search(searchField.getText().toString());
+        hideKeyboard();
     }
 }

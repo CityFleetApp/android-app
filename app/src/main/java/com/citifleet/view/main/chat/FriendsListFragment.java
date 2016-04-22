@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -33,9 +32,9 @@ import butterknife.OnEditorAction;
 /**
  * Created by vika on 11.04.16.
  */
-public class FriendsListFragment extends BaseFragment implements FriendsListAdapter.OnItemClickListener, FriendsListPresenter.FriendsListView {
+public class FriendsListFragment extends BaseFragment implements FriendsListAdapter.OnItemClickListener, FriendsListPresenter.FriendsListView, SearchEditText.EditTextImeBackListener {
     @Bind(R.id.searchField)
-    EditText searchField;
+    SearchEditText searchField;
     @Bind(R.id.contactsList)
     RecyclerView contactsList;
     @Bind(R.id.progressBar)
@@ -59,6 +58,7 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
         contactsList.setLayoutManager(new LinearLayoutManager(getContext()));
         contactsList.setAdapter(adapter);
         contactsList.addItemDecoration(new DividerItemDecoration(getContext()));
+        searchField.setOnEditTextImeBackListener(this);
         return view;
     }
 
@@ -122,5 +122,11 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
     @Override
     public void onChatRoomCreated(int roomId) {
         ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(roomId), true);
+    }
+
+    @Override
+    public void onImeBack(SearchEditText ctrl, String text) {
+        adapter.getFilter().filter(searchField.getText().toString());
+        hideKeyboard();
     }
 }
