@@ -81,7 +81,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, ResultCallback<LocationSettingsResult>, MainMapPresenter.MainMapView {
     public static final int REQUEST_LOCATION_UPDATES = 111;
     public static final int REQUEST_CHECK_SETTINGS = 222;
-    private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+    private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 333;
     @Bind(R.id.dashboardBtn)
     TextView dashboardBtn;
     @Bind(R.id.marketplaceBtn)
@@ -469,26 +469,20 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_CHECK_SETTINGS:
-                switch (resultCode) {
-                    case Activity.RESULT_OK:
-                        startLocationUpdates();
-                        break;
-                    case Activity.RESULT_CANCELED:
-                        break;
+                if (resultCode == Activity.RESULT_OK) {
+                    startLocationUpdates();
                 }
+                break;
             case PLACE_AUTOCOMPLETE_REQUEST_CODE:
-                switch (resultCode) {
-                    case Activity.RESULT_OK:
-                        selectedPlace = PlaceAutocomplete.getPlace(getActivity(), data);
-                        Marker marker = map.addMarker(new MarkerOptions()
-                                .position(selectedPlace.getLatLng())
-                                .title(selectedPlace.getName().toString()));
-                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedPlace.getLatLng(), Constants.ZOOM_LEVEL));
-                        break;
-                    case PlaceAutocomplete.RESULT_ERROR:
-                        Status status = PlaceAutocomplete.getStatus(getActivity(), data);
-                        Log.d(MainMapFragment.class.getName(), status.getStatusMessage());
-                        break;
+                if (resultCode == Activity.RESULT_OK) {
+                    selectedPlace = PlaceAutocomplete.getPlace(getActivity(), data);
+                    Marker marker = map.addMarker(new MarkerOptions()
+                            .position(selectedPlace.getLatLng())
+                            .title(selectedPlace.getName().toString()));
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedPlace.getLatLng(), Constants.ZOOM_LEVEL));
+                } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                    Status status = PlaceAutocomplete.getStatus(getActivity(), data);
+                    Log.d(MainMapFragment.class.getName(), status.getStatusMessage());
                 }
                 break;
         }

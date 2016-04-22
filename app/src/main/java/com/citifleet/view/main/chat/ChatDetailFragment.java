@@ -19,9 +19,11 @@ import com.citifleet.model.ChatMessage;
 import com.citifleet.model.ChatMessageToSend;
 import com.citifleet.model.ChatMessageTypes;
 import com.citifleet.model.MarkRoomAsRead;
+import com.citifleet.model.PagesResult;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 import com.citifleet.util.Constants;
+import com.citifleet.util.EndlessRecyclerOnScrollListener;
 import com.citifleet.util.MarkMessageSeenEvent;
 import com.citifleet.util.NewMessageEvent;
 import com.citifleet.util.PostMessageEvent;
@@ -55,6 +57,9 @@ public class ChatDetailFragment extends BaseFragment {
     private ChatMessagesAdapter adapter;
     private static boolean isFragmentActive = false;
     private static int roomId = Constants.DEFAULT_UNSELECTED_POSITION;
+    private EndlessRecyclerOnScrollListener scrollListener;
+    private int offset = 0;
+    private int totalMessagesCount;
 
     @Nullable
     @Override
@@ -65,9 +70,11 @@ public class ChatDetailFragment extends BaseFragment {
         title.setText(R.string.chatting);
         adapter = new ChatMessagesAdapter(getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setStackFromEnd(true);
+        //linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
         chatList.setLayoutManager(linearLayoutManager);
         chatList.setAdapter(adapter);
+        setScrollListener(linearLayoutManager);
         loadChatHistory();
         return view;
     }
@@ -106,6 +113,24 @@ public class ChatDetailFragment extends BaseFragment {
         roomId = Constants.DEFAULT_UNSELECTED_POSITION;
     }
 
+    public void setScrollListener() {
+        setScrollListener((LinearLayoutManager) chatList.getLayoutManager());
+    }
+
+    public void removeScrollListener() {
+        chatList.removeOnScrollListener(scrollListener);
+    }
+
+    private void setScrollListener(LinearLayoutManager llm) {
+        scrollListener = new EndlessRecyclerOnScrollListener(llm) {
+            @Override
+            public void onLoadMore(int current_page) {
+                loadChatHistory();
+            }
+        };
+        chatList.addOnScrollListener(scrollListener);
+    }
+
     public static boolean isFragmentActive() {
         return isFragmentActive;
     }
@@ -119,7 +144,9 @@ public class ChatDetailFragment extends BaseFragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(event.getChatMessage().getRoom()==chatId) {
+                if (event.getChatMessage().getRoom() == chatId) {
+                    offset++;
+                    totalMessagesCount++;
                     adapter.addMessage(event.getChatMessage());
                     chatList.getLayoutManager().scrollToPosition(adapter.getItemCount() - 1);
                     EventBus.getDefault().post(new MarkMessageSeenEvent(new MarkRoomAsRead(chatId)));
@@ -144,26 +171,30 @@ public class ChatDetailFragment extends BaseFragment {
         NetworkManager networkManager = CitiFleetApp.getInstance().getNetworkManager();
         if (networkManager.isConnectedOrConnecting()) {
             startLoading();
-            Call<List<ChatMessage>> call = networkManager.getNetworkClient().getChatRoomHistory(chatId);
+            Call<PagesResult<ChatMessage>> call = networkManager.getNetworkClient().getChatRoomHistory(chatId, offset);
             call.enqueue(chatHistoryCallback);
         } else {
             onNetworkError();
         }
     }
 
-    private Callback<List<ChatMessage>> chatHistoryCallback = new Callback<List<ChatMessage>>() {
+    private Callback<PagesResult<ChatMessage>> chatHistoryCallback = new Callback<PagesResult<ChatMessage>>() {
         @Override
-        public void onResponse(Call<List<ChatMessage>> call, Response<List<ChatMessage>> response) {
+        public void onResponse(Call<PagesResult<ChatMessage>> call, Response<PagesResult<ChatMessage>> response) {
             stopLoading();
             if (response.isSuccess()) {
-                adapter.setList(response.body());
+                List<ChatMessage> list = response.body().getResults();
+//                Collections.reverse(list);
+                totalMessagesCount = response.body().getCount();
+                adapter.addItems(list);
+                offset = offset + Constants.PAGE_SIZE;
             } else {
                 onFailureMessage(NetworkErrorUtil.gerErrorMessage(response));
             }
         }
 
         @Override
-        public void onFailure(Call<List<ChatMessage>> call, Throwable t) {
+        public void onFailure(Call<PagesResult<ChatMessage>> call, Throwable t) {
             Log.e(ChatDetailFragment.class.getName(), t.getMessage());
             stopLoading();
             onFailureMessage(t.getMessage());

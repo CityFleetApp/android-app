@@ -1,5 +1,6 @@
 package com.citifleet.view.main.chat;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -14,6 +18,7 @@ import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.ChatRoom;
 import com.citifleet.util.DividerItemDecoration;
+import com.citifleet.util.EndlessRecyclerOnScrollListener;
 import com.citifleet.util.MarkMessageSeenEvent;
 import com.citifleet.util.NewMessageEvent;
 import com.citifleet.util.RoomInvitationEvent;
@@ -28,17 +33,21 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 
 /**
  * Created by vika on 12.04.16.
  */
 public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdapter.OnItemClickListener, ChatRoomPresenter.ChatRoomsListView {
     @Bind(R.id.contactsList)
-    RecyclerView contactsList;
+    RecyclerView chatRoomsList;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
+    @Bind(R.id.searchField)
+    EditText searchField;
     private ChatRoomsAdapter adapter;
     private ChatRoomPresenter presenter;
+    private EndlessRecyclerOnScrollListener scrollListener;
 
     @Nullable
     @Override
@@ -48,13 +57,31 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
         if (adapter == null) {
             adapter = new ChatRoomsAdapter(this, getContext());
             presenter = new ChatRoomPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
-            presenter.loadAllChatRooms();
+            presenter.loadNextPage();
         }
-        contactsList.setLayoutManager(new LinearLayoutManager(getContext()));
-        contactsList.setAdapter(adapter);
-        contactsList.addItemDecoration(new DividerItemDecoration(getContext()));
-        contactsList.setNestedScrollingEnabled(false);
+        chatRoomsList.setLayoutManager(new LinearLayoutManager(getContext()));
+        chatRoomsList.setAdapter(adapter);
+        chatRoomsList.addItemDecoration(new DividerItemDecoration(getContext()));
+        setScrollListener((LinearLayoutManager) chatRoomsList.getLayoutManager());
+
         return view;
+    }
+
+    @OnEditorAction(R.id.searchField)
+    protected boolean onSearchClicked(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            presenter.search(searchField.getText().toString());
+            hideKeyboard();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(searchField.getWindowToken(),
+                InputMethodManager.RESULT_UNCHANGED_SHOWN);
     }
 
     @OnClick(R.id.newChatRoomBtn)
@@ -81,6 +108,24 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
         EventBus.getDefault().register(this);
     }
 
+    public void setScrollListener() {
+        setScrollListener((LinearLayoutManager) chatRoomsList.getLayoutManager());
+    }
+
+    public void removeScrollListener() {
+        chatRoomsList.removeOnScrollListener(scrollListener);
+    }
+
+    private void setScrollListener(LinearLayoutManager llm) {
+        scrollListener = new EndlessRecyclerOnScrollListener(llm) {
+            @Override
+            public void onLoadMore(int current_page) {
+                presenter.loadNextPage();
+            }
+        };
+        chatRoomsList.addOnScrollListener(scrollListener);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -98,10 +143,21 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
     }
 
     @Subscribe
-    public void onEvent(final RoomInvitationEvent event){
+    public void onEvent(final RoomInvitationEvent event) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+//                ChatRoom chatRoom = event.getChatRoom();
+//                boolean containsSearchWords = false;
+//                if(searchField.getText().toString().isEmpty()){
+//                    containsSearchWords = true;
+//                } else{
+//                    for(ChatFriend chatFriend: chatRoom.getParticipants()){
+//                        if(chatFriend.getId()!= PrefUtil.getId(getContext()) && chatFriend.getName().toLowerCase().contains(searchField.getText().toString().toLowerCase())){
+//
+//                        }
+//                    }
+//                } TODO
                 adapter.onNewChatRoom(event.getChatRoom());
             }
         });
@@ -113,7 +169,7 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-              adapter.markMessageAsSeen(event.getMarkRoomAsRead().getRoom());
+                adapter.markMessageAsSeen(event.getMarkRoomAsRead().getRoom());
             }
         });
     }
@@ -141,8 +197,14 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
     }
 
     @Override
+    public void clearList() {
+        adapter.clearList();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onChatRoomsListLoaded(List<ChatRoom> chatRooms) {
-        adapter.setList(chatRooms);
+        adapter.addItems(chatRooms);
         adapter.notifyDataSetChanged();
     }
 

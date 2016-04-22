@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.citifleet.R;
+import com.citifleet.model.ChatFriend;
 import com.citifleet.model.ChatMessage;
 import com.citifleet.model.ChatMessageTypes;
 import com.citifleet.model.Report;
@@ -70,9 +71,14 @@ public class MyGcmListenerService extends GcmListenerService {
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
+            ChatFriend author=null;
+            for(ChatFriend friend: chatMessage.getParticipants()){
+                if(friend.getId()==chatMessage.getAuthor()){
+                    author = friend;
+                }
+            }
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                    .setContentTitle(chatMessage.getAuthor().getName())
+                    .setContentTitle(author.getName())
                     .setContentText(chatMessage.getText())
                     .setSmallIcon(R.drawable.ic_stat_name)
                     .setAutoCancel(true)

@@ -16,12 +16,14 @@ import com.citifleet.model.LegalAidPerson;
 import com.citifleet.model.LoginInfo;
 import com.citifleet.model.ManagePostModel;
 import com.citifleet.model.Notification;
+import com.citifleet.model.PagesResult;
 import com.citifleet.model.ProfileImage;
 import com.citifleet.model.Report;
 import com.citifleet.model.Settings;
 import com.citifleet.model.UserEditInfo;
 import com.citifleet.model.UserImages;
 import com.citifleet.model.UserInfo;
+import com.citifleet.util.Constants;
 
 import java.util.List;
 import java.util.Map;
@@ -279,13 +281,13 @@ public interface NetworkService {
     @GET("chat/friends/")
     Call<List<ChatFriend>> getChatFriends();
 
-    @GET("chat/rooms/")
-    Call<List<ChatRoom>> getChatRooms();
+    @GET("chat/rooms/?limit=" + Constants.PAGE_SIZE)
+    Call<PagesResult<ChatRoom>> getChatRooms(@Query("search") String search, @Query("offset") int offset);
 
     @FormUrlEncoded
     @POST("chat/rooms/")
     Call<ChatRoom> createChatRoom(@Field("name") String name, @Field("participants") int[] participantsIds);
 
-    @GET("chat/rooms/{id}/messages/")
-    Call<List<ChatMessage>> getChatRoomHistory(@Path("id") int roomId);
+    @GET("chat/rooms/{id}/messages/?limit="+Constants.PAGE_SIZE)
+    Call<PagesResult<ChatMessage>> getChatRoomHistory(@Path("id") int roomId, @Query("offset") int offset);
 }

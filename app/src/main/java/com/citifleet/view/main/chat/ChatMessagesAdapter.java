@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.citifleet.R;
+import com.citifleet.model.ChatFriend;
 import com.citifleet.model.ChatMessage;
 import com.citifleet.util.CircleTransform;
 import com.citifleet.util.Constants;
@@ -59,13 +60,13 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
 
     }
 
-    public void setList(List<ChatMessage> chatList) {
-        this.chatList.clear();
+    public void addItems(List<ChatMessage> chatList) {
+      //  this.chatList.clear();
         this.chatList.addAll(chatList);
         notifyDataSetChanged();
     }
 
-    public void addMessage(ChatMessage chatMessage){
+    public void addMessage(ChatMessage chatMessage) {
         this.chatList.add(chatMessage);
         notifyDataSetChanged();
     }
@@ -79,7 +80,7 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
 
     @Override
     public int getItemViewType(int position) {
-        if (chatList.get(position).getAuthor().getId() == PrefUtil.getId(context)) {
+        if (chatList.get(position).getAuthor() == PrefUtil.getId(context)) {
             return RIGHT_MESSAGE_TYPE;
         } else {
             return LEFT_MESSAGE_TYPE;
@@ -90,10 +91,16 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ChatMessage chatMessage = chatList.get(position);
         holder.chatMessage.setText(chatMessage.getText());
-        if( TextUtils.isEmpty(chatMessage.getAuthor().getPhoto()) ){
-            Picasso.with(holder.itemView.getContext()).load(R.drawable.default_large).transform(new CircleTransform()).into(holder.authorImage);
+        ChatFriend author=null;
+        for(ChatFriend friend: chatMessage.getParticipants()){
+            if(friend.getId()==chatMessage.getAuthor()){
+                author = friend;
+            }
+        }
+        if (TextUtils.isEmpty(author.getPhoto())) {
+            Picasso.with(holder.itemView.getContext()).load(R.drawable.default_large).transform(new CircleTransform()).fit().centerCrop().into(holder.authorImage);
         } else {
-            Picasso.with(holder.itemView.getContext()).load(chatMessage.getAuthor().getPhoto()).transform(new CircleTransform()).into(holder.authorImage);
+            Picasso.with(holder.itemView.getContext()).load(author.getPhoto()).transform(new CircleTransform()).fit().centerCrop().into(holder.authorImage);
         }
         Calendar calendar = Calendar.getInstance();
         try {
@@ -104,12 +111,12 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
         String dateTime = simpleDateFormatToShow.format(calendar.getTime());
         holder.chatTime.setText(dateTime);
 
-        if (position == chatList.size() - 1) {
+        if (position == 0) {
             TypedValue typedValue = new TypedValue();
             int[] attribute = new int[]{android.R.attr.actionBarSize};
             TypedArray array = context.obtainStyledAttributes(typedValue.resourceId, attribute);
             int size = array.getDimensionPixelSize(0, -1);
-            holder.itemView.setPadding(holder.itemView.getPaddingLeft(), holder.itemView.getPaddingTop(), holder.itemView.getPaddingRight(), size+holder.itemView.getPaddingTop());
+            holder.itemView.setPadding(holder.itemView.getPaddingLeft(), holder.itemView.getPaddingTop(), holder.itemView.getPaddingRight(), size + holder.itemView.getPaddingTop());
         } else {
             holder.itemView.setPadding(holder.itemView.getPaddingLeft(), holder.itemView.getPaddingTop(), holder.itemView.getPaddingRight(), 0);
         }

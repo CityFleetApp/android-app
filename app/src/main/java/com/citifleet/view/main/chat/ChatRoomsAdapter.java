@@ -82,7 +82,7 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         for (ChatRoom chatRoom : chatList) {
             if (chatRoom.getId() == chatMessage.getRoom()) {
                 chatRoomWithNewMessage = chatRoom;
-                if (chatMessage.getAuthor().getId() != PrefUtil.getId(context)) {
+                if (chatMessage.getAuthor()!= PrefUtil.getId(context)) {
                     chatRoom.setUnseen(chatRoom.getUnseen() + 1);
                 }
                 chatRoom.setLastMessage(chatMessage.getText());
@@ -107,9 +107,12 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         }
     }
 
-    public void setList(List<ChatRoom> chatList) {
-        this.chatList.clear();
+    public void addItems(List<ChatRoom> chatList) {
         this.chatList.addAll(chatList);
+    }
+
+    public void clearList() {
+        this.chatList.clear();
     }
 
     @Override

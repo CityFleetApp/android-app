@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/benefits_background"
@@ -53,7 +54,29 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <EditText
+            android:id="@+id/searchField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:hint="@string/type_name"
+            android:imeOptions="actionDone"
+            android:singleLine="true" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/contactsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchField"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -61,37 +84,5 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:visibility="gone" />
-
-        <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/searchField"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:hint="@string/type_name" />
-
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/contactsList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/searchField"
-                    android:fillViewport="true"
-                    android:overScrollMode="never"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-            </RelativeLayout>
-        </android.support.v4.widget.NestedScrollView>
     </RelativeLayout>
 </LinearLayout>

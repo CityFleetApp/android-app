@@ -1,5 +1,6 @@
 package com.citifleet.view.main.chat;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -8,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -25,7 +28,7 @@ import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnTextChanged;
+import butterknife.OnEditorAction;
 
 /**
  * Created by vika on 11.04.16.
@@ -56,21 +59,33 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
         contactsList.setLayoutManager(new LinearLayoutManager(getContext()));
         contactsList.setAdapter(adapter);
         contactsList.addItemDecoration(new DividerItemDecoration(getContext()));
-        contactsList.setNestedScrollingEnabled(false);
         return view;
+    }
+
+    @OnEditorAction(R.id.searchField)
+    protected boolean onSearchClicked(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            adapter.getFilter().filter(searchField.getText().toString());
+            hideKeyboard();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(searchField.getWindowToken(),
+                InputMethodManager.RESULT_UNCHANGED_SHOWN);
     }
 
     @Override
     public void onItemClick(ChatFriend item) {
         Set<Integer> set = new LinkedHashSet<Integer>();
         set.add(item.getId());
-        ((ChatActivity)   getActivity()).createChatRoomAndOpen(set, true);
+        ((ChatActivity) getActivity()).createChatRoomAndOpen(set, true);
     }
 
-    @OnTextChanged(R.id.searchField)
-    void onSearchTextChanged(CharSequence cs) {
-        adapter.getFilter().filter(cs);
-    }
 
     @Override
     public void startLoading() {

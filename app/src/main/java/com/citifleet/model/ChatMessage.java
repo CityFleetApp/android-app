@@ -1,6 +1,6 @@
 package com.citifleet.model;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
 /**
  * Created by vika on 18.04.16.
@@ -9,8 +9,8 @@ public class ChatMessage {
     private String text;
     private int room;
     private String created;
-    @SerializedName("author_info")
-    private ChatFriend author;
+    private int author;
+    private List<ChatFriend> participants;
 
     public String getText() {
         return text;
@@ -36,11 +36,19 @@ public class ChatMessage {
         this.created = created;
     }
 
-    public ChatFriend getAuthor() {
+    public int getAuthor() {
         return author;
     }
 
-    public void setAuthor(ChatFriend author) {
+    public void setAuthor(int author) {
         this.author = author;
+    }
+
+    public List<ChatFriend> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<ChatFriend> participants) {
+        this.participants = participants;
     }
 }

@@ -8,7 +8,6 @@ public class Constants {
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
             UPDATE_INTERVAL_IN_MILLISECONDS / 2;
-    public static final int MAP_DISPLACEMENT = 10;
     public static final String REPORT_DIALOG_TAG = "report_dialog";
     public static final String BENEFITS_BARCODE_TAG = "barcode_dialog";
     public static final int REPORT_TARGET_FRAGMENT = 100;
@@ -39,7 +38,6 @@ public class Constants {
     public static final int IMAGE_WIDTH = 1440;
     public static final int MAX_PRICE = 4;
     public static final int JOB_OFFER_MAX_FARE = 3;
-    public static final int MAX_PRICE_DEC_PLACES = 2;
     public static final String INPUT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String OUTPUT_TIME_FORMAT = "hh:mm aa";
     public static final String OUTPUT_DATE_FORMAT = "MM/dd/yyyy";
@@ -52,5 +50,6 @@ public class Constants {
     public static final String GCM_REGISTRATION_TYPE_TAG = "gcm_reg_type_tag";
     public static final String PREFS_SEND_TOKEN_TO_SERVER = "prefs_send_token_to_server";
     public static final int DIALOG_ANIMATION_DURATION = 150;
+    public static final int PAGE_SIZE = 20;
     public static final String CHAT_ID_TAG = "chat_id_tag";
 }

@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,7 +72,7 @@ public class DashboardFragment extends BaseFragment implements DashboardView {
     @BindString(R.string.pick_profile_image_title)
     String pickImageTitle;
     @Bind(R.id.progressBar)
-    ProgressBar progressBar;
+    RelativeLayout progressBar;
     @BindString(R.string.default_error_mes)
     String defaultErrorMes;
     @Bind(R.id.profileFullName)
