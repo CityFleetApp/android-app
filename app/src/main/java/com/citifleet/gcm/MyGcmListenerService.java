@@ -14,10 +14,12 @@ import com.citifleet.R;
 import com.citifleet.model.ChatFriend;
 import com.citifleet.model.ChatMessage;
 import com.citifleet.model.ChatMessageTypes;
+import com.citifleet.model.JobOfferCoveredNotification;
 import com.citifleet.model.Report;
 import com.citifleet.util.Constants;
 import com.citifleet.util.NewReportAddedEvent;
 import com.citifleet.util.ReportDeletedEvent;
+import com.citifleet.view.main.MainActivity;
 import com.citifleet.view.main.chat.ChatActivity;
 import com.citifleet.view.main.chat.ChatDetailFragment;
 import com.google.android.gms.gcm.GcmListenerService;
@@ -36,7 +38,7 @@ public class MyGcmListenerService extends GcmListenerService {
     //receive push: {"lng":28.4802699,"action":"removed","id":126,"report_type":4,"lat":49.2389275}
     //   {"id":13,"title":"Job Offer Created","type":"offer_created"}
     //{"author":1,"created":"2016-04-19T14:18:32","text":"Lorem ipsum dolor sit amet, in aeque ancillae incorrupte nec, altera postulant constituam cum in. Illud officiis nam et, hinc regione detraxit est ut. Qui falli labore invenire ea, et ius aliquid accusam accusata. Duo saepe prompta conclusionemque ut. His ei tritani mentitum.  Eos ei scripta inciderint, mea eu wisi error fierent. Cu duo habeo adolescens. Inani putant feugait sed ne, purto veri dicit sea cu. Eum ex impedit senserit scribentur, ex homero lobortis scribentur ius.  Ne quaeque erroribus eum, essent nonumes menandri his cu. Erat inermis sapientem mei eu,","type":"receive_message","room":6,"author_info":{"full_name":"admin","avatar_url":"","phone":"1","id":1}}
-
+//{'id': offer.id, 'type': 'offer_covered', 'title': 'Your job offer accepted'}
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
@@ -59,21 +61,25 @@ public class MyGcmListenerService extends GcmListenerService {
                 Gson gson = new GsonBuilder().create();
                 ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
                 showNewMessageNotification(chatMessage);
+            } else if (messageObject.get("type").getAsString().equals("offer_covered")) {
+                Gson gson = new GsonBuilder().create();
+                JobOfferCoveredNotification offerCoveredNotification = gson.fromJson(message, JobOfferCoveredNotification.class);
+                showJobOfferNotification(offerCoveredNotification);
             }
         }
     }
 
     private void showNewMessageNotification(ChatMessage chatMessage) {
-        if (!(ChatDetailFragment.isFragmentActive() && ChatDetailFragment.getRoomId()==chatMessage.getRoom())) {
+        if (!(ChatDetailFragment.isFragmentActive() && ChatDetailFragment.getRoomId() == chatMessage.getRoom())) {
             Intent intent = new Intent(this, ChatActivity.class);
             intent.putExtra(Constants.CHAT_ID_TAG, chatMessage.getRoom());
-          //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            ChatFriend author=null;
-            for(ChatFriend friend: chatMessage.getParticipants()){
-                if(friend.getId()==chatMessage.getAuthor()){
+            ChatFriend author = null;
+            for (ChatFriend friend : chatMessage.getParticipants()) {
+                if (friend.getId() == chatMessage.getAuthor()) {
                     author = friend;
                 }
             }
@@ -90,6 +96,24 @@ public class MyGcmListenerService extends GcmListenerService {
 
             notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
         }
+    }
+
+    private void showJobOfferNotification(JobOfferCoveredNotification offerCoveredNotification) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(Constants.JOB_OFFER_ID_TAG, offerCoveredNotification.getId());
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
+
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setContentTitle(offerCoveredNotification.getTitle())
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(1 /* ID of notification */, notificationBuilder.build());
     }
 }
 

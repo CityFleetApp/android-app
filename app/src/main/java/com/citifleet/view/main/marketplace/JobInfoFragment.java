@@ -2,12 +2,12 @@ package com.citifleet.view.main.marketplace;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.JobOffer;
+import com.citifleet.model.JobOfferStatus;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 import com.citifleet.util.Constants;
@@ -67,15 +68,31 @@ public class JobInfoFragment extends BaseFragment {
     TextView jobTypeLbl;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
+    @Bind(R.id.requestBtn)
+    Button requestBtn;
     private JobOffer jobOffer;
+    private int jobId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.job_info_fragment, container, false);
         ButterKnife.bind(this, view);
-        jobOffer = Parcels.unwrap(getArguments().getParcelable(Constants.JOB_OFFER_TAG));
+        if (getArguments().containsKey(Constants.JOB_OFFER_TAG)) {
+            jobOffer = Parcels.unwrap(getArguments().getParcelable(Constants.JOB_OFFER_TAG));
+        } else {
+            jobId = getArguments().getInt(Constants.JOB_OFFER_ID_TAG);
+        }
         title.setText(R.string.job_info);
+        if (jobOffer != null) {
+            init();
+        } else {
+            loadJobInfo();
+        }
+        return view;
+    }
+
+    private void init() {
         String time = "";
         String date = "";
         try {
@@ -96,24 +113,43 @@ public class JobInfoFragment extends BaseFragment {
         suiteTieLbl.setText(jobOffer.isSuite() ? getString(R.string.yes) : getString(R.string.no));
         companyPersonalLbl.setText("");
         jobTypeLbl.setText(jobOffer.getJobType());
-        return view;
+        if (jobOffer.getStatus().equals(JobOfferStatus.COVERED.name())) {
+            requestBtn.setText(R.string.complete_job);
+        } else {
+            requestBtn.setText(R.string.request_job);
+        }
     }
 
     @OnClick(R.id.requestBtn)
     void onRequestBtnClick() {
         NetworkManager networkManager = CitiFleetApp.getInstance().getNetworkManager();
         if (networkManager.isConnectedOrConnecting()) {
-            Call<Void> call = networkManager.getNetworkClient().requestJob(jobOffer.getId());
-            call.enqueue(callback);
+            Call<Void> call = null;
+            if (jobOffer.getStatus().equals(JobOfferStatus.COVERED.name())) {
+                //TODO
+            } else {
+                call = networkManager.getNetworkClient().requestJob(jobOffer.getId());
+            }
+            call.enqueue(requestCallback);
         } else {
             Toast.makeText(getActivity(), getString(R.string.networkMesMoInternet), Toast.LENGTH_LONG).show();
         }
     }
 
-    private Callback<Void> callback = new Callback<Void>() {
+    public void loadJobInfo() {
+        NetworkManager networkManager = CitiFleetApp.getInstance().getNetworkManager();
+        if (networkManager.isConnectedOrConnecting()) {
+            Call<JobOffer> call = networkManager.getNetworkClient().getJobOfferInfo(jobId);
+            call.enqueue(infoCallback);
+        } else {
+            Toast.makeText(getActivity(), getString(R.string.networkMesMoInternet), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private Callback<Void> requestCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 getActivity().onBackPressed();
             } else {
                 String error = NetworkErrorUtil.gerErrorMessage(response);
@@ -126,6 +162,28 @@ public class JobInfoFragment extends BaseFragment {
 
         @Override
         public void onFailure(Call<Void> call, Throwable t) {
+            Log.d(JobInfoFragment.class.getName(), t.getMessage());
+            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private Callback<JobOffer> infoCallback = new Callback<JobOffer>() {
+        @Override
+        public void onResponse(Call<JobOffer> call, Response<JobOffer> response) {
+            if (response.isSuccessful()) {
+                jobOffer = response.body();
+                init();
+            } else {
+                String error = NetworkErrorUtil.gerErrorMessage(response);
+                if (TextUtils.isEmpty(error)) {
+                    error = getString(R.string.default_error_mes);
+                }
+                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onFailure(Call<JobOffer> call, Throwable t) {
             Log.d(JobInfoFragment.class.getName(), t.getMessage());
             Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
         }

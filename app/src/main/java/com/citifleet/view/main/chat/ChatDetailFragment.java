@@ -182,7 +182,7 @@ public class ChatDetailFragment extends BaseFragment {
         @Override
         public void onResponse(Call<PagesResult<ChatMessage>> call, Response<PagesResult<ChatMessage>> response) {
             stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 List<ChatMessage> list = response.body().getResults();
 //                Collections.reverse(list);
                 totalMessagesCount = response.body().getCount();

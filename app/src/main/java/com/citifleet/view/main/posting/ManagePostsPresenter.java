@@ -42,7 +42,7 @@ public class ManagePostsPresenter  {
         @Override
         public void onResponse(Call<List<ManagePostModel>> call, Response<List<ManagePostModel>> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 posts = response.body();
                 view.onPostsLoaded(posts);
             } else {

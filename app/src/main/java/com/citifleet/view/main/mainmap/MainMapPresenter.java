@@ -59,7 +59,7 @@ public class MainMapPresenter {
         @Override
         public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onChatRoomCreated(response.body().getId());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -103,7 +103,7 @@ public class MainMapPresenter {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
             view.stopLoading();
-            if (!response.isSuccess()) {
+            if (!response.isSuccessful()) {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
         }
@@ -119,7 +119,7 @@ public class MainMapPresenter {
         @Override
         public void onResponse(Call<List<FriendNearby>> call, Response<List<FriendNearby>> response) {
             //          view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onFriendsNearbyLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -137,7 +137,7 @@ public class MainMapPresenter {
         @Override
         public void onResponse(Call<List<Report>> call, Response<List<Report>> response) {
             //  view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onReportsNearbyLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -155,7 +155,7 @@ public class MainMapPresenter {
         @Override
         public void onResponse(Call<Object> call, Response<Object> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onPostReportSuccess();
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));

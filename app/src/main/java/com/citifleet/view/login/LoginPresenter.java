@@ -33,7 +33,7 @@ public class LoginPresenter {
         @Override
         public void onResponse(Call<LoginInfo> call, Response<LoginInfo> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onLoginSuccess(response.body().getToken(), response.body().getId());
             } else {
                 view.onLoginFailure(NetworkErrorUtil.gerErrorMessage(response));

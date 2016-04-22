@@ -103,7 +103,7 @@ public class EditUserProfilePresenter {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onInfoUpdateSuccessfully();
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -121,7 +121,7 @@ public class EditUserProfilePresenter {
         @Override
         public void onResponse(Call<UserEditInfo> call, Response<UserEditInfo> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.setUserInfo(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -139,7 +139,7 @@ public class EditUserProfilePresenter {
         @Override
         public void onResponse(Call<ProfileImage> call, Response<ProfileImage> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.updateProfileImage(response.body().getAvatar());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -157,7 +157,7 @@ public class EditUserProfilePresenter {
         @Override
         public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.updateProfileImage(response.body().getAvatarUrl());
                 view.setName(response.body().getFullName());
             } else {

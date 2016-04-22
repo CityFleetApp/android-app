@@ -229,7 +229,7 @@ public class ChatActivity extends BaseActivity {
         @Override
         public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
             progressBar.setVisibility(View.GONE);
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 changeFragment(ChatDetailFragment.getInstance(response.body().getId()), addToBackStack);
             } else {
                 ChatActivity.this.onFailure(NetworkErrorUtil.gerErrorMessage(response));

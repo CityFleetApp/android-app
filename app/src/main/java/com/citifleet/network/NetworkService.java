@@ -214,6 +214,9 @@ public interface NetworkService {
     @POST("marketplace/offers/{id}/request_job/")
     Call<Void> requestJob(@Path("id") int id);
 
+    @GET("marketplace/offers/{id}/")
+    Call<JobOffer> getJobOfferInfo(@Path("id") int id);
+
     @GET("marketplace/job_types/")
     Call<List<CarOption>> getJobTypes();
 
@@ -288,6 +291,6 @@ public interface NetworkService {
     @POST("chat/rooms/")
     Call<ChatRoom> createChatRoom(@Field("name") String name, @Field("participants") int[] participantsIds);
 
-    @GET("chat/rooms/{id}/messages/?limit="+Constants.PAGE_SIZE)
+    @GET("chat/rooms/{id}/messages/?limit=" + Constants.PAGE_SIZE)
     Call<PagesResult<ChatMessage>> getChatRoomHistory(@Path("id") int roomId, @Query("offset") int offset);
 }

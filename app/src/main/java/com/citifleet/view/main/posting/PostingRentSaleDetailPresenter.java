@@ -155,7 +155,7 @@ public class PostingRentSaleDetailPresenter {
     private Callback<Void> deletePhotoCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
-            if (!response.isSuccess()) {
+            if (!response.isSuccessful()) {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
         }
@@ -168,7 +168,7 @@ public class PostingRentSaleDetailPresenter {
     private Callback<Void> editPhotoCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 imagesUpdatingCount--;
                 if (imagesUpdatingCount == 0) {
                     view.stopLoading();
@@ -190,7 +190,7 @@ public class PostingRentSaleDetailPresenter {
     private Callback<Void> createPostCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 if (!isUpdatingPost || (isUpdatingPost && imagesUpdatingCount == 0)) {
                     view.onPostCreatesSuccessfully();
                     view.stopLoading();
@@ -211,7 +211,7 @@ public class PostingRentSaleDetailPresenter {
     private Callback<List<CarOption>> makeCallback = new Callback<List<CarOption>>() {
         @Override
         public void onResponse(Call<List<CarOption>> call, Response<List<CarOption>> response) {
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onMakesLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -227,7 +227,7 @@ public class PostingRentSaleDetailPresenter {
     private Callback<List<CarOption>> modelCallback = new Callback<List<CarOption>>() {
         @Override
         public void onResponse(Call<List<CarOption>> call, Response<List<CarOption>> response) {
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onModelLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -243,7 +243,7 @@ public class PostingRentSaleDetailPresenter {
     private Callback<List<CarOption>> seatsCallback = new Callback<List<CarOption>>() {
         @Override
         public void onResponse(Call<List<CarOption>> call, Response<List<CarOption>> response) {
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onSeatsLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -259,7 +259,7 @@ public class PostingRentSaleDetailPresenter {
     private Callback<List<CarOption>> fuelCallback = new Callback<List<CarOption>>() {
         @Override
         public void onResponse(Call<List<CarOption>> call, Response<List<CarOption>> response) {
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onFuelLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -275,7 +275,7 @@ public class PostingRentSaleDetailPresenter {
     private Callback<List<CarOption>> colorCallback = new Callback<List<CarOption>>() {
         @Override
         public void onResponse(Call<List<CarOption>> call, Response<List<CarOption>> response) {
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onColorLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -291,7 +291,7 @@ public class PostingRentSaleDetailPresenter {
     private Callback<List<CarOption>> typesCallback = new Callback<List<CarOption>>() {
         @Override
         public void onResponse(Call<List<CarOption>> call, Response<List<CarOption>> response) {
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onTypeLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));

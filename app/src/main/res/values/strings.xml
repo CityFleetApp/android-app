@@ -231,6 +231,7 @@
     <string name="chatting">Chatting</string>
     <string name="create_chat_room">Create chat room</string>
     <string name="selected">%1$s selected</string>
+    <string name="complete_job">Complete job</string>
 
     <string-array name="pick_image_options">
         <item>Take Photo</item>

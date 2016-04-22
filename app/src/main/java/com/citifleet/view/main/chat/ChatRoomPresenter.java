@@ -72,7 +72,7 @@ public class ChatRoomPresenter {
         public void onResponse(Call<PagesResult<ChatRoom>> call, Response<PagesResult<ChatRoom>> response) {
             view.stopLoading();
             isLoading = false;
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 totalItemsCount = response.body().getCount();
                 view.onChatRoomsListLoaded(response.body().getResults());
                 offset = offset + 10;

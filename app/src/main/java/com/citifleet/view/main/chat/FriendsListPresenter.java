@@ -50,7 +50,7 @@ public class FriendsListPresenter {
         @Override
         public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onChatRoomCreated(response.body().getId());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -68,7 +68,7 @@ public class FriendsListPresenter {
         @Override
         public void onResponse(Call<List<ChatFriend>> call, Response<List<ChatFriend>> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onFriendsLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));

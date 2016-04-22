@@ -80,7 +80,7 @@ public class DocManagementPresenter {
         @Override
         public void onResponse(Call<Document> call, Response<Document> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onDocumentCreatedOrUpdated(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -99,7 +99,7 @@ public class DocManagementPresenter {
         @Override
         public void onResponse(Call<List<Document>> call, Response<List<Document>> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onDocumentsLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));

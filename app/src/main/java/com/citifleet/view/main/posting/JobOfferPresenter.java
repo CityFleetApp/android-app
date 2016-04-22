@@ -60,7 +60,7 @@ public class JobOfferPresenter {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
             view.stopLoading();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onPostCreatesSuccessfully();
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -77,7 +77,7 @@ public class JobOfferPresenter {
 
         @Override
         public void onResponse(Call<List<CarOption>> call, Response<List<CarOption>> response) {
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onJobTypesLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
@@ -95,7 +95,7 @@ public class JobOfferPresenter {
 
         @Override
         public void onResponse(Call<List<CarOption>> call, Response<List<CarOption>> response) {
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 view.onVehicleTypesLoaded(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));

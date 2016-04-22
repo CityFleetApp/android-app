@@ -39,7 +39,7 @@ public class GeneralGoodsPresenter {
         @Override
         public void onResponse(Call<List<GeneralGood>> call, retrofit2.Response<List<GeneralGood>> response) {
             view.stopLoading();
-            if (!response.isSuccess()) {
+            if (!response.isSuccessful()) {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             } else {
                 view.onListLoaded(response.body());
