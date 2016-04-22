@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
+    android:background="@color/benefits_background"
     android:focusableInTouchMode="true">
     <com.citifleet.view.main.chat.SearchEditText
         android:id="@+id/searchField"

@@ -1,5 +1,6 @@
 package com.citifleet.view.main.chat;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,7 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,14 +28,14 @@ import java.util.Set;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
+import butterknife.OnEditorAction;
 
 /**
  * Created by vika on 19.04.16.
  */
-public class SelectFriendsListFragment extends BaseFragment implements SelectFriendsListAdapter.OnItemClickListener, FriendsListPresenter.FriendsListView {
+public class SelectFriendsListFragment extends BaseFragment implements SelectFriendsListAdapter.OnItemClickListener, FriendsListPresenter.FriendsListView, SearchEditText.EditTextImeBackListener {
     @Bind(R.id.searchField)
-    EditText searchField;
+    SearchEditText searchField;
     @Bind(R.id.contactsList)
     RecyclerView contactsList;
     @Bind(R.id.progressBar)
@@ -50,7 +52,7 @@ public class SelectFriendsListFragment extends BaseFragment implements SelectFri
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.friends_list_fragment, container, false);
         ButterKnife.bind(this, view);
-        searchField.setVisibility(View.GONE);
+        //    searchField.setVisibility(View.GONE);
         if (adapter == null) {
             adapter = new SelectFriendsListAdapter(this);
             presenter = new FriendsListPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
@@ -62,6 +64,7 @@ public class SelectFriendsListFragment extends BaseFragment implements SelectFri
         contactsList.setNestedScrollingEnabled(false);
         title.setText(getString(R.string.create_chat_room));
         okBtn.setVisibility(View.INVISIBLE);
+        searchField.setOnEditTextImeBackListener(this);
         return view;
     }
 
@@ -86,10 +89,15 @@ public class SelectFriendsListFragment extends BaseFragment implements SelectFri
             title.setText(getString(R.string.selected, count));
         }
     }
+    @OnEditorAction(R.id.searchField)
+    protected boolean onSearchClicked(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            adapter.getFilter().filter(searchField.getText().toString());
+            hideKeyboard();
+            return true;
+        }
 
-    @OnTextChanged(R.id.searchField)
-    void onSearchTextChanged(CharSequence cs) {
-        adapter.getFilter().filter(cs);
+        return false;
     }
 
     @Override
@@ -127,5 +135,17 @@ public class SelectFriendsListFragment extends BaseFragment implements SelectFri
     @Override
     public void onChatRoomCreated(int roomId) {
         ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(getId()), true);
+    }
+
+    @Override
+    public void onImeBack(SearchEditText ctrl, String text) {
+        adapter.getFilter().filter(searchField.getText().toString());
+        hideKeyboard();
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(searchField.getWindowToken(),
+                InputMethodManager.RESULT_UNCHANGED_SHOWN);
     }
 }
