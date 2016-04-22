@@ -6,7 +6,6 @@ import com.citifleet.model.ChatRoom;
 import com.citifleet.model.PagesResult;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
-import com.citifleet.util.Constants;
 
 import java.util.List;
 
@@ -17,10 +16,11 @@ import retrofit2.Response;
 /**
  * Created by vika on 12.04.16.
  */
-public class  ChatRoomPresenter {
+public class ChatRoomPresenter {
     private ChatRoomsListView view;
     private NetworkManager networkManager;
     private int offset = 0;
+    private int totalItemsCount = 0;
     private boolean isLoading = false;
 
     public ChatRoomPresenter(ChatRoomsListView view, NetworkManager networkManager) {
@@ -28,15 +28,25 @@ public class  ChatRoomPresenter {
         this.networkManager = networkManager;
     }
 
-    public void loadNextPage() {
-        if (!isLoading) {
+    public void loadNextPage(int adapterSize) {
+        if (!isLoading && adapterSize < totalItemsCount) {
             loadAllChatRooms(null);
         }
     }
 
+    public void onNewChatRoom() {
+        offset++;
+        totalItemsCount++;
+    }
+
+    public void onNewMessageWithoutChatRoom(){
+        offset++;
+        totalItemsCount++;
+    }
+
     public void search(String query) {
         if (!isLoading) {
-            if(query.length()==0){
+            if (query.length() == 0) {
                 query = null;
             }
             offset = 0;
@@ -63,8 +73,9 @@ public class  ChatRoomPresenter {
             view.stopLoading();
             isLoading = false;
             if (response.isSuccess()) {
+                totalItemsCount = response.body().getCount();
                 view.onChatRoomsListLoaded(response.body().getResults());
-                offset = offset + Constants.PAGE_SIZE;
+                offset = offset + 10;
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }

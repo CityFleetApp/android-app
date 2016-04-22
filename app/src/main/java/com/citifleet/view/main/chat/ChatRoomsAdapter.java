@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.citifleet.R;
 import com.citifleet.model.ChatFriend;
-import com.citifleet.model.ChatMessage;
 import com.citifleet.model.ChatRoom;
 import com.citifleet.util.ChatRoomImageView;
 import com.citifleet.util.Constants;
@@ -77,25 +76,6 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         notifyDataSetChanged();
     }
 
-    public void onNewMessage(ChatMessage chatMessage) {
-        ChatRoom chatRoomWithNewMessage = null;
-        for (ChatRoom chatRoom : chatList) {
-            if (chatRoom.getId() == chatMessage.getRoom()) {
-                chatRoomWithNewMessage = chatRoom;
-                if (chatMessage.getAuthor()!= PrefUtil.getId(context)) {
-                    chatRoom.setUnseen(chatRoom.getUnseen() + 1);
-                }
-                chatRoom.setLastMessage(chatMessage.getText());
-                chatRoom.setLastMessageTimestamp(chatMessage.getCreated());
-                break;
-            }
-        }
-        if (chatRoomWithNewMessage != null) {
-            chatList.remove(chatRoomWithNewMessage);
-            chatList.add(0, chatRoomWithNewMessage);
-        }
-        notifyDataSetChanged();
-    }
 
     public void markMessageAsSeen(int roomId) {
         for (ChatRoom chatRoom : chatList) {
@@ -105,6 +85,10 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
                 break;
             }
         }
+    }
+
+    public List<ChatRoom> getChatList() {
+        return chatList;
     }
 
     public void addItems(List<ChatRoom> chatList) {

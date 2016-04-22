@@ -70,7 +70,6 @@ public class ChatDetailFragment extends BaseFragment {
         title.setText(R.string.chatting);
         adapter = new ChatMessagesAdapter(getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        //linearLayoutManager.setStackFromEnd(true);
         linearLayoutManager.setReverseLayout(true);
         chatList.setLayoutManager(linearLayoutManager);
         chatList.setAdapter(adapter);
@@ -125,7 +124,9 @@ public class ChatDetailFragment extends BaseFragment {
         scrollListener = new EndlessRecyclerOnScrollListener(llm) {
             @Override
             public void onLoadMore(int current_page) {
-                loadChatHistory();
+                if (adapter.getItemCount() < totalMessagesCount) {
+                    loadChatHistory();
+                }
             }
         };
         chatList.addOnScrollListener(scrollListener);
@@ -148,7 +149,8 @@ public class ChatDetailFragment extends BaseFragment {
                     offset++;
                     totalMessagesCount++;
                     adapter.addMessage(event.getChatMessage());
-                    chatList.getLayoutManager().scrollToPosition(adapter.getItemCount() - 1);
+//                    chatList.getLayoutManager().scrollToPosition(0);
+//                    chatList.getLayoutManager().scrollToPosition(adapter.getItemCount() - 1);
                     EventBus.getDefault().post(new MarkMessageSeenEvent(new MarkRoomAsRead(chatId)));
                 }
             }

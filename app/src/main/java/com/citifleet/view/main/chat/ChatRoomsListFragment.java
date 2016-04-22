@@ -16,11 +16,15 @@ import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
+import com.citifleet.model.ChatFriend;
+import com.citifleet.model.ChatMessage;
 import com.citifleet.model.ChatRoom;
+import com.citifleet.util.Constants;
 import com.citifleet.util.DividerItemDecoration;
 import com.citifleet.util.EndlessRecyclerOnScrollListener;
 import com.citifleet.util.MarkMessageSeenEvent;
 import com.citifleet.util.NewMessageEvent;
+import com.citifleet.util.PrefUtil;
 import com.citifleet.util.RoomInvitationEvent;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
@@ -57,7 +61,7 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
         if (adapter == null) {
             adapter = new ChatRoomsAdapter(this, getContext());
             presenter = new ChatRoomPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
-            presenter.loadNextPage();
+            presenter.loadNextPage(Constants.DEFAULT_UNSELECTED_POSITION);
         }
         chatRoomsList.setLayoutManager(new LinearLayoutManager(getContext()));
         chatRoomsList.setAdapter(adapter);
@@ -120,7 +124,7 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
         scrollListener = new EndlessRecyclerOnScrollListener(llm) {
             @Override
             public void onLoadMore(int current_page) {
-                presenter.loadNextPage();
+                presenter.loadNextPage(adapter.getItemCount());
             }
         };
         chatRoomsList.addOnScrollListener(scrollListener);
@@ -137,7 +141,50 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                adapter.onNewMessage(event.getChatMessage());
+
+                ChatMessage chatMessage = event.getChatMessage();
+                ChatRoom chatRoomWithNewMessage = null;
+                for (ChatRoom chatRoom : adapter.getChatList()) {
+                    if (chatRoom.getId() == chatMessage.getRoom()) {
+                        chatRoomWithNewMessage = chatRoom;
+                        if (chatMessage.getAuthor() != PrefUtil.getId(getContext())) {
+                            chatRoom.setUnseen(chatRoom.getUnseen() + 1);
+                        }
+                        chatRoom.setLastMessage(chatMessage.getText());
+                        chatRoom.setLastMessageTimestamp(chatMessage.getCreated());
+                        break;
+                    }
+                }
+
+                if (chatRoomWithNewMessage != null) {
+                    adapter.getChatList().remove(chatRoomWithNewMessage);
+                    adapter.getChatList().add(0, chatRoomWithNewMessage);
+                } else {
+
+                    boolean containsSearchWords = false;
+                    if (searchField.getText().toString().isEmpty()) {
+                        containsSearchWords = true;
+                    } else {
+                        for (ChatFriend chatFriend : chatMessage.getParticipants()) {
+                            if (chatFriend.getId() != PrefUtil.getId(getContext()) && chatFriend.getName().toLowerCase().contains(searchField.getText().toString().toLowerCase())) {
+                                containsSearchWords = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (containsSearchWords) {
+                        chatRoomWithNewMessage = new ChatRoom();
+                        chatRoomWithNewMessage.setLastMessage(chatMessage.getText());
+                        chatRoomWithNewMessage.setLastMessageTimestamp(chatMessage.getCreated());
+                        chatRoomWithNewMessage.setUnseen(1);
+                        chatRoomWithNewMessage.setId(chatMessage.getRoom());
+                        chatRoomWithNewMessage.setParticipants(chatMessage.getParticipants());
+                        adapter.getChatList().add(0, chatRoomWithNewMessage);
+                        presenter.onNewMessageWithoutChatRoom();
+                    }
+                }
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -147,18 +194,22 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-//                ChatRoom chatRoom = event.getChatRoom();
-//                boolean containsSearchWords = false;
-//                if(searchField.getText().toString().isEmpty()){
-//                    containsSearchWords = true;
-//                } else{
-//                    for(ChatFriend chatFriend: chatRoom.getParticipants()){
-//                        if(chatFriend.getId()!= PrefUtil.getId(getContext()) && chatFriend.getName().toLowerCase().contains(searchField.getText().toString().toLowerCase())){
-//
-//                        }
-//                    }
-//                } TODO
-                adapter.onNewChatRoom(event.getChatRoom());
+                ChatRoom chatRoom = event.getChatRoom();
+                boolean containsSearchWords = false;
+                if (searchField.getText().toString().isEmpty()) {
+                    containsSearchWords = true;
+                } else {
+                    for (ChatFriend chatFriend : chatRoom.getParticipants()) {
+                        if (chatFriend.getId() != PrefUtil.getId(getContext()) && chatFriend.getName().toLowerCase().contains(searchField.getText().toString().toLowerCase())) {
+                            containsSearchWords = true;
+                            break;
+                        }
+                    }
+                }
+                if (containsSearchWords) {
+                    adapter.onNewChatRoom(event.getChatRoom());
+                    presenter.onNewChatRoom();
+                }
             }
         });
     }

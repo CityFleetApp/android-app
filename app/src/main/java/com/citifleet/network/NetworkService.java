@@ -281,7 +281,7 @@ public interface NetworkService {
     @GET("chat/friends/")
     Call<List<ChatFriend>> getChatFriends();
 
-    @GET("chat/rooms/?limit=" + Constants.PAGE_SIZE)
+    @GET("chat/rooms/?limit=" + 10)
     Call<PagesResult<ChatRoom>> getChatRooms(@Query("search") String search, @Query("offset") int offset);
 
     @FormUrlEncoded

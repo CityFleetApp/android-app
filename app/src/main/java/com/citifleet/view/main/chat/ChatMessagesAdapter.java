@@ -61,13 +61,13 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
     }
 
     public void addItems(List<ChatMessage> chatList) {
-      //  this.chatList.clear();
+        //  this.chatList.clear();
         this.chatList.addAll(chatList);
         notifyDataSetChanged();
     }
 
     public void addMessage(ChatMessage chatMessage) {
-        this.chatList.add(chatMessage);
+        this.chatList.add(0, chatMessage);
         notifyDataSetChanged();
     }
 
@@ -91,9 +91,9 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ChatMessage chatMessage = chatList.get(position);
         holder.chatMessage.setText(chatMessage.getText());
-        ChatFriend author=null;
-        for(ChatFriend friend: chatMessage.getParticipants()){
-            if(friend.getId()==chatMessage.getAuthor()){
+        ChatFriend author = null;
+        for (ChatFriend friend : chatMessage.getParticipants()) {
+            if (friend.getId() == chatMessage.getAuthor()) {
                 author = friend;
             }
         }
