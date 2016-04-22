@@ -57,6 +57,13 @@ public class ChatRoomImageView extends ImageView {
         paint = null;
     }
 
+    public void clearBitmaps() {
+        firstBitmap = null;
+        secondBitmap = null;
+        thirdBitmap = null;
+        fourthBitmap = null;
+    }
+
     public void setBitmap(Bitmap bitmap, int position) {
         switch (position) {
             case 0:

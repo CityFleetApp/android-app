@@ -110,6 +110,12 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
     public void onViewRecycled(ViewHolder holder) {
         super.onViewRecycled(holder);
         Picasso.with(holder.itemView.getContext()).cancelTag(holder.imageTag);
+        for(CustomTarget target: holder.imagesTargets){
+            if(target!=null){
+                Picasso.with(context).cancelRequest(target);
+            }
+        }
+        holder.chatImage.clearBitmaps();
     }
 
     @Override
@@ -130,44 +136,54 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         holder.imageTag = chatRoom.getName() + chatRoom.getId();
         Context context = holder.chatImage.getContext();
         int size = context.getResources().getDimensionPixelSize(R.dimen.friends_list_image_height);
+        for(CustomTarget target: holder.imagesTargets){
+            if(target!=null){
+                Picasso.with(context).cancelRequest(target);
+            }
+        }
+        holder.chatImage.clearBitmaps();
         if (images.size() == 0) {
             holder.chatImage.setBitmaps(((BitmapDrawable) ContextCompat.getDrawable(holder.chatImage.getContext(), R.drawable.default_large)).getBitmap(), null, null, null);
             holder.chatImage.invalidate();
         } else if (images.size() == 1) {
             CustomTarget firstTarget = new CustomTarget(holder.chatImage, 0, new AtomicInteger(1));
+            holder.imagesTargets[0] = firstTarget;
             Picasso.with(holder.itemView.getContext()).load(images.get(0)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(firstTarget);
-            holder.imagesTargets[0] = firstTarget;
         } else if (images.size() == 2) {
             AtomicInteger atomicInteger = new AtomicInteger(2);
             CustomTarget firstTarget = new CustomTarget(holder.chatImage, 0, atomicInteger);
             CustomTarget secondTarget = new CustomTarget(holder.chatImage, 1, atomicInteger);
+            holder.imagesTargets[0] = firstTarget;
+            holder.imagesTargets[1] = secondTarget;
             Picasso.with(holder.itemView.getContext()).load(images.get(0)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(firstTarget);
             Picasso.with(holder.itemView.getContext()).load(images.get(1)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(secondTarget);
-            holder.imagesTargets[0] = firstTarget;
-            holder.imagesTargets[1] = secondTarget;
         } else if (images.size() == 3) {
             AtomicInteger atomicInteger = new AtomicInteger(3);
             CustomTarget firstTarget = new CustomTarget(holder.chatImage, 0, atomicInteger);
             CustomTarget secondTarget = new CustomTarget(holder.chatImage, 1, atomicInteger);
             CustomTarget thirdTarget = new CustomTarget(holder.chatImage, 2, atomicInteger);
+            holder.imagesTargets[0] = firstTarget;
+            holder.imagesTargets[1] = secondTarget;
+            holder.imagesTargets[2] = thirdTarget;
             Picasso.with(holder.itemView.getContext()).load(images.get(0)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(firstTarget);
             Picasso.with(holder.itemView.getContext()).load(images.get(1)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(secondTarget);
             Picasso.with(holder.itemView.getContext()).load(images.get(2)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(thirdTarget);
-            holder.imagesTargets[0] = firstTarget;
-            holder.imagesTargets[1] = secondTarget;
-            holder.imagesTargets[2] = thirdTarget;
         } else if (images.size() > 3) {
             AtomicInteger atomicInteger = new AtomicInteger(4);
             CustomTarget firstTarget = new CustomTarget(holder.chatImage, 0, atomicInteger);
             CustomTarget secondTarget = new CustomTarget(holder.chatImage, 1, atomicInteger);
             CustomTarget thirdTarget = new CustomTarget(holder.chatImage, 2, atomicInteger);
             CustomTarget forthTarget = new CustomTarget(holder.chatImage, 3, atomicInteger);
+            holder.imagesTargets[0] = firstTarget;
+            holder.imagesTargets[1] = secondTarget;
+            holder.imagesTargets[2] = thirdTarget;
+            holder.imagesTargets[3] = forthTarget;
             Picasso.with(holder.itemView.getContext()).load(images.get(0)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(firstTarget);
             Picasso.with(holder.itemView.getContext()).load(images.get(1)).resize(size, size).centerCrop().
@@ -176,10 +192,6 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
                     tag(holder.imageTag).into(thirdTarget);
             Picasso.with(holder.itemView.getContext()).load(images.get(3)).resize(size, size).centerCrop().
                     tag(holder.imageTag).into(forthTarget);
-            holder.imagesTargets[0] = firstTarget;
-            holder.imagesTargets[1] = secondTarget;
-            holder.imagesTargets[2] = thirdTarget;
-            holder.imagesTargets[3] = forthTarget;
         }
 
         String chatNameString = chatName.substring(0, chatName.lastIndexOf(","));
