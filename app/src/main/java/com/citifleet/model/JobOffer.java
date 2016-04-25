@@ -26,6 +26,7 @@ public class JobOffer {
     private String jobType;
     private String instructions;
     private String status;
+    private boolean awarded;
     @Expose
     private int vehicleTypeId = Constants.DEFAULT_UNSELECTED_POSITION;
     @Expose
@@ -133,5 +134,13 @@ public class JobOffer {
 
     public void setJobTypeId(int jobTypeId) {
         this.jobTypeId = jobTypeId;
+    }
+
+    public boolean isAwarded() {
+        return awarded;
+    }
+
+    public void setAwarded(boolean awarded) {
+        this.awarded = awarded;
     }
 }

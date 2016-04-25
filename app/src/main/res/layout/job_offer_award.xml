@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/jobAwardedLbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/job_awarded_lbl_padding"
+        android:text="@string/completed"
+        android:textAllCaps="true"
+        android:textColor="@color/greyText"
+        android:textSize="@dimen/job_awarded_lbl_size"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:divider="@drawable/empty_tall_divider"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:showDividers="middle">
+
+        <ImageView
+            android:id="@+id/star1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/star_big_background" />
+
+        <ImageView
+            android:id="@+id/star2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/star_big_background" />
+
+        <ImageView
+            android:id="@+id/star3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/star_big_background" />
+
+        <ImageView
+            android:id="@+id/star4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/star_big_background" />
+
+        <ImageView
+            android:id="@+id/star5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/star_big_background" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/paid_on_time"
+            android:textAllCaps="true"
+            android:textColor="@color/bottom_button_textcolor" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/paidOnTimeSwitcher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/reg_edittext_padding"
+        android:layout_marginLeft="@dimen/splash_btn_margin_small"
+        android:layout_marginRight="@dimen/splash_btn_margin_small"
+        android:layout_marginTop="@dimen/reg_edittext_padding"
+        android:background="@drawable/red_btn_background"
+        android:text="@string/submit"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:src="@drawable/like_extra_big" />
+    </RelativeLayout>
+</LinearLayout>

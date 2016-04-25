@@ -214,6 +214,10 @@ public interface NetworkService {
     @POST("marketplace/offers/{id}/request_job/")
     Call<Void> requestJob(@Path("id") int id);
 
+    @FormUrlEncoded
+    @POST("marketplace/offers/{id}/complete_job/")
+    Call<Void> completeJob(@Path("id") int id, @Field("rating") int rating, @Field("paid_on_time") boolean paidOnTime);
+
     @GET("marketplace/offers/{id}/")
     Call<JobOffer> getJobOfferInfo(@Path("id") int id);
 

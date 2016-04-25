@@ -19,6 +19,7 @@ import com.citifleet.model.JobOfferStatus;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 import com.citifleet.util.Constants;
+import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 
 import org.parceler.Parcels;
@@ -70,6 +71,8 @@ public class JobInfoFragment extends BaseFragment {
     ProgressBar progressBar;
     @Bind(R.id.requestBtn)
     Button requestBtn;
+    @Bind(R.id.jobAwardedLbl)
+    TextView jobAwardedLbl;
     private JobOffer jobOffer;
     private int jobId;
 
@@ -113,26 +116,33 @@ public class JobInfoFragment extends BaseFragment {
         suiteTieLbl.setText(jobOffer.isSuite() ? getString(R.string.yes) : getString(R.string.no));
         companyPersonalLbl.setText("");
         jobTypeLbl.setText(jobOffer.getJobType());
-        if (jobOffer.getStatus().equals(JobOfferStatus.COVERED.name())) {
+        if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.COVERED.name()) && jobOffer.isAwarded()) {
+            jobAwardedLbl.setVisibility(View.VISIBLE);
             requestBtn.setText(R.string.complete_job);
+        } else if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.COVERED.name())) {
+            requestBtn.setVisibility(View.GONE);
         } else {
+            jobAwardedLbl.setVisibility(View.GONE);
             requestBtn.setText(R.string.request_job);
         }
     }
 
     @OnClick(R.id.requestBtn)
     void onRequestBtnClick() {
-        NetworkManager networkManager = CitiFleetApp.getInstance().getNetworkManager();
-        if (networkManager.isConnectedOrConnecting()) {
-            Call<Void> call = null;
-            if (jobOffer.getStatus().equals(JobOfferStatus.COVERED.name())) {
-                //TODO
-            } else {
-                call = networkManager.getNetworkClient().requestJob(jobOffer.getId());
-            }
-            call.enqueue(requestCallback);
+        if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.COVERED.name()) && jobOffer.isAwarded()) {
+            JobOfferAwardFragment fragment = new JobOfferAwardFragment();
+            Bundle args = new Bundle();
+            args.putInt(Constants.JOB_OFFER_ID_TAG, jobOffer.getId());
+            fragment.setArguments(args);
+            ((BaseActivity) getActivity()).changeFragment(fragment, true);
         } else {
-            Toast.makeText(getActivity(), getString(R.string.networkMesMoInternet), Toast.LENGTH_LONG).show();
+            NetworkManager networkManager = CitiFleetApp.getInstance().getNetworkManager();
+            if (networkManager.isConnectedOrConnecting()) {
+                Call<Void> call = networkManager.getNetworkClient().requestJob(jobOffer.getId());
+                call.enqueue(requestCallback);
+            } else {
+                Toast.makeText(getActivity(), getString(R.string.networkMesMoInternet), Toast.LENGTH_LONG).show();
+            }
         }
     }
 

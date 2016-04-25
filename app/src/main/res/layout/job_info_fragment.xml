@@ -18,6 +18,19 @@
             android:orientation="vertical"
             android:showDividers="middle">
 
+            <TextView
+                android:id="@+id/jobAwardedLbl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/job_awarded_lbl_padding"
+                android:text="@string/job_awarded"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:textColor="@color/job_awarded_lbl"
+                android:textSize="@dimen/job_awarded_lbl_size" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -243,9 +256,9 @@
                         android:id="@+id/suitTieLbl"
                         style="@style/RegistrationEdittextStyle"
                         android:layout_width="wrap_content"
-                        android:textAllCaps="true"
                         android:layout_height="wrap_content"
-                        android:text="$150" />
+                        android:text="$150"
+                        android:textAllCaps="true" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -302,7 +315,7 @@
                 android:layout_marginLeft="@dimen/splash_btn_margin_small"
                 android:layout_marginRight="@dimen/splash_btn_margin_small"
                 android:layout_marginTop="@dimen/reg_edittext_padding"
-                android:background="@drawable/green_btn_background"
+                android:background="@drawable/red_btn_background"
                 android:text="@string/request_job"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"

@@ -45,4 +45,5 @@
     <color name="chat_date_color">#5e5f56</color>
     <color name="friend_list_text_color">#50555b</color>
     <color name="unread_message_color">#262ec5b6</color>
+    <color name="job_awarded_lbl">#fea01c</color>
 </resources>
