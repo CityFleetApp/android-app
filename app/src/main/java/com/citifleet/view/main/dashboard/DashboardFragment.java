@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -118,6 +119,7 @@ public class DashboardFragment extends BaseFragment implements DashboardView {
 
     private void launchCamera() {
         Intent intent = new Intent(Constants.ACTION_PICK_IMAGE_CAMERA);
+        intent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(getFileForProfileFromCamera()));
         startActivityForResult(intent, REQUEST_CAMERA);
     }
