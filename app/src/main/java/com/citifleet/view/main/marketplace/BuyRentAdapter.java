@@ -1,7 +1,6 @@
 package com.citifleet.view.main.marketplace;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -79,7 +78,6 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
     }
 
     public void setList(List<Car> carList) {
-        this.list.clear();
         this.list.addAll(carList);
     }
 

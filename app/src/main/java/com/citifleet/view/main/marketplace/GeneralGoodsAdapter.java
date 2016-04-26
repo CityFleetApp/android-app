@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.citifleet.R;
-import com.citifleet.model.Car;
 import com.citifleet.model.GeneralGood;
 import com.squareup.picasso.Picasso;
 
@@ -70,7 +69,6 @@ public class GeneralGoodsAdapter extends RecyclerView.Adapter<GeneralGoodsAdapte
     }
 
     public void setList(List<GeneralGood> generalGoodList) {
-        this.list.clear();
         this.list.addAll(generalGoodList);
     }
 

@@ -18,6 +18,7 @@ import com.citifleet.CitiFleetApp;
 import com.citifleet.R;
 import com.citifleet.model.GeneralGood;
 import com.citifleet.util.Constants;
+import com.citifleet.util.EndlessStaggeredScollListener;
 import com.citifleet.view.BaseFragment;
 
 import org.parceler.Parcels;
@@ -40,6 +41,7 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
     TextView title;
     private GeneralGoodsAdapter adapter;
     private GeneralGoodsPresenter presenter;
+    private EndlessStaggeredScollListener scrollListener;
 
     @Nullable
     @Override
@@ -50,9 +52,11 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
         marketplaceList.setLayoutManager(layoutManager);
         adapter = new GeneralGoodsAdapter(getActivity());
         marketplaceList.setAdapter(adapter);
+        setScrollListener(layoutManager);
         presenter = new GeneralGoodsPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
-        presenter.loadGeneralGoodsList();
+        presenter.loadGeneralGoodsList(Constants.DEFAULT_UNSELECTED_POSITION, 1);
         adapter.setClickListener(this);
+
         title.setText(R.string.general_goods_for_sale);
         return view;
     }
@@ -60,6 +64,16 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
     @OnClick(R.id.backBtn)
     void onBackBtnClick() {
         getActivity().onBackPressed();
+    }
+
+    private void setScrollListener(StaggeredGridLayoutManager llm) {
+        scrollListener = new EndlessStaggeredScollListener(llm) {
+            @Override
+            public void onLoadMore(int current_page) {
+                presenter.loadGeneralGoodsList(adapter.getItemCount(), current_page);
+            }
+        };
+        marketplaceList.addOnScrollListener(scrollListener);
     }
 
     @Override

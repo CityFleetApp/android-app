@@ -1,34 +1,34 @@
 package com.citifleet.util;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 
 /**
- * Created by vika on 21.04.16.
+ * Created by vika on 26.04.16.
  */
-public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener {
-    public static String TAG = EndlessRecyclerOnScrollListener.class.getSimpleName();
+public abstract class EndlessStaggeredScollListener extends RecyclerView.OnScrollListener {
+    public static String TAG = EndlessStaggeredScollListener.class.getSimpleName();
 
     private int previousTotal = 0; // The total number of items in the dataset after the last load
     private boolean loading = true; // True if we are still waiting for the last set of data to load.
-    private int visibleThreshold = 5; // The minimum amount of items to have below your current scroll position before loading more.
+    private int visibleThreshold = 6; // The minimum amount of items to have below your current scroll position before loading more.
     int firstVisibleItem, visibleItemCount, totalItemCount;
 
     private int current_page = 1;
 
-    private LinearLayoutManager mLinearLayoutManager;
+    private StaggeredGridLayoutManager layoutManager;
 
-    public EndlessRecyclerOnScrollListener(LinearLayoutManager linearLayoutManager) {
-        this.mLinearLayoutManager = linearLayoutManager;
+    public EndlessStaggeredScollListener(StaggeredGridLayoutManager layoutManager) {
+        this.layoutManager = layoutManager;
     }
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
-
-        visibleItemCount = mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
-        totalItemCount = mLinearLayoutManager.getItemCount();
-        firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+        visibleItemCount = layoutManager.getChildCount();
+        totalItemCount = layoutManager.getItemCount();
+        int[] firstPositions = layoutManager.findFirstVisibleItemPositions(null);
+        firstVisibleItem = firstPositions[0];
 
         if (loading) {
             if (totalItemCount > previousTotal) {
@@ -47,16 +47,6 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
 
             loading = true;
         }
-    }
-
-    public void reset() {
-        previousTotal = 0;
-        loading = true;
-        visibleThreshold = 5;
-        firstVisibleItem = 0;
-        visibleItemCount = 0;
-        totalItemCount = 0;
-        current_page = 1;
     }
 
     public abstract void onLoadMore(int current_page);

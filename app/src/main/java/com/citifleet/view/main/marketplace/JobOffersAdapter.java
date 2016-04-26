@@ -60,8 +60,11 @@ public class JobOffersAdapter extends RecyclerView.Adapter<JobOffersAdapter.View
     }
 
     public void setList(List<JobOffer> list) {
-        this.list.clear();
         this.list.addAll(list);
+    }
+
+    public void clearList() {
+        this.list.clear();
     }
 
     @Override

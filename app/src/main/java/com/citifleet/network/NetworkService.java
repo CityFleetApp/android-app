@@ -155,10 +155,10 @@ public interface NetworkService {
     Call<Settings> changeSettings(@Field("notifications_enabled") boolean notificationsEnabled, @Field("chat_privacy") boolean chatPrivacy, @Field("visible") boolean visible);
 
     @GET("marketplace/cars/sale/")
-    Call<List<Car>> getCarsForSale();
+    Call<PagesResult<Car>> getCarsForSale(@Query("page") int page);
 
     @GET("marketplace/cars/rent/")
-    Call<List<Car>> getCarsForRent();
+    Call<PagesResult<Car>> getCarsForRent(@Query("page") int page);
 
     @GET("marketplace/cars/make/")
     Call<List<CarOption>> getCarMakes();
@@ -179,10 +179,10 @@ public interface NetworkService {
     Call<List<CarOption>> getCarFuels();
 
     @GET("marketplace/goods/")
-    Call<List<GeneralGood>> getGoods();
+    Call<PagesResult<GeneralGood>> getGoods(@Query("page") int page);
 
     @GET("marketplace/offers/")
-    Call<List<JobOffer>> getOffers();
+    Call<PagesResult<JobOffer>> getOffers(@Query("page") int page, @Query("status") String status);
 
     @Multipart
     @POST("marketplace/cars/posting/rent/")

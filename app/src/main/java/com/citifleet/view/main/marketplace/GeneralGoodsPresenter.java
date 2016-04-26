@@ -3,6 +3,7 @@ package com.citifleet.view.main.marketplace;
 import android.util.Log;
 
 import com.citifleet.model.GeneralGood;
+import com.citifleet.model.PagesResult;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 
@@ -17,37 +18,41 @@ import retrofit2.Callback;
 public class GeneralGoodsPresenter {
     private NetworkManager networkManager;
     private GeneralGoodsView view;
+    private int totalCount;
 
     public GeneralGoodsPresenter(NetworkManager networkManager, GeneralGoodsView view) {
         this.networkManager = networkManager;
         this.view = view;
     }
 
-    public void loadGeneralGoodsList() {
-        if (networkManager.isConnectedOrConnecting()) {
-            view.startLoading();
-            Call<List<GeneralGood>> call = networkManager.getNetworkClient().getGoods();
-            call.enqueue(goodsCallback);
-        } else {
-            view.stopLoading();
-            view.onNetworkError();
+    public void loadGeneralGoodsList(int currentTotalCount, int page) {
+        if (currentTotalCount < totalCount) {
+            if (networkManager.isConnectedOrConnecting()) {
+                view.startLoading();
+                Call<PagesResult<GeneralGood>> call = networkManager.getNetworkClient().getGoods(page);
+                call.enqueue(goodsCallback);
+            } else {
+                view.stopLoading();
+                view.onNetworkError();
+            }
         }
     }
 
-    private Callback<List<GeneralGood>> goodsCallback = new Callback<List<GeneralGood>>() {
+    private Callback<PagesResult<GeneralGood>> goodsCallback = new Callback<PagesResult<GeneralGood>>() {
 
         @Override
-        public void onResponse(Call<List<GeneralGood>> call, retrofit2.Response<List<GeneralGood>> response) {
+        public void onResponse(Call<PagesResult<GeneralGood>> call, retrofit2.Response<PagesResult<GeneralGood>> response) {
             view.stopLoading();
             if (!response.isSuccessful()) {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             } else {
-                view.onListLoaded(response.body());
+                totalCount = response.body().getCount();
+                view.onListLoaded(response.body().getResults());
             }
         }
 
         @Override
-        public void onFailure(Call<List<GeneralGood>> call, Throwable t) {
+        public void onFailure(Call<PagesResult<GeneralGood>> call, Throwable t) {
             Log.e(BuyRentPresenter.class.getName(), t.getMessage());
             view.stopLoading();
             view.onFailure(t.getMessage());

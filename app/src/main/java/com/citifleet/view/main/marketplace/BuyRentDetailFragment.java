@@ -18,6 +18,7 @@ import com.citifleet.R;
 import com.citifleet.model.Car;
 import com.citifleet.model.CarPostingType;
 import com.citifleet.util.Constants;
+import com.citifleet.util.EndlessStaggeredScollListener;
 import com.citifleet.view.BaseFragment;
 
 import org.parceler.Parcels;
@@ -38,6 +39,7 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
     private BuyRentAdapter adapter;
     private BuyRentPresenter presenter;
     private CarPostingType type;
+    private EndlessStaggeredScollListener scrollListener;
 
     @Nullable
     @Override
@@ -50,10 +52,11 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
         adapter = new BuyRentAdapter(getActivity());
         marketplaceList.setAdapter(adapter);
         adapter.setClickListener(this);
+        setScrollListener(layoutManager);
         //marketplaceList.addItemDecoration(new SpacesItemDecoration((int) getResources().getDimension(R.dimen.marketplace_space)));
         // marketplaceList.addOnItemTouchListener(new RecycleViewClickListener(getActivity(), onItemClickListener));
         presenter = new BuyRentPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
-        presenter.loadCarList(type);
+        presenter.loadCarList(type, Constants.DEFAULT_UNSELECTED_POSITION, 1);
         return view;
     }
 
@@ -61,6 +64,16 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    private void setScrollListener(StaggeredGridLayoutManager llm) {
+        scrollListener = new EndlessStaggeredScollListener(llm) {
+            @Override
+            public void onLoadMore(int current_page) {
+                presenter.loadCarList(type, adapter.getItemCount(), current_page);
+            }
+        };
+        marketplaceList.addOnScrollListener(scrollListener);
     }
 
     @Override

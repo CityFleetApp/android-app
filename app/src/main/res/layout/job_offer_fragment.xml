@@ -108,6 +108,7 @@
                     style="@style/RegistrationEdittextStyle"
                     fontPath="@string/fontLight"
                     android:hint="@string/enter_pickup_address"
+                    android:singleLine="true"
                     tools:ignore="MissingPrefix" />
 
             </LinearLayout>
@@ -134,6 +135,7 @@
                     style="@style/RegistrationEdittextStyle"
                     fontPath="@string/fontLight"
                     android:hint="@string/enter_destination"
+                    android:singleLine="true"
                     android:inputType="text"
                     tools:ignore="MissingPrefix" />
 
@@ -161,6 +163,7 @@
                     fontPath="@string/fontLight"
                     android:hint="@string/enter_fare"
                     android:inputType="numberDecimal"
+                    android:singleLine="true"
                     tools:ignore="MissingPrefix" />
 
             </LinearLayout>
@@ -188,6 +191,7 @@
                     fontPath="@string/fontLight"
                     android:hint="@string/enter_gratuity"
                     android:inputType="numberDecimal"
+                    android:singleLine="true"
                     tools:ignore="MissingPrefix" />
 
             </LinearLayout>
@@ -320,6 +324,7 @@
                     fontPath="@string/fontLight"
                     android:hint="@string/enter_instructions"
                     android:inputType="text"
+                    android:singleLine="true"
                     tools:ignore="MissingPrefix" />
 
             </LinearLayout>

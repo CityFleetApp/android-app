@@ -16,6 +16,7 @@ import com.citifleet.R;
 import com.citifleet.model.JobOffer;
 import com.citifleet.util.Constants;
 import com.citifleet.util.DividerItemDecoration;
+import com.citifleet.util.EndlessRecyclerOnScrollListener;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 
@@ -43,6 +44,7 @@ public class JobOffersFragment extends BaseFragment implements JobOffersPresente
     TextView availableBtnLbl;
     private JobOffersAdapter adapter;
     private JobOffersPresenter presenter;
+    private EndlessRecyclerOnScrollListener scrollListener;
 
     @Nullable
     @Override
@@ -55,14 +57,26 @@ public class JobOffersFragment extends BaseFragment implements JobOffersPresente
         jobsListView.setAdapter(adapter);
         jobsListView.addItemDecoration(new DividerItemDecoration(getContext()));
         presenter = new JobOffersPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
-        presenter.loadJobOffersList();
+        presenter.loadJobOffersList(Constants.DEFAULT_UNSELECTED_POSITION, 1, true);
         toggleSelectionOfFilters(true);
+        setScrollListener((LinearLayoutManager) jobsListView.getLayoutManager());
         return view;
     }
 
     @OnClick(R.id.backBtn)
     void onBackBtnClick() {
         getActivity().onBackPressed();
+    }
+
+    private void setScrollListener(LinearLayoutManager llm) {
+        scrollListener = new EndlessRecyclerOnScrollListener(llm) {
+            @Override
+            public void onLoadMore(int current_page) {
+                boolean isAllAvailable = allBtnLbl.getAlpha() == Constants.ENABLED_LAYOUT_ALPHA;
+                presenter.loadJobOffersList(adapter.getItemCount(), current_page, isAllAvailable);
+            }
+        };
+        jobsListView.addOnScrollListener(scrollListener);
     }
 
     @Override
@@ -97,6 +111,11 @@ public class JobOffersFragment extends BaseFragment implements JobOffersPresente
     }
 
     @Override
+    public void clearList() {
+        adapter.clearList();
+    }
+
+    @Override
     public void onListLoaded(List<JobOffer> jobOfferList) {
         adapter.setList(jobOfferList);
         adapter.notifyDataSetChanged();
@@ -105,6 +124,11 @@ public class JobOffersFragment extends BaseFragment implements JobOffersPresente
     @Override
     public void setAvailableJobsCount(int count) {
         availableBtnLbl.setText(getString(R.string.jobs_available, count));
+    }
+
+    @Override
+    public void resetScrollListener() {
+        scrollListener.reset();
     }
 
     @OnClick(R.id.allBtn)

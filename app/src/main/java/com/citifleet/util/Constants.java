@@ -55,4 +55,7 @@ public class Constants {
     public static final String JOB_OFFER_ID_TAG = "job_offer_id_tag";
     public static final String NOTIFICATION_ID_TAG = "notification_id_tag";
     public static final int NEW_MESSAGE_NOTIF_ID = 0;
+    public static final int NEW_JOB_OFFER_NOTIF_ID = 1;
+    public static final int JOB_OFFER_COVERED_NOTIF_ID = 2;
+    public static final int ADMIN_NOTIF_ID = 3;
 }

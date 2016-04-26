@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.citifleet.model.Car;
 import com.citifleet.model.CarPostingType;
+import com.citifleet.model.PagesResult;
 import com.citifleet.network.NetworkErrorUtil;
 import com.citifleet.network.NetworkManager;
 
@@ -18,42 +19,46 @@ import retrofit2.Callback;
 public class BuyRentPresenter {
     private NetworkManager networkManager;
     private BuyRentView view;
+    private int totalCount;
 
     public BuyRentPresenter(NetworkManager networkManager, BuyRentView view) {
         this.networkManager = networkManager;
         this.view = view;
     }
 
-    public void loadCarList(CarPostingType type) {
-        if (networkManager.isConnectedOrConnecting()) {
-            view.startLoading();
-            Call<List<Car>> call;
-            if (type == CarPostingType.RENT) {
-                call = networkManager.getNetworkClient().getCarsForRent();
+    public void loadCarList(CarPostingType type, int currentTotalCount, int page) {
+        if (currentTotalCount < totalCount) {
+            if (networkManager.isConnectedOrConnecting()) {
+                view.startLoading();
+                Call<PagesResult<Car>> call;
+                if (type == CarPostingType.RENT) {
+                    call = networkManager.getNetworkClient().getCarsForRent(page);
+                } else {
+                    call = networkManager.getNetworkClient().getCarsForSale(page);
+                }
+                call.enqueue(carCallback);
             } else {
-                call = networkManager.getNetworkClient().getCarsForSale();
+                view.stopLoading();
+                view.onNetworkError();
             }
-            call.enqueue(carCallback);
-        } else {
-            view.stopLoading();
-            view.onNetworkError();
         }
     }
 
-    private Callback<List<Car>> carCallback = new Callback<List<Car>>() {
+    private Callback<PagesResult<Car>> carCallback = new Callback<PagesResult<Car>>() {
 
         @Override
-        public void onResponse(Call<List<Car>> call, retrofit2.Response<List<Car>> response) {
+        public void onResponse(Call<PagesResult<Car>> call, retrofit2.Response<PagesResult<Car>> response) {
             view.stopLoading();
             if (!response.isSuccessful()) {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             } else {
-                view.onListLoaded(response.body());
+                totalCount = response.body().getCount();
+                view.onListLoaded(response.body().getResults());
             }
         }
 
         @Override
-        public void onFailure(Call<List<Car>> call, Throwable t) {
+        public void onFailure(Call<PagesResult<Car>> call, Throwable t) {
             Log.e(BuyRentPresenter.class.getName(), t.getMessage());
             view.stopLoading();
             view.onFailure(t.getMessage());

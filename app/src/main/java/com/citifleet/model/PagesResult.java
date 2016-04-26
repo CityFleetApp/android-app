@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class PagesResult<T> {
     private int count;
+    private int available;
     private String next;
     private String previous;
     private List<T> results;
@@ -37,6 +38,14 @@ public class PagesResult<T> {
 
     public List<T> getResults() {
         return results;
+    }
+
+    public int getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(int available) {
+        this.available = available;
     }
 
     public void setResults(List<T> results) {
