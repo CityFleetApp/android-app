@@ -195,9 +195,11 @@ public class ChatDetailFragment extends BaseFragment {
 
         @Override
         public void onFailure(Call<PagesResult<ChatMessage>> call, Throwable t) {
-            Log.e(ChatDetailFragment.class.getName(), t.getMessage());
-            stopLoading();
-            onFailureMessage(t.getMessage());
+            if (t.getMessage() != null) {
+                Log.e(ChatDetailFragment.class.getName(), t.getMessage());
+                stopLoading();
+                onFailureMessage(t.getMessage());
+            }
         }
     };
 

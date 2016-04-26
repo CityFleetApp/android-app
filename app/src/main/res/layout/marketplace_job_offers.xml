@@ -70,7 +70,7 @@
                 android:drawablePadding="@dimen/notification_divider_margin"
                 android:gravity="right"
                 android:padding="@dimen/notification_button_padding"
-                android:text="8 Jobs Available"
+                android:text="0 Jobs Available"
                 android:textColor="@android:color/white" />
         </RelativeLayout>
     </LinearLayout>

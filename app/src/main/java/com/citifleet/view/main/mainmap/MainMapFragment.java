@@ -152,7 +152,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     @Subscribe(sticky = true)
-    public void onEvent(ReportDeletedEvent event) {
+    public void onEventMainThread(ReportDeletedEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         boolean isRemoved = nearbyReportsList.remove(event.getReport());
         if (isRemoved) {
@@ -164,6 +164,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             }
         }
     }
+
 
     private void addReportMarkerToMap(Report report) {
         int iconResId = ReportType.values()[report.getReportType() - 1].getPinIconResId();

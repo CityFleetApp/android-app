@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,6 +43,7 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
 
     public ChatMessagesAdapter(Context context) {
         this.context = context;
+        simpleDateFormatFromServer.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
