@@ -129,7 +129,10 @@ public interface NetworkService {
     Call<List<Notification>> getNotifications();
 
     @POST("notifications/{id}/mark-seen/")
-    Call<Void> getNotificationById(@Path("id") int id);
+    Call<Void> markNotificationSeen(@Path("id") int id);
+
+    @GET("notifications/{id}/")
+    Call<Notification> getNotificationInfo(@Path("id") int id);
 
     @GET("documents/")
     Call<List<Document>> getDocuments();

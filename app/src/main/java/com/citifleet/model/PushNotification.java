@@ -3,7 +3,7 @@ package com.citifleet.model;
 /**
  * Created by vika on 22.04.16.
  */
-public class JobOfferCoveredNotification {
+public class PushNotification {
     private int id;
     private String type;
     private String title;

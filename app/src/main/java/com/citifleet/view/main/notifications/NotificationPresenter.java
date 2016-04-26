@@ -39,7 +39,7 @@ public class NotificationPresenter {
     }
 
     public void setNotificationIsSeen(int id) {
-        Call<Void> call = networkManager.getNetworkClient().getNotificationById(id);
+        Call<Void> call = networkManager.getNetworkClient().markNotificationSeen(id);
         call.enqueue(markSeenNotificationCallback);
     }
 

@@ -14,7 +14,7 @@ import com.citifleet.R;
 import com.citifleet.model.ChatFriend;
 import com.citifleet.model.ChatMessage;
 import com.citifleet.model.ChatMessageTypes;
-import com.citifleet.model.JobOfferCoveredNotification;
+import com.citifleet.model.PushNotification;
 import com.citifleet.model.Report;
 import com.citifleet.util.Constants;
 import com.citifleet.util.NewReportAddedEvent;
@@ -57,14 +57,17 @@ public class MyGcmListenerService extends GcmListenerService {
                 EventBus.getDefault().post(new ReportDeletedEvent(report));
             }
         } else if (messageObject.has("type")) {
-            if (messageObject.get("type").getAsString().equals(ChatMessageTypes.RECEIVE_MESSAGE.getName())) {
-                Gson gson = new GsonBuilder().create();
+            String type = messageObject.get("type").getAsString();
+            Gson gson = new GsonBuilder().create();
+            if (type.equals(ChatMessageTypes.RECEIVE_MESSAGE.getName())) {
                 ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
                 showNewMessageNotification(chatMessage);
-            } else if (messageObject.get("type").getAsString().equals("offer_covered")) {
-                Gson gson = new GsonBuilder().create();
-                JobOfferCoveredNotification offerCoveredNotification = gson.fromJson(message, JobOfferCoveredNotification.class);
+            } else if (type.equals("offer_covered") || type.equals("offer_created")) {
+                PushNotification offerCoveredNotification = gson.fromJson(message, PushNotification.class);
                 showJobOfferNotification(offerCoveredNotification);
+            } else if (type.equals("new_notification")) {
+                PushNotification newNotification = gson.fromJson(message, PushNotification.class);
+                showNewNotification(newNotification);
             }
         }
     }
@@ -98,7 +101,7 @@ public class MyGcmListenerService extends GcmListenerService {
         }
     }
 
-    private void showJobOfferNotification(JobOfferCoveredNotification offerCoveredNotification) {
+    private void showJobOfferNotification(PushNotification offerCoveredNotification) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Constants.JOB_OFFER_ID_TAG, offerCoveredNotification.getId());
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -114,6 +117,24 @@ public class MyGcmListenerService extends GcmListenerService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(1 /* ID of notification */, notificationBuilder.build());
+    }
+
+    private void showNewNotification(PushNotification newNotification) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(Constants.NOTIFICATION_ID_TAG, newNotification.getId());
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
+
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setContentTitle(newNotification.getTitle())
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(2 /* ID of notification */, notificationBuilder.build());
     }
 }
 
