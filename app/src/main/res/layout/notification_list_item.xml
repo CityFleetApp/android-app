@@ -11,7 +11,7 @@
         android:id="@+id/notificationType"
         style="@style/RegistrationEdittextLabelStyle"
         android:drawableLeft="@drawable/bell"
-        android:text="Type" />
+        android:text="@string/tlc_alert" />
 
     <TextView
         android:id="@+id/notificationTitle"

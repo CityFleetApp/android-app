@@ -148,4 +148,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="job_awarded_lbl_size">17sp</dimen>
     <dimen name="job_awarded_lbl_padding">30dp</dimen>
+    <dimen name="large_image_notification_size">64dp</dimen>
 </resources>

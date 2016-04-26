@@ -54,4 +54,5 @@ public class Constants {
     public static final String CHAT_ID_TAG = "chat_id_tag";
     public static final String JOB_OFFER_ID_TAG = "job_offer_id_tag";
     public static final String NOTIFICATION_ID_TAG = "notification_id_tag";
+    public static final int NEW_MESSAGE_NOTIF_ID = 0;
 }

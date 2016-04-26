@@ -1,9 +1,11 @@
 package com.citifleet.gcm;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import com.citifleet.model.ChatMessage;
 import com.citifleet.model.ChatMessageTypes;
 import com.citifleet.model.PushNotification;
 import com.citifleet.model.Report;
+import com.citifleet.util.CircleTransform;
 import com.citifleet.util.Constants;
 import com.citifleet.util.NewReportAddedEvent;
 import com.citifleet.util.ReportDeletedEvent;
@@ -27,8 +30,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
 
 /**
  * Created by vika on 21.03.16.
@@ -86,18 +92,28 @@ public class MyGcmListenerService extends GcmListenerService {
                     author = friend;
                 }
             }
+            Bitmap authorImage = null;
+            try {
+                int imageSize = getResources().getDimensionPixelSize(R.dimen.large_image_notification_size);
+                authorImage = Picasso.with(getApplicationContext()).load(author.getPhoto()).transform(new CircleTransform()).resize(imageSize, imageSize).centerCrop().get();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                     .setContentTitle(author.getName())
                     .setContentText(chatMessage.getText())
                     .setSmallIcon(R.drawable.ic_stat_name)
                     .setAutoCancel(true)
                     .setSound(defaultSoundUri)
-                    .setContentIntent(pendingIntent);
-
+                    .setContentIntent(pendingIntent)
+                    .setPriority(Notification.PRIORITY_HIGH);
+            if (authorImage != null) {
+                notificationBuilder.setLargeIcon(authorImage);
+            }
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(Constants.NEW_MESSAGE_NOTIF_ID, notificationBuilder.build());
 
-            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
         }
     }
 

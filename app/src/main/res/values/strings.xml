@@ -237,6 +237,7 @@
     <string name="paid_on_time">Paid on time</string>
     <string name="submit">Submit</string>
     <string name="rating_empty">Rating  can\'t be 0!</string>
+    <string name="tlc_alert">TLC Alert</string>
 
     <string-array name="pick_image_options">
         <item>Take Photo</item>
