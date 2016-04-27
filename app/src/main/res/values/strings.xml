@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CitiFleet</string>
+    <string name="app_name">CityFleet</string>
     <string name="fontRegular">Montserrat-Regular.otf</string>
     <string name="fontLight">Montserrat-Light.otf</string>
     <string name="fontSemibold">Montserrat-SemiBold.otf</string>
