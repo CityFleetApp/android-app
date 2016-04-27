@@ -81,7 +81,7 @@ public class EditUserProfileFragment extends BaseFragment implements EditUserPro
             }}, getString(R.string.profile_image_name), this);
         }
         if (userEditInfo!=null && !TextUtils.isEmpty(userEditInfo.getCarMakeDisplay()) && !TextUtils.isEmpty(userEditInfo.getCarModelDisplay())) {
-            drivesLbl.setText(userEditInfo.getCarMakeDisplay() + ", " + userEditInfo.getCarModelDisplay());
+            drivesLbl.setText(userEditInfo.getCarYear()+" "+userEditInfo.getCarMakeDisplay() + " " + userEditInfo.getCarModelDisplay());
         }
         return view;
     }
@@ -225,7 +225,7 @@ public class EditUserProfileFragment extends BaseFragment implements EditUserPro
         phoneEt.setText(info.getPhone());
         usernameEt.setText(info.getUsername());
         if (!TextUtils.isEmpty(info.getCarMakeDisplay()) && !TextUtils.isEmpty(info.getCarModelDisplay())) {
-            drivesLbl.setText(info.getCarMakeDisplay() + ", " + info.getCarModelDisplay());
+            drivesLbl.setText(info.getCarYear()+" "+info.getCarMakeDisplay() + " " + info.getCarModelDisplay());
         }
     }
 
