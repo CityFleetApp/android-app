@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
@@ -36,6 +37,8 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
     RecyclerView marketplaceList;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
+    @Bind(R.id.emptyView)
+    TextView emptyView;
     private BuyRentAdapter adapter;
     private BuyRentPresenter presenter;
     private CarPostingType type;
@@ -53,10 +56,16 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
         marketplaceList.setAdapter(adapter);
         adapter.setClickListener(this);
         setScrollListener(layoutManager);
-        //marketplaceList.addItemDecoration(new SpacesItemDecoration((int) getResources().getDimension(R.dimen.marketplace_space)));
-        // marketplaceList.addOnItemTouchListener(new RecycleViewClickListener(getActivity(), onItemClickListener));
         presenter = new BuyRentPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.loadCarList(type, Constants.DEFAULT_UNSELECTED_POSITION, 1);
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                emptyView.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+                marketplaceList.setVisibility(adapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
+            }
+        });
         return view;
     }
 
@@ -103,8 +112,13 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
 
     @Override
     public void onListLoaded(List<Car> carList) {
-        adapter.setList(carList);
-        adapter.notifyDataSetChanged();
+        if (carList.size() > 0) {
+            adapter.setList(carList);
+            adapter.notifyDataSetChanged();
+        } else {
+            emptyView.setVisibility(View.VISIBLE);
+            marketplaceList.setVisibility(View.GONE);
+        }
     }
 
     @Override

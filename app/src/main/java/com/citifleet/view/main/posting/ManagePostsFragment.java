@@ -21,13 +21,8 @@ import com.citifleet.model.ManagePostModel;
 import com.citifleet.model.PostingType;
 import com.citifleet.util.Constants;
 import com.citifleet.util.DividerItemDecoration;
-import com.citifleet.util.RecycleViewClickListener;
-import com.citifleet.util.SpacesItemDecoration;
 import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
-import com.citifleet.view.main.benefits.BenefitPresenter;
-import com.citifleet.view.main.benefits.BenefitsAdapter;
-import com.citifleet.view.main.marketplace.*;
 
 import org.parceler.Parcels;
 
@@ -47,6 +42,8 @@ public class ManagePostsFragment extends BaseFragment implements ManagePostsAdap
     ProgressBar progressBar;
     @Bind(R.id.postsList)
     RecyclerView postsList;
+    @Bind(R.id.emptyView)
+    TextView emptyView;
     private ManagePostsPresenter presenter;
     private ManagePostsAdapter adapter;
 
@@ -64,6 +61,14 @@ public class ManagePostsFragment extends BaseFragment implements ManagePostsAdap
         postsList.addItemDecoration(new DividerItemDecoration(getActivity()));
         presenter = new ManagePostsPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
         presenter.loadPosts();
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                emptyView.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+                postsList.setVisibility(adapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
+            }
+        });
         return view;
     }
 
@@ -174,7 +179,12 @@ public class ManagePostsFragment extends BaseFragment implements ManagePostsAdap
 
     @Override
     public void onPostsLoaded(List<ManagePostModel> posts) {
-        adapter.setManagePostModels(posts);
-        adapter.notifyDataSetChanged();
+        if (posts.size() > 0) {
+            adapter.setManagePostModels(posts);
+            adapter.notifyDataSetChanged();
+        } else {
+            emptyView.setVisibility(View.VISIBLE);
+            postsList.setVisibility(View.GONE);
+        }
     }
 }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
@@ -48,6 +49,8 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
     ProgressBar progressBar;
     @Bind(R.id.searchField)
     SearchEditText searchField;
+    @Bind(R.id.emptyView)
+    TextView emptyView;
     private ChatRoomsAdapter adapter;
     private ChatRoomPresenter presenter;
     private EndlessRecyclerOnScrollListener scrollListener;
@@ -67,6 +70,14 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
         chatRoomsList.addItemDecoration(new DividerItemDecoration(getContext()));
         setScrollListener((LinearLayoutManager) chatRoomsList.getLayoutManager());
         searchField.setOnEditTextImeBackListener(this);
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                emptyView.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+                chatRoomsList.setVisibility(adapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
+            }
+        });
         return view;
     }
 
@@ -254,8 +265,13 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
 
     @Override
     public void onChatRoomsListLoaded(List<ChatRoom> chatRooms) {
-        adapter.addItems(chatRooms);
-        adapter.notifyDataSetChanged();
+        if (chatRooms.size() > 0) {
+            adapter.addItems(chatRooms);
+            adapter.notifyDataSetChanged();
+        } else {
+            emptyView.setVisibility(View.VISIBLE);
+            chatRoomsList.setVisibility(View.GONE);
+        }
     }
 
 

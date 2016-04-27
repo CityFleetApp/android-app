@@ -78,6 +78,16 @@
             android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+        <TextView
+            android:id="@+id/emptyView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/searchField"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/there_are_no_contacts"
+            android:textSize="@dimen/text_size"
+            android:visibility="gone" />
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

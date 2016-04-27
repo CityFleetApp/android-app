@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@android:color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/marketplaceList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/emptyView"
+        android:text="@string/there_is_no_cars"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="@dimen/text_size"
+        android:visibility="gone"
+        android:layout_height="wrap_content" />
 
     <ProgressBar
         android:id="@+id/progressBar"

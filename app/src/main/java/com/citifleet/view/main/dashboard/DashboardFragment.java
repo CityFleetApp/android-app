@@ -40,6 +40,7 @@ import com.citifleet.view.BaseActivity;
 import com.citifleet.view.BaseFragment;
 import com.citifleet.view.login.LoginFlowActivity;
 import com.citifleet.view.main.HelpFragment;
+import com.citifleet.view.main.addfriends.AddFriendsFragment;
 import com.citifleet.view.main.benefits.BenefitsFragment;
 import com.citifleet.view.main.chat.ChatActivity;
 import com.citifleet.view.main.dashboard.DashboardPresenter.DashboardView;
@@ -199,7 +200,7 @@ public class DashboardFragment extends BaseFragment implements DashboardView {
 
     @OnClick(R.id.inviteDriverBtn)
     void onInviteDriverBtnClick() {
-
+        ((BaseActivity) getActivity()).changeFragment(new AddFriendsFragment(), true);
     }
 
     @OnClick(R.id.chatBtn)

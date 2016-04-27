@@ -238,7 +238,14 @@
     <string name="submit">Submit</string>
     <string name="rating_empty">Rating  can\'t be 0!</string>
     <string name="tlc_alert">TLC Alert</string>
-
+    <string name="there_is_no_cars">There are no cars</string>
+    <string name="there_is_no_goods">There are no goods</string>
+    <string name="there_is_no_job_offers">There are no job offers</string>
+    <string name="there_is_no_notifications">There are no notifications</string>
+    <string name="there_are_no_benefits">There are no benefits</string>
+    <string name="there_are_no_posts">There are no posts</string>
+    <string name="there_are_no_contacts">There are no contacts</string>
+    <string name="there_are_no_chat_rooms">There are no chat rooms</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.citifleet.CitiFleetApp;
@@ -41,6 +42,8 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
     ProgressBar progressBar;
     @Bind(R.id.toolbar)
     AppBarLayout toolbar;
+    @Bind(R.id.emptyView)
+    TextView emptyView;
     private FriendsListAdapter adapter;
     private FriendsListPresenter presenter;
 
@@ -59,6 +62,14 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
         contactsList.setAdapter(adapter);
         contactsList.addItemDecoration(new DividerItemDecoration(getContext()));
         searchField.setOnEditTextImeBackListener(this);
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                emptyView.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+                contactsList.setVisibility(adapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
+            }
+        });
         return view;
     }
 
@@ -115,8 +126,13 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
     @Override
     public void onFriendsLoaded(List<ChatFriend> friends) {
         searchField.getText().clear();
-        adapter.setList(friends);
-        adapter.notifyDataSetChanged();
+        if (friends.size() > 0) {
+            adapter.setList(friends);
+            adapter.notifyDataSetChanged();
+        } else {
+            emptyView.setVisibility(View.VISIBLE);
+            contactsList.setVisibility(View.GONE);
+        }
     }
 
     @Override

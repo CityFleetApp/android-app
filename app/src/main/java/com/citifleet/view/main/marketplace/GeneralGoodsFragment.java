@@ -39,6 +39,8 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
     ProgressBar progressBar;
     @Bind(R.id.title)
     TextView title;
+    @Bind(R.id.emptyView)
+    TextView emptyView;
     private GeneralGoodsAdapter adapter;
     private GeneralGoodsPresenter presenter;
     private EndlessStaggeredScollListener scrollListener;
@@ -56,8 +58,15 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
         presenter = new GeneralGoodsPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.loadGeneralGoodsList(Constants.DEFAULT_UNSELECTED_POSITION, 1);
         adapter.setClickListener(this);
-
         title.setText(R.string.general_goods_for_sale);
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                emptyView.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+                marketplaceList.setVisibility(adapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
+            }
+        });
         return view;
     }
 
@@ -109,8 +118,13 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
 
     @Override
     public void onListLoaded(List<GeneralGood> generalGoodList) {
-        adapter.setList(generalGoodList);
-        adapter.notifyDataSetChanged();
+        if (generalGoodList.size() > 0) {
+            adapter.setList(generalGoodList);
+            adapter.notifyDataSetChanged();
+        } else {
+            emptyView.setVisibility(View.VISIBLE);
+            marketplaceList.setVisibility(View.GONE);
+        }
     }
 
     @Override

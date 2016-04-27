@@ -42,6 +42,8 @@ public class JobOffersFragment extends BaseFragment implements JobOffersPresente
     TextView allBtnLbl;
     @Bind(R.id.availableBtnLbl)
     TextView availableBtnLbl;
+    @Bind(R.id.emptyView)
+    TextView emptyView;
     private JobOffersAdapter adapter;
     private JobOffersPresenter presenter;
     private EndlessRecyclerOnScrollListener scrollListener;
@@ -60,6 +62,14 @@ public class JobOffersFragment extends BaseFragment implements JobOffersPresente
         presenter.loadJobOffersList(Constants.DEFAULT_UNSELECTED_POSITION, 1, true);
         toggleSelectionOfFilters(true);
         setScrollListener((LinearLayoutManager) jobsListView.getLayoutManager());
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                emptyView.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+                jobsListView.setVisibility(adapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
+            }
+        });
         return view;
     }
 
@@ -117,8 +127,13 @@ public class JobOffersFragment extends BaseFragment implements JobOffersPresente
 
     @Override
     public void onListLoaded(List<JobOffer> jobOfferList) {
-        adapter.setList(jobOfferList);
-        adapter.notifyDataSetChanged();
+        if (jobOfferList.size() > 0) {
+            adapter.setList(jobOfferList);
+            adapter.notifyDataSetChanged();
+        } else {
+            emptyView.setVisibility(View.VISIBLE);
+            jobsListView.setVisibility(View.GONE);
+        }
     }
 
     @Override

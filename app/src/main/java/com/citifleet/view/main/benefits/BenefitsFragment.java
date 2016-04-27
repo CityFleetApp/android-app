@@ -36,6 +36,8 @@ public class BenefitsFragment extends BaseFragment implements BenefitPresenter.B
     ProgressBar progressBar;
     @Bind(R.id.benefitsList)
     RecyclerView benefitsList;
+    @Bind(R.id.emptyView)
+    TextView emptyView;
     private BenefitPresenter presenter;
     private BenefitsAdapter adapter;
 
@@ -54,6 +56,14 @@ public class BenefitsFragment extends BaseFragment implements BenefitPresenter.B
         presenter = new BenefitPresenter(CitiFleetApp.getInstance().getNetworkManager(), this);
         presenter.loadBenefits();
         benefitsList.addOnItemTouchListener(new RecycleViewClickListener(getActivity(), onItemClickListener));
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                emptyView.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+                benefitsList.setVisibility(adapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
+            }
+        });
         return view;
     }
 
@@ -114,7 +124,12 @@ public class BenefitsFragment extends BaseFragment implements BenefitPresenter.B
 
     @Override
     public void updateBenefitsList(final List<Benefit> benefits) {
-        adapter.setBenefitList(benefits);
-        adapter.notifyDataSetChanged();
+        if (benefits.size() > 0) {
+            adapter.setBenefitList(benefits);
+            adapter.notifyDataSetChanged();
+        } else {
+            emptyView.setVisibility(View.VISIBLE);
+            benefitsList.setVisibility(View.GONE);
+        }
     }
 }

@@ -42,6 +42,8 @@ public class NotificationsFragment extends BaseFragment implements NotificationP
     TextView allBtnLbl;
     @Bind(R.id.unreadBtnLbl)
     TextView unreadBtnLbl;
+    @Bind(R.id.emptyView)
+    TextView emptyView;
     private NotificationPresenter presenter;
     private NotificationsListAdapter adapter;
 
@@ -60,6 +62,14 @@ public class NotificationsFragment extends BaseFragment implements NotificationP
         presenter = new NotificationPresenter(this, CitiFleetApp.getInstance().getNetworkManager());
         presenter.loadNotifications();
         toggleSelectionOfFilters(true);
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                emptyView.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+                notificationsListView.setVisibility(adapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
+            }
+        });
         return view;
     }
 
@@ -119,8 +129,13 @@ public class NotificationsFragment extends BaseFragment implements NotificationP
 
     @Override
     public void onNotificationsLoaded(List<Notification> notifications) {
-        adapter.setNotifications(notifications);
-        adapter.notifyDataSetChanged();
+        if (notifications.size() > 0) {
+            adapter.setNotifications(notifications);
+            adapter.notifyDataSetChanged();
+        } else {
+            emptyView.setVisibility(View.VISIBLE);
+            notificationsListView.setVisibility(View.GONE);
+        }
     }
 
     @Override

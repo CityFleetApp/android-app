@@ -164,7 +164,7 @@ public interface NetworkService {
     Call<List<CarOption>> getCarMakes();
 
     @GET("marketplace/cars/model/")
-    Call<List<CarOption>> getCardModels(@Query("id") int id);
+    Call<List<CarOption>> getCardModels(@Query("make") int id);
 
     @GET("marketplace/seats/")
     Call<List<CarOption>> getCarSeats();
