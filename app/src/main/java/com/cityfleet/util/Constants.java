@@ -36,6 +36,7 @@ public class Constants {
     public static final int MIN_POSTING_YEAR = 2009;
     public static final int POSTING_IMAGES_NUMBER = 5;
     public static final int IMAGE_WIDTH = 1440;
+    public static final int PROFILE_IMAGE_WIDTH = 700;
     public static final int MAX_PRICE = 5;
     public static final int JOB_OFFER_MAX_FARE = 3;
     public static final String INPUT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";

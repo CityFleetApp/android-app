@@ -66,6 +66,7 @@ public class DocManagementPresenter {
     }
 
 
+
     public void getAllDocuments() {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();

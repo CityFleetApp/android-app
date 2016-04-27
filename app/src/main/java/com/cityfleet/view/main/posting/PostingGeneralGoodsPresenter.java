@@ -8,6 +8,7 @@ import com.cityfleet.model.GeneralGood;
 import com.cityfleet.model.Photo;
 import com.cityfleet.network.NetworkErrorUtil;
 import com.cityfleet.network.NetworkManager;
+import com.cityfleet.util.Constants;
 import com.cityfleet.util.ScaleImageHelper;
 
 import java.util.ArrayList;
@@ -158,7 +159,7 @@ public class PostingGeneralGoodsPresenter {
                 final HashMap<String, RequestBody> imagesMap = new HashMap<String, RequestBody>();
                 for (int i = 0; i < imageUrls.size(); i++) {
                     if (imageUrls.get(i) != null) {
-                        byte[] bytes = scaleImageHelper.getScaledImageBytes(imageUrls.get(i).getUrl());
+                        byte[] bytes = scaleImageHelper.getScaledImageBytes(imageUrls.get(i).getUrl(), Constants.IMAGE_WIDTH);
                         RequestBody fileRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), bytes);
                         imagesMap.put("photos[" + i + "]\"; filename=\"image.png\" ", fileRequestBody);
                     }

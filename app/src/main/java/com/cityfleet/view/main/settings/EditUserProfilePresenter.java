@@ -1,5 +1,7 @@
 package com.cityfleet.view.main.settings;
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import com.cityfleet.model.ProfileImage;
@@ -7,6 +9,8 @@ import com.cityfleet.model.UserEditInfo;
 import com.cityfleet.model.UserInfo;
 import com.cityfleet.network.NetworkErrorUtil;
 import com.cityfleet.network.NetworkManager;
+import com.cityfleet.util.Constants;
+import com.cityfleet.util.ScaleImageHelper;
 
 import java.io.File;
 
@@ -54,15 +58,35 @@ public class EditUserProfilePresenter {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
             File file = new File(filepath);
-            RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), "");
-            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            Call<ProfileImage> call = networkManager.getNetworkClient().uploadAvatar(requestBody, description);
-            call.enqueue(uploadImageCallback);
+            final RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+
+            getScaledImageRequestBody(filepath, new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    Call<ProfileImage> call = networkManager.getNetworkClient().uploadAvatar((RequestBody) msg.obj, description);
+                    call.enqueue(uploadImageCallback);
+                }
+            });
+
         } else {
             view.onNetworkError();
         }
     }
-
+    private void getScaledImageRequestBody(final String imageUrl, final Handler handler) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                ScaleImageHelper scaleImageHelper = new ScaleImageHelper();
+                byte[] bytes = scaleImageHelper.getScaledImageBytes(imageUrl, Constants.PROFILE_IMAGE_WIDTH);
+                RequestBody fileRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), bytes);
+                Message message = new Message();
+                message.obj = fileRequestBody;
+                handler.sendMessage(message);
+            }
+        };
+        new Thread(runnable).start();
+    }
     public void updateUserInfo(UserEditInfo info) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();

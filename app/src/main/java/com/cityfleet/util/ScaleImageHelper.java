@@ -10,19 +10,18 @@ import java.io.ByteArrayOutputStream;
  * Created by vika on 25.03.16.
  */
 public class ScaleImageHelper {
-    public byte[] getScaledImageBytes(String filePath) {
+    public byte[] getScaledImageBytes(String filePath, int maxWidth) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(filePath, options);
-        options.inSampleSize = calculateInSampleSize(options, Constants.IMAGE_WIDTH);
+        options.inSampleSize = calculateInSampleSize(options, maxWidth);
         options.inJustDecodeBounds = false;
         Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
         int width = options.outWidth;
         int height = options.outHeight;
-        int reqWidth = Constants.IMAGE_WIDTH;
         double ratio = (double) height / (double) width;
-        int reqHeight = (int) (reqWidth * ratio);
-        float scaleWidth = ((float) reqWidth) / width;
+        int reqHeight = (int) (maxWidth * ratio);
+        float scaleWidth = ((float) maxWidth) / width;
         float scaleHeight = ((float) reqHeight) / height;
         Matrix matrix = new Matrix();
         matrix.postScale(scaleWidth, scaleHeight);
