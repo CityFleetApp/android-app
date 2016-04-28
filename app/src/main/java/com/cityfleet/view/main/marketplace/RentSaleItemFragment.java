@@ -43,8 +43,6 @@ public class RentSaleItemFragment extends BaseFragment {
     TextView modelLbl;
     @Bind(R.id.seatsLbl)
     TextView seatsLbl;
-    @Bind(R.id.typeLbl)
-    TextView typeLbl;
     @Bind(R.id.detailsText)
     TextView detailsText;
     private Car car;
@@ -70,8 +68,7 @@ public class RentSaleItemFragment extends BaseFragment {
         colorLbl.setText(car.getColor());
         fuelLbl.setText(car.getFuel());
         seatsLbl.setText(String.valueOf(car.getSeats()));
-        typeLbl.setText(car.getType());
-        modelLbl.setText(car.getModel());
+        modelLbl.setText(car.getType());
         detailsText.setText(car.getDescription());
         return view;
     }

@@ -58,14 +58,7 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
         setScrollListener(layoutManager);
         presenter = new BuyRentPresenter(CityFleetApp.getInstance().getNetworkManager(), this);
         presenter.loadCarList(type, Constants.DEFAULT_UNSELECTED_POSITION, 1);
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                super.onChanged();
-                emptyView.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
-                marketplaceList.setVisibility(adapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
-            }
-        });
+        adapter.registerAdapterDataObserver(dataObserver);
         return view;
     }
 

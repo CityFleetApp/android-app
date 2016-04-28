@@ -282,7 +282,7 @@
                 <TextView
                     android:id="@+id/jobTypeLbl"
                     style="@style/RegistrationEdittextLabelStyle"
-                    android:drawableLeft="@drawable/smoking"
+                    android:drawableLeft="@drawable/buss"
                     android:text="@string/job_type" />
 
                 <TextView
@@ -315,7 +315,7 @@
 
                 <TextView
                     style="@style/RegistrationEdittextLabelStyle"
-                    android:drawableLeft="@drawable/shield"
+                    android:drawableLeft="@drawable/edit"
                     android:text="@string/instructions" />
 
                 <EditText
