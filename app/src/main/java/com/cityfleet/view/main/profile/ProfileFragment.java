@@ -145,7 +145,7 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
 
     @Override
     public void setUserInfo(UserInfo userInfo) {
-        fullName.setText(userInfo.getUsername());
+        fullName.setText(userInfo.getFullName());
         bio.setText(userInfo.getBio());
         drives.setText(userInfo.getDrives());
         jobsCompleted.setText(String.valueOf(userInfo.getJobsCompleted()));
