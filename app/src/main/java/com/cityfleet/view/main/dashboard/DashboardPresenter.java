@@ -11,8 +11,6 @@ import com.cityfleet.network.NetworkManager;
 import com.cityfleet.util.Constants;
 import com.cityfleet.util.ScaleImageHelper;
 
-import java.io.File;
-
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -41,7 +39,6 @@ public class DashboardPresenter {
     public void uploadImage(String filepath) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
-            File file = new File(filepath);
             final RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), "");
             getScaledImageRequestBody(filepath, new Handler() {
                 @Override

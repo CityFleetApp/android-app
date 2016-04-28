@@ -80,4 +80,20 @@ public class FriendNearby {
     public void setLng(double lng) {
         this.lng = lng;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if ((obj instanceof FriendNearby) && (((FriendNearby) obj).getId() == this.id)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 0;
+        result = (int) (id / 11);
+        return result;
+    }
 }

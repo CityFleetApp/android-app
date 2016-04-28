@@ -112,6 +112,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     private List<Marker> nearbyReportMarkersList = new ArrayList<Marker>();
     private List<Marker> nearbyFriendsMarkerList = new ArrayList<Marker>();
     private boolean needToAnimateZoomToLocation = true;
+    private Marker selectedFriendMarker = null;
 
     @Nullable
     @Override
@@ -133,6 +134,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         buildGoogleApiClient();
         nearbyReportDialogView = new NearbyReportDialogView(this, nearReportDialog);
         nearbyFriendMapDialogView = new NearbyFriendMapDialogView(this, nearFriendDialog);
+
         return view;
     }
 
@@ -585,10 +587,10 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         }
     }
 
-    private void addFriendMarkerToMap(FriendNearby friendNearby) {
+    private Bitmap getImageForFriendSelected(String friendName) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.friend_marker, null);
         TextView name = (TextView) view.findViewById(R.id.markerFriendName);
-        name.setText(friendNearby.getFullName());
+        name.setText(friendName);
         view.setDrawingCacheEnabled(true);
         view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
@@ -598,15 +600,34 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             Bitmap drawingCache = view.getDrawingCache();
             Bitmap b = Bitmap.createBitmap(drawingCache);
             view.setDrawingCacheEnabled(false);
-            Marker marker = map.addMarker(new MarkerOptions()
-                    .position(new LatLng(friendNearby.getLat(), friendNearby.getLng()))
-                    .icon(BitmapDescriptorFactory.fromBitmap(b))
-                    .title(String.valueOf(friendNearby.getId()))
-                    .snippet("friend"));
-            b.recycle();
             drawingCache.recycle();
-            nearbyFriendsMarkerList.add(marker);
+            return b;
         }
+        return null;
+    }
+
+    private void addFriendMarkerToMap(FriendNearby friendNearby) {
+//        View view = getActivity().getLayoutInflater().inflate(R.layout.friend_marker, null);
+//        TextView name = (TextView) view.findViewById(R.id.markerFriendName);
+//        name.setText(friendNearby.getFullName());
+//        view.setDrawingCacheEnabled(true);
+//        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+//                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+//        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+//        view.buildDrawingCache(true);
+//        if (view != null && view.getDrawingCache() != null) {
+//            Bitmap drawingCache = view.getDrawingCache();
+//            Bitmap b = Bitmap.createBitmap(drawingCache);
+//            view.setDrawingCacheEnabled(false);
+        Marker marker = map.addMarker(new MarkerOptions()
+                .position(new LatLng(friendNearby.getLat(), friendNearby.getLng()))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.friend_marker))
+                .title(String.valueOf(friendNearby.getId()))
+                .snippet("friend"));
+//            b.recycle();
+//            drawingCache.recycle();
+        nearbyFriendsMarkerList.add(marker);
+        //     }
     }
 
     @Override
@@ -644,7 +665,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             String type = marker.getSnippet();
             if (type != null && type.equals("report")) {
                 if (nearbyFriendMapDialogView.isVisible()) {
-                    nearbyFriendMapDialogView.hide();
+                    unselectFriendMarker();
                 }
                 Report report = getReportForMarker(marker);
                 if (!nearbyReportDialogView.isVisible() || (nearbyReportDialogView.isVisible() && !nearbyReportDialogView.getSelectedReport().equals(report))) {
@@ -657,17 +678,36 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                 if (nearbyReportDialogView.isVisible()) {
                     nearbyReportDialogView.hide();
                 }
+                if (selectedFriendMarker != null) {
+                    selectedFriendMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.friend_marker));
+                    selectedFriendMarker = null;
+                }
                 FriendNearby friendNearby = getFriendForMarker(marker);
+                Bitmap b = getImageForFriendSelected(friendNearby.getFullName());
+                if (b != null) {
+                    marker.setIcon(BitmapDescriptorFactory.fromBitmap(b));
+                }
+                selectedFriendMarker = marker;
                 if (!nearbyFriendMapDialogView.isVisible() || (nearbyFriendMapDialogView.isVisible() && !nearbyFriendMapDialogView.getSelectedFriend().equals(friendNearby))) {
                     nearbyFriendMapDialogView.show(friendNearby);
                 } else {
-                    nearbyFriendMapDialogView.hide();
+                    unselectFriendMarker();
                 }
                 return true;
             }
             return false;
         }
     };
+
+    private void unselectFriendMarker() {
+        nearbyFriendMapDialogView.hide();
+        if (selectedFriendMarker != null) {
+            selectedFriendMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.friend_marker));
+            selectedFriendMarker = null;
+        }
+
+    }
+
     private GoogleMap.OnMapClickListener mapClickListener = new GoogleMap.OnMapClickListener() {
         @Override
         public void onMapClick(LatLng latLng) {
@@ -675,7 +715,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                 nearbyReportDialogView.hide();
             }
             if (nearbyFriendMapDialogView.isVisible()) {
-                nearbyFriendMapDialogView.hide();
+                unselectFriendMarker();
             }
         }
     };

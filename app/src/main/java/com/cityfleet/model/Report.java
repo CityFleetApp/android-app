@@ -43,4 +43,20 @@ public class Report {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if ((obj instanceof Report) && (((Report) obj).getId() == this.id)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 0;
+        result = (int) (id / 11);
+        return result;
+    }
 }

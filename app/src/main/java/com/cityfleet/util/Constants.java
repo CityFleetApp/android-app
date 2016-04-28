@@ -5,7 +5,7 @@ public class Constants {
     public static final String PREFS_TOKEN = "token";
     public static final String PREFS_ID = "id";
     public static final float ZOOM_LEVEL = 16.0f;
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
+    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 20000;
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
             UPDATE_INTERVAL_IN_MILLISECONDS / 2;
     public static final String REPORT_DIALOG_TAG = "report_dialog";

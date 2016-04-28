@@ -36,6 +36,7 @@ public class NearbyFriendMapDialogView {
     MainMapFragment fragment;
     int dialogHeight;
     FriendNearby friendNearby;
+    private boolean isAnimatingClosing = false;
 
     public NearbyFriendMapDialogView(MainMapFragment fragment, View viewCont) {
         ButterKnife.bind(this, viewCont);
@@ -48,7 +49,11 @@ public class NearbyFriendMapDialogView {
     }
 
     public boolean isVisible() {
-        return nearFriendDialog.getVisibility() == View.VISIBLE;
+        if(!isAnimatingClosing) {
+            return nearFriendDialog.getVisibility() == View.VISIBLE;
+        } else{
+            return false;
+        }
     }
 
     public FriendNearby getSelectedFriend() {
@@ -97,16 +102,18 @@ public class NearbyFriendMapDialogView {
     }
 
     private void playShowHideAnimation() {
+
         if (nearFriendDialog.getVisibility() == View.VISIBLE) {
+            isAnimatingClosing = true;
             nearFriendDialog.animate().translationY(-dialogHeight).setDuration(Constants.DIALOG_ANIMATION_DURATION).setInterpolator(new AccelerateInterpolator()).
-                    setListener(openingAnimatorListener).start();
+                    setListener(closingAnimatorListener).start();
         } else {
             nearFriendDialog.setVisibility(View.VISIBLE);
             nearFriendDialog.animate().translationY(0).setDuration(Constants.DIALOG_ANIMATION_DURATION).setInterpolator(new AccelerateInterpolator()).setListener(null).start();
         }
     }
 
-    private Animator.AnimatorListener openingAnimatorListener = new Animator.AnimatorListener() {
+    private Animator.AnimatorListener closingAnimatorListener = new Animator.AnimatorListener() {
         @Override
         public void onAnimationStart(Animator animation) {
 
@@ -116,6 +123,7 @@ public class NearbyFriendMapDialogView {
         public void onAnimationEnd(Animator animation) {
             nearFriendDialog.setVisibility(View.GONE);
             friendNearby = null;
+            isAnimatingClosing = false;
         }
 
         @Override
