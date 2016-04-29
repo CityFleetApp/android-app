@@ -66,6 +66,7 @@ public class ResetPasswordFragment extends Fragment implements Validator.Validat
         public void onResponse(Call<Void> call, Response<Void> response) {
             setLoading(false);
             if (response.isSuccessful()) {
+                Toast.makeText(getActivity(), R.string.password_reset, Toast.LENGTH_SHORT).show();
                 getActivity().onBackPressed();
             } else {
                 String error = NetworkErrorUtil.gerErrorMessage(response);

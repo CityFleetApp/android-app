@@ -19,7 +19,7 @@ public class NetworkErrorUtil {
             if (keys.hasNext()) {
                 String key = (String) keys.next();
                 errorMes = (String) object.getJSONArray(key).get(0);
-                if(!key.equals("non_field_error")){
+                if(!key.equals("non_field_errors")){
                     errorMes = key+": "+ errorMes;
                 }
             }
