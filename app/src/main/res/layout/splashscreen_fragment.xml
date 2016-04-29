@@ -1,96 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/splash"/>
+        android:src="@drawable/splash" />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/logo"/>
-
-        <TextView
-            android:id="@+id/welcome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/logo"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/splash_welcome_padding"
-            android:paddingLeft="@dimen/splash_line_padding"
-            android:paddingRight="@dimen/splash_line_padding"
-            android:text="Welcome"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/welcome_textsize"/>
-
-        <View
-            android:id="@+id/line"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_alignLeft="@+id/welcome"
-            android:layout_alignRight="@+id/welcome"
-            android:layout_below="@+id/welcome"
-            android:layout_marginTop="@dimen/splash_line_padding"
-            android:background="@color/lineColor"/>
-
-        <TextView
-            android:id="@+id/hintLbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/line"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="43dp"
-            android:gravity="center"
-            android:text="@string/login_or_create_an_account_and_nenjoy_the_experience"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size"/>
-
-        <Button
-            android:id="@+id/registerBtn"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/hintLbl"
-            android:layout_marginLeft="@dimen/splash_btn_margin_small"
-            android:layout_marginRight="@dimen/splash_btn_margin_small"
-            android:layout_marginTop="@dimen/splash_btn_margin"
-            android:minHeight="0dp"
-            android:padding="@dimen/button_padding"
-            android:background="@drawable/red_btn_selector"
-            android:text="@string/create_an_account"
-            android:textSize="@dimen/button_text_size"
-            android:textAllCaps="true"
-            android:textColor="@android:color/white"/>
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-        <Button
-            android:id="@+id/loginBtn"
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/logo" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/registerBtn"
-            android:textSize="@dimen/button_text_size"
-            android:layout_marginLeft="@dimen/splash_btn_margin_small"
-            android:layout_marginRight="@dimen/splash_btn_margin_small"
-            android:layout_marginTop="@dimen/splash_btn_margin_small"
-            android:background="@drawable/yellow_btn_selector"
-            android:text="@string/log_in"
-            android:minHeight="0dp"
-            android:padding="@dimen/button_padding"
-            android:textAllCaps="true"
-            android:textColor="@color/yellowBtnTextColor"/>
+            android:layout_height="0dp"
+            android:layout_weight="1.3">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/welcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/splash_welcome_padding"
+                android:paddingLeft="@dimen/splash_line_padding"
+                android:paddingRight="@dimen/splash_line_padding"
+                android:text="Welcome"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/welcome_textsize" />
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_alignLeft="@+id/welcome"
+                android:layout_alignRight="@+id/welcome"
+                android:layout_below="@+id/welcome"
+                android:layout_marginTop="@dimen/splash_line_padding"
+                android:background="@color/lineColor" />
+
+            <TextView
+                android:id="@+id/hintLbl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/registerBtn"
+                android:layout_below="@+id/line"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="@string/login_or_create_an_account_and_nenjoy_the_experience"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size" />
+
+            <Button
+                android:id="@+id/registerBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/loginBtn"
+                android:layout_marginLeft="@dimen/splash_btn_margin_small"
+                android:layout_marginRight="@dimen/splash_btn_margin_small"
+                android:background="@drawable/red_btn_selector"
+                android:minHeight="0dp"
+                android:padding="@dimen/button_padding"
+                android:text="@string/create_an_account"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_text_size" />
+
+            <Button
+                android:id="@+id/loginBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/splash_btn_margin"
+                android:layout_marginLeft="@dimen/splash_btn_margin_small"
+                android:layout_marginRight="@dimen/splash_btn_margin_small"
+                android:layout_marginTop="@dimen/splash_btn_margin_small"
+                android:background="@drawable/yellow_btn_selector"
+                android:minHeight="0dp"
+                android:padding="@dimen/button_padding"
+                android:text="@string/log_in"
+                android:textAllCaps="true"
+                android:textColor="@color/yellowBtnTextColor"
+                android:textSize="@dimen/button_text_size" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
 </RelativeLayout>

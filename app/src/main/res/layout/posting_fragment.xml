@@ -20,7 +20,7 @@
 
             <TextView
                 style="@style/DashBtnStyle"
-                android:drawableLeft="@drawable/car"
+                android:drawableLeft="@drawable/car_selected"
                 android:text="@string/vechicles_for_rent_sale"
                 android:textAllCaps="false" />
 
