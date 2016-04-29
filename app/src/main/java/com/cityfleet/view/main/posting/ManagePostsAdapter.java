@@ -86,7 +86,7 @@ public class ManagePostsAdapter extends RecyclerView.Adapter<ManagePostsAdapter.
         } else if (model.getPostingType().equals(PostingType.JOB_OFFER.getApiName())) {
             holder.postTypeImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.buss));
             holder.postTypeText.setText(context.getString(R.string.job_offer));
-            holder.postTitle.setText(model.getInstructions());
+            holder.postTitle.setText(model.getTitle());
         }
         String date = "";
         try {

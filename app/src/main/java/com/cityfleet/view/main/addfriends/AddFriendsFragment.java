@@ -160,6 +160,11 @@ public class AddFriendsFragment extends BaseFragment implements AddFriendsPresen
         Toast.makeText(getActivity(), getString(R.string.networkMesMoInternet), Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onSuccess() {
+        Toast.makeText(getContext(), R.string.friends_added, Toast.LENGTH_SHORT).show();
+    }
+
     private void requestContactPermission() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             // permissions have not been granted.
@@ -177,20 +182,20 @@ public class AddFriendsFragment extends BaseFragment implements AddFriendsPresen
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         EventBus.getDefault().register(this);
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
         EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(sticky = true)
     public void onEvent(InstagramLoginEvent event) {
-        //TODO uncomment later    presenter.addInstagramFriends(event.getToken());
+        presenter.addInstagramFriends(event.getToken());
         EventBus.getDefault().removeStickyEvent(event);
     }
 

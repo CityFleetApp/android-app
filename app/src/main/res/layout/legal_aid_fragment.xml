@@ -15,7 +15,7 @@
 
         <TextView
             style="@style/DashBtnStyle"
-            android:drawableLeft="@drawable/lawyers_selector"
+            android:drawableLeft="@drawable/lawyer_selected"
             android:text="@string/dmv_lawyers"
             android:textAllCaps="false" />
 
@@ -41,7 +41,7 @@
 
         <TextView
             style="@style/DashBtnStyle"
-            android:drawableLeft="@drawable/lawyers_selector"
+            android:drawableLeft="@drawable/lawyer_selected"
             android:text="@string/tlc_lawyers"
             android:textAllCaps="false" />
 

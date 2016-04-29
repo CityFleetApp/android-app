@@ -43,10 +43,10 @@ public class JobOfferPresenter {
             double gratuity = TextUtils.isEmpty(jobOffer.getGratuity()) ? 0 : Double.parseDouble(jobOffer.getGratuity());
             Call<Void> postingCall;
             if (!isEditMode) {
-                postingCall = networkManager.getNetworkClient().postJobOffer(jobOffer.getDateTime(), jobOffer.getPickupAddress(), jobOffer.getDestination(),
+                postingCall = networkManager.getNetworkClient().postJobOffer(jobOffer.getTitle(), jobOffer.getDateTime(), jobOffer.getPickupAddress(), jobOffer.getDestination(),
                         jobOffer.getFare(), gratuity, jobOffer.getVehicleTypeId(), jobOffer.isSuite(), jobOffer.getJobTypeId(), jobOffer.getInstructions());
             } else {
-                postingCall = networkManager.getNetworkClient().editJobOffer(String.valueOf(jobOffer.getId()), jobOffer.getDateTime(), jobOffer.getPickupAddress(), jobOffer.getDestination(),
+                postingCall = networkManager.getNetworkClient().editJobOffer(String.valueOf(jobOffer.getId()), jobOffer.getTitle(), jobOffer.getDateTime(), jobOffer.getPickupAddress(), jobOffer.getDestination(),
                         jobOffer.getFare(), gratuity, jobOffer.getVehicleTypeId(), jobOffer.isSuite(), jobOffer.getJobTypeId(), jobOffer.getInstructions());
             }
             postingCall.enqueue(postingListener);

@@ -221,6 +221,10 @@ public interface NetworkService {
     @POST("marketplace/offers/{id}/complete_job/")
     Call<Void> completeJob(@Path("id") int id, @Field("rating") int rating, @Field("paid_on_time") boolean paidOnTime);
 
+    @FormUrlEncoded
+    @POST("marketplace/offers/{id}/rate_driver/")
+    Call<Void> rateDriver(@Path("id") int id, @Field("rating") int rating);
+
     @GET("marketplace/offers/{id}/")
     Call<JobOffer> getJobOfferInfo(@Path("id") int id);
 
@@ -232,13 +236,15 @@ public interface NetworkService {
 
     @FormUrlEncoded
     @POST("marketplace/offers/posting/")
-    Call<Void> postJobOffer(@Field("pickup_datetime") String datetime, @Field("pickup_address") String pickupAddress, @Field("destination") String destination, @Field("fare") double fare,
+    Call<Void> postJobOffer(@Field("title") String title, @Field("pickup_datetime") String datetime, @Field("pickup_address") String pickupAddress,
+                            @Field("destination") String destination, @Field("fare") double fare,
                             @Field("gratuity") double gratuity, @Field("vehicle_type") int vehicleType, @Field("suite") boolean suite, @Field("job_type") int jobType,
                             @Field("instructions") String instructions);
 
     @FormUrlEncoded
     @PATCH("marketplace/offers/posting/{id}/")
-    Call<Void> editJobOffer(@Path("id") String id, @Field("pickup_datetime") String datetime, @Field("pickup_address") String pickupAddress, @Field("destination") String destination, @Field("fare") double fare,
+    Call<Void> editJobOffer(@Path("id") String id, @Field("title") String title, @Field("pickup_datetime") String datetime, @Field("pickup_address") String pickupAddress,
+                            @Field("destination") String destination, @Field("fare") double fare,
                             @Field("gratuity") double gratuity, @Field("vehicle_type") int vehicleType, @Field("suite") boolean suite, @Field("job_type") int jobType,
                             @Field("instructions") String instructions);
 

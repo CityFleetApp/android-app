@@ -12,6 +12,7 @@ import org.parceler.Parcel;
 @Parcel
 public class JobOffer {
     private int id;
+    private String title;
     @SerializedName("pickup_datetime")
     private String dateTime;
     @SerializedName("pickup_address")
@@ -142,5 +143,13 @@ public class JobOffer {
 
     public void setAwarded(boolean awarded) {
         this.awarded = awarded;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

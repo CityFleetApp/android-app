@@ -59,6 +59,7 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
         presenter = new BuyRentPresenter(CityFleetApp.getInstance().getNetworkManager(), this);
         presenter.loadCarList(type, Constants.DEFAULT_UNSELECTED_POSITION, 1);
         adapter.registerAdapterDataObserver(dataObserver);
+
         return view;
     }
 

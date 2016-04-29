@@ -17,6 +17,7 @@ import com.cityfleet.R;
 import com.cityfleet.model.ChatFriend;
 import com.cityfleet.model.ChatMessage;
 import com.cityfleet.model.ChatMessageTypes;
+import com.cityfleet.model.JobOfferCompletedPushNotification;
 import com.cityfleet.model.PushNotification;
 import com.cityfleet.model.Report;
 import com.cityfleet.util.CircleTransform;
@@ -46,6 +47,7 @@ public class MyGcmListenerService extends GcmListenerService {
     //   {"id":13,"title":"Job Offer Created","type":"offer_created"}
     //{"author":1,"created":"2016-04-19T14:18:32","text":"Lorem ipsum dolor sit amet, in aeque ancillae incorrupte nec, altera postulant constituam cum in. Illud officiis nam et, hinc regione detraxit est ut. Qui falli labore invenire ea, et ius aliquid accusam accusata. Duo saepe prompta conclusionemque ut. His ei tritani mentitum.  Eos ei scripta inciderint, mea eu wisi error fierent. Cu duo habeo adolescens. Inani putant feugait sed ne, purto veri dicit sea cu. Eum ex impedit senserit scribentur, ex homero lobortis scribentur ius.  Ne quaeque erroribus eum, essent nonumes menandri his cu. Erat inermis sapientem mei eu,","type":"receive_message","room":6,"author_info":{"full_name":"admin","avatar_url":"","phone":"1","id":1}}
 //{'id': offer.id, 'type': 'offer_covered', 'title': 'Your job offer accepted'}
+//   /'type': 'rate_driver', 'id': offer.id, 'title': offer.title
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
@@ -71,10 +73,13 @@ public class MyGcmListenerService extends GcmListenerService {
                 showNewMessageNotification(chatMessage);
             } else if (type.equals("offer_covered") || type.equals("offer_created")) {
                 PushNotification offerCoveredNotification = gson.fromJson(message, PushNotification.class);
-                showJobOfferNotification(offerCoveredNotification, type.equals("offer_covered"));
+                showJobOfferAwardedNotification(offerCoveredNotification, type.equals("offer_covered"));
             } else if (type.equals("new_notification")) {
                 PushNotification newNotification = gson.fromJson(message, PushNotification.class);
                 showNewNotification(newNotification);
+            } else if (type.equals("rate_driver")) {
+                JobOfferCompletedPushNotification notification = gson.fromJson(message, JobOfferCompletedPushNotification.class);
+                showJobOfferCompletedNotification(notification);
             }
         }
     }
@@ -119,7 +124,7 @@ public class MyGcmListenerService extends GcmListenerService {
         }
     }
 
-    private void showJobOfferNotification(PushNotification offerCoveredNotification, boolean isCovered) {
+    private void showJobOfferAwardedNotification(PushNotification offerCoveredNotification, boolean isCovered) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Constants.JOB_OFFER_ID_TAG, offerCoveredNotification.getId());
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -135,6 +140,25 @@ public class MyGcmListenerService extends GcmListenerService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(isCovered ? Constants.JOB_OFFER_COVERED_NOTIF_ID : Constants.NEW_JOB_OFFER_NOTIF_ID, notificationBuilder.build());
+    }
+
+    private void showJobOfferCompletedNotification(JobOfferCompletedPushNotification pushNotification) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(Constants.JOB_OFFER_ID_TAG, pushNotification.getId());
+        intent.putExtra(Constants.JOB_OFFER_TITLE_TAG, pushNotification.getOfferTitle());
+        intent.putExtra(Constants.JOB_OFFER_EXECUTOR_TAG, pushNotification.getDriverName());
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setContentTitle(pushNotification.getTitle())
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(Constants.JOB_OFFER_COMPLETED_NOTIF_ID, notificationBuilder.build());
     }
 
     private void showNewNotification(PushNotification newNotification) {

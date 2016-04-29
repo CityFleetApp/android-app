@@ -51,6 +51,8 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
     SimpleDateFormat outputFormatter = new SimpleDateFormat(Constants.INPUT_DATETIME_FORMAT);
     @Bind(R.id.title)
     TextView title;
+    @Bind(R.id.titleText)
+    EditText titleText;
     @Bind(R.id.dateText)
     TextView dateText;
     @Bind(R.id.timeText)
@@ -116,6 +118,7 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
         } catch (ParseException e) {
             Log.e(JobOfferFragment.class.getName(), e.getMessage());
         }
+        titleText.setText(jobOffer.getTitle());
         pickupText.setText(jobOffer.getPickupAddress());
         destinationText.setText(jobOffer.getDestination());
         fareEt.setText(String.valueOf(jobOffer.getFare()));
@@ -136,16 +139,18 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
 
     @OnClick(R.id.postBtn)
     void onPostBtnClick() {
-        if (dateText.equals(getString(R.string.select_date)) || timeText.equals(getString(R.string.select_time)) ||
+        if (TextUtils.isEmpty(titleText.getText()) || dateText.equals(getString(R.string.select_date)) || timeText.equals(getString(R.string.select_time)) ||
                 TextUtils.isEmpty(pickupText.getText()) || TextUtils.isEmpty(destinationText.getText())
                 || TextUtils.isEmpty(fareEt.getText()) || jobOffer.getJobTypeId() == Constants.DEFAULT_UNSELECTED_POSITION ||
                 jobOffer.getVehicleTypeId() == Constants.DEFAULT_UNSELECTED_POSITION || TextUtils.isEmpty(instructionsET.getText())) {
             Toast.makeText(getActivity(), R.string.posting_empty, Toast.LENGTH_SHORT).show();
         } else {
             double fare = Double.parseDouble(fareEt.getText().toString());
+            jobOffer.setTitle(titleText.getText().toString());
             jobOffer.setPickupAddress(pickupText.getText().toString());
             jobOffer.setDestination(destinationText.getText().toString());
             jobOffer.setFare(fare);
+            jobOffer.setGratuity(gratuityEt.getText().toString());
             jobOffer.setInstructions(instructionsET.getText().toString());
             String datetime = outputFormatter.format(selectedDateTimeCalendar.getTime());
             jobOffer.setDateTime(datetime);

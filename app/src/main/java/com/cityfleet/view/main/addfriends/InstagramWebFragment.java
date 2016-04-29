@@ -98,8 +98,9 @@ public class InstagramWebFragment extends BaseFragment implements InstagramLogin
     @Override
     public void onSuccessAuthorization(String token) {
         Log.d("TAG", token);
-        EventBus.getDefault().postSticky(new InstagramLoginEvent(token));
+
         getActivity().onBackPressed();
+        EventBus.getDefault().postSticky(new InstagramLoginEvent(token));
     }
 
     @Override

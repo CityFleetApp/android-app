@@ -72,6 +72,8 @@ public class AddFriendsPresenter {
             view.stopLoading();
             if (!response.isSuccessful()) {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            } else {
+                view.onSuccess();
             }
         }
 
@@ -92,5 +94,6 @@ public class AddFriendsPresenter {
 
         void onNetworkError();
 
+        void onSuccess();
     }
 }

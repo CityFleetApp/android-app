@@ -139,6 +139,7 @@ public class ManagePostsFragment extends BaseFragment implements ManagePostsAdap
     private JobOffer getJobOfferFromManagePostModel(ManagePostModel item) {
         JobOffer jobOffer = new JobOffer();
         jobOffer.setId(item.getId());
+        jobOffer.setTitle(item.getTitle());
         jobOffer.setDateTime(item.getPickupDatetime());
         jobOffer.setSuite(item.isSuite());
         jobOffer.setJobType(item.getJobType());

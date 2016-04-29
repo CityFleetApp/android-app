@@ -45,6 +45,8 @@ public class JobInfoFragment extends BaseFragment {
     private SimpleDateFormat outputDateFormatter = new SimpleDateFormat(Constants.OUTPUT_DATE_FORMAT, Locale.ENGLISH);
     @Bind(R.id.title)
     TextView title;
+    @Bind(R.id.titleLbl)
+    TextView titleText;
     @Bind(R.id.dateLbl)
     TextView dateLbl;
     @Bind(R.id.timeLbl)
@@ -105,6 +107,7 @@ public class JobInfoFragment extends BaseFragment {
         } catch (ParseException e) {
             Log.e(JobOffersAdapter.class.getName(), e.getMessage());
         }
+        titleText.setText(jobOffer.getTitle());
         dateLbl.setText(date);
         timeLbl.setText(time);
         pickupAddressLbl.setText(jobOffer.getPickupAddress());
@@ -133,6 +136,7 @@ public class JobInfoFragment extends BaseFragment {
             JobOfferAwardFragment fragment = new JobOfferAwardFragment();
             Bundle args = new Bundle();
             args.putInt(Constants.JOB_OFFER_ID_TAG, jobOffer.getId());
+            args.putString(Constants.JOB_OFFER_TITLE_TAG, jobOffer.getTitle());
             fragment.setArguments(args);
             ((BaseActivity) getActivity()).changeFragment(fragment, true);
         } else {

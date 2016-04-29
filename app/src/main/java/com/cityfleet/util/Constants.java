@@ -54,9 +54,12 @@ public class Constants {
     public static final int PAGE_SIZE = 20;
     public static final String CHAT_ID_TAG = "chat_id_tag";
     public static final String JOB_OFFER_ID_TAG = "job_offer_id_tag";
+    public static final String JOB_OFFER_TITLE_TAG = "job_offer_title_tag";
+    public static final String JOB_OFFER_EXECUTOR_TAG = "job_offer_executor_tag";
     public static final String NOTIFICATION_ID_TAG = "notification_id_tag";
     public static final int NEW_MESSAGE_NOTIF_ID = 0;
     public static final int NEW_JOB_OFFER_NOTIF_ID = 1;
     public static final int JOB_OFFER_COVERED_NOTIF_ID = 2;
+    public static final int JOB_OFFER_COMPLETED_NOTIF_ID = 4;
     public static final int ADMIN_NOTIF_ID = 3;
 }

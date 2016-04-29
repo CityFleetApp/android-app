@@ -59,7 +59,7 @@ public class SettingsFragment extends BaseFragment implements SettingsPresenter.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.settings_fragment, container, false);
         ButterKnife.bind(this, view);
-        title.setText(getString(R.string.profile));
+        title.setText(getString(R.string.settings));
         setupSeekbar();
         presenter = new SettingsPresenter(this, CityFleetApp.getInstance().getNetworkManager());
         presenter.loadSettings();

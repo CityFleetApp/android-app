@@ -102,7 +102,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:paddingRight="@dimen/add_friends_padding_left"
-                    android:src="@drawable/add" />
+                    android:src="@drawable/arrow_right_red" />
             </RelativeLayout>
 
             <View
@@ -128,7 +128,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:paddingRight="@dimen/add_friends_padding_left"
-                    android:src="@drawable/add" />
+                    android:src="@drawable/arrow_right_red" />
             </RelativeLayout>
 
             <View
@@ -208,7 +208,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:paddingRight="@dimen/add_friends_padding_left"
-                    android:src="@drawable/add" />
+                    android:src="@drawable/arrow_right_red" />
             </RelativeLayout>
 
             <View
@@ -260,7 +260,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:paddingRight="@dimen/add_friends_padding_left"
-                    android:src="@drawable/add" />
+                    android:src="@drawable/arrow_right_red" />
             </RelativeLayout>
 
             <View

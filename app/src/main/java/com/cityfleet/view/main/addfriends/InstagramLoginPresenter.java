@@ -66,6 +66,7 @@ public class InstagramLoginPresenter {
         queryParams.put("client_id", clientId);
         queryParams.put("redirect_uri", redirectUrl);
         queryParams.put("response_type", "token");
+        queryParams.put("scope", "follower_list");
         String urlWithParams = authUrl + urlEncodeUTF8(queryParams);
         return urlWithParams;
     }

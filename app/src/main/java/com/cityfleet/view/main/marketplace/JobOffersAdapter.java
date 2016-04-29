@@ -90,7 +90,7 @@ public class JobOffersAdapter extends RecyclerView.Adapter<JobOffersAdapter.View
         }
         holder.timePrice.setText(timePrice);
         holder.date.setText(date);
-        holder.description.setText(jobOffer.getInstructions());
+        holder.description.setText(jobOffer.getTitle());
         holder.covered.setText(jobOffer.getStatus());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -82,7 +82,6 @@
         android:layout_toLeftOf="@+id/arrow"
         android:textColor="@color/date_text_color"
         android:textSize="@dimen/reg_edittext_lbl_textsize"
-        android:text="Need a car for"
         android:layout_toRightOf="@+id/line"
         android:ellipsize="end"
         android:singleLine="true" />

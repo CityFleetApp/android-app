@@ -9,6 +9,7 @@ import com.cityfleet.util.Constants;
 import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.main.mainmap.MainMapFragment;
 import com.cityfleet.view.main.marketplace.JobInfoFragment;
+import com.cityfleet.view.main.marketplace.JobOfferCompletedFragment;
 import com.cityfleet.view.main.notifications.NotificationDetailFragment;
 
 public class MainActivity extends BaseActivity {
@@ -21,22 +22,33 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if(intent.hasExtra(Constants.JOB_OFFER_ID_TAG)) {
+        if (intent.hasExtra(Constants.JOB_OFFER_ID_TAG) && intent.hasExtra(Constants.JOB_OFFER_EXECUTOR_TAG)) {
+            int jobOfferId = intent.getIntExtra(Constants.JOB_OFFER_ID_TAG, Constants.DEFAULT_UNSELECTED_POSITION);
+            String title = intent.getStringExtra(Constants.JOB_OFFER_TITLE_TAG);
+            String driverName = intent.getStringExtra(Constants.JOB_OFFER_EXECUTOR_TAG);
+            changeFragment(getJobOfferCompletedFragment(jobOfferId, title, driverName), false);
+        } else if (intent.hasExtra(Constants.JOB_OFFER_ID_TAG)) {
             int jobOfferId = intent.getIntExtra(Constants.JOB_OFFER_ID_TAG, Constants.DEFAULT_UNSELECTED_POSITION);
             if (jobOfferId != Constants.DEFAULT_UNSELECTED_POSITION) {
                 changeFragment(getJobOfferFragment(jobOfferId), false);
             }
-        } else if(intent.hasExtra(Constants.NOTIFICATION_ID_TAG)){
+        } else if (intent.hasExtra(Constants.NOTIFICATION_ID_TAG)) {
             int notifId = intent.getIntExtra(Constants.NOTIFICATION_ID_TAG, Constants.DEFAULT_UNSELECTED_POSITION);
             if (notifId != Constants.DEFAULT_UNSELECTED_POSITION) {
                 changeFragment(getNotificationFragment(notifId), false);
             }
         }
+
     }
 
     @Override
     protected Fragment getInitFragment() {
-        if (getIntent().hasExtra(Constants.JOB_OFFER_ID_TAG)) {
+        if (getIntent().hasExtra(Constants.JOB_OFFER_ID_TAG) && getIntent().hasExtra(Constants.JOB_OFFER_EXECUTOR_TAG)) {
+            int jobOfferId = getIntent().getIntExtra(Constants.JOB_OFFER_ID_TAG, Constants.DEFAULT_UNSELECTED_POSITION);
+            String title = getIntent().getStringExtra(Constants.JOB_OFFER_TITLE_TAG);
+            String driverName = getIntent().getStringExtra(Constants.JOB_OFFER_EXECUTOR_TAG);
+           return getJobOfferCompletedFragment(jobOfferId, title, driverName);
+        } else if (getIntent().hasExtra(Constants.JOB_OFFER_ID_TAG)) {
             int jobOfferId = getIntent().getIntExtra(Constants.JOB_OFFER_ID_TAG, Constants.DEFAULT_UNSELECTED_POSITION);
             return getJobOfferFragment(jobOfferId);
         } else if (getIntent().hasExtra(Constants.SELECTED_NOTIFICATION_TAG)) {
@@ -45,6 +57,16 @@ public class MainActivity extends BaseActivity {
         } else {
             return new MainMapFragment();
         }
+    }
+
+    private JobOfferCompletedFragment getJobOfferCompletedFragment(int id, String title, String driverName) {
+        JobOfferCompletedFragment fragment = new JobOfferCompletedFragment();
+        Bundle args = new Bundle();
+        args.putInt(Constants.JOB_OFFER_ID_TAG, id);
+        args.putString(Constants.JOB_OFFER_TITLE_TAG, title);
+        args.putString(Constants.JOB_OFFER_EXECUTOR_TAG, driverName);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     private JobInfoFragment getJobOfferFragment(int jobOfferId) {

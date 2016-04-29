@@ -2,7 +2,6 @@ package com.cityfleet.view.main.marketplace;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,30 +31,30 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by vika on 25.04.16.
+ * Created by vika on 29.04.16.
  */
-public class JobOfferAwardFragment extends BaseFragment {
+public class JobOfferCompletedFragment extends BaseFragment {
     @Bind({R.id.star1, R.id.star2, R.id.star3, R.id.star4, R.id.star5})
     List<ImageView> stars;
-    @Bind(R.id.paidOnTimeSwitcher)
-    SwitchCompat switcher;
     @Bind(R.id.submitBtn)
     Button submitBtn;
-    @Bind(R.id.jobAwardedLbl)
-    TextView jobAwardedLbl;
+    @Bind(R.id.jobCompletedLbl)
+    TextView jobCompletedLbl;
     @Bind(R.id.title)
     TextView title;
     private int jobOfferId;
     private String jobTitle;
+    private String jobExecutor;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.job_offer_award, container, false);
+        View view = inflater.inflate(R.layout.job_offer_completed, container, false);
         ButterKnife.bind(this, view);
         jobOfferId = getArguments().getInt(Constants.JOB_OFFER_ID_TAG, 0);
         jobTitle = getArguments().getString(Constants.JOB_OFFER_TITLE_TAG);
-        jobAwardedLbl.setText(getString(R.string.completed, jobTitle));
+        jobExecutor = getArguments().getString(Constants.JOB_OFFER_EXECUTOR_TAG);
+        jobCompletedLbl.setText(getString(R.string.completed_by_smb, jobTitle, jobExecutor));
         title.setText(R.string.complete);
         return view;
     }
@@ -79,16 +78,16 @@ public class JobOfferAwardFragment extends BaseFragment {
     @OnClick(R.id.submitBtn)
     void onSubmitBtnClicked() {
         if (stars.get(0).isSelected()) {
-            completeJob();
+            rateExecutor();
         } else {
-            Toast.makeText(getContext(), getString(R.string.rate_hirer), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.rate_executor), Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void completeJob() {
+    private void rateExecutor() {
         NetworkManager networkManager = CityFleetApp.getInstance().getNetworkManager();
         if (networkManager.isConnectedOrConnecting()) {
-            Call<Void> call = networkManager.getNetworkClient().completeJob(jobOfferId, getRating(), switcher.isChecked());
+            Call<Void> call = networkManager.getNetworkClient().rateDriver(jobOfferId, getRating());
             call.enqueue(completeCallback);
         } else {
             Toast.makeText(getActivity(), getString(R.string.networkMesMoInternet), Toast.LENGTH_LONG).show();
