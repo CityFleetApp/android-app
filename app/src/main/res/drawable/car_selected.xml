@@ -6,11 +6,13 @@
                 android:bottom="@dimen/dash_icon_padding"
                 android:left="@dimen/dash_icon_padding"
                 android:right="@dimen/dash_icon_padding"
-                android:top="@dimen/dash_icon_padding"/>
-            <solid android:color="@android:color/white"/>
-            <corners
-                android:radius="@dimen/dash_icon_radius"/>
+                android:top="@dimen/dash_icon_padding" />
+            <solid android:color="@android:color/white" />
+            <corners android:radius="@dimen/dash_icon_radius" />
         </shape>
     </item>
-    <item android:drawable="@drawable/car"/>
+    <item>
+        <bitmap
+            android:src="@drawable/car" />
+    </item>
 </layer-list>

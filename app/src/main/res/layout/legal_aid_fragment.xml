@@ -38,10 +38,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true">
-
+        <!--lawer_selected_2 is workaround for http://stackoverflow.com/questions/36917935/android-xml-drawable-is-bigger-first-time-->
         <TextView
             style="@style/DashBtnStyle"
-            android:drawableLeft="@drawable/lawyer_selected"
+            android:drawableLeft="@drawable/lawer_selected_2"
             android:text="@string/tlc_lawyers"
             android:textAllCaps="false" />
 

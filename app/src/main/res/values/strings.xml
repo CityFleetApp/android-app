@@ -40,7 +40,7 @@
     <string name="police">Police</string>
     <string name="tlc">Tlc</string>
     <string name="accident">Accident</string>
-    <string name="trafic_jam">Trafic jam</string>
+    <string name="trafic_jam">Traffic jam</string>
     <string name="hazard">Hazard</string>
     <string name="road_closure">Road closure</string>
     <string name="add_friend_lbl">Add friend to simplify\nconnecting and meeting up!\nsee other\'s ETA when heading\nto the same direction,\nand appear on the map when\ndriving nearby</string>

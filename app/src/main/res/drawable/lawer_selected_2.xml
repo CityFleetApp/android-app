@@ -12,8 +12,5 @@
                 android:radius="@dimen/dash_icon_radius"/>
         </shape>
     </item>
-    <item>
-        <bitmap
-            android:src="@drawable/buss" />
-    </item>
+    <item android:drawable="@drawable/femida"/>
 </layer-list>
