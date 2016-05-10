@@ -53,8 +53,6 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
         TextView modelLbl;
         @Bind(R.id.seatsLbl)
         TextView seatsLbl;
-        @Bind(R.id.typeLbl)
-        TextView typeLbl;
         @Bind(R.id.detailsLbl)
         TextView detailsLbl;
         @Bind(R.id.detailsText)
@@ -113,8 +111,7 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
         holder.colorLbl.setText(car.getColor());
         holder.fuelLbl.setText(car.getFuel());
         holder.seatsLbl.setText(String.valueOf(car.getSeats()));
-        holder.typeLbl.setText(car.getType());
-        holder.modelLbl.setText(car.getModel());
+        holder.modelLbl.setText(car.getType());
         holder.detailsText.setText(car.getDescription());
         if (holder.isDetailsExpanded) {
             holder.detailsText.setVisibility(View.VISIBLE);
