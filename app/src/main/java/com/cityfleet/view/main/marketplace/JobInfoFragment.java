@@ -165,6 +165,7 @@ public class JobInfoFragment extends BaseFragment {
         public void onResponse(Call<Void> call, Response<Void> response) {
             if (response.isSuccessful()) {
                 getActivity().onBackPressed();
+                Toast.makeText(getContext(), R.string.job_request_sent, Toast.LENGTH_SHORT).show();
             } else {
                 String error = NetworkErrorUtil.gerErrorMessage(response);
                 if (TextUtils.isEmpty(error)) {
