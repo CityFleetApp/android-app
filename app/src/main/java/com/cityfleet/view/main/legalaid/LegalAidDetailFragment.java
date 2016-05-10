@@ -46,6 +46,8 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
     RelativeLayout progressBar;
     @Bind(R.id.contactBtn)
     Button contactBtn;
+    @Bind(R.id.textInfo)
+    TextView textInfo;
     @Bind(R.id.locationText)
     TextView locationText;
     @Bind(R.id.personInfo)
@@ -85,6 +87,7 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
         personTitle.setText(personType);
         personText.setText(getString(R.string.select_person, personType));
         contactBtn.setText(getString(R.string.contact_person, personType));
+        textInfo.setText(getTextInfoNameByType(type));
         if (selectedLocation != null) {
             locationText.setText(selectedLocation.getName());
             if (selectedPerson != null) {
@@ -120,6 +123,19 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
                 return getString(R.string.accountant);
             case BROKERS:
                 return getString(R.string.broker);
+        }
+        return "";
+    }
+
+    private String getTextInfoNameByType(LegalAidType type) {
+        switch (type) {
+            case DMV_LAWYERS:
+            case TLC_LAWYERS:
+                return getString(R.string.lawyer_s_info);
+            case ACCOUNTANTS:
+                return getString(R.string.accountants_info);
+            case BROKERS:
+                return getString(R.string.insurance_brokers_info);
         }
         return "";
     }
