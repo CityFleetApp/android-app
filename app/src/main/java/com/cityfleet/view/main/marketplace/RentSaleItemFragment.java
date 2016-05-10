@@ -63,7 +63,7 @@ public class RentSaleItemFragment extends BaseFragment {
         }
         adapter = new RentSaleGalleryPagerAdapter(getContext(), car.getPhotos(), RentSaleItemFragment.class.getName());
         carImagePager.setAdapter(adapter);
-        carPrice.setText(car.getPrice());
+        carPrice.setText(getString(R.string.dollar_price, car.getPrice()));
         carTitle.setText(car.getYear() + " " + car.getMake() + " " + car.getModel());
         colorLbl.setText(car.getColor());
         fuelLbl.setText(car.getFuel());

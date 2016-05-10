@@ -9,8 +9,7 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:layout_centerInParent="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/testprofile" />
+        android:scaleType="centerCrop" />
 
     <ProgressBar
         android:id="@+id/progressBar"

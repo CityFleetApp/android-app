@@ -56,7 +56,7 @@ public class GeneralGoodDetailFragment extends BaseFragment {
         }
         adapter = new RentSaleGalleryPagerAdapter(getContext(), photoList, GeneralGoodDetailFragment.class.getName());
         goodsImagePager.setAdapter(adapter);
-        goodsPrice.setText(generalGood.getPrice());
+        goodsPrice.setText(getString(R.string.dollar_price, generalGood.getPrice()));
         goodsTitle.setText(generalGood.getItem());
         typeLbl.setText(generalGood.getCondition());
         detailsText.setText(generalGood.getDescription());
