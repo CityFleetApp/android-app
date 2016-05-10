@@ -133,7 +133,6 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
     void onDateBtnClick() {
         Calendar cal = Calendar.getInstance();
         DatePickerDialog datePicker = new DatePickerDialog(getContext(), datePickerListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-        datePicker.getDatePicker().setMinDate(cal.getTime().getTime() - Constants.UPDATE_INTERVAL_IN_MILLISECONDS);
         datePicker.show();
     }
 
@@ -162,10 +161,20 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            dateText.setText(getString(R.string.job_date, monthOfYear, dayOfMonth, year));
-            selectedDateTimeCalendar.set(Calendar.YEAR, year);
-            selectedDateTimeCalendar.set(Calendar.MONTH, monthOfYear);
-            selectedDateTimeCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            selectedDateTimeCalendar.set(Calendar.SECOND, 0);
+            selectedDateTimeCalendar.set(Calendar.MILLISECOND, 0);
+            if (calendar.getTimeInMillis() > selectedDateTimeCalendar.getTimeInMillis()) {
+                dateText.setText(getString(R.string.job_date, monthOfYear + 1, dayOfMonth, year));
+                selectedDateTimeCalendar.set(Calendar.YEAR, year);
+                selectedDateTimeCalendar.set(Calendar.MONTH, monthOfYear);
+                selectedDateTimeCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            } else {
+                Toast.makeText(getContext(), R.string.invalid_date, Toast.LENGTH_SHORT).show();
+            }
         }
     };
 

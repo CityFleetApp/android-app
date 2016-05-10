@@ -39,7 +39,7 @@ public class FriendsListTabbedFragment extends BaseFragment {
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
         tabs.getTabAt(0).setIcon(ContextCompat.getDrawable(getContext(), R.drawable.user));
-        tabs.getTabAt(1).setIcon(ContextCompat.getDrawable(getContext(), R.drawable.clock));
+        tabs.getTabAt(1).setIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_clock));
         return view;
     }
 

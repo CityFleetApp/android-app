@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/splash" />
+            android:src="@drawable/cars_back" />
 
         <ImageView
             android:id="@+id/logo"
