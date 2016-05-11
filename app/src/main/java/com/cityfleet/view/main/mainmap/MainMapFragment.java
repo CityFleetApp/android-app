@@ -636,6 +636,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                 .position(new LatLng(friendNearby.getLat(), friendNearby.getLng()))
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.friend_marker))
                 .title(String.valueOf(friendNearby.getId()))
+                .anchor(0.5f, 1f)
                 .snippet("friend"));
 //            b.recycle();
 //            drawingCache.recycle();
@@ -693,12 +694,14 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                 }
                 if (selectedFriendMarker != null) {
                     selectedFriendMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.friend_marker));
+                    selectedFriendMarker.setAnchor(0.5f,1);
                     selectedFriendMarker = null;
                 }
                 FriendNearby friendNearby = getFriendForMarker(marker);
                 Bitmap b = getImageForFriendSelected(friendNearby.getFullName());
                 if (b != null) {
                     marker.setIcon(BitmapDescriptorFactory.fromBitmap(b));
+                    marker.setAnchor(0.5f, 1f);
                 }
                 selectedFriendMarker = marker;
                 if (!nearbyFriendMapDialogView.isVisible() || (nearbyFriendMapDialogView.isVisible() && !nearbyFriendMapDialogView.getSelectedFriend().equals(friendNearby))) {
@@ -716,6 +719,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         nearbyFriendMapDialogView.hide();
         if (selectedFriendMarker != null) {
             selectedFriendMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.friend_marker));
+            selectedFriendMarker.setAnchor(0.5f, 1f);
             selectedFriendMarker = null;
         }
 
