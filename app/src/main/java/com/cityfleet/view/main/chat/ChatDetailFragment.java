@@ -141,7 +141,7 @@ public class ChatDetailFragment extends BaseFragment {
     }
 
     @Subscribe
-    public void onEvent(final NewMessageEvent event) {
+    public void onEventMainThread(final NewMessageEvent event) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

@@ -194,7 +194,7 @@ public class AddFriendsFragment extends BaseFragment implements AddFriendsPresen
     }
 
     @Subscribe(sticky = true)
-    public void onEvent(InstagramLoginEvent event) {
+    public void onEventMainThread(InstagramLoginEvent event) {
         presenter.addInstagramFriends(event.getToken());
         EventBus.getDefault().removeStickyEvent(event);
     }

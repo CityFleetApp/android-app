@@ -104,6 +104,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     protected GoogleApiClient googleApiClient;
     protected LocationRequest locationRequest;
     protected Location currentLocation;
+    private Location selectedForReportPosition;
     protected LocationSettingsRequest locationSettingsRequest;
     private MainMapPresenter presenter;
     private Place selectedPlace;
@@ -113,6 +114,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     private List<Marker> nearbyFriendsMarkerList = new ArrayList<Marker>();
     private boolean needToAnimateZoomToLocation = true;
     private Marker selectedFriendMarker = null;
+
 
     @Nullable
     @Override
@@ -139,7 +141,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     @Subscribe(sticky = true)
-    public void onEvent(NewReportAddedEvent event) {
+    public void onEventMainThread(NewReportAddedEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         boolean needToAddReport = true;
         for (Report report : nearbyReportsList) {
@@ -321,6 +323,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         map.getUiSettings().setMyLocationButtonEnabled(false);
         map.setOnMarkerClickListener(markerClickListener);
         map.setOnMapClickListener(mapClickListener);
+        map.setOnMapLongClickListener(mapLongClickListener);
     }
 
     public static int getPixelsFromDp(Context context, float dp) {
@@ -359,16 +362,19 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     void reportBtnClick() {
         if (!reportBtn.isSelected()) {
             selectButton(reportBtn);
-            FragmentManager fm = getChildFragmentManager();
-            ReportDialogFragment fragment = (ReportDialogFragment) fm.findFragmentByTag(Constants.REPORT_DIALOG_TAG);
-            if (fragment == null) {
-                fragment = new ReportDialogFragment();
-            }
-            fragment.setTargetFragment(this, Constants.REPORT_TARGET_FRAGMENT);
-            fragment.show(getChildFragmentManager(), Constants.REPORT_DIALOG_TAG);
+            showReportDialog();
         }
     }
 
+    private void showReportDialog() {
+        FragmentManager fm = getChildFragmentManager();
+        ReportDialogFragment fragment = (ReportDialogFragment) fm.findFragmentByTag(Constants.REPORT_DIALOG_TAG);
+        if (fragment == null) {
+            fragment = new ReportDialogFragment();
+        }
+        fragment.setTargetFragment(this, Constants.REPORT_TARGET_FRAGMENT);
+        fragment.show(getChildFragmentManager(), Constants.REPORT_DIALOG_TAG);
+    }
 
     @OnClick(R.id.notificationBtn)
     void notificationBtnClick() {
@@ -427,8 +433,15 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     public void onReportItemClick(int position) {
-        double lat = currentLocation == null ? 0 : currentLocation.getLatitude();
-        double longt = currentLocation == null ? 0 : currentLocation.getLongitude();
+        double lat = 0, longt = 0;
+        if (selectedForReportPosition != null) {
+            lat = selectedForReportPosition.getLatitude();
+            longt = selectedForReportPosition.getLongitude();
+            selectedForReportPosition = null;
+        } else {
+            lat = currentLocation.getLatitude();
+            longt = currentLocation.getLongitude();
+        }
         presenter.sendReport(position + 1, lat, longt);
         selectButton(dashboardBtn);
     }
@@ -717,6 +730,16 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
             if (nearbyFriendMapDialogView.isVisible()) {
                 unselectFriendMarker();
             }
+        }
+    };
+
+    private GoogleMap.OnMapLongClickListener mapLongClickListener = new GoogleMap.OnMapLongClickListener() {
+        @Override
+        public void onMapLongClick(LatLng latLng) {
+            selectedForReportPosition = new Location("");
+            selectedForReportPosition.setLatitude(latLng.latitude);
+            selectedForReportPosition.setLongitude(latLng.longitude);
+            showReportDialog();
         }
     };
 }

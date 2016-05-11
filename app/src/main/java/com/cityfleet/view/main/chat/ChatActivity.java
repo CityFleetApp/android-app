@@ -88,14 +88,14 @@ public class ChatActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void onEvent(PostMessageEvent event) {
+    public void onEventMainThread(PostMessageEvent event) {
         Gson gson = new Gson();
         String message = gson.toJson(event.getChatMessageToSend());
         webSocket.sendText(message);
     }
 
     @Subscribe
-    public void onEvent(MarkMessageSeenEvent event) {
+    public void onEventMainThread(MarkMessageSeenEvent event) {
         Gson gson = new Gson();
         String message = gson.toJson(event.getMarkRoomAsRead());
         webSocket.sendText(message);

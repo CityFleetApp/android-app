@@ -139,7 +139,7 @@ public class EditUserProfileFragment extends BaseFragment implements EditUserPro
     }
 
     @Subscribe(sticky = false)
-    public void onEvent(EditUserCarEvent event) {
+    public void onEventMainThread(EditUserCarEvent event) {
         userEditInfo = new UserEditInfo(event.getEditInfo());
     }
 

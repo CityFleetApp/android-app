@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
@@ -58,12 +59,26 @@ public class MyGcmListenerService extends GcmListenerService {
             String action = messageObject.get("action").getAsString();
             if (action.equals("added")) {
                 Gson gson = new GsonBuilder().create();
-                Report report = gson.fromJson(message, Report.class);
-                EventBus.getDefault().post(new NewReportAddedEvent(report));
+                final Report report = gson.fromJson(message, Report.class);
+                Handler mainHandler = new Handler(getMainLooper());
+                Runnable myRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        EventBus.getDefault().post(new NewReportAddedEvent(report));
+                    }
+                };
+                mainHandler.post(myRunnable);
             } else if (action.equals("removed")) {
                 Gson gson = new GsonBuilder().create();
-                Report report = gson.fromJson(message, Report.class);
-                EventBus.getDefault().post(new ReportDeletedEvent(report));
+                final Report report = gson.fromJson(message, Report.class);
+                Handler mainHandler = new Handler(getMainLooper());
+                Runnable myRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        EventBus.getDefault().post(new ReportDeletedEvent(report));
+                    }
+                };
+                mainHandler.post(myRunnable);
             }
         } else if (messageObject.has("type")) {
             String type = messageObject.get("type").getAsString();

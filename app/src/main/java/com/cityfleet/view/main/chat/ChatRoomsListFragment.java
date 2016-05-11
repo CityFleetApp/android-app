@@ -149,7 +149,7 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
     }
 
     @Subscribe
-    public void onEvent(final NewMessageEvent event) {
+    public void onEventMainThread(final NewMessageEvent event) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -202,7 +202,7 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
     }
 
     @Subscribe
-    public void onEvent(final RoomInvitationEvent event) {
+    public void onEventMainThread(final RoomInvitationEvent event) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -228,7 +228,7 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
 
 
     @Subscribe
-    public void onEvent(final MarkMessageSeenEvent event) {
+    public void onEventMainThread(final MarkMessageSeenEvent event) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
