@@ -24,7 +24,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:background="@android:color/transparent"
                 android:paddingBottom="@dimen/toolbar_back_padding"
                 android:paddingRight="@dimen/toolbar_back_padding"
                 android:paddingTop="@dimen/toolbar_back_padding"
@@ -37,6 +36,32 @@
                 android:layout_gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/reg_edittext_lbl_textsize" />
+
+            <ImageButton
+                android:id="@+id/searchBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:paddingBottom="@dimen/toolbar_back_padding"
+                android:paddingLeft="@dimen/toolbar_back_padding"
+                android:paddingRight="@dimen/toolbar_back_padding"
+                android:paddingTop="@dimen/toolbar_back_padding"
+                android:src="@drawable/search" />
+
+            <EditText
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/reg_edittext_lbl_textsize"
+                android:textColorHint="@android:color/white"
+                android:textCursorDrawable="@null"
+                android:visibility="gone"/>
         </app:android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout

@@ -7,6 +7,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cityfleet.R;
@@ -22,6 +24,10 @@ import butterknife.OnClick;
 public class BuyRentTabbedFragment extends BaseFragment {
     @Bind(R.id.title)
     TextView title;
+    @Bind(R.id.searchBar)
+    EditText searchBar;
+    @Bind(R.id.searchBtn)
+    ImageButton searchBtn;
     @Bind(R.id.tabs)
     TabLayout tabs;
     @Bind(R.id.viewPager)
@@ -41,8 +47,27 @@ public class BuyRentTabbedFragment extends BaseFragment {
 
     @OnClick(R.id.backBtn)
     void onBackBtnClick() {
-        getActivity().onBackPressed();
+        if (searchBar.getVisibility() == View.VISIBLE) {
+            showSearch(false);
+        } else {
+            getActivity().onBackPressed();
+        }
     }
+
+    @OnClick(R.id.searchBtn)
+    void onSearchBtnClick() {
+        showSearch(true);
+    }
+
+    private void showSearch(boolean showSearch) {
+        title.setVisibility(showSearch ? View.GONE : View.VISIBLE);
+        searchBtn.setVisibility(showSearch ? View.GONE : View.VISIBLE);
+        searchBar.setVisibility(showSearch ? View.VISIBLE : View.GONE);
+        if (!showSearch) {
+            searchBar.getText().clear();
+        }
+    }
+
 
     @Override
     public void onDestroyView() {
