@@ -1,6 +1,8 @@
 package com.cityfleet.view.main.chat;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +26,7 @@ import com.cityfleet.network.NetworkErrorUtil;
 import com.cityfleet.network.NetworkManager;
 import com.cityfleet.util.Constants;
 import com.cityfleet.util.EndlessRecyclerOnScrollListener;
+import com.cityfleet.util.ImagePickerUtil;
 import com.cityfleet.util.MarkMessageSeenEvent;
 import com.cityfleet.util.NewMessageEvent;
 import com.cityfleet.util.PostMessageEvent;
@@ -44,7 +47,7 @@ import retrofit2.Response;
 /**
  * Created by vika on 18.04.16.
  */
-public class ChatDetailFragment extends BaseFragment {
+public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.ImageResultListener {
     private int chatId;
     @Bind(R.id.title)
     TextView title;
@@ -60,6 +63,7 @@ public class ChatDetailFragment extends BaseFragment {
     private EndlessRecyclerOnScrollListener scrollListener;
     private int offset = 0;
     private int totalMessagesCount;
+    private ImagePickerUtil imagePickerUtil;
 
     @Nullable
     @Override
@@ -75,6 +79,7 @@ public class ChatDetailFragment extends BaseFragment {
         chatList.setAdapter(adapter);
         setScrollListener(linearLayoutManager);
         loadChatHistory();
+        imagePickerUtil = new ImagePickerUtil(this, getString(R.string.chat_photo_name), this);
         return view;
     }
 
@@ -167,6 +172,26 @@ public class ChatDetailFragment extends BaseFragment {
         }
     }
 
+    @OnClick(R.id.cameraBtn)
+    void onCameraBtnClicked() {
+        imagePickerUtil.onImageClick();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (imagePickerUtil.isImagePickerPermissionResultCode(requestCode)) {
+            imagePickerUtil.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (imagePickerUtil.isImagePickerRequestResultCode(requestCode)) {
+            imagePickerUtil.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
     private void loadChatHistory() {
         NetworkManager networkManager = CityFleetApp.getInstance().getNetworkManager();
         if (networkManager.isConnectedOrConnecting()) {
@@ -237,8 +262,26 @@ public class ChatDetailFragment extends BaseFragment {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (imagePickerUtil != null) {
+            imagePickerUtil.onDestroy();
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onImageReceived(String url) {
+        Log.d("TAG", "image received: " + url);
+    }
+
+    @Override
+    public void onImageCanceledOrFailed() {
+
     }
 }

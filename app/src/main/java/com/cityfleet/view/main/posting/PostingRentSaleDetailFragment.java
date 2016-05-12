@@ -30,7 +30,7 @@ import com.cityfleet.model.CarPostingType;
 import com.cityfleet.model.Photo;
 import com.cityfleet.util.Constants;
 import com.cityfleet.util.DecimalDigitsInputFilter;
-import com.cityfleet.util.ImagePickerUtil;
+import com.cityfleet.util.MultipleImagePickerUtil;
 import com.cityfleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
 
@@ -51,7 +51,7 @@ import butterknife.OnLongClick;
 /**
  * Created by vika on 21.03.16.
  */
-public class PostingRentSaleDetailFragment extends BaseFragment implements PostingRentSaleDetailPresenter.PostingRentSaleDetailView, ImagePickerUtil.ImageResultListener {
+public class PostingRentSaleDetailFragment extends BaseFragment implements PostingRentSaleDetailPresenter.PostingRentSaleDetailView, MultipleImagePickerUtil.ImageResultListener {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.progressBar)
@@ -96,7 +96,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     private List<String> yearList;
     private Photo[] imageUrls = new Photo[Constants.POSTING_IMAGES_NUMBER];
     private List<Integer> photosToDelete = new ArrayList<Integer>();
-    private ImagePickerUtil imagePickerUtil;
+    private MultipleImagePickerUtil imagePickerUtil;
 
     @Nullable
     @Override
@@ -117,7 +117,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
         presenter = new PostingRentSaleDetailPresenter(CityFleetApp.getInstance().getNetworkManager(), this);
         presenter.init();
         price.setFilters(new InputFilter[]{new DecimalDigitsInputFilter()});
-        imagePickerUtil = new ImagePickerUtil(this, images, getString(R.string.car_posting_image_name), this);
+        imagePickerUtil = new MultipleImagePickerUtil(this, images, getString(R.string.car_posting_image_name), this);
         return view;
     }
 

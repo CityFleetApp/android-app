@@ -21,7 +21,7 @@ import com.cityfleet.model.UserEditInfo;
 import com.cityfleet.util.CircleFrameTransform;
 import com.cityfleet.util.Constants;
 import com.cityfleet.util.EditUserCarEvent;
-import com.cityfleet.util.ImagePickerUtil;
+import com.cityfleet.util.MultipleImagePickerUtil;
 import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
@@ -40,7 +40,7 @@ import jp.wasabeef.picasso.transformations.BlurTransformation;
 /**
  * Created by vika on 31.03.16.
  */
-public class EditUserProfileFragment extends BaseFragment implements EditUserProfilePresenter.EditUserProfileVIew, ImagePickerUtil.ImageResultListener {
+public class EditUserProfileFragment extends BaseFragment implements EditUserProfilePresenter.EditUserProfileVIew, MultipleImagePickerUtil.ImageResultListener {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.profileImage)
@@ -60,7 +60,7 @@ public class EditUserProfileFragment extends BaseFragment implements EditUserPro
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
     private EditUserProfilePresenter presenter;
-    private ImagePickerUtil imagePickerUtil;
+    private MultipleImagePickerUtil imagePickerUtil;
     private UserEditInfo userEditInfo;
 
     @Nullable
@@ -75,7 +75,7 @@ public class EditUserProfileFragment extends BaseFragment implements EditUserPro
         }
         presenter.initImage();
         if (imagePickerUtil == null) {
-            imagePickerUtil = new ImagePickerUtil(this, new ArrayList<ImageView>() {{
+            imagePickerUtil = new MultipleImagePickerUtil(this, new ArrayList<ImageView>() {{
                 add(profileImage);
             }}, getString(R.string.profile_image_name), this);
         }

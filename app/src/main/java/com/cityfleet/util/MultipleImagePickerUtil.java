@@ -6,21 +6,27 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.cityfleet.R;
 
 import java.io.File;
+import java.util.List;
 
 /**
- * Created by vika on 12.05.16.
+ * Created by vika on 30.03.16.
  */
-public class ImagePickerUtil {
+public class MultipleImagePickerUtil {
     private Fragment fragment;
+    private List<? extends ImageView> images;
+    private int positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
     public static final int REQUEST_CAMERA = 555;
     public static final int SELECT_FILE = 666;
     public static final int REQUEST_PERMISSION_CAMERA = 1;
@@ -28,17 +34,16 @@ public class ImagePickerUtil {
     private String cameraImageName;
     private ImageResultListener listener;
 
-    public ImagePickerUtil(Fragment fragment, String cameraImageName, ImageResultListener listener) {
+    public MultipleImagePickerUtil(Fragment fragment, List<? extends ImageView> images, String cameraImageName, ImageResultListener listener) {
         this.fragment = fragment;
-        this.cameraImageName = cameraImageName;
+        this.images = images;
         this.listener = listener;
+        this.cameraImageName = cameraImageName;
     }
 
-    public void onDestroy() {
-        fragment = null;
-    }
-
-    public void onImageClick() {
+    public void onImageClick(ImageView view) {
+        int clickedPosition = getClickedPosition(view);
+        positionToUpdateImage = clickedPosition;
         showPickImageDialog();
     }
 
@@ -60,17 +65,19 @@ public class ImagePickerUtil {
             case SELECT_FILE:
                 if (resultCode == Activity.RESULT_OK) {
                     String url = CommonUtils.getImagePath(data.getData(), fragment.getContext());
-                    listener.onImageReceived(url);
+                    listener.onImageReceived(url, positionToUpdateImage);
+                    positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
                 } else {
-                    listener.onImageCanceledOrFailed();
+                    listener.onImageCanceledOrFailed(positionToUpdateImage);
                 }
                 break;
             case REQUEST_CAMERA:
                 if (resultCode == Activity.RESULT_OK) {
-                    String url = getFileForImageFromCamera().getAbsolutePath();
-                    listener.onImageReceived(url);
+                    String url = getFileForProfileFromCamera().getAbsolutePath();
+                    listener.onImageReceived(url, positionToUpdateImage);
+                    positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
                 } else {
-                    listener.onImageCanceledOrFailed();
+                    listener.onImageCanceledOrFailed(positionToUpdateImage);
                 }
                 break;
         }
@@ -82,6 +89,17 @@ public class ImagePickerUtil {
 
     public boolean isImagePickerPermissionResultCode(int resultCode) {
         return (resultCode == REQUEST_PERMISSION_CAMERA || resultCode == REQUEST_PERMISSION_GALLERY);
+    }
+
+    public int getClickedPosition(View view) {
+        int clickedPosition = Constants.DEFAULT_UNSELECTED_POSITION;
+        for (ImageView imageButton : images) {
+            if (imageButton.getId() == view.getId()) {
+                clickedPosition = images.indexOf(imageButton);
+                break;
+            }
+        }
+        return clickedPosition;
     }
 
     private void showPickImageDialog() {
@@ -126,7 +144,7 @@ public class ImagePickerUtil {
 
     private void launchCamera() {
         Intent intent = new Intent(Constants.ACTION_PICK_IMAGE_CAMERA);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(getFileForImageFromCamera()));
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(getFileForProfileFromCamera()));
         fragment.startActivityForResult(intent, REQUEST_CAMERA);
     }
 
@@ -136,13 +154,14 @@ public class ImagePickerUtil {
         fragment.startActivityForResult(photoPickerIntent, SELECT_FILE);
     }
 
-    private File getFileForImageFromCamera() {
-        return new File(fragment.getContext().getExternalFilesDir(null) + File.separator + cameraImageName + ".png"); //TODO change to timestamp
+
+    private File getFileForProfileFromCamera() {
+        return new File(Environment.getExternalStorageDirectory() + File.separator + cameraImageName + "_" + positionToUpdateImage + ".png"); //TODO
     }
 
     public interface ImageResultListener {
-        void onImageReceived(String url);
+        void onImageReceived(String url, int position);
 
-        void onImageCanceledOrFailed();
+        void onImageCanceledOrFailed(int position);
     }
 }

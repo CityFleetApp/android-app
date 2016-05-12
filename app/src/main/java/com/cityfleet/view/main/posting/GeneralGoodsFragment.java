@@ -27,7 +27,7 @@ import com.cityfleet.model.GeneralGood;
 import com.cityfleet.model.Photo;
 import com.cityfleet.util.Constants;
 import com.cityfleet.util.DecimalDigitsInputFilter;
-import com.cityfleet.util.ImagePickerUtil;
+import com.cityfleet.util.MultipleImagePickerUtil;
 import com.cityfleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
 
@@ -47,7 +47,7 @@ import butterknife.OnLongClick;
 /**
  * Created by vika on 21.03.16.
  */
-public class GeneralGoodsFragment extends BaseFragment implements PostingGeneralGoodsPresenter.PostingGeneralGoodsDetailView, ImagePickerUtil.ImageResultListener {
+public class GeneralGoodsFragment extends BaseFragment implements PostingGeneralGoodsPresenter.PostingGeneralGoodsDetailView, MultipleImagePickerUtil.ImageResultListener {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.itemET)
@@ -69,7 +69,7 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
     private Photo[] imageUrls = new Photo[Constants.POSTING_IMAGES_NUMBER];
     private List<Integer> photosToDelete = new ArrayList<Integer>();
     private PostingGeneralGoodsPresenter presenter;
-    private ImagePickerUtil imagePickerUtil;
+    private MultipleImagePickerUtil imagePickerUtil;
     private boolean isEditMode = false;
     private GeneralGood generalGood;
 
@@ -89,7 +89,7 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
         }
         presenter = new PostingGeneralGoodsPresenter(CityFleetApp.getInstance().getNetworkManager(), this);
         priceEt.setFilters(new InputFilter[]{new DecimalDigitsInputFilter()});
-        imagePickerUtil = new ImagePickerUtil(this, images, getString(R.string.general_good_posting_name), this);
+        imagePickerUtil = new MultipleImagePickerUtil(this, images, getString(R.string.general_good_posting_name), this);
         return view;
     }
 

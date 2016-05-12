@@ -24,7 +24,7 @@ import com.cityfleet.model.UserImages;
 import com.cityfleet.model.UserInfo;
 import com.cityfleet.util.CircleFrameTransform;
 import com.cityfleet.util.Constants;
-import com.cityfleet.util.ImagePickerUtil;
+import com.cityfleet.util.MultipleImagePickerUtil;
 import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
@@ -43,7 +43,7 @@ import jp.wasabeef.picasso.transformations.BlurTransformation;
 /**
  * Created by vika on 11.03.16.
  */
-public class ProfileFragment extends BaseFragment implements ProfilePresenter.ProfileView, ImagePickerUtil.ImageResultListener {
+public class ProfileFragment extends BaseFragment implements ProfilePresenter.ProfileView, MultipleImagePickerUtil.ImageResultListener {
     @Bind(R.id.profileImage)
     ImageView profileImage;
     @Bind(R.id.bigProfileImage)
@@ -74,7 +74,7 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
     List<ImageButton> images;
     private ProfilePresenter presenter;
     private List<UserImages> imagesList;
-    private ImagePickerUtil imagePickerUtil;
+    private MultipleImagePickerUtil imagePickerUtil;
     private int positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
 
     @Nullable
@@ -85,7 +85,7 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
         presenter = new ProfilePresenter(CityFleetApp.getInstance().getNetworkManager(), this);
         presenter.init();
         title.setText(getString(R.string.profile));
-        imagePickerUtil = new ImagePickerUtil(this, images, getString(R.string.car_profile), this);
+        imagePickerUtil = new MultipleImagePickerUtil(this, images, getString(R.string.car_profile), this);
         return view;
     }
 
