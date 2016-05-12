@@ -39,6 +39,7 @@ public class ManagePostModel {
     private String pickupAddress;
     private String destination;
     private String fare;
+    private double tolls;
     private String gratuity;
     @SerializedName("vehicle_type")
     private String vehicleType;
@@ -48,6 +49,7 @@ public class ManagePostModel {
     private String instructions;
     private String status;
     private String title;
+    private String personal;
 
     public int getId() {
         return id;
@@ -111,6 +113,22 @@ public class ManagePostModel {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public double getTolls() {
+        return tolls;
+    }
+
+    public void setTolls(double tolls) {
+        this.tolls = tolls;
+    }
+
+    public String getPersonal() {
+        return personal;
+    }
+
+    public void setPersonal(String personal) {
+        this.personal = personal;
     }
 
     public String getFuel() {

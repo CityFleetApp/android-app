@@ -73,6 +73,7 @@ public class ManagePostsFragment extends BaseFragment implements ManagePostsAdap
             postsList.setVisibility(adapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
         }
     };
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -145,6 +146,8 @@ public class ManagePostsFragment extends BaseFragment implements ManagePostsAdap
         jobOffer.setJobType(item.getJobType());
         jobOffer.setVehicleType(item.getVehicleType());
         jobOffer.setPickupAddress(item.getPickupAddress());
+        jobOffer.setPersonal(item.getPersonal());
+        jobOffer.setTolls(item.getTolls());
         jobOffer.setDestination(item.getDestination());
         jobOffer.setFare(Double.parseDouble(item.getFare()));
         jobOffer.setGratuity(item.getGratuity());

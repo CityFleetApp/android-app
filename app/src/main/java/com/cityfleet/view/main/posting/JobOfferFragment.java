@@ -130,7 +130,8 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
         gratuityEt.setText(String.valueOf(jobOffer.getGratuity()));
         tollsEt.setText(String.valueOf(jobOffer.getTolls()));
         String[] companyPersonal = getResources().getStringArray(R.array.company_personal_types);
-        companyPersonalText.setText(jobOffer.getChoices() == 1 ? companyPersonal[0] : companyPersonal[1]);
+        companyPersonalText.setText(jobOffer.getPersonal());
+        jobOffer.setChoices(jobOffer.getPersonal().equalsIgnoreCase(companyPersonal[0]) ? 1 : 2);
         suiteText.setText(jobOffer.isSuite() ? getString(R.string.yes) : getString(R.string.no));
         instructionsET.setText(jobOffer.getInstructions());
         vehicleTypeText.setText(jobOffer.getVehicleType());
@@ -160,8 +161,6 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
             if (!TextUtils.isEmpty(tollsEt.getText())) {
                 jobOffer.setTolls(Double.parseDouble(tollsEt.getText().toString()));
             }
-            String[] companyPersonal = getResources().getStringArray(R.array.company_personal_types);
-            jobOffer.setChoices(companyPersonalText.equals(companyPersonal[0]) ? 1 : 2);
             jobOffer.setGratuity(gratuityEt.getText().toString());
             jobOffer.setInstructions(instructionsET.getText().toString());
             String datetime = outputFormatter.format(selectedDateTimeCalendar.getTime());
@@ -241,7 +240,7 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
         public void onClick(DialogInterface dialog, int which) {
             String[] companyPersonalTypes = getResources().getStringArray(R.array.company_personal_types);
             companyPersonalText.setText(companyPersonalTypes[which]);
-            jobOffer.setChoices(which+1);
+            jobOffer.setChoices(which + 1);
         }
     };
 
