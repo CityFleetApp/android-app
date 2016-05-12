@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -122,7 +121,7 @@ public class EditUserProfileFragment extends BaseFragment implements EditUserPro
         }
         String phonenumber = phoneEt.getText().toString();
         if (!phonenumber.equals(userEditInfo.getPhone())) {
-            if (!TextUtils.isEmpty(phonenumber) && PhoneNumberUtils.isGlobalPhoneNumber(phonenumber)) {
+            if (!TextUtils.isEmpty(phonenumber) && phonenumber.length()==Constants.PHONE_NUMBER_SIZE) {
                 userEditInfo.setPhone(phonenumber);
                 userEditInfo.setPhoneChanged(true);
             } else {

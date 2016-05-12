@@ -16,6 +16,7 @@ public class Constants {
     public static final String BARCODE_STRING = "barcode_string";
     public static final int MAX_BRIGHTNESS = 255;
     public static final int MIN_LENGTH_HACK_LICENSE = 6;
+    public static final int PHONE_NUMBER_SIZE=10;
     public static final int MIN_PASSWORD_LENGTH = 8;
     public static final String IMAGES_LIST_TAG = "images_list";
     public static final String IMAGES_SELECTED_TAG = "images_selected_tag";

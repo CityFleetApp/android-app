@@ -81,7 +81,7 @@
                     android:id="@+id/phoneEt"
                     style="@style/RegistrationEdittextStyle"
                     android:hint="@string/enter_your_phone"
-                    android:inputType="phone"
+                    android:inputType="number"
                     android:nextFocusDown="@+id/hackLicenseEt"/>
             </LinearLayout>
 

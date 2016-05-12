@@ -1,12 +1,10 @@
 package com.cityfleet.view.login;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.Size;
 import android.support.v4.app.Fragment;
-import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +21,6 @@ import com.cityfleet.util.CommonUtils;
 import com.cityfleet.util.Constants;
 import com.cityfleet.util.GcmRegistrationTypes;
 import com.cityfleet.util.PrefUtil;
-import com.mobsandgeeks.saripaar.QuickRule;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
@@ -47,6 +44,8 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
     @NotEmpty
     @Bind(R.id.usernameEt)
     EditText usernameEt;
+    @NotEmpty
+    @Size(value = Constants.PHONE_NUMBER_SIZE)
     @Bind(R.id.phoneEt)
     EditText phoneEt;
     @NotEmpty
@@ -81,7 +80,6 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
         presenter = new RegistrationPresenter(CityFleetApp.getInstance().getNetworkManager(), this);
         validator = new Validator(this);
         validator.setValidationListener(this);
-        validator.put(phoneEt, phoneRule);
         return view;
     }
 
@@ -112,20 +110,6 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
         CommonUtils.handleValidationError(getActivity(), errors);
     }
 
-    QuickRule<EditText> phoneRule = new QuickRule<EditText>(0) {
-
-        @Override
-        public boolean isValid(EditText editText) {
-            String phone = editText.getText().toString();
-            return PhoneNumberUtils.isGlobalPhoneNumber(phone); //TODO change to regex
-        }
-
-        @Override
-        public String getMessage(Context context) {
-            return context.getString(R.string.phone_validation);
-        }
-
-    };
 
     @Override
     public void onSignUpSuccess(String token,int id) {
