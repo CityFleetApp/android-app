@@ -122,7 +122,7 @@ public class JobInfoFragment extends BaseFragment {
         if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.COVERED.name()) && jobOffer.isAwarded()) {
             jobAwardedLbl.setVisibility(View.VISIBLE);
             requestBtn.setText(R.string.complete_job);
-        } else if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.COVERED.name())) {
+        } else if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.COVERED.name()) || jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.AVAILABLE.name()) && jobOffer.isRequested()) {
             requestBtn.setVisibility(View.GONE);
         } else {
             jobAwardedLbl.setVisibility(View.GONE);

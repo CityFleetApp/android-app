@@ -21,8 +21,11 @@
             <TextView
                 android:id="@+id/notificationTitle"
                 style="@style/RegistrationEdittextLabelStyle"
+                android:layout_toLeftOf="@+id/date"
+                android:gravity="left"
+                android:layout_width="match_parent"
                 android:drawableLeft="@drawable/bell"
-                android:text="Title" />
+                android:text="hhhhhhhhdfffffff" />
 
             <TextView
                 android:id="@+id/notificationMessage"
@@ -40,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/notificationTitle"
-                android:layout_toRightOf="@+id/notificationTitle"
+                android:layout_alignParentRight="true"
                 android:drawableLeft="@drawable/calendar_small"
                 android:drawablePadding="@dimen/notification_drawable_padding"
                 android:paddingLeft="@dimen/reg_edittext_drawable_padding"
@@ -48,6 +51,17 @@
                 android:textColor="@color/date_text_color"
                 android:textSize="@dimen/date_text_label"
                 tools:ignore="MissingPrefix" />
+
+            <Button
+                android:id="@+id/seeJobBtn"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/notificationMessage"
+                android:text="@string/see_job"
+                android:textColor="@color/add_friends_text_color"
+                android:visibility="gone" />
 
         </RelativeLayout>
     </ScrollView>

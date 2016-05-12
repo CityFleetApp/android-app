@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +17,9 @@ import com.cityfleet.model.Notification;
 import com.cityfleet.network.NetworkErrorUtil;
 import com.cityfleet.network.NetworkManager;
 import com.cityfleet.util.Constants;
+import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
+import com.cityfleet.view.main.marketplace.JobInfoFragment;
 
 import org.parceler.Parcels;
 
@@ -39,6 +42,8 @@ public class NotificationDetailFragment extends BaseFragment {
     TextView notificationMessage;
     @Bind(R.id.date)
     TextView date;
+    @Bind(R.id.seeJobBtn)
+    Button seeJobBtn;
     private Notification notification;
 
     @Nullable
@@ -91,10 +96,22 @@ public class NotificationDetailFragment extends BaseFragment {
     };
 
     private void initView() {
-        title.setText(notification.getType());
+        title.setText(getString(R.string.tlc_alert));
         notificationTitle.setText(notification.getTitle());
         notificationMessage.setText(notification.getMessage());
         date.setText(notification.getCreated());
+        if (notification.getRefType().equals("offer_created")) {
+            seeJobBtn.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @OnClick(R.id.seeJobBtn)
+    void onSeeJobBtnClicked() {
+        JobInfoFragment jobInfoFragment = new JobInfoFragment();
+        Bundle args = new Bundle();
+        args.putInt(Constants.JOB_OFFER_ID_TAG, notification.getRefId());
+        jobInfoFragment.setArguments(args);
+        ((BaseActivity) getActivity()).changeFragment(jobInfoFragment, true);
     }
 
     @Override

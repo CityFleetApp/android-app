@@ -18,6 +18,7 @@
         style="@style/RegistrationEdittextStyle"
         fontPath="@string/fontLight"
         android:layout_below="@+id/notificationType"
+        android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/arrowLocation"
         android:singleLine="true"
         android:text="Title"
@@ -25,12 +26,12 @@
 
     <TextView
         android:id="@+id/date"
+        fontPath="@string/fontLight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/notificationType"
         android:layout_toRightOf="@+id/notificationType"
         android:drawableLeft="@drawable/calendar_small"
-        fontPath = "@string/fontLight"
         android:drawablePadding="@dimen/notification_drawable_padding"
         android:paddingLeft="@dimen/reg_edittext_drawable_padding"
         android:text="10/17/2912"

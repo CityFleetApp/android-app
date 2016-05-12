@@ -7,7 +7,7 @@ import com.cityfleet.R;
  */
 public enum ReportType {
     POLICE(R.drawable.ic_police_pin, R.drawable.ic_policeman), TLC(R.drawable.ic_tlc_pin, R.drawable.ic_police), ACCIDENT(R.drawable.ic_accident_pin, R.drawable.ic_crash),
-    TRAFIC_JAM(R.drawable.ic_traffic_pin, R.drawable.ic_traffic), HAZARD(R.drawable.ic_hazard, R.drawable.ic_alert),
+    TRAFIC_JAM(R.drawable.ic_traffic_pin, R.drawable.ic_traffic), HAZARD(R.drawable.ic_hazard_pin, R.drawable.ic_alert),
     ROAD_CLOSURE(R.drawable.ic_road_closure_pin, R.drawable.ic_stop);
     private int pinIconResId;
     private int smallIconResId;

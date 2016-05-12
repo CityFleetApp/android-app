@@ -1,5 +1,7 @@
 package com.cityfleet.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.parceler.Parcel;
 
 /**
@@ -13,6 +15,10 @@ public class Notification {
     private String created;
     private boolean unseen;
     private int id;
+    @SerializedName("ref_type")
+    private String refType;
+    @SerializedName("ref_id")
+    private int refId;
 
     public String getType() {
         return type;
@@ -60,5 +66,21 @@ public class Notification {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getRefType() {
+        return refType;
+    }
+
+    public void setRefType(String refType) {
+        this.refType = refType;
+    }
+
+    public int getRefId() {
+        return refId;
+    }
+
+    public void setRefId(int refId) {
+        this.refId = refId;
     }
 }

@@ -258,6 +258,7 @@
     <string name="invalid_date">Invalid date!</string>
     <string name="job_request_sent">Job Request Sent</string>
     <string name="search">Search...</string>
+    <string name="see_job">See job</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>
