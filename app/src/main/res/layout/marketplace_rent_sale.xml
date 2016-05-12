@@ -27,6 +27,7 @@
                 android:paddingBottom="@dimen/toolbar_back_padding"
                 android:paddingRight="@dimen/toolbar_back_padding"
                 android:paddingTop="@dimen/toolbar_back_padding"
+                android:background="@android:color/transparent"
                 android:src="@drawable/back" />
 
             <TextView
@@ -42,13 +43,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:background="@android:color/transparent"
                 android:paddingBottom="@dimen/toolbar_back_padding"
                 android:paddingLeft="@dimen/toolbar_back_padding"
                 android:paddingRight="@dimen/toolbar_back_padding"
                 android:paddingTop="@dimen/toolbar_back_padding"
                 android:src="@drawable/search" />
 
-            <EditText
+            <com.cityfleet.view.main.chat.SearchEditText
                 android:id="@+id/searchBar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

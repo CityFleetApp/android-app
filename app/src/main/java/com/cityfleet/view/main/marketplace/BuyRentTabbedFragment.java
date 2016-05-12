@@ -1,5 +1,6 @@
 package com.cityfleet.view.main.marketplace;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -7,25 +8,28 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cityfleet.R;
 import com.cityfleet.view.BaseFragment;
+import com.cityfleet.view.main.chat.SearchEditText;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 
 /**
  * Created by vika on 23.03.16.
  */
-public class BuyRentTabbedFragment extends BaseFragment {
+public class BuyRentTabbedFragment extends BaseFragment implements SearchEditText.EditTextImeBackListener {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.searchBar)
-    EditText searchBar;
+    SearchEditText searchBar;
     @Bind(R.id.searchBtn)
     ImageButton searchBtn;
     @Bind(R.id.tabs)
@@ -42,6 +46,7 @@ public class BuyRentTabbedFragment extends BaseFragment {
         RentSalePagerAdapter adapter = new RentSalePagerAdapter(getChildFragmentManager(), getResources().getStringArray(R.array.rent_sale_marketplace));
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
+        searchBar.setOnEditTextImeBackListener(this);
         return view;
     }
 
@@ -49,14 +54,25 @@ public class BuyRentTabbedFragment extends BaseFragment {
     void onBackBtnClick() {
         if (searchBar.getVisibility() == View.VISIBLE) {
             showSearch(false);
+            hideKeyboard();
         } else {
             getActivity().onBackPressed();
         }
     }
+    @OnEditorAction(R.id.searchBar)
+    protected boolean onSearchClicked(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+           //todo search
+            hideKeyboard();
+            return true;
+        }
 
+        return false;
+    }
     @OnClick(R.id.searchBtn)
     void onSearchBtnClick() {
         showSearch(true);
+        showKeyboard();
     }
 
     private void showSearch(boolean showSearch) {
@@ -73,5 +89,20 @@ public class BuyRentTabbedFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(searchBar.getWindowToken(),
+                InputMethodManager.RESULT_UNCHANGED_SHOWN);
+    }
+    private void showKeyboard(){
+        searchBar.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(searchBar, InputMethodManager.SHOW_FORCED);
+    }
+    @Override
+    public void onImeBack(SearchEditText ctrl, String text) {
+        //TODO search
+        hideKeyboard();
     }
 }

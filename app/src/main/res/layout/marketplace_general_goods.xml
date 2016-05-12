@@ -4,7 +4,67 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <include layout="@layout/toolbar" />
+    <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbarColor">
+
+        <app:android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@android:color/transparent"
+                android:paddingBottom="@dimen/toolbar_back_padding"
+                android:paddingRight="@dimen/toolbar_back_padding"
+                android:paddingTop="@dimen/toolbar_back_padding"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/reg_edittext_lbl_textsize" />
+
+            <ImageButton
+                android:id="@+id/searchBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@android:color/transparent"
+                android:paddingBottom="@dimen/toolbar_back_padding"
+                android:paddingLeft="@dimen/toolbar_back_padding"
+                android:paddingRight="@dimen/toolbar_back_padding"
+                android:paddingTop="@dimen/toolbar_back_padding"
+                android:src="@drawable/search" />
+
+            <com.cityfleet.view.main.chat.SearchEditText
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/reg_edittext_lbl_textsize"
+                android:visibility="gone" />
+        </app:android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/marketplaceList"
@@ -16,12 +76,12 @@
         android:id="@+id/emptyView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
         android:layout_below="@+id/toolbar"
+        android:layout_centerInParent="true"
         android:gravity="center"
-        android:visibility="gone"
         android:text="@string/there_is_no_goods"
-        android:textSize="@dimen/text_size" />
+        android:textSize="@dimen/text_size"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progressBar"
