@@ -65,8 +65,12 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
     EditText fareEt;
     @Bind(R.id.gratuityET)
     EditText gratuityEt;
+    @Bind(R.id.tollsET)
+    EditText tollsEt;
     @Bind(R.id.vehicleTypeText)
     TextView vehicleTypeText;
+    @Bind(R.id.companyPersonalText)
+    TextView companyPersonalText;
     @Bind(R.id.suiteText)
     TextView suiteText;
     @Bind(R.id.progressBar)
@@ -106,6 +110,7 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
         presenter.loadVehicleAndJobTypes();
         fareEt.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(Constants.JOB_OFFER_MAX_FARE)});
         gratuityEt.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(Constants.JOB_OFFER_MAX_FARE)});
+        tollsEt.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(Constants.JOB_OFFER_MAX_FARE)});
         return view;
     }
 
@@ -123,6 +128,9 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
         destinationText.setText(jobOffer.getDestination());
         fareEt.setText(String.valueOf(jobOffer.getFare()));
         gratuityEt.setText(String.valueOf(jobOffer.getGratuity()));
+        tollsEt.setText(String.valueOf(jobOffer.getTolls()));
+        String[] companyPersonal = getResources().getStringArray(R.array.company_personal_types);
+        companyPersonalText.setText(jobOffer.getChoices() == 1 ? companyPersonal[0] : companyPersonal[1]);
         suiteText.setText(jobOffer.isSuite() ? getString(R.string.yes) : getString(R.string.no));
         instructionsET.setText(jobOffer.getInstructions());
         vehicleTypeText.setText(jobOffer.getVehicleType());
@@ -141,7 +149,7 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
         if (TextUtils.isEmpty(titleText.getText()) || dateText.equals(getString(R.string.select_date)) || timeText.equals(getString(R.string.select_time)) ||
                 TextUtils.isEmpty(pickupText.getText()) || TextUtils.isEmpty(destinationText.getText())
                 || TextUtils.isEmpty(fareEt.getText()) || jobOffer.getJobTypeId() == Constants.DEFAULT_UNSELECTED_POSITION ||
-                jobOffer.getVehicleTypeId() == Constants.DEFAULT_UNSELECTED_POSITION || TextUtils.isEmpty(instructionsET.getText())) {
+                jobOffer.getVehicleTypeId() == Constants.DEFAULT_UNSELECTED_POSITION || TextUtils.isEmpty(instructionsET.getText()) || TextUtils.isEmpty(companyPersonalText.getText())) {
             Toast.makeText(getActivity(), R.string.posting_empty, Toast.LENGTH_SHORT).show();
         } else {
             double fare = Double.parseDouble(fareEt.getText().toString());
@@ -149,6 +157,11 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
             jobOffer.setPickupAddress(pickupText.getText().toString());
             jobOffer.setDestination(destinationText.getText().toString());
             jobOffer.setFare(fare);
+            if (!TextUtils.isEmpty(tollsEt.getText())) {
+                jobOffer.setTolls(Double.parseDouble(tollsEt.getText().toString()));
+            }
+            String[] companyPersonal = getResources().getStringArray(R.array.company_personal_types);
+            jobOffer.setChoices(companyPersonalText.equals(companyPersonal[0]) ? 1 : 2);
             jobOffer.setGratuity(gratuityEt.getText().toString());
             jobOffer.setInstructions(instructionsET.getText().toString());
             String datetime = outputFormatter.format(selectedDateTimeCalendar.getTime());
@@ -199,6 +212,15 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
         }
     }
 
+    @OnClick(R.id.companyPersonalBtn)
+    void onCompanyPersonalClick() {
+        String[] companyPersonalTypes = getResources().getStringArray(R.array.company_personal_types);
+        List<CarOption> companyPersonal = new ArrayList<CarOption>();
+        companyPersonal.add(new CarOption(0, companyPersonalTypes[0]));
+        companyPersonal.add(new CarOption(1, companyPersonalTypes[1]));
+        showListDialog(getString(R.string.select_company_personal), companyPersonal, companyPersonalClickListener);
+    }
+
     private DialogInterface.OnClickListener vehicleTypeClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -212,6 +234,14 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
         public void onClick(DialogInterface dialog, int which) {
             jobOffer.setJobTypeId(jobTypes.get(which).getId());
             jobTypeText.setText(jobTypes.get(which).getName());
+        }
+    };
+    private DialogInterface.OnClickListener companyPersonalClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            String[] companyPersonalTypes = getResources().getStringArray(R.array.company_personal_types);
+            companyPersonalText.setText(companyPersonalTypes[which]);
+            jobOffer.setChoices(which+1);
         }
     };
 

@@ -29,6 +29,9 @@ public class JobOffer {
     private String status;
     private boolean awarded;
     private boolean requested;
+    private double tolls;
+    private int choices;
+    private String personal;
     @Expose
     private int vehicleTypeId = Constants.DEFAULT_UNSELECTED_POSITION;
     @Expose
@@ -82,6 +85,22 @@ public class JobOffer {
         this.gratuity = gratuity;
     }
 
+    public double getTolls() {
+        return tolls;
+    }
+
+    public void setTolls(double tolls) {
+        this.tolls = tolls;
+    }
+
+    public int getChoices() {
+        return choices;
+    }
+
+    public void setChoices(int choices) {
+        this.choices = choices;
+    }
+
     public String getVehicleType() {
         return vehicleType;
     }
@@ -124,6 +143,14 @@ public class JobOffer {
 
     public int getVehicleTypeId() {
         return vehicleTypeId;
+    }
+
+    public String getPersonal() {
+        return personal;
+    }
+
+    public void setPersonal(String personal) {
+        this.personal = personal;
     }
 
     public void setVehicleTypeId(int vehicleTypeId) {

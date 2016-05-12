@@ -113,11 +113,12 @@ public class JobInfoFragment extends BaseFragment {
         pickupAddressLbl.setText(jobOffer.getPickupAddress());
         dropOffLbl.setText(jobOffer.getDestination());
         payLbl.setText(getString(R.string.dollar_price, jobOffer.getFare()));
-        tollsLbl.setText("");
-        gratuityLbl.setText(jobOffer.getGratuity());
+        tollsLbl.setText(getString(R.string.dollar_price, jobOffer.getTolls()));
+        gratuityLbl.setText(getString(R.string.dollar_price, jobOffer.getGratuity()));
         vehicleTypeLbl.setText(jobOffer.getVehicleType());
         suiteTieLbl.setText(jobOffer.isSuite() ? getString(R.string.yes) : getString(R.string.no));
-        companyPersonalLbl.setText("");
+        String[] companyPersonal = getResources().getStringArray(R.array.company_personal_types);
+        companyPersonalLbl.setText(jobOffer.getPersonal());
         jobTypeLbl.setText(jobOffer.getJobType());
         if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.COVERED.name()) && jobOffer.isAwarded()) {
             jobAwardedLbl.setVisibility(View.VISIBLE);

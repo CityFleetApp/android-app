@@ -238,15 +238,17 @@ public interface NetworkService {
     @POST("marketplace/offers/posting/")
     Call<Void> postJobOffer(@Field("title") String title, @Field("pickup_datetime") String datetime, @Field("pickup_address") String pickupAddress,
                             @Field("destination") String destination, @Field("fare") double fare,
-                            @Field("gratuity") double gratuity, @Field("vehicle_type") int vehicleType, @Field("suite") boolean suite, @Field("job_type") int jobType,
+                            @Field("gratuity") double gratuity, @Field("tolls") double tolls, @Field("vehicle_type") int vehicleType,
+                            @Field("suite") boolean suite, @Field("job_type") int jobType,@Field("personal") int personal,
                             @Field("instructions") String instructions);
 
     @FormUrlEncoded
     @PATCH("marketplace/offers/posting/{id}/")
     Call<Void> editJobOffer(@Path("id") String id, @Field("title") String title, @Field("pickup_datetime") String datetime, @Field("pickup_address") String pickupAddress,
                             @Field("destination") String destination, @Field("fare") double fare,
-                            @Field("gratuity") double gratuity, @Field("vehicle_type") int vehicleType, @Field("suite") boolean suite, @Field("job_type") int jobType,
-                            @Field("instructions") String instructions);
+                            @Field("gratuity") double gratuity, @Field("tolls") double tolls, @Field("vehicle_type") int vehicleType,
+                            @Field("suite") boolean suite, @Field("job_type") int jobType,
+                            @Field("personal") int personal, @Field("instructions") String instructions);
 
     @GET("users/profile/")
     Call<UserEditInfo> getUserProfileInfo();

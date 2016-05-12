@@ -227,6 +227,33 @@
                 android:layout_height="1dp"
                 android:background="@color/lineColor" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/reg_edittext_padding">
+
+                <TextView
+                    style="@style/RegistrationEdittextLabelStyle"
+                    android:drawableLeft="@drawable/dollar"
+                    android:text="@string/tolls" />
+
+                <EditText
+                    android:id="@+id/tollsET"
+                    style="@style/RegistrationEdittextStyle"
+                    fontPath="@string/fontLight"
+                    android:hint="@string/enter_tolls"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    tools:ignore="MissingPrefix" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
+
             <RelativeLayout
                 android:id="@+id/vehicleTypeBtn"
                 android:layout_width="match_parent"
@@ -287,6 +314,42 @@
 
                 <ImageView
                     android:id="@+id/arrowSuite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_down" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
+
+            <RelativeLayout
+                android:id="@+id/companyPersonalBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/reg_edittext_padding">
+
+                <TextView
+                    android:id="@+id/companyPersonalLbl"
+                    style="@style/RegistrationEdittextLabelStyle"
+                    android:drawableLeft="@drawable/houses"
+                    android:text="@string/company_personal" />
+
+                <TextView
+                    android:id="@+id/companyPersonalText"
+                    style="@style/RegistrationEdittextStyle"
+                    fontPath="@string/fontLight"
+                    android:layout_below="@+id/companyPersonalLbl"
+                    android:layout_toLeftOf="@+id/arrowCompany"
+                    android:text="@string/select_company_personal"
+                    tools:ignore="MissingPrefix" />
+
+                <ImageView
+                    android:id="@+id/arrowCompany"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

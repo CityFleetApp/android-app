@@ -44,10 +44,12 @@ public class JobOfferPresenter {
             Call<Void> postingCall;
             if (!isEditMode) {
                 postingCall = networkManager.getNetworkClient().postJobOffer(jobOffer.getTitle(), jobOffer.getDateTime(), jobOffer.getPickupAddress(), jobOffer.getDestination(),
-                        jobOffer.getFare(), gratuity, jobOffer.getVehicleTypeId(), jobOffer.isSuite(), jobOffer.getJobTypeId(), jobOffer.getInstructions());
+                        jobOffer.getFare(), gratuity, jobOffer.getTolls(), jobOffer.getVehicleTypeId(), jobOffer.isSuite(),
+                        jobOffer.getJobTypeId(), jobOffer.getChoices(), jobOffer.getInstructions());
             } else {
                 postingCall = networkManager.getNetworkClient().editJobOffer(String.valueOf(jobOffer.getId()), jobOffer.getTitle(), jobOffer.getDateTime(), jobOffer.getPickupAddress(), jobOffer.getDestination(),
-                        jobOffer.getFare(), gratuity, jobOffer.getVehicleTypeId(), jobOffer.isSuite(), jobOffer.getJobTypeId(), jobOffer.getInstructions());
+                        jobOffer.getFare(), gratuity, jobOffer.getTolls(), jobOffer.getVehicleTypeId(), jobOffer.isSuite(),
+                        jobOffer.getJobTypeId(), jobOffer.getChoices(), jobOffer.getInstructions());
             }
             postingCall.enqueue(postingListener);
         } else {
