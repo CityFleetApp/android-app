@@ -1,6 +1,7 @@
 package com.cityfleet.view.main.marketplace;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.cityfleet.R;
 import com.cityfleet.model.JobOffer;
+import com.cityfleet.model.JobOfferStatus;
 import com.cityfleet.util.Constants;
 
 import java.text.ParseException;
@@ -91,7 +93,27 @@ public class JobOffersAdapter extends RecyclerView.Adapter<JobOffersAdapter.View
         holder.timePrice.setText(timePrice);
         holder.date.setText(date);
         holder.description.setText(jobOffer.getTitle());
-        holder.covered.setText(jobOffer.getStatus());
+
+        String status = jobOffer.getStatus();
+        if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.AVAILABLE.name())) {
+            if (jobOffer.isRequested()) {
+                status = JobOfferStatus.REQUESTED.name().toLowerCase();
+                holder.covered.setBackground(ContextCompat.getDrawable(context, JobOfferStatus.REQUESTED.getDrawableRes()));
+            } else {
+                status = JobOfferStatus.AVAILABLE.name().toLowerCase();
+                holder.covered.setBackground(ContextCompat.getDrawable(context, JobOfferStatus.AVAILABLE.getDrawableRes()));
+            }
+        } else if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.COVERED.name())) {
+            if (jobOffer.isAwarded()) {
+                status = JobOfferStatus.AWARDED.name().toLowerCase();
+                holder.covered.setBackground(ContextCompat.getDrawable(context, JobOfferStatus.AWARDED.getDrawableRes()));
+            } else {
+                status = JobOfferStatus.COVERED.name().toLowerCase();
+                holder.covered.setBackground(ContextCompat.getDrawable(context, JobOfferStatus.COVERED.getDrawableRes()));
+            }
+        }
+
+        holder.covered.setText(status);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

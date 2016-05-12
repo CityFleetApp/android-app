@@ -28,6 +28,7 @@ public class JobOffer {
     private String instructions;
     private String status;
     private boolean awarded;
+    private boolean requested;
     @Expose
     private int vehicleTypeId = Constants.DEFAULT_UNSELECTED_POSITION;
     @Expose
@@ -151,5 +152,13 @@ public class JobOffer {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isRequested() {
+        return requested;
+    }
+
+    public void setRequested(boolean requested) {
+        this.requested = requested;
     }
 }
