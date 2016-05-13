@@ -54,6 +54,7 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
     private GeneralGoodsAdapter adapter;
     private GeneralGoodsPresenter presenter;
     private EndlessStaggeredScollListener scrollListener;
+    private String searchWord;
 
     @Nullable
     @Override
@@ -66,13 +67,21 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
         marketplaceList.setAdapter(adapter);
         setScrollListener(layoutManager);
         presenter = new GeneralGoodsPresenter(CityFleetApp.getInstance().getNetworkManager(), this);
-        presenter.loadGeneralGoodsList(Constants.DEFAULT_UNSELECTED_POSITION, 1);
+        presenter.loadGeneralGoodsList(Constants.DEFAULT_UNSELECTED_POSITION, 1, searchWord);
         adapter.setClickListener(this);
         title.setText(R.string.general_goods_for_sale);
         adapter.registerAdapterDataObserver(adapterDataObserver);
         searchBar.setOnEditTextImeBackListener(this);
 
         return view;
+    }
+
+    private void search(String searchWord) {
+        this.searchWord = searchWord;
+        adapter.clearList();
+        adapter.notifyDataSetChanged();
+        scrollListener.reset();
+        presenter.loadGeneralGoodsList(Constants.DEFAULT_UNSELECTED_POSITION, 1, searchWord);
     }
 
     private RecyclerView.AdapterDataObserver adapterDataObserver = new RecyclerView.AdapterDataObserver() {
@@ -88,6 +97,7 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
     void onBackBtnClick() {
         if (searchBar.getVisibility() == View.VISIBLE) {
             showSearch(false);
+            search(null);
             hideKeyboard();
         } else {
             getActivity().onBackPressed();
@@ -97,7 +107,7 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
     @OnEditorAction(R.id.searchBar)
     protected boolean onSearchClicked(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            //todo search
+            search(searchBar.getText().toString());
             hideKeyboard();
             return true;
         }
@@ -115,7 +125,7 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
         scrollListener = new EndlessStaggeredScollListener(llm) {
             @Override
             public void onLoadMore(int current_page) {
-                presenter.loadGeneralGoodsList(adapter.getItemCount(), current_page);
+                presenter.loadGeneralGoodsList(adapter.getItemCount(), current_page, searchWord);
             }
         };
         marketplaceList.addOnScrollListener(scrollListener);
@@ -140,11 +150,13 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
     @Override
     public void startLoading() {
         progressBar.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.GONE);
     }
 
     @Override
     public void stopLoading() {
         progressBar.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -209,7 +221,7 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
 
     @Override
     public void onImeBack(SearchEditText ctrl, String text) {
-        //TODO search
+        search(searchBar.getText().toString());
         hideKeyboard();
     }
 }

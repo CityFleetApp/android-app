@@ -80,7 +80,7 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
     }
 
     public void clearList() {
-    this.list.clear();
+        this.list.clear();
     }
 
     @Override
@@ -93,22 +93,28 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Car car = list.get(position);
-        final int[] dimensions = car.getDimensions();
-        if (dimensions != null) {
-            holder.carImage.post(new Runnable() {
-                @Override
-                public void run() {
+
+        holder.carImage.post(new Runnable() {
+            @Override
+            public void run() {
+                final int[] dimensions = car.getDimensions();
+                int viewHeight;
+                if (dimensions != null) {
                     int width = dimensions[0];
                     int height = dimensions[1];
-                    int viewHeight = holder.carImage.getWidth() * height / width;
-                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.carImage.getLayoutParams();
-                    lp.height = viewHeight;
-                    holder.carImage.setLayoutParams(lp);
+                    viewHeight = holder.carImage.getWidth() * height / width;
+                } else {
+                    viewHeight = holder.carImage.getWidth();
                 }
-            });
-        }
+                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.carImage.getLayoutParams();
+                lp.height = viewHeight;
+                holder.carImage.setLayoutParams(lp);
+            }
+        });
         if (car.getPhotos() != null && !car.getPhotos().isEmpty() && !TextUtils.isEmpty(car.getPhotos().get(0).getUrl())) {
             Picasso.with(context).load(car.getPhotos().get(0).getUrl()).fit().centerCrop().into(holder.carImage);
+        } else {
+            Picasso.with(context).load(R.drawable.painting_big).fit().centerCrop().into(holder.carImage);
         }
         holder.carPrice.setText(context.getString(R.string.dollar_price, car.getPrice()));
         holder.carTitle.setText(car.getYear() + " " + car.getMake() + " " + car.getModel());

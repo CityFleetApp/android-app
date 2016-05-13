@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -72,6 +71,10 @@ public class GeneralGoodsAdapter extends RecyclerView.Adapter<GeneralGoodsAdapte
         this.list.addAll(generalGoodList);
     }
 
+    public void clearList() {
+        this.list.clear();
+    }
+
     @Override
     public GeneralGoodsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.general_goods_item, parent, false);
@@ -82,28 +85,28 @@ public class GeneralGoodsAdapter extends RecyclerView.Adapter<GeneralGoodsAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final GeneralGood generalGood = list.get(position);
-        final int[] dimensions = generalGood.getDimensions();
-        if (dimensions != null) {
-            holder.goodsImage.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        holder.goodsImage.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    } else {
-                        holder.goodsImage.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    }
+        holder.goodsImage.post(new Runnable() {
+            @Override
+            public void run() {
+                final int[] dimensions = generalGood.getDimensions();
+                int viewHeight;
+                if (dimensions != null) {
                     int width = dimensions[0];
                     int height = dimensions[1];
-                    int viewHeight = holder.goodsImage.getWidth() * height / width;
-                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.goodsImage.getLayoutParams();
-                    lp.height = viewHeight;
-                    holder.goodsImage.setLayoutParams(lp);
-
+                    viewHeight = holder.goodsImage.getWidth() * height / width;
+                } else {
+                    viewHeight = holder.goodsImage.getWidth();
                 }
-            });
-        }
+                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.goodsImage.getLayoutParams();
+                lp.height = viewHeight;
+                holder.goodsImage.setLayoutParams(lp);
+
+            }
+        });
         if (generalGood.getPhotos() != null && !generalGood.getPhotos().isEmpty() && !TextUtils.isEmpty(generalGood.getPhotos().get(0).getUrl())) {
             Picasso.with(context).load(generalGood.getPhotos().get(0).getUrl()).error(R.drawable.painting_big).into(holder.goodsImage);
+        } else {
+            Picasso.with(context).load(R.drawable.painting_big).into(holder.goodsImage);
         }
 
         holder.goodsPrice.setText(context.getString(R.string.dollar_price, generalGood.getPrice()));

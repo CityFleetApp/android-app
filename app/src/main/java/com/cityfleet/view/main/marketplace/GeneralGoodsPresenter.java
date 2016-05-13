@@ -25,11 +25,11 @@ public class GeneralGoodsPresenter {
         this.view = view;
     }
 
-    public void loadGeneralGoodsList(int currentTotalCount, int page) {
+    public void loadGeneralGoodsList(int currentTotalCount, int page, String search) {
         if (currentTotalCount < totalCount) {
             if (networkManager.isConnectedOrConnecting()) {
                 view.startLoading();
-                Call<PagesResult<GeneralGood>> call = networkManager.getNetworkClient().getGoods(page);
+                Call<PagesResult<GeneralGood>> call = networkManager.getNetworkClient().getGoods(page, search);
                 call.enqueue(goodsCallback);
             } else {
                 view.stopLoading();

@@ -179,7 +179,7 @@ public interface NetworkService {
     Call<List<CarOption>> getCarFuels();
 
     @GET("marketplace/goods/")
-    Call<PagesResult<GeneralGood>> getGoods(@Query("page") int page);
+    Call<PagesResult<GeneralGood>> getGoods(@Query("page") int page, @Query("search") String search);
 
     @GET("marketplace/offers/")
     Call<PagesResult<JobOffer>> getOffers(@Query("page") int page, @Query("status") String status);
@@ -239,7 +239,7 @@ public interface NetworkService {
     Call<Void> postJobOffer(@Field("title") String title, @Field("pickup_datetime") String datetime, @Field("pickup_address") String pickupAddress,
                             @Field("destination") String destination, @Field("fare") double fare,
                             @Field("gratuity") double gratuity, @Field("tolls") double tolls, @Field("vehicle_type") int vehicleType,
-                            @Field("suite") boolean suite, @Field("job_type") int jobType,@Field("personal") int personal,
+                            @Field("suite") boolean suite, @Field("job_type") int jobType, @Field("personal") int personal,
                             @Field("instructions") String instructions);
 
     @FormUrlEncoded
