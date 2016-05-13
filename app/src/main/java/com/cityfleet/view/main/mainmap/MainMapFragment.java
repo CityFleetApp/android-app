@@ -632,15 +632,17 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 //            Bitmap drawingCache = view.getDrawingCache();
 //            Bitmap b = Bitmap.createBitmap(drawingCache);
 //            view.setDrawingCacheEnabled(false);
-        Marker marker = map.addMarker(new MarkerOptions()
-                .position(new LatLng(friendNearby.getLat(), friendNearby.getLng()))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.friend_marker))
-                .title(String.valueOf(friendNearby.getId()))
-                .anchor(0.5f, 1f)
-                .snippet("friend"));
+        if(map!=null) {
+            Marker marker = map.addMarker(new MarkerOptions()
+                    .position(new LatLng(friendNearby.getLat(), friendNearby.getLng()))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.friend_marker))
+                    .title(String.valueOf(friendNearby.getId()))
+                    .anchor(0.5f, 1f)
+                    .snippet("friend"));
 //            b.recycle();
 //            drawingCache.recycle();
-        nearbyFriendsMarkerList.add(marker);
+            nearbyFriendsMarkerList.add(marker);
+        }
         //     }
     }
 

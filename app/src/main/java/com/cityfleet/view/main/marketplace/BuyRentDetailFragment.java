@@ -89,11 +89,11 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
 
     @Subscribe
     public void onEvent(MarketplaceSearchEvent event) {
-            searchWord = event.getSearch();
-            adapter.clearList();
-            adapter.notifyDataSetChanged();
-            scrollListener.reset();
-            presenter.loadCarList(type, Constants.DEFAULT_UNSELECTED_POSITION, 1, searchWord);
+        searchWord = event.getSearch();
+        adapter.clearList();
+        adapter.notifyDataSetChanged();
+        scrollListener.reset();
+        presenter.loadCarList(type, Constants.DEFAULT_UNSELECTED_POSITION, 1, searchWord);
     }
 
     @Override
@@ -121,8 +121,10 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
 
     @Override
     public void stopLoading() {
-        progressBar.setVisibility(View.GONE);
-        emptyView.setVisibility(View.VISIBLE);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
