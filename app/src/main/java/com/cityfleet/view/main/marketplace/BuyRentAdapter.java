@@ -79,6 +79,10 @@ public class BuyRentAdapter extends RecyclerView.Adapter<BuyRentAdapter.ViewHold
         this.list.addAll(carList);
     }
 
+    public void clearList() {
+    this.list.clear();
+    }
+
     @Override
     public BuyRentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.marketplace_rent_sale_item, parent, false);

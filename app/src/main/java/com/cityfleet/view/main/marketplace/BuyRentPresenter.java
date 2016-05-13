@@ -26,15 +26,15 @@ public class BuyRentPresenter {
         this.view = view;
     }
 
-    public void loadCarList(CarPostingType type, int currentTotalCount, int page) {
+    public void loadCarList(CarPostingType type, int currentTotalCount, int page, String search) {
         if (currentTotalCount < totalCount) {
             if (networkManager.isConnectedOrConnecting()) {
                 view.startLoading();
                 Call<PagesResult<Car>> call;
                 if (type == CarPostingType.RENT) {
-                    call = networkManager.getNetworkClient().getCarsForRent(page);
+                    call = networkManager.getNetworkClient().getCarsForRent(page, search);
                 } else {
-                    call = networkManager.getNetworkClient().getCarsForSale(page);
+                    call = networkManager.getNetworkClient().getCarsForSale(page, search);
                 }
                 call.enqueue(carCallback);
             } else {

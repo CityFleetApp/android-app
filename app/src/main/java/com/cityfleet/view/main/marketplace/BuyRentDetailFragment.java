@@ -20,8 +20,11 @@ import com.cityfleet.model.Car;
 import com.cityfleet.model.CarPostingType;
 import com.cityfleet.util.Constants;
 import com.cityfleet.util.EndlessStaggeredScollListener;
+import com.cityfleet.util.MarketplaceSearchEvent;
 import com.cityfleet.view.BaseFragment;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -43,6 +46,7 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
     private BuyRentPresenter presenter;
     private CarPostingType type;
     private EndlessStaggeredScollListener scrollListener;
+    private String searchWord = null;
 
     @Nullable
     @Override
@@ -57,9 +61,8 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
         adapter.setClickListener(this);
         setScrollListener(layoutManager);
         presenter = new BuyRentPresenter(CityFleetApp.getInstance().getNetworkManager(), this);
-        presenter.loadCarList(type, Constants.DEFAULT_UNSELECTED_POSITION, 1);
+        presenter.loadCarList(type, Constants.DEFAULT_UNSELECTED_POSITION, 1, searchWord);
         adapter.registerAdapterDataObserver(dataObserver);
-
         return view;
     }
 
@@ -73,6 +76,27 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
     };
 
     @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(MarketplaceSearchEvent event) {
+            searchWord = event.getSearch();
+            adapter.clearList();
+            adapter.notifyDataSetChanged();
+            scrollListener.reset();
+            presenter.loadCarList(type, Constants.DEFAULT_UNSELECTED_POSITION, 1, searchWord);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         adapter.unregisterAdapterDataObserver(dataObserver);
@@ -83,7 +107,7 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
         scrollListener = new EndlessStaggeredScollListener(llm) {
             @Override
             public void onLoadMore(int current_page) {
-                presenter.loadCarList(type, adapter.getItemCount(), current_page);
+                presenter.loadCarList(type, adapter.getItemCount(), current_page, searchWord);
             }
         };
         marketplaceList.addOnScrollListener(scrollListener);
@@ -92,11 +116,13 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
     @Override
     public void startLoading() {
         progressBar.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.GONE);
     }
 
     @Override
     public void stopLoading() {
         progressBar.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
     }
 
     @Override

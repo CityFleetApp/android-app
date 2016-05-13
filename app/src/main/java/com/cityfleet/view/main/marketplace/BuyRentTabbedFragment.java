@@ -14,8 +14,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cityfleet.R;
+import com.cityfleet.util.MarketplaceSearchEvent;
 import com.cityfleet.view.BaseFragment;
 import com.cityfleet.view.main.chat.SearchEditText;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,21 +57,24 @@ public class BuyRentTabbedFragment extends BaseFragment implements SearchEditTex
     void onBackBtnClick() {
         if (searchBar.getVisibility() == View.VISIBLE) {
             showSearch(false);
+            EventBus.getDefault().post(new MarketplaceSearchEvent(""));
             hideKeyboard();
         } else {
             getActivity().onBackPressed();
         }
     }
+
     @OnEditorAction(R.id.searchBar)
     protected boolean onSearchClicked(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-           //todo search
+            EventBus.getDefault().post(new MarketplaceSearchEvent(searchBar.getText().toString()));
             hideKeyboard();
             return true;
         }
 
         return false;
     }
+
     @OnClick(R.id.searchBtn)
     void onSearchBtnClick() {
         showSearch(true);
@@ -90,19 +96,22 @@ public class BuyRentTabbedFragment extends BaseFragment implements SearchEditTex
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
     private void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(searchBar.getWindowToken(),
                 InputMethodManager.RESULT_UNCHANGED_SHOWN);
     }
-    private void showKeyboard(){
+
+    private void showKeyboard() {
         searchBar.requestFocus();
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(searchBar, InputMethodManager.SHOW_FORCED);
     }
+
     @Override
     public void onImeBack(SearchEditText ctrl, String text) {
-        //TODO search
+        EventBus.getDefault().post(new MarketplaceSearchEvent(searchBar.getText().toString()));
         hideKeyboard();
     }
 }

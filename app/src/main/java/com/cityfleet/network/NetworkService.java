@@ -155,10 +155,10 @@ public interface NetworkService {
     Call<Settings> changeSettings(@Field("notifications_enabled") boolean notificationsEnabled, @Field("chat_privacy") boolean chatPrivacy, @Field("visible") boolean visible);
 
     @GET("marketplace/cars/sale/")
-    Call<PagesResult<Car>> getCarsForSale(@Query("page") int page);
+    Call<PagesResult<Car>> getCarsForSale(@Query("page") int page, @Query("search") String search);
 
     @GET("marketplace/cars/rent/")
-    Call<PagesResult<Car>> getCarsForRent(@Query("page") int page);
+    Call<PagesResult<Car>> getCarsForRent(@Query("page") int page, @Query("search") String search);
 
     @GET("marketplace/cars/make/")
     Call<List<CarOption>> getCarMakes();

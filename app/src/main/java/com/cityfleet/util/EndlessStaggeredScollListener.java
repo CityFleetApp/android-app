@@ -48,6 +48,15 @@ public abstract class EndlessStaggeredScollListener extends RecyclerView.OnScrol
             loading = true;
         }
     }
+    public void reset() {
+        previousTotal = 0;
+        loading = true;
+        visibleThreshold = 6;
+        firstVisibleItem = 0;
+        visibleItemCount = 0;
+        totalItemCount = 0;
+        current_page = 1;
+    }
 
     public abstract void onLoadMore(int current_page);
 }
