@@ -39,6 +39,7 @@ import com.cityfleet.view.main.chat.ChatActivity;
 import com.cityfleet.view.main.dashboard.DashboardFragment;
 import com.cityfleet.view.main.marketplace.MarketPlaceFragment;
 import com.cityfleet.view.main.notifications.NotificationsFragment;
+import com.cityfleet.view.main.profile.ProfileFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -206,6 +207,16 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     protected void onChatFriend(int friendId) {
         presenter.createChatRoomWithFriend(friendId);
+    }
+
+    protected void onProfileFriendOpen(int friendId) {
+        unselectFriendMarker();
+        ProfileFragment profileFragment = new ProfileFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(Constants.FRIEND_PROFILE_EXTRA, true);
+        args.putInt(Constants.FRIEND_ID_EXTRA, friendId);
+        profileFragment.setArguments(args);
+        ((BaseActivity) getActivity()).changeFragment(profileFragment, true);
     }
 
     protected void buildLocationSettingsRequest() {
@@ -632,7 +643,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 //            Bitmap drawingCache = view.getDrawingCache();
 //            Bitmap b = Bitmap.createBitmap(drawingCache);
 //            view.setDrawingCacheEnabled(false);
-        if(map!=null) {
+        if (map != null) {
             Marker marker = map.addMarker(new MarkerOptions()
                     .position(new LatLng(friendNearby.getLat(), friendNearby.getLng()))
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.friend_marker))
@@ -696,7 +707,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                 }
                 if (selectedFriendMarker != null) {
                     selectedFriendMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.friend_marker));
-                    selectedFriendMarker.setAnchor(0.5f,1);
+                    selectedFriendMarker.setAnchor(0.5f, 1);
                     selectedFriendMarker = null;
                 }
                 FriendNearby friendNearby = getFriendForMarker(marker);

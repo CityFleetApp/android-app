@@ -12,7 +12,9 @@ import com.cityfleet.R;
 import com.cityfleet.model.GeneralGood;
 import com.cityfleet.model.Photo;
 import com.cityfleet.util.Constants;
+import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
+import com.cityfleet.view.main.profile.ProfileFragment;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -39,6 +41,8 @@ public class GeneralGoodDetailFragment extends BaseFragment {
     TextView typeLbl;
     @Bind(R.id.detailsText)
     TextView detailsText;
+    @Bind(R.id.authorLbl)
+    TextView authorLbl;
     private GeneralGood generalGood;
     private RentSaleGalleryPagerAdapter adapter;
 
@@ -60,7 +64,13 @@ public class GeneralGoodDetailFragment extends BaseFragment {
         goodsTitle.setText(generalGood.getItem());
         typeLbl.setText(generalGood.getCondition());
         detailsText.setText(generalGood.getDescription());
+        authorLbl.setText(generalGood.getOwnerName());
         return view;
+    }
+
+    @OnClick(R.id.authorLbl)
+    void onAuthorLblClicked() {
+        ((BaseActivity) getActivity()).changeFragment(ProfileFragment.getInstanceForFriend(generalGood.getOwner()), true);
     }
 
     @OnClick(R.id.backBtn)

@@ -122,7 +122,6 @@
                 android:layout_marginBottom="@dimen/profile_padding_side"
                 android:paddingLeft="@dimen/profile_padding_side"
                 android:paddingRight="@dimen/profile_padding_side"
-                android:text="Long long bio Long long bio Long long bio Long long bio Long long bio Long long bio"
                 android:textColor="@color/text_color_grey"
                 android:textSize="@dimen/profile_text_size"
                 tools:ignore="MissingPrefix" />
@@ -145,7 +144,6 @@
                 android:layout_marginBottom="@dimen/profile_padding_side"
                 android:paddingLeft="@dimen/profile_padding_side"
                 android:paddingRight="@dimen/profile_padding_side"
-                android:text="Long long bilong bio Long long bio"
                 android:textColor="@color/text_color_grey"
                 android:textSize="@dimen/profile_text_size"
                 tools:ignore="MissingPrefix" />
@@ -169,7 +167,6 @@
                 android:layout_marginBottom="@dimen/profile_padding_side"
                 android:paddingLeft="@dimen/profile_padding_side"
                 android:paddingRight="@dimen/profile_padding_side"
-                android:text="Long long bilong bio Long long bio"
                 android:textColor="@color/text_color_grey"
                 android:textSize="@dimen/profile_text_size"
                 tools:ignore="MissingPrefix" />
@@ -199,7 +196,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:paddingRight="@dimen/profile_padding_side"
-                    android:text="85"
                     android:textSize="@dimen/green_text_wth_icon_size"
                     tools:ignore="MissingPrefix" />
             </RelativeLayout>

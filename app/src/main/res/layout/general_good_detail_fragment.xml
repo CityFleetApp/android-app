@@ -99,6 +99,23 @@
                         android:singleLine="false"
                         android:text="long long long long long long long long long long longlong long long long longlong long long long longlong long long long longlong long long long longlong long long long long long long long long long long long long long long long long long long long long text" />
                 </LinearLayout>
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/bottom_menu_drawable_padding"
+                    android:background="@color/marketplace_divider" />
+
+
+                <TextView
+                    android:clickable="true"
+                    android:id="@+id/authorLbl"
+                    style="@style/MarketPlaceTextStyle"
+                    android:layout_marginTop="@dimen/bottom_menu_drawable_padding"
+                    android:layout_marginBottom="@dimen/bottom_menu_drawable_padding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="jkjkjkjkj" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

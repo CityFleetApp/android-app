@@ -2,6 +2,7 @@ package com.cityfleet.model;
 
 import com.cityfleet.util.Constants;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -18,6 +19,9 @@ public class GeneralGood {
     private String condition;
     private String description;
     private String price;
+    private int owner;
+    @SerializedName("owner_name")
+    private String ownerName;
     private int[] dimensions = new int[2];
     private List<Photo> photos = new ArrayList<Photo>();
     @Expose
@@ -77,6 +81,22 @@ public class GeneralGood {
 
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
+    }
+
+    public int getOwner() {
+        return owner;
+    }
+
+    public void setOwner(int owner) {
+        this.owner = owner;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
     public int getConditionId() {

@@ -63,4 +63,6 @@ public class Constants {
     public static final int JOB_OFFER_COVERED_NOTIF_ID = 2;
     public static final int JOB_OFFER_COMPLETED_NOTIF_ID = 4;
     public static final int ADMIN_NOTIF_ID = 3;
+    public static final String FRIEND_ID_EXTRA = "friend_id_extra";
+    public static final String FRIEND_PROFILE_EXTRA = "friend_profile_extra";
 }

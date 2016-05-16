@@ -12,7 +12,9 @@ import com.cityfleet.R;
 import com.cityfleet.model.Car;
 import com.cityfleet.model.Photo;
 import com.cityfleet.util.Constants;
+import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
+import com.cityfleet.view.main.profile.ProfileFragment;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -45,6 +47,8 @@ public class RentSaleItemFragment extends BaseFragment {
     TextView seatsLbl;
     @Bind(R.id.detailsText)
     TextView detailsText;
+    @Bind(R.id.authorLbl)
+    TextView authorLbl;
     private Car car;
     private RentSaleGalleryPagerAdapter adapter;
 
@@ -57,7 +61,7 @@ public class RentSaleItemFragment extends BaseFragment {
         title.setText(R.string.marketplace);
         car = Parcels.unwrap(getArguments().getParcelable(Constants.CAR_RENT_SALE_TAG));
         List<Photo> photoList = car.getPhotos();
-        if(photoList.isEmpty()){
+        if (photoList.isEmpty()) {
             photoList.add(new Photo());
             photoList.get(0).setUrl("error");
         }
@@ -70,7 +74,13 @@ public class RentSaleItemFragment extends BaseFragment {
         seatsLbl.setText(String.valueOf(car.getSeats()));
         modelLbl.setText(car.getType());
         detailsText.setText(car.getDescription());
+        authorLbl.setText(car.getOwnerName());
         return view;
+    }
+
+    @OnClick(R.id.authorLbl)
+    void onAuthorLblClicked() {
+        ((BaseActivity) getActivity()).changeFragment(ProfileFragment.getInstanceForFriend(car.getOwner()), true);
     }
 
     @OnClick(R.id.backBtn)

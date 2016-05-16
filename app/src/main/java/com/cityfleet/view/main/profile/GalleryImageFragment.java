@@ -43,12 +43,17 @@ public class GalleryImageFragment extends BaseFragment {
     ImageButton deleteBtn;
     private List<UserImages> imagesList;
     private int position;
+    private boolean isFriendProfile = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.gallery_fragment, container, false);
         ButterKnife.bind(this, view);
+        isFriendProfile = getArguments().getBoolean(Constants.FRIEND_PROFILE_EXTRA);
+        if (isFriendProfile) {
+            deleteBtn.setVisibility(View.GONE);
+        }
         imagesList = Parcels.unwrap(getArguments().getParcelable(Constants.IMAGES_LIST_TAG));
         position = getArguments().getInt(Constants.IMAGES_SELECTED_TAG);
         pager.setAdapter(new GalleryPagerAdapter(getContext(), imagesList));

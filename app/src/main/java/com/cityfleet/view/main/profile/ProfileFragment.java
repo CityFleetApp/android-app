@@ -76,17 +76,37 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
     private List<UserImages> imagesList;
     private MultipleImagePickerUtil imagePickerUtil;
     private int positionToUpdateImage = Constants.DEFAULT_UNSELECTED_POSITION;
+    private boolean isFriendProfile = false;
+    private int friendId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
         ButterKnife.bind(this, view);
-        presenter = new ProfilePresenter(CityFleetApp.getInstance().getNetworkManager(), this);
+        Bundle bundle = getArguments();
+        if (bundle != null && bundle.containsKey(Constants.FRIEND_PROFILE_EXTRA)) {
+            isFriendProfile = bundle.getBoolean(Constants.FRIEND_PROFILE_EXTRA, false);
+        }
+        if (isFriendProfile) {
+            friendId = bundle.getInt(Constants.FRIEND_ID_EXTRA);
+        }
+        presenter = new ProfilePresenter(CityFleetApp.getInstance().getNetworkManager(), this, isFriendProfile, friendId);
         presenter.init();
-        title.setText(getString(R.string.profile));
+        if (!isFriendProfile) {
+            title.setText(getString(R.string.profile));
+        }
         imagePickerUtil = new MultipleImagePickerUtil(this, images, getString(R.string.car_profile), this);
         return view;
+    }
+
+    public static ProfileFragment getInstanceForFriend(int userId) {
+        ProfileFragment profileFragment = new ProfileFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(Constants.FRIEND_PROFILE_EXTRA, true);
+        args.putInt(Constants.FRIEND_ID_EXTRA, userId);
+        profileFragment.setArguments(args);
+        return profileFragment;
     }
 
     @OnClick(R.id.backBtn)
@@ -145,6 +165,9 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
 
     @Override
     public void setUserInfo(UserInfo userInfo) {
+        if (isFriendProfile) {
+            title.setText(userInfo.getFullName());
+        }
         fullName.setText(userInfo.getFullName());
         bio.setText(userInfo.getBio());
         drives.setText(userInfo.getDrives());
@@ -216,7 +239,7 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
         int clickedPosition = getClickedPosition(view);
         if (imagesList != null && imagesList.size() > clickedPosition && imagesList.get(clickedPosition) != null) {
             showGallery(clickedPosition);
-        } else {
+        } else if (!isFriendProfile) {
             imagePickerUtil.onImageClick(view);
         }
     }
@@ -261,6 +284,7 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.IMAGES_LIST_TAG, Parcels.wrap(imagesList));
         bundle.putInt(Constants.IMAGES_SELECTED_TAG, position);
+        bundle.putBoolean(Constants.FRIEND_PROFILE_EXTRA, isFriendProfile);
         fragment.setArguments(bundle);
         ((BaseActivity) getActivity()).changeFragment(fragment, true);
     }

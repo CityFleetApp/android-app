@@ -1,5 +1,7 @@
 package com.cityfleet.view.main.profile;
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import com.cityfleet.CityFleetApp;
@@ -7,9 +9,10 @@ import com.cityfleet.model.UserImages;
 import com.cityfleet.model.UserInfo;
 import com.cityfleet.network.NetworkErrorUtil;
 import com.cityfleet.network.NetworkManager;
+import com.cityfleet.util.Constants;
+import com.cityfleet.util.ScaleImageHelper;
 import com.cityfleet.view.login.LoginPresenter;
 
-import java.io.File;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -24,17 +27,28 @@ import retrofit2.Response;
 public class ProfilePresenter {
     private NetworkManager networkManager;
     private ProfileView view;
+    private boolean isFriendProfile = false;
+    private int friendId;
 
-    public ProfilePresenter(NetworkManager networkManager, ProfileView view) {
+    public ProfilePresenter(NetworkManager networkManager, ProfileView view, boolean isFriendProfile, int friendId) {
         this.networkManager = networkManager;
         this.view = view;
+        this.friendId = friendId;
+        this.isFriendProfile = isFriendProfile;
     }
 
     public void init() {
         if (networkManager.isConnectedOrConnecting()) {
-            Call<UserInfo> call = networkManager.getNetworkClient().getUserInfo();
+            Call<UserInfo> call;
+            Call<List<UserImages>> userImagesCall;
+            if (isFriendProfile) {
+                call = networkManager.getNetworkClient().getFriendInfo(friendId);
+                userImagesCall = networkManager.getNetworkClient().getFriendPhotos(friendId);
+            } else {
+                call = networkManager.getNetworkClient().getUserInfo();
+                userImagesCall = networkManager.getNetworkClient().getPhotos();
+            }
             call.enqueue(getUserInfoCallback);
-            Call<List<UserImages>> userImagesCall = networkManager.getNetworkClient().getPhotos();
             userImagesCall.enqueue(getUserImagesCallback);
         } else {
             view.onNetworkError();
@@ -44,14 +58,34 @@ public class ProfilePresenter {
     public void uploadImageForList(String filePath) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
-            File file = new File(filePath);
-            RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), "");
-            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            Call<UserImages> call = networkManager.getNetworkClient().uploadPhoto(requestBody, description);
-            call.enqueue(uploadImageCallback);
+            final RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+            getScaledImageRequestBody(filePath, new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    Call<UserImages> call = networkManager.getNetworkClient().uploadPhoto((RequestBody) msg.obj, description);
+                    call.enqueue(uploadImageCallback);
+                }
+            });
+
         } else {
             view.onNetworkError();
         }
+    }
+
+    private void getScaledImageRequestBody(final String imageUrl, final Handler handler) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                ScaleImageHelper scaleImageHelper = new ScaleImageHelper();
+                byte[] bytes = scaleImageHelper.getScaledImageBytes(imageUrl, Constants.PROFILE_IMAGE_WIDTH);
+                RequestBody fileRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), bytes);
+                Message message = new Message();
+                message.obj = fileRequestBody;
+                handler.sendMessage(message);
+            }
+        };
+        new Thread(runnable).start();
     }
 
     public void deleteImageFromList(int id) {

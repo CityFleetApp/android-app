@@ -79,7 +79,7 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
         chatList.setAdapter(adapter);
         setScrollListener(linearLayoutManager);
         loadChatHistory();
-        imagePickerUtil = new ImagePickerUtil(this, getString(R.string.chat_photo_name), this);
+        imagePickerUtil = new ImagePickerUtil(this, this);
         return view;
     }
 

@@ -78,6 +78,9 @@ public interface NetworkService {
     @GET("users/info/")
     Call<UserInfo> getUserInfo();
 
+    @GET("users/person/{id}/")
+    Call<UserInfo> getFriendInfo(@Path("id") int id);
+
     @POST("users/add-contacts-friends/")
     Call<List<UserInfo>> addFriendsFromContacts(@Body AddContactsBody body);
 
@@ -106,6 +109,10 @@ public interface NetworkService {
 
     @GET("users/photos/")
     Call<List<UserImages>> getPhotos();
+
+    @GET("users/person/{friend_id}/photos/")
+    Call<List<UserImages>> getFriendPhotos(@Path("friend_id") int id);
+
 
     @DELETE("users/photos/{id}/")
     Call<Void> deletePhoto(@Path("id") int id);

@@ -49,9 +49,9 @@ public class NearbyFriendMapDialogView {
     }
 
     public boolean isVisible() {
-        if(!isAnimatingClosing) {
+        if (!isAnimatingClosing) {
             return nearFriendDialog.getVisibility() == View.VISIBLE;
-        } else{
+        } else {
             return false;
         }
     }
@@ -82,6 +82,11 @@ public class NearbyFriendMapDialogView {
     @OnClick(R.id.chatBtn)
     public void onChatBtnClicked() {
         fragment.onChatFriend(friendNearby.getId());
+    }
+
+    @OnClick(R.id.nearFriendDialog)
+    public void profileClicked() {
+        fragment.onProfileFriendOpen(friendNearby.getId());
     }
 
     public void show(FriendNearby friendNearby) {
@@ -121,7 +126,9 @@ public class NearbyFriendMapDialogView {
 
         @Override
         public void onAnimationEnd(Animator animation) {
-            nearFriendDialog.setVisibility(View.GONE);
+            if (nearFriendDialog != null) {
+                nearFriendDialog.setVisibility(View.GONE);
+            }
             friendNearby = null;
             isAnimatingClosing = false;
         }

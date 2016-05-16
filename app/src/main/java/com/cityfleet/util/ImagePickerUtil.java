@@ -25,12 +25,10 @@ public class ImagePickerUtil {
     public static final int SELECT_FILE = 666;
     public static final int REQUEST_PERMISSION_CAMERA = 1;
     public static final int REQUEST_PERMISSION_GALLERY = 2;
-    private String cameraImageName;
     private ImageResultListener listener;
 
-    public ImagePickerUtil(Fragment fragment, String cameraImageName, ImageResultListener listener) {
+    public ImagePickerUtil(Fragment fragment, ImageResultListener listener) {
         this.fragment = fragment;
-        this.cameraImageName = cameraImageName;
         this.listener = listener;
     }
 
@@ -137,7 +135,7 @@ public class ImagePickerUtil {
     }
 
     private File getFileForImageFromCamera() {
-        return new File(fragment.getContext().getExternalFilesDir(null) + File.separator + cameraImageName + ".png"); //TODO change to timestamp
+        return new File(fragment.getContext().getExternalFilesDir(null) + File.separator + System.currentTimeMillis() + ".png");
     }
 
     public interface ImageResultListener {
