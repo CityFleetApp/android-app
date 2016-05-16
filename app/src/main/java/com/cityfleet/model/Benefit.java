@@ -10,6 +10,16 @@ public class Benefit {
     private String image;
     private String name;
     private String barcode;
+    @SerializedName("promo_code")
+    private String promocode;
+
+    public String getPromocode() {
+        return promocode;
+    }
+
+    public void setPromocode(String promocode) {
+        this.promocode = promocode;
+    }
 
     public String getImage() {
         return image;

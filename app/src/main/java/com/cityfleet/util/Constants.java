@@ -14,9 +14,11 @@ public class Constants {
     public static final String ACTION_LOGOUT = "ACTION_LOGOUT";
     public static final String ACTION_PICK_IMAGE_CAMERA = "android.media.action.IMAGE_CAPTURE";
     public static final String BARCODE_STRING = "barcode_string";
+    public static final String PROMOCODE_STRING = "promocode_string";
+    public static final String BENEFIT_NAME = "benefit_name";
     public static final int MAX_BRIGHTNESS = 255;
     public static final int MIN_LENGTH_HACK_LICENSE = 6;
-    public static final int PHONE_NUMBER_SIZE=10;
+    public static final int PHONE_NUMBER_SIZE = 10;
     public static final int MIN_PASSWORD_LENGTH = 8;
     public static final String IMAGES_LIST_TAG = "images_list";
     public static final String IMAGES_SELECTED_TAG = "images_selected_tag";
@@ -66,5 +68,5 @@ public class Constants {
     public static final String FRIEND_ID_EXTRA = "friend_id_extra";
     public static final String FRIEND_PROFILE_EXTRA = "friend_profile_extra";
     public static final int RANDOM_RADIUS_FOR_MARKER = 10;
-    public static final float METERS_IN_DEGREE =111000f;
+    public static final float METERS_IN_DEGREE = 111000f;
 }

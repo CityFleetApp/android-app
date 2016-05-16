@@ -265,6 +265,7 @@
     <string name="author">Author</string>
     <string name="delete_post">Delete Post</string>
     <string name="renew_post">Renew Post</string>
+    <string name="discount_code">Discount code</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

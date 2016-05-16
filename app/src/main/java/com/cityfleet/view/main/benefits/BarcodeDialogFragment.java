@@ -35,6 +35,8 @@ public class BarcodeDialogFragment extends BaseFragment {
     ImageView barcodeImageView;
     @Bind(R.id.barcodeText)
     TextView barcodeText;
+    @Bind(R.id.title)
+    TextView title;
     @BindDimen(R.dimen.barcode_height)
     int barcodeHeight;
     @BindDimen(R.dimen.barcode_width)
@@ -46,6 +48,8 @@ public class BarcodeDialogFragment extends BaseFragment {
         View v = getActivity().getLayoutInflater().inflate(R.layout.benefit_barcode, null);
         ButterKnife.bind(this, v);
         String barcodeString = getArguments().getString(Constants.BARCODE_STRING);
+        String benefitName = getArguments().getString(Constants.BENEFIT_NAME);
+        title.setText(benefitName);
         try {
             Bitmap bitmap = encodeAsBitmap(barcodeString, BarcodeFormat.CODE_128, barcodeWidth, barcodeHeight);
             barcodeImageView.setImageBitmap(bitmap);
@@ -55,6 +59,11 @@ public class BarcodeDialogFragment extends BaseFragment {
         barcodeText.setText(barcodeString);
 
         return v;
+    }
+
+    @OnClick(R.id.backBtn)
+    void onBackBtnClick() {
+        getActivity().onBackPressed();
     }
 
     Bitmap encodeAsBitmap(String contents, BarcodeFormat format, int img_width, int img_height) throws WriterException {
@@ -102,10 +111,6 @@ public class BarcodeDialogFragment extends BaseFragment {
         return null;
     }
 
-    @OnClick(R.id.barcodeContainer)
-    public void onBarcodeContainerClick() {
-        getParentFragment().getChildFragmentManager().popBackStackImmediate();
-    }
 
     @Override
     public void onDestroyView() {

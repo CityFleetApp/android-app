@@ -2,9 +2,9 @@ package com.cityfleet.view.main.benefits;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +18,7 @@ import com.cityfleet.model.Benefit;
 import com.cityfleet.util.Constants;
 import com.cityfleet.util.RecycleViewClickListener;
 import com.cityfleet.util.SpacesItemDecoration;
+import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
 
 import java.util.List;
@@ -71,25 +72,28 @@ public class BenefitsFragment extends BaseFragment implements BenefitPresenter.B
     private RecycleViewClickListener.OnItemClickListener onItemClickListener = new RecycleViewClickListener.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
-            FragmentManager fm = getChildFragmentManager();
-            BarcodeDialogFragment fragment = (BarcodeDialogFragment) fm.findFragmentByTag(Constants.BENEFITS_BARCODE_TAG);
-            if (fragment == null) {
-                fragment = new BarcodeDialogFragment();
+            Benefit benefit = adapter.getBenefit(position);
+            if (TextUtils.isEmpty(benefit.getBarcode())) {
+                PromocodeDialogFragment fragment = new PromocodeDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.PROMOCODE_STRING, benefit.getPromocode());
+                bundle.putString(Constants.BENEFIT_NAME, benefit.getName());
+                fragment.setArguments(bundle);
+                ((BaseActivity) getActivity()).changeFragment(fragment, true);
+            } else {
+                BarcodeDialogFragment fragment = new BarcodeDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.BARCODE_STRING, benefit.getBarcode());
+                bundle.putString(Constants.BENEFIT_NAME, benefit.getName());
+                fragment.setArguments(bundle);
+                ((BaseActivity) getActivity()).changeFragment(fragment, true);
             }
-            Bundle bundle = new Bundle();
-            bundle.putString(Constants.BARCODE_STRING, adapter.getBarcodeString(position));
-            fragment.setArguments(bundle);
-            fm.beginTransaction().add(R.id.childFragmentContainer, fragment, Constants.BENEFITS_BARCODE_TAG).addToBackStack(null).commit();
         }
     };
 
     @OnClick(R.id.backBtn)
     void onBackBtnClick() {
-        FragmentManager fragmentManager = getChildFragmentManager();
-        fragmentManager.popBackStack();
-        if (fragmentManager.getBackStackEntryCount() == 0) {
-            getActivity().onBackPressed();
-        }
+        getActivity().onBackPressed();
     }
 
     @Override
