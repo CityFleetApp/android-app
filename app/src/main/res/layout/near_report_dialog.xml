@@ -3,13 +3,13 @@
     android:id="@+id/nearReportDialog"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-   android:background="@color/bottom_button_color_transparent"
+    android:background="@color/bottom_button_color_transparent"
+    android:clickable="true"
     android:divider="@drawable/vertical_divider"
     android:elevation="@dimen/direct_btn_elevation"
     android:orientation="vertical"
-    android:clickable="true"
     android:tint="@android:color/white"
-    android:visibility="invisible">
+    android:visibility="gone">
     <!--android:background="@color/bottom_button_color"-->
     <TextView
         android:id="@+id/titleMiles"
@@ -38,8 +38,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
             android:background="@drawable/transparent_selector"
+            android:gravity="center"
             android:text="@string/still_here"
             android:textColor="@android:color/white"
             android:textSize="@dimen/report_dialog_button_textsize" />
@@ -50,8 +50,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
             android:background="@drawable/transparent_selector"
+            android:gravity="center"
             android:text="@string/not_here"
             android:textColor="@android:color/white"
             android:textSize="@dimen/report_dialog_button_textsize" />

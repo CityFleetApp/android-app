@@ -38,7 +38,7 @@
     <string name="marketplace">Marketplace</string>
     <string name="report_title">Report</string>
     <string name="police">Police</string>
-    <string name="tlc">Tlc</string>
+    <string name="tlc">TLC</string>
     <string name="accident">Accident</string>
     <string name="trafic_jam">Traffic jam</string>
     <string name="hazard">Hazard</string>
@@ -223,7 +223,7 @@
     <string name="vehicles_for_rent_sale">Vehicles for Rent/Sale</string>
     <string name="still_here">Still here</string>
     <string name="not_here">Not here</string>
-    <string name="in_miles">In %1$s miles</string>
+    <string name="in_miles">%1$s in %2$s miles</string>
     <string name="message_user">Message user</string>
     <string name="enter_your_message">Enter your message...</string>
     <string name="contacts">Contacts</string>

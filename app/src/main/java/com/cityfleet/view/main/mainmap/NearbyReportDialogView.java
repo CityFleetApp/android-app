@@ -81,7 +81,7 @@ public class NearbyReportDialogView {
         reportLocation.setLongitude(report.getLng());
         float distanceInMeters = currentLocation.distanceTo(reportLocation);
         float distanceInMiles = convertMetersToMiles(distanceInMeters);
-        titleMiles.setText(fragment.getString(R.string.in_miles, String.format("%.1f", distanceInMiles)));
+        titleMiles.setText(fragment.getString(R.string.in_miles, fragment.getString(ReportType.values()[report.getReportType() - 1].getNameRes()), String.format("%.1f", distanceInMiles)));
         if (nearReportDialog.getVisibility() == View.GONE) {
             playShowHideAnimation();
         }
@@ -101,7 +101,7 @@ public class NearbyReportDialogView {
         }
     }
 
-   private Animator.AnimatorListener openingAnimatorListener = new Animator.AnimatorListener() {
+    private Animator.AnimatorListener openingAnimatorListener = new Animator.AnimatorListener() {
         @Override
         public void onAnimationStart(Animator animation) {
 
