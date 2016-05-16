@@ -65,4 +65,6 @@ public class Constants {
     public static final int ADMIN_NOTIF_ID = 3;
     public static final String FRIEND_ID_EXTRA = "friend_id_extra";
     public static final String FRIEND_PROFILE_EXTRA = "friend_profile_extra";
+    public static final int RANDOM_RADIUS_FOR_MARKER = 10;
+    public static final float METERS_IN_DEGREE =111000f;
 }

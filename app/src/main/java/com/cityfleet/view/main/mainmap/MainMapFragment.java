@@ -71,6 +71,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import butterknife.Bind;
@@ -173,12 +174,52 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     private void addReportMarkerToMap(Report report) {
         int iconResId = ReportType.values()[report.getReportType() - 1].getPinIconResId();
+        LatLng markerLocation = new LatLng(report.getLat(), report.getLng());
+        if (checkIfMarkerOnLocationExists(markerLocation)) {
+            markerLocation = getRandomCoordinate(markerLocation);
+        }
         Marker marker = map.addMarker(new MarkerOptions()
-                .position(new LatLng(report.getLat(), report.getLng()))
+                .position(markerLocation)
                 .icon(BitmapDescriptorFactory.fromResource(iconResId))
                 .title(String.valueOf(report.getId()))
                 .snippet("report"));
         nearbyReportMarkersList.add(marker);
+    }
+
+    private boolean checkIfMarkerOnLocationExists(LatLng markerLocation) {
+        boolean locationExists = false;
+        for (Marker m : nearbyReportMarkersList) {
+            if (m.getPosition().equals(markerLocation)) {
+                locationExists = true;
+                break;
+            }
+        }
+        if (!locationExists) {
+            for (Marker m : nearbyFriendsMarkerList) {
+                if (m.getPosition().equals(markerLocation)) {
+                    locationExists = true;
+                    break;
+                }
+            }
+        }
+        return locationExists;
+    }
+
+    private LatLng getRandomCoordinate(LatLng latLng) {
+        Random random = new Random();
+        // Convert radius from meters to degrees
+        double radiusInDegrees = Constants.RANDOM_RADIUS_FOR_MARKER / Constants.METERS_IN_DEGREE;
+        double u = random.nextDouble();
+        double v = random.nextDouble();
+        double w = radiusInDegrees * Math.sqrt(u);
+        double t = 2 * Math.PI * v;
+        double x = w * Math.cos(t);
+        double y = w * Math.sin(t);
+        // Adjust the x-coordinate for the shrinking of the east-west distances
+        double newX = x / Math.cos(latLng.latitude);
+        double foundLongitude = newX + latLng.longitude;
+        double foundLatitude = y + latLng.latitude;
+        return new LatLng(foundLatitude, foundLongitude);
     }
 
     private Report getReportForMarker(Marker marker) {
@@ -631,30 +672,19 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     private void addFriendMarkerToMap(FriendNearby friendNearby) {
-//        View view = getActivity().getLayoutInflater().inflate(R.layout.friend_marker, null);
-//        TextView name = (TextView) view.findViewById(R.id.markerFriendName);
-//        name.setText(friendNearby.getFullName());
-//        view.setDrawingCacheEnabled(true);
-//        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-//                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-//        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-//        view.buildDrawingCache(true);
-//        if (view != null && view.getDrawingCache() != null) {
-//            Bitmap drawingCache = view.getDrawingCache();
-//            Bitmap b = Bitmap.createBitmap(drawingCache);
-//            view.setDrawingCacheEnabled(false);
         if (map != null) {
+            LatLng markerLocation = new LatLng(friendNearby.getLat(), friendNearby.getLng());
+            if (checkIfMarkerOnLocationExists(markerLocation)) {
+                markerLocation = getRandomCoordinate(markerLocation);
+            }
             Marker marker = map.addMarker(new MarkerOptions()
-                    .position(new LatLng(friendNearby.getLat(), friendNearby.getLng()))
+                    .position(markerLocation)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.friend_marker))
                     .title(String.valueOf(friendNearby.getId()))
                     .anchor(0.5f, 1f)
                     .snippet("friend"));
-//            b.recycle();
-//            drawingCache.recycle();
             nearbyFriendsMarkerList.add(marker);
         }
-        //     }
     }
 
     @Override
