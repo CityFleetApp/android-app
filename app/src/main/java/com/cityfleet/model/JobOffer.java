@@ -32,6 +32,10 @@ public class JobOffer {
     private double tolls;
     private int choices;
     private String personal;
+    private int owner;
+    @SerializedName("owner_name")
+    private String ownerName;
+
     @Expose
     private int vehicleTypeId = Constants.DEFAULT_UNSELECTED_POSITION;
     @Expose
@@ -123,6 +127,22 @@ public class JobOffer {
 
     public void setJobType(String jobType) {
         this.jobType = jobType;
+    }
+
+    public int getOwner() {
+        return owner;
+    }
+
+    public void setOwner(int owner) {
+        this.owner = owner;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
     public String getInstructions() {

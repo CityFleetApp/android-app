@@ -262,6 +262,7 @@
     <string name="enter_tolls">Enter Tolls</string>
     <string name="select_company_personal">Select Company/Personal</string>
     <string name="chat_photo_name">chat_photo</string>
+    <string name="author">Author</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

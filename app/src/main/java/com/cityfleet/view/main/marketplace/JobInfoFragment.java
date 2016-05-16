@@ -21,6 +21,7 @@ import com.cityfleet.network.NetworkManager;
 import com.cityfleet.util.Constants;
 import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
+import com.cityfleet.view.main.profile.ProfileFragment;
 
 import org.parceler.Parcels;
 
@@ -75,6 +76,8 @@ public class JobInfoFragment extends BaseFragment {
     Button requestBtn;
     @Bind(R.id.jobAwardedLbl)
     TextView jobAwardedLbl;
+    @Bind(R.id.authorLbl)
+    TextView authorLbl;
     private JobOffer jobOffer;
     private int jobId;
 
@@ -97,6 +100,13 @@ public class JobInfoFragment extends BaseFragment {
         return view;
     }
 
+    @OnClick(R.id.authorBtn)
+    void onAuthorBtnClicked() {
+        if (jobOffer != null) {
+            ((BaseActivity) getActivity()).changeFragment(ProfileFragment.getInstanceForFriend(jobOffer.getOwner()), true);
+        }
+    }
+
     private void init() {
         String time = "";
         String date = "";
@@ -117,7 +127,7 @@ public class JobInfoFragment extends BaseFragment {
         gratuityLbl.setText(getString(R.string.dollar_price, jobOffer.getGratuity()));
         vehicleTypeLbl.setText(jobOffer.getVehicleType());
         suiteTieLbl.setText(jobOffer.isSuite() ? getString(R.string.yes) : getString(R.string.no));
-        String[] companyPersonal = getResources().getStringArray(R.array.company_personal_types);
+        authorLbl.setText(jobOffer.getOwnerName());
         companyPersonalLbl.setText(jobOffer.getPersonal());
         jobTypeLbl.setText(jobOffer.getJobType());
         if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.COVERED.name()) && jobOffer.isAwarded()) {

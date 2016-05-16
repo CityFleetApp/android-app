@@ -328,6 +328,30 @@
                     android:text="$8.00" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/authorBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:padding="@dimen/job_info_padding">
+
+                <TextView
+                    style="@style/RegistrationEdittextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/edit"
+                    android:text="@string/author"
+                    android:textColor="@color/green_color_text" />
+
+                <TextView
+                    android:id="@+id/authorLbl"
+                    style="@style/RegistrationEdittextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
             <Button
                 android:id="@+id/requestBtn"
                 android:layout_width="match_parent"
