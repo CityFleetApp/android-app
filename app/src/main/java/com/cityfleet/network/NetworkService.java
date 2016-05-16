@@ -216,10 +216,19 @@ public interface NetworkService {
     Call<Void> postGood(@PartMap() Map<String, RequestBody> files, @Part("price") double price, @Part("condition") int condition,
                         @Part("item") RequestBody item, @Part("description") RequestBody description);
 
+    @DELETE("marketplace/cars/posting/rent/{id}/")
+    Call<Void> deleteCarForRentPost(@Path("id") int id);
+
+    @DELETE("marketplace/cars/posting/sale/{id}/")
+    Call<Void> deleteCarForSalePost(@Path("id") int id);
+
     @Multipart
     @PATCH("marketplace/goods/posting/{id}/")
     Call<Void> editGood(@Path("id") int id, @Part("price") double price, @Part("condition") int condition,
                         @Part("item") RequestBody item, @Part("description") RequestBody description);
+
+    @DELETE("marketplace/goods/posting/{id}/")
+    Call<Void> deleteGood(@Path("id") int id);
 
     @POST("marketplace/offers/{id}/request_job/")
     Call<Void> requestJob(@Path("id") int id);
@@ -256,6 +265,10 @@ public interface NetworkService {
                             @Field("gratuity") double gratuity, @Field("tolls") double tolls, @Field("vehicle_type") int vehicleType,
                             @Field("suite") boolean suite, @Field("job_type") int jobType,
                             @Field("personal") int personal, @Field("instructions") String instructions);
+
+
+    @DELETE("marketplace/offers/{id}/")
+    Call<Void> deleteJobOffer(@Path("id") int id);
 
     @GET("users/profile/")
     Call<UserEditInfo> getUserProfileInfo();

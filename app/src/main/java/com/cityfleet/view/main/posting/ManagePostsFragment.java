@@ -163,7 +163,9 @@ public class ManagePostsFragment extends BaseFragment implements ManagePostsAdap
 
     @Override
     public void stopLoading() {
-        progressBar.setVisibility(View.GONE);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     @Override

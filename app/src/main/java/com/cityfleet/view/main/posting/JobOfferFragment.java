@@ -77,6 +77,10 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
     ProgressBar progressBar;
     @Bind(R.id.postBtn)
     Button postBtn;
+    @Bind(R.id.updateBtn)
+    Button updateBtn;
+    @Bind(R.id.deleteBtn)
+    Button deleteBtn;
     @Bind(R.id.jobTypeText)
     TextView jobTypeText;
     @Bind(R.id.instructionsET)
@@ -136,6 +140,9 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
         instructionsET.setText(jobOffer.getInstructions());
         vehicleTypeText.setText(jobOffer.getVehicleType());
         jobTypeText.setText(jobOffer.getJobType());
+        postBtn.setVisibility(View.GONE);
+        deleteBtn.setVisibility(View.VISIBLE);
+        updateBtn.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.dateBtn)
@@ -145,7 +152,7 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
         datePicker.show();
     }
 
-    @OnClick(R.id.postBtn)
+    @OnClick({R.id.postBtn, R.id.updateBtn})
     void onPostBtnClick() {
         if (TextUtils.isEmpty(titleText.getText()) || dateText.equals(getString(R.string.select_date)) || timeText.equals(getString(R.string.select_time)) ||
                 TextUtils.isEmpty(pickupText.getText()) || TextUtils.isEmpty(destinationText.getText())
@@ -169,6 +176,10 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
         }
     }
 
+    @OnClick(R.id.deleteBtn)
+    void onDeleteBtnClick() {
+        presenter.deleteJobOffer(jobOffer.getId());
+    }
 
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
         @Override

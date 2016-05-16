@@ -82,6 +82,10 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     String pickImageTitle;
     @Bind(R.id.postBtn)
     Button postBtn;
+    @Bind(R.id.updateBtn)
+    Button updateBtn;
+    @Bind(R.id.deleteBtn)
+    Button deleteBtn;
     private CarPostingType postingType;
     private Car car;
     private boolean isEditMode = false;
@@ -137,11 +141,19 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
                 Picasso.with(getContext()).load(car.getPhotos().get(i).getUrl()).centerCrop().fit().into(images.get(i));
             }
         }
+        postBtn.setVisibility(View.GONE);
+        deleteBtn.setVisibility(View.VISIBLE);
+        updateBtn.setVisibility(View.VISIBLE);
     }
 
     private void enableModelBtn(boolean enable) {
         modelBtn.setClickable(enable);
         modelBtn.setAlpha(enable ? Constants.ENABLED_LAYOUT_ALPHA : Constants.DISABLED_LAYOUT_ALPHA);
+    }
+
+    @OnClick(R.id.deleteBtn)
+    void onDeleteBtnClick() {
+        presenter.deletePost(postingType, car.getId());
     }
 
     @Override
@@ -180,7 +192,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
         }
     }
 
-    @OnClick(R.id.postBtn)
+    @OnClick({R.id.postBtn, R.id.updateBtn})
     void onPostBtnClick() {
         if (car.getMakeId() == Constants.DEFAULT_UNSELECTED_POSITION || car.getModelId() == Constants.DEFAULT_UNSELECTED_POSITION || car.getTypeId() == Constants.DEFAULT_UNSELECTED_POSITION
                 || car.getSeatsId() == Constants.DEFAULT_UNSELECTED_POSITION || car.getFuelId() == Constants.DEFAULT_UNSELECTED_POSITION || car.getColorId() == Constants.DEFAULT_UNSELECTED_POSITION ||

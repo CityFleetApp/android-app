@@ -438,6 +438,40 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size" />
+
+            <Button
+                android:id="@+id/updateBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/reg_edittext_padding"
+                android:layout_marginLeft="@dimen/splash_btn_margin_small"
+                android:layout_marginRight="@dimen/splash_btn_margin_small"
+                android:layout_marginTop="@dimen/reg_edittext_padding"
+                android:background="@drawable/red_btn_selector"
+                android:text="@string/renew_post"
+                android:textAllCaps="true"
+                android:visibility="gone"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
+
+            <Button
+                android:id="@+id/deleteBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/reg_edittext_padding"
+                android:layout_marginLeft="@dimen/splash_btn_margin_small"
+                android:layout_marginRight="@dimen/splash_btn_margin_small"
+                android:layout_marginTop="@dimen/reg_edittext_padding"
+                android:background="@drawable/red_btn_selector"
+                android:text="@string/delete_post"
+                android:textAllCaps="true"
+                android:visibility="gone"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
     </ScrollView>
 

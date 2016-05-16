@@ -64,6 +64,10 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
     String pickImageTitle;
     @Bind(R.id.postBtn)
     Button postBtn;
+    @Bind(R.id.updateBtn)
+    Button updateBtn;
+    @Bind(R.id.deleteBtn)
+    Button deleteBtn;
     @Bind(R.id.progressBar)
     RelativeLayout progressBar;
     private Photo[] imageUrls = new Photo[Constants.POSTING_IMAGES_NUMBER];
@@ -111,9 +115,12 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
                 break;
             }
         }
+        postBtn.setVisibility(View.GONE);
+        deleteBtn.setVisibility(View.VISIBLE);
+        updateBtn.setVisibility(View.VISIBLE);
     }
 
-    @OnClick(R.id.postBtn)
+    @OnClick({R.id.postBtn, R.id.updateBtn})
     void onPostBtnClick() {
         if (TextUtils.isEmpty(itemEt.getText().toString()) || TextUtils.isEmpty(descrEt.getText().toString()) || TextUtils.isEmpty(priceEt.getText().toString())
                 || generalGood.getConditionId() == Constants.DEFAULT_UNSELECTED_POSITION) {
@@ -125,6 +132,11 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
             generalGood.setPhotos(Arrays.asList(imageUrls));
             presenter.createPost(generalGood, isEditMode, photosToDelete);
         }
+    }
+
+    @OnClick(R.id.deleteBtn)
+    void onDeleteBtnClick() {
+        presenter.deleteGeneralGood(generalGood.getId());
     }
 
     @OnClick(R.id.conditionBtn)

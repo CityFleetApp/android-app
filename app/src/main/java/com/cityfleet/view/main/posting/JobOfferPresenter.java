@@ -57,6 +57,16 @@ public class JobOfferPresenter {
         }
     }
 
+    public void deleteJobOffer(int jobOfferId) {
+        if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
+            Call<Void> deleteCall = networkManager.getNetworkClient().deleteJobOffer(jobOfferId);
+            deleteCall.enqueue(postingListener);
+        } else {
+            view.onNetworkError();
+        }
+    }
+
     private Callback<Void> postingListener = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {

@@ -54,6 +54,21 @@ public class PostingRentSaleDetailPresenter {
         }
     }
 
+    public void deletePost(CarPostingType postingType, int id) {
+        if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
+            Call<Void> deleteCall;
+            if (postingType == CarPostingType.RENT) {
+                deleteCall = networkManager.getNetworkClient().deleteCarForRentPost(id);
+            } else {
+                deleteCall = networkManager.getNetworkClient().deleteCarForSalePost(id);
+            }
+            deleteCall.enqueue(deleteCallback);
+        } else {
+            view.onNetworkError();
+        }
+    }
+
     public void getCarModelsByMakeId(int makeId) {
         if (networkManager.isConnectedOrConnecting()) {
             Call<List<CarOption>> modelCall = networkManager.getNetworkClient().getCardModels(makeId);
@@ -153,6 +168,24 @@ public class PostingRentSaleDetailPresenter {
         new Thread(runnable).start();
     }
 
+    private Callback<Void> deleteCallback = new Callback<Void>() {
+        @Override
+        public void onResponse(Call<Void> call, Response<Void> response) {
+            view.stopLoading();
+            if (response.isSuccessful()) {
+                view.onPostCreatesSuccessfully();
+            } else {
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Void> call, Throwable t) {
+            view.stopLoading();
+            Log.e(PostingRentSaleDetailFragment.class.getName(), t.getMessage());
+            view.onFailure(t.getMessage());
+        }
+    };
     private Callback<Void> deletePhotoCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {

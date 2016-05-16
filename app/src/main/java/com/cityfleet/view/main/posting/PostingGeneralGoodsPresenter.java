@@ -68,6 +68,16 @@ public class PostingGeneralGoodsPresenter {
         }
     }
 
+    public void deleteGeneralGood(int id) {
+        if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
+            Call<Void> call = networkManager.getNetworkClient().deleteGood(id);
+            call.enqueue(createPostCallback);
+        } else {
+            view.onNetworkError();
+        }
+    }
+
     private void updatePost(GeneralGood generalGood, HashMap<String, RequestBody> imagesMap) {
         isUpdatingPost = true;
         imagesUpdatingCount = 0;
@@ -93,6 +103,23 @@ public class PostingGeneralGoodsPresenter {
         call.enqueue(createPostCallback);
     }
 
+    private Callback<Void> deletePostCallback = new Callback<Void>() {
+        @Override
+        public void onResponse(Call<Void> call, Response<Void> response) {
+            view.stopLoading();
+            if (!response.isSuccessful()) {
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            } else {
+                view.onPostCreatesSuccessfully();
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Void> call, Throwable t) {
+            view.stopLoading();
+            Log.e(PostingGeneralGoodsPresenter.class.getName(), t.getMessage());
+        }
+    };
     private Callback<Void> deletePhotoCallback = new Callback<Void>() {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
