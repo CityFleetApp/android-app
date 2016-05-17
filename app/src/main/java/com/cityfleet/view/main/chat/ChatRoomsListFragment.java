@@ -213,11 +213,11 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
             public void run() {
                 ChatRoom chatRoom = event.getChatRoom();
                 boolean containsSearchWords = false;
-                if (searchField.getText().toString().isEmpty()) {
+                if (searchField!=null && searchField.getText().toString().isEmpty()) {
                     containsSearchWords = true;
                 } else {
                     for (ChatFriend chatFriend : chatRoom.getParticipants()) {
-                        if (chatFriend.getId() != PrefUtil.getId(getContext()) && chatFriend.getName().toLowerCase().contains(searchField.getText().toString().toLowerCase())) {
+                        if (chatFriend.getId() != PrefUtil.getId(getContext()) && searchField!=null && chatFriend.getName().toLowerCase().contains(searchField.getText().toString().toLowerCase())) {
                             containsSearchWords = true;
                             break;
                         }
