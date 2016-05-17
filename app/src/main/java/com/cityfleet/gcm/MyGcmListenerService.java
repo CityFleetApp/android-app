@@ -38,6 +38,7 @@ import com.squareup.picasso.Picasso;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by vika on 21.03.16.
@@ -102,7 +103,13 @@ public class MyGcmListenerService extends GcmListenerService {
     private void showNewMessageNotification(ChatMessage chatMessage) {
         if (!(ChatDetailFragment.isFragmentActive() && ChatDetailFragment.getRoomId() == chatMessage.getRoom())) {
             Intent intent = new Intent(this, ChatActivity.class);
+            List<ChatFriend> chatFriends = chatMessage.getParticipants();
+            int[] participants = new int[chatFriends.size()];
+            for(int i=0; i<participants.length; i++){
+                participants[i] = chatFriends.get(i).getId();
+            }
             intent.putExtra(Constants.CHAT_ID_TAG, chatMessage.getRoom());
+            intent.putExtra(Constants.CHAT_PARTICIPANTS_TAG, participants);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

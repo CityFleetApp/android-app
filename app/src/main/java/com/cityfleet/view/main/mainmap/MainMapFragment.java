@@ -26,6 +26,9 @@ import android.widget.Toast;
 
 import com.cityfleet.CityFleetApp;
 import com.cityfleet.R;
+import com.cityfleet.model.ChatFriend;
+import com.cityfleet.model.ChatMessage;
+import com.cityfleet.model.ChatRoom;
 import com.cityfleet.model.FriendNearby;
 import com.cityfleet.model.Report;
 import com.cityfleet.model.ReportType;
@@ -709,9 +712,15 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     @Override
-    public void onChatRoomCreated(int roomId) {
+    public void onChatRoomCreated(ChatRoom chatRoom) {
+        List<ChatFriend> chatFriends = chatRoom.getParticipants();
+        int[] participants = new int[chatFriends.size()];
+        for(int i=0; i<participants.length; i++){
+            participants[i] = chatFriends.get(i).getId();
+        }
         Intent i = new Intent(getActivity(), ChatActivity.class);
-        i.putExtra(Constants.CHAT_ID_TAG, roomId);
+        i.putExtra(Constants.CHAT_ID_TAG, chatRoom.getId());
+        i.putExtra(Constants.CHAT_PARTICIPANTS_TAG, participants);
         getActivity().startActivity(i);
     }
 

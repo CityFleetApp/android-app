@@ -5,7 +5,52 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <app:android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/toolbarColor"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@android:color/transparent"
+                android:paddingBottom="@dimen/toolbar_back_padding"
+                android:paddingRight="@dimen/toolbar_back_padding"
+                android:paddingTop="@dimen/toolbar_back_padding"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/reg_edittext_lbl_textsize" />
+
+            <ImageButton
+                android:id="@+id/addBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@android:color/transparent"
+                android:paddingBottom="@dimen/toolbar_back_padding"
+                android:paddingLeft="@dimen/toolbar_back_padding"
+                android:paddingRight="@dimen/toolbar_back_padding"
+                android:paddingTop="@dimen/toolbar_back_padding"
+                android:src="@drawable/ic_add" />
+
+        </app:android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chatList"
@@ -43,8 +88,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:padding="@dimen/chat_image_button_padding"
             android:background="@android:color/transparent"
+            android:padding="@dimen/chat_image_button_padding"
             android:src="@drawable/approve" />
 
         <EditText

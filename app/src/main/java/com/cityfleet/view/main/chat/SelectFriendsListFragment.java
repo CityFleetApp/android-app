@@ -18,10 +18,16 @@ import android.widget.Toast;
 import com.cityfleet.CityFleetApp;
 import com.cityfleet.R;
 import com.cityfleet.model.ChatFriend;
+import com.cityfleet.model.ChatRoom;
+import com.cityfleet.util.AddFriendsToChatEvent;
+import com.cityfleet.util.Constants;
 import com.cityfleet.util.DividerItemDecoration;
 import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +39,8 @@ import butterknife.OnEditorAction;
 /**
  * Created by vika on 19.04.16.
  */
-public class SelectFriendsListFragment extends BaseFragment implements SelectFriendsListAdapter.OnItemClickListener, FriendsListPresenter.FriendsListView, SearchEditText.EditTextImeBackListener {
+public class SelectFriendsListFragment extends BaseFragment implements SelectFriendsListAdapter.OnItemClickListener,
+        FriendsListPresenter.FriendsListView, SearchEditText.EditTextImeBackListener {
     @Bind(R.id.searchField)
     SearchEditText searchField;
     @Bind(R.id.contactsList)
@@ -46,13 +53,19 @@ public class SelectFriendsListFragment extends BaseFragment implements SelectFri
     ImageButton okBtn;
     private SelectFriendsListAdapter adapter;
     private FriendsListPresenter presenter;
+    private boolean isAddFriendsToChatMode = false;
+    private int[] excludedFriendsIds;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.friends_list_fragment, container, false);
         ButterKnife.bind(this, view);
-        //    searchField.setVisibility(View.GONE);
+        Bundle args = getArguments();
+        if (args != null) {
+            isAddFriendsToChatMode = args.getBoolean(Constants.IS_ADD_FRIENDS_TO_CHAT_MODE);
+            excludedFriendsIds = args.getIntArray(Constants.EXCLUDED_FRIENDS_IDS);
+        }
         if (adapter == null) {
             adapter = new SelectFriendsListAdapter(this);
             presenter = new FriendsListPresenter(this, CityFleetApp.getInstance().getNetworkManager());
@@ -62,7 +75,7 @@ public class SelectFriendsListFragment extends BaseFragment implements SelectFri
         contactsList.setAdapter(adapter);
         contactsList.addItemDecoration(new DividerItemDecoration(getContext()));
         contactsList.setNestedScrollingEnabled(false);
-        title.setText(getString(R.string.create_chat_room));
+        title.setText(getString(isAddFriendsToChatMode ? R.string.add_friends_to_chat_room : R.string.create_chat_room));
         okBtn.setVisibility(View.INVISIBLE);
         searchField.setOnEditTextImeBackListener(this);
         return view;
@@ -76,7 +89,20 @@ public class SelectFriendsListFragment extends BaseFragment implements SelectFri
     @OnClick(R.id.okBtn)
     void onOkBtnClick() {
         Set<Integer> participantIds = adapter.getSelectedItemsIds();
-        ((ChatActivity) getActivity()).createChatRoomAndOpen(participantIds, false);
+        if (isAddFriendsToChatMode) {
+            for (int i = 0; i < excludedFriendsIds.length; i++) {
+                participantIds.add(excludedFriendsIds[i]);
+            }
+            int[] allChatParticipantIds = new int[participantIds.size()];
+            int index = 0;
+            for (Integer i : participantIds) {
+                allChatParticipantIds[index++] = i;
+            }
+            EventBus.getDefault().postSticky(new AddFriendsToChatEvent(allChatParticipantIds));
+            getActivity().onBackPressed();
+        } else {
+            ((ChatActivity) getActivity()).createChatRoomAndOpen(participantIds, false);
+        }
     }
 
     @Override
@@ -89,6 +115,7 @@ public class SelectFriendsListFragment extends BaseFragment implements SelectFri
             title.setText(getString(R.string.selected, count));
         }
     }
+
     @OnEditorAction(R.id.searchField)
     protected boolean onSearchClicked(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -128,13 +155,30 @@ public class SelectFriendsListFragment extends BaseFragment implements SelectFri
     @Override
     public void onFriendsLoaded(List<ChatFriend> friends) {
         searchField.getText().clear();
+        if (isAddFriendsToChatMode) {
+            Iterator<ChatFriend> i = friends.iterator();
+            while (i.hasNext()) {
+                ChatFriend friend = i.next();
+                for (int j = 0; j < excludedFriendsIds.length; j++) {
+                    if (friend.getId() == excludedFriendsIds[j]) {
+                        i.remove();
+                        break;
+                    }
+                }
+            }
+        }
         adapter.setList(friends);
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onChatRoomCreated(int roomId) {
-        ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(getId()), true);
+    public void onChatRoomCreated(ChatRoom chatRoom) {
+        List<ChatFriend> chatFriends = chatRoom.getParticipants();
+        int[] participants = new int[chatFriends.size()];
+        for(int i=0; i<participants.length; i++){
+            participants[i] = chatFriends.get(i).getId();
+        }
+        ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(getId(), participants), true);
     }
 
     @Override

@@ -326,6 +326,10 @@ public interface NetworkService {
     @POST("chat/rooms/")
     Call<ChatRoom> createChatRoom(@Field("name") String name, @Field("participants") int[] participantsIds);
 
+    @FormUrlEncoded
+    @PATCH("chat/rooms/{id}/")
+    Call<ChatRoom> editChatRoom(@Path("id") int id, @Field("participants") int[] participantsIds);
+
     @GET("chat/rooms/{id}/messages/?limit=" + Constants.PAGE_SIZE)
     Call<PagesResult<ChatMessage>> getChatRoomHistory(@Path("id") int roomId, @Query("offset") int offset);
 }

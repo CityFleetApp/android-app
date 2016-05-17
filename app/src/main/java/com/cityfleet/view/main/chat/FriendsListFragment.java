@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.cityfleet.CityFleetApp;
 import com.cityfleet.R;
 import com.cityfleet.model.ChatFriend;
+import com.cityfleet.model.ChatRoom;
 import com.cityfleet.util.DividerItemDecoration;
 import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
@@ -145,8 +146,13 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
     }
 
     @Override
-    public void onChatRoomCreated(int roomId) {
-        ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(roomId), true);
+    public void onChatRoomCreated(ChatRoom chatRoom) {
+        List<ChatFriend> chatFriends = chatRoom.getParticipants();
+        int[] participants = new int[chatFriends.size()];
+        for(int i=0; i<participants.length; i++){
+            participants[i] = chatFriends.get(i).getId();
+        }
+        ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(chatRoom.getId(),participants ), true);
     }
 
     @Override

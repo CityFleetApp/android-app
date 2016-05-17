@@ -20,16 +20,19 @@ import com.cityfleet.R;
 import com.cityfleet.model.ChatMessage;
 import com.cityfleet.model.ChatMessageToSend;
 import com.cityfleet.model.ChatMessageTypes;
+import com.cityfleet.model.ChatRoom;
 import com.cityfleet.model.MarkRoomAsRead;
 import com.cityfleet.model.PagesResult;
 import com.cityfleet.network.NetworkErrorUtil;
 import com.cityfleet.network.NetworkManager;
+import com.cityfleet.util.AddFriendsToChatEvent;
 import com.cityfleet.util.Constants;
 import com.cityfleet.util.EndlessRecyclerOnScrollListener;
 import com.cityfleet.util.ImagePickerUtil;
 import com.cityfleet.util.MarkMessageSeenEvent;
 import com.cityfleet.util.NewMessageEvent;
 import com.cityfleet.util.PostMessageEvent;
+import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,6 +52,7 @@ import retrofit2.Response;
  */
 public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.ImageResultListener {
     private int chatId;
+    private int[] chatParticipants;
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.chatList)
@@ -71,8 +75,11 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
         View view = inflater.inflate(R.layout.chat_view, container, false);
         ButterKnife.bind(this, view);
         chatId = getArguments().getInt(Constants.CHAT_ID_TAG);
+        chatParticipants = getArguments().getIntArray(Constants.CHAT_PARTICIPANTS_TAG);
         title.setText(R.string.chatting);
-        adapter = new ChatMessagesAdapter(getContext());
+        if (adapter == null) {
+            adapter = new ChatMessagesAdapter(getContext());
+        }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);
         chatList.setLayoutManager(linearLayoutManager);
@@ -83,10 +90,11 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
         return view;
     }
 
-    public static ChatDetailFragment getInstance(int roomId) {
+    public static ChatDetailFragment getInstance(int roomId, int[] chatParticipants) {
         ChatDetailFragment chatDetailFragment = new ChatDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.CHAT_ID_TAG, roomId);
+        bundle.putIntArray(Constants.CHAT_PARTICIPANTS_TAG, chatParticipants);
         chatDetailFragment.setArguments(bundle);
         return chatDetailFragment;
     }
@@ -160,6 +168,12 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
         });
     }
 
+    @Subscribe(sticky = true)
+    public void onEventMainThread(AddFriendsToChatEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        addFriendsToChatRoom(event.getAllFriends());
+    }
+
     @OnClick(R.id.okBtn)
     void onOkBtnClicked() {
         if (newMessageEt.getText().length() > 0) {
@@ -192,6 +206,17 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
         }
     }
 
+    private void addFriendsToChatRoom(int[] allParticipantsIds) {
+        NetworkManager networkManager = CityFleetApp.getInstance().getNetworkManager();
+        if (networkManager.isConnectedOrConnecting()) {
+            startLoading();
+            Call<ChatRoom> call = networkManager.getNetworkClient().editChatRoom(chatId, allParticipantsIds);
+            call.enqueue(addFriendsToChatRoomCallback);
+        } else {
+            onNetworkError();
+        }
+    }
+
     private void loadChatHistory() {
         NetworkManager networkManager = CityFleetApp.getInstance().getNetworkManager();
         if (networkManager.isConnectedOrConnecting()) {
@@ -202,6 +227,27 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
             onNetworkError();
         }
     }
+
+    private Callback<ChatRoom> addFriendsToChatRoomCallback = new Callback<ChatRoom>() {
+        @Override
+        public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
+            stopLoading();
+            if (response.isSuccessful()) {
+                Toast.makeText(getContext(), R.string.add_friends_chat_room_message, Toast.LENGTH_SHORT).show();
+            } else {
+                onFailureMessage(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ChatRoom> call, Throwable t) {
+            stopLoading();
+            if (t.getMessage() != null) {
+                Log.e(ChatDetailFragment.class.getName(), t.getMessage());
+                onFailureMessage(t.getMessage());
+            }
+        }
+    };
 
     private Callback<PagesResult<ChatMessage>> chatHistoryCallback = new Callback<PagesResult<ChatMessage>>() {
         @Override
@@ -220,9 +266,9 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
 
         @Override
         public void onFailure(Call<PagesResult<ChatMessage>> call, Throwable t) {
+            stopLoading();
             if (t.getMessage() != null) {
                 Log.e(ChatDetailFragment.class.getName(), t.getMessage());
-                stopLoading();
                 onFailureMessage(t.getMessage());
             }
         }
@@ -245,6 +291,16 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
     @OnClick(R.id.backBtn)
     void onBackBtnClick() {
         getActivity().onBackPressed();
+    }
+
+    @OnClick(R.id.addBtn)
+    void onAddFriendBtn() {
+        SelectFriendsListFragment friendsListFragment = new SelectFriendsListFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(Constants.IS_ADD_FRIENDS_TO_CHAT_MODE, true);
+        args.putIntArray(Constants.EXCLUDED_FRIENDS_IDS, chatParticipants);
+        friendsListFragment.setArguments(args);
+        ((BaseActivity) getActivity()).changeFragment(friendsListFragment, true);
     }
 
     private void onFailureMessage(String error) {

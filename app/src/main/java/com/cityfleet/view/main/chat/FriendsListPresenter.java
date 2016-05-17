@@ -51,7 +51,7 @@ public class FriendsListPresenter {
         public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
             view.stopLoading();
             if (response.isSuccessful()) {
-                view.onChatRoomCreated(response.body().getId());
+                view.onChatRoomCreated(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
@@ -94,6 +94,6 @@ public class FriendsListPresenter {
 
         void onFriendsLoaded(List<ChatFriend> friends);
 
-        void onChatRoomCreated(int roomId);
+        void onChatRoomCreated(ChatRoom chatRoom);
     }
 }

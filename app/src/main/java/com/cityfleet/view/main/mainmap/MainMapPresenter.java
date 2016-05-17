@@ -60,7 +60,7 @@ public class MainMapPresenter {
         public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
             view.stopLoading();
             if (response.isSuccessful()) {
-                view.onChatRoomCreated(response.body().getId());
+                view.onChatRoomCreated(response.body());
             } else {
                 view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
@@ -185,6 +185,6 @@ public class MainMapPresenter {
 
         void onFriendsNearbyLoaded(List<FriendNearby> friendList);
 
-        void onChatRoomCreated(int roomId);
+        void onChatRoomCreated(ChatRoom chatRoom);
     }
 }

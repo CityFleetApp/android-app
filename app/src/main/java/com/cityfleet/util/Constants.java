@@ -56,6 +56,7 @@ public class Constants {
     public static final int DIALOG_ANIMATION_DURATION = 150;
     public static final int PAGE_SIZE = 20;
     public static final String CHAT_ID_TAG = "chat_id_tag";
+    public static final String CHAT_PARTICIPANTS_TAG = "chat_participants_tag";
     public static final String JOB_OFFER_ID_TAG = "job_offer_id_tag";
     public static final String JOB_OFFER_TITLE_TAG = "job_offer_title_tag";
     public static final String JOB_OFFER_EXECUTOR_TAG = "job_offer_executor_tag";
@@ -69,4 +70,6 @@ public class Constants {
     public static final String FRIEND_PROFILE_EXTRA = "friend_profile_extra";
     public static final int RANDOM_RADIUS_FOR_MARKER = 10;
     public static final float METERS_IN_DEGREE = 111000f;
+    public static final String IS_ADD_FRIENDS_TO_CHAT_MODE = "is_add_friends_to_chat_mode";
+    public static final String EXCLUDED_FRIENDS_IDS = "excluded_friends_ids";
 }

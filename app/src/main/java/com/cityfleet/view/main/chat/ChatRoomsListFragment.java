@@ -107,7 +107,12 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
 
     @Override
     public void onItemClick(ChatRoom item) {
-        ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(item.getId()), true);
+        List<ChatFriend> chatFriends = item.getParticipants();
+        int[] participants = new int[chatFriends.size()];
+        for(int i=0; i<participants.length; i++){
+            participants[i] = chatFriends.get(i).getId();
+        }
+        ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(item.getId(), participants), true);
         item.setUnseen(0);
     }
 

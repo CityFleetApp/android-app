@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.cityfleet.CityFleetApp;
 import com.cityfleet.R;
+import com.cityfleet.model.ChatFriend;
 import com.cityfleet.model.ChatMessage;
 import com.cityfleet.model.ChatMessageTypes;
 import com.cityfleet.model.ChatRoom;
@@ -70,8 +71,9 @@ public class ChatActivity extends BaseActivity {
         }
         EventBus.getDefault().register(this);
         int roomId = getIntent().getIntExtra(Constants.CHAT_ID_TAG, 0);
-        if (roomId != 0) {
-            changeFragment(ChatDetailFragment.getInstance(roomId), false);
+        int[] chatParticipants = getIntent().getIntArrayExtra(Constants.CHAT_PARTICIPANTS_TAG);
+        if (roomId != 0 && chatParticipants != null) {
+            changeFragment(ChatDetailFragment.getInstance(roomId, chatParticipants), false);
         } else {
             changeFragment(new FriendsListTabbedFragment(), false);
         }
@@ -81,8 +83,9 @@ public class ChatActivity extends BaseActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         int roomId = intent.getIntExtra(Constants.CHAT_ID_TAG, 0);
-        if (roomId != 0) {
-            changeFragment(ChatDetailFragment.getInstance(roomId), false);
+        int[] chatParticipants = getIntent().getIntArrayExtra(Constants.CHAT_PARTICIPANTS_TAG);
+        if (roomId != 0 && chatParticipants != null) {
+            changeFragment(ChatDetailFragment.getInstance(roomId, chatParticipants), false);
             EventBus.getDefault().post(new MarkMessageSeenEvent(new MarkRoomAsRead(roomId)));
         }
     }
@@ -230,7 +233,12 @@ public class ChatActivity extends BaseActivity {
         public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
             progressBar.setVisibility(View.GONE);
             if (response.isSuccessful()) {
-                changeFragment(ChatDetailFragment.getInstance(response.body().getId()), addToBackStack);
+                List<ChatFriend> chatFriends = response.body().getParticipants();
+                int[] participants = new int[chatFriends.size()];
+                for (int i = 0; i < participants.length; i++) {
+                    participants[i] = chatFriends.get(i).getId();
+                }
+                changeFragment(ChatDetailFragment.getInstance(response.body().getId(), participants), addToBackStack);
             } else {
                 ChatActivity.this.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
