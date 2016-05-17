@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.cityfleet.R;
 import com.cityfleet.util.MarketplaceSearchEvent;
+import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
 import com.cityfleet.view.main.chat.SearchEditText;
 
@@ -39,6 +40,8 @@ public class BuyRentTabbedFragment extends BaseFragment implements SearchEditTex
     TabLayout tabs;
     @Bind(R.id.viewPager)
     ViewPager viewPager;
+    @Bind(R.id.closeBtn)
+    ImageButton closeBtn;
 
     @Nullable
     @Override
@@ -81,10 +84,16 @@ public class BuyRentTabbedFragment extends BaseFragment implements SearchEditTex
         showKeyboard();
     }
 
+    @OnClick(R.id.closeBtn)
+    void onCloseBtnClicked() {
+        ((BaseActivity) getActivity()).goToTop();
+    }
+
     private void showSearch(boolean showSearch) {
         title.setVisibility(showSearch ? View.GONE : View.VISIBLE);
         searchBtn.setVisibility(showSearch ? View.GONE : View.VISIBLE);
         searchBar.setVisibility(showSearch ? View.VISIBLE : View.GONE);
+        closeBtn.setVisibility(showSearch ? View.GONE : View.VISIBLE);
         if (!showSearch) {
             searchBar.getText().clear();
         }

@@ -4,7 +4,64 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <include layout="@layout/toolbar" />
+    <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbarColor">
+
+        <app:android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageButton
+                    android:id="@+id/backBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:paddingBottom="@dimen/toolbar_back_padding"
+                    android:paddingRight="@dimen/toolbar_back_padding"
+                    android:paddingTop="@dimen/toolbar_back_padding"
+                    android:src="@drawable/back" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/reg_edittext_lbl_textsize" />
+
+
+                <ImageButton
+                    android:id="@+id/closeBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:paddingBottom="@dimen/toolbar_back_padding"
+                    android:paddingLeft="@dimen/toolbar_back_padding"
+                    android:paddingRight="@dimen/toolbar_back_padding"
+                    android:paddingTop="@dimen/toolbar_back_padding"
+                    android:src="@drawable/ic_close" />
+
+
+            </RelativeLayout>
+
+        </app:android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/jobsListView"

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,8 @@ public class JobOffersFragment extends BaseFragment implements JobOffersPresente
     TextView availableBtnLbl;
     @Bind(R.id.emptyView)
     TextView emptyView;
+    @Bind(R.id.closeBtn)
+    ImageButton closeBtn;
     private JobOffersAdapter adapter;
     private JobOffersPresenter presenter;
     private EndlessRecyclerOnScrollListener scrollListener;
@@ -64,6 +67,11 @@ public class JobOffersFragment extends BaseFragment implements JobOffersPresente
         setScrollListener((LinearLayoutManager) jobsListView.getLayoutManager());
         adapter.registerAdapterDataObserver(adapterDataObserver);
         return view;
+    }
+
+    @OnClick(R.id.closeBtn)
+    void onCloseBtnClicked() {
+        ((BaseActivity) getActivity()).goToTop();
     }
 
     private RecyclerView.AdapterDataObserver adapterDataObserver = new RecyclerView.AdapterDataObserver() {

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,6 +79,8 @@ public class JobInfoFragment extends BaseFragment {
     TextView jobAwardedLbl;
     @Bind(R.id.authorLbl)
     TextView authorLbl;
+    @Bind(R.id.closeBtn)
+    ImageButton closeBtn;
     private JobOffer jobOffer;
     private int jobId;
 
@@ -86,6 +89,7 @@ public class JobInfoFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.job_info_fragment, container, false);
         ButterKnife.bind(this, view);
+        closeBtn.setVisibility(View.VISIBLE);
         if (getArguments().containsKey(Constants.JOB_OFFER_TAG)) {
             jobOffer = Parcels.unwrap(getArguments().getParcelable(Constants.JOB_OFFER_TAG));
         } else {
@@ -106,7 +110,10 @@ public class JobInfoFragment extends BaseFragment {
             ((BaseActivity) getActivity()).changeFragment(ProfileFragment.getInstanceForFriend(jobOffer.getOwner()), true);
         }
     }
-
+    @OnClick(R.id.closeBtn)
+    void onCloseBtnClicked() {
+        ((BaseActivity) getActivity()).goToTop();
+    }
     private void init() {
         String time = "";
         String date = "";

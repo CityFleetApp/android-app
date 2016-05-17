@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,8 @@ public class JobOfferCompletedFragment extends BaseFragment {
     TextView jobCompletedLbl;
     @Bind(R.id.title)
     TextView title;
+    @Bind(R.id.closeBtn)
+    ImageButton closeBtn;
     private int jobOfferId;
     private String jobTitle;
     private String jobExecutor;
@@ -51,12 +54,18 @@ public class JobOfferCompletedFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.job_offer_completed, container, false);
         ButterKnife.bind(this, view);
+        closeBtn.setVisibility(View.VISIBLE);
         jobOfferId = getArguments().getInt(Constants.JOB_OFFER_ID_TAG, 0);
         jobTitle = getArguments().getString(Constants.JOB_OFFER_TITLE_TAG);
         jobExecutor = getArguments().getString(Constants.JOB_OFFER_EXECUTOR_TAG);
         jobCompletedLbl.setText(getString(R.string.completed_by_smb, jobTitle, jobExecutor));
         title.setText(R.string.complete);
         return view;
+    }
+
+    @OnClick(R.id.closeBtn)
+    void onCloseBtnClicked() {
+        ((BaseActivity) getActivity()).goToTop();
     }
 
     @OnClick({R.id.star1, R.id.star2, R.id.star3, R.id.star4, R.id.star5})

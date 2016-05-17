@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cityfleet.R;
@@ -49,6 +50,8 @@ public class RentSaleItemFragment extends BaseFragment {
     TextView detailsText;
     @Bind(R.id.authorLbl)
     TextView authorLbl;
+    @Bind(R.id.closeBtn)
+    ImageButton closeBtn;
     private Car car;
     private RentSaleGalleryPagerAdapter adapter;
 
@@ -57,7 +60,7 @@ public class RentSaleItemFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.rent_sale_item_fragment, container, false);
         ButterKnife.bind(this, view);
-
+        closeBtn.setVisibility(View.VISIBLE);
         title.setText(R.string.marketplace);
         car = Parcels.unwrap(getArguments().getParcelable(Constants.CAR_RENT_SALE_TAG));
         List<Photo> photoList = car.getPhotos();
@@ -86,6 +89,11 @@ public class RentSaleItemFragment extends BaseFragment {
     @OnClick(R.id.backBtn)
     void onBackBtnClick() {
         getActivity().onBackPressed();
+    }
+
+    @OnClick(R.id.closeBtn)
+    void onCloseBtnClicked() {
+        ((BaseActivity) getActivity()).goToTop();
     }
 
     @Override

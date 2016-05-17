@@ -23,6 +23,7 @@ import com.cityfleet.R;
 import com.cityfleet.model.GeneralGood;
 import com.cityfleet.util.Constants;
 import com.cityfleet.util.EndlessStaggeredScollListener;
+import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
 import com.cityfleet.view.main.chat.SearchEditText;
 
@@ -51,6 +52,8 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
     ImageButton searchBtn;
     @Bind(R.id.emptyView)
     TextView emptyView;
+    @Bind(R.id.closeBtn)
+    ImageButton closeBtn;
     private GeneralGoodsAdapter adapter;
     private GeneralGoodsPresenter presenter;
     private EndlessStaggeredScollListener scrollListener;
@@ -135,9 +138,15 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
         title.setVisibility(showSearch ? View.GONE : View.VISIBLE);
         searchBtn.setVisibility(showSearch ? View.GONE : View.VISIBLE);
         searchBar.setVisibility(showSearch ? View.VISIBLE : View.GONE);
+        closeBtn.setVisibility(showSearch ? View.GONE : View.VISIBLE);
         if (!showSearch) {
             searchBar.getText().clear();
         }
+    }
+
+    @OnClick(R.id.closeBtn)
+    void onCloseBtnClicked() {
+        ((BaseActivity) getActivity()).goToTop();
     }
 
     @Override

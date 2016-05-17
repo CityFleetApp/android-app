@@ -19,51 +19,75 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-            <ImageButton
-                android:id="@+id/backBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:paddingBottom="@dimen/toolbar_back_padding"
-                android:paddingRight="@dimen/toolbar_back_padding"
-                android:paddingTop="@dimen/toolbar_back_padding"
-                android:background="@android:color/transparent"
-                android:src="@drawable/back" />
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/reg_edittext_lbl_textsize" />
-
-            <ImageButton
-                android:id="@+id/searchBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:background="@android:color/transparent"
-                android:paddingBottom="@dimen/toolbar_back_padding"
-                android:paddingLeft="@dimen/toolbar_back_padding"
-                android:paddingRight="@dimen/toolbar_back_padding"
-                android:paddingTop="@dimen/toolbar_back_padding"
-                android:src="@drawable/search" />
-
-            <com.cityfleet.view.main.chat.SearchEditText
-                android:id="@+id/searchBar"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:hint="@string/search"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/reg_edittext_lbl_textsize"
-                android:textColorHint="@android:color/white"
-                android:textCursorDrawable="@null"
-                android:visibility="gone"/>
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/backBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:paddingBottom="@dimen/toolbar_back_padding"
+                    android:paddingRight="@dimen/toolbar_back_padding"
+                    android:paddingTop="@dimen/toolbar_back_padding"
+                    android:src="@drawable/back" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/reg_edittext_lbl_textsize" />
+
+                <ImageButton
+                    android:id="@+id/searchBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/closeBtn"
+                    android:background="@android:color/transparent"
+                    android:paddingBottom="@dimen/toolbar_back_padding"
+                    android:paddingLeft="@dimen/toolbar_back_padding"
+                    android:paddingRight="@dimen/toolbar_back_padding"
+                    android:paddingTop="@dimen/toolbar_back_padding"
+                    android:src="@drawable/search" />
+
+                <ImageButton
+                    android:id="@+id/closeBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@android:color/transparent"
+                    android:paddingBottom="@dimen/toolbar_back_padding"
+                    android:paddingLeft="@dimen/toolbar_back_padding"
+                    android:paddingRight="@dimen/toolbar_back_padding"
+                    android:paddingTop="@dimen/toolbar_back_padding"
+                    android:src="@drawable/ic_close" />
+
+                <com.cityfleet.view.main.chat.SearchEditText
+                    android:id="@+id/searchBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/backBtn"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/search"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"
+                    android:textCursorDrawable="@null"
+                    android:textSize="@dimen/reg_edittext_lbl_textsize"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
         </app:android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
