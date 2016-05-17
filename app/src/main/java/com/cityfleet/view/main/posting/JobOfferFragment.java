@@ -181,25 +181,6 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
         presenter.deleteJobOffer(jobOffer.getId());
     }
 
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.YEAR, year);
-            calendar.set(Calendar.MONTH, monthOfYear);
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            selectedDateTimeCalendar.set(Calendar.SECOND, 0);
-            selectedDateTimeCalendar.set(Calendar.MILLISECOND, 0);
-            if (calendar.getTimeInMillis() > selectedDateTimeCalendar.getTimeInMillis()) {
-                dateText.setText(getString(R.string.job_date, monthOfYear + 1, dayOfMonth, year));
-                selectedDateTimeCalendar.set(Calendar.YEAR, year);
-                selectedDateTimeCalendar.set(Calendar.MONTH, monthOfYear);
-                selectedDateTimeCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            } else {
-                Toast.makeText(getContext(), R.string.invalid_date, Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
 
     @OnClick(R.id.timeBtn)
     void onTimeBtnClick() {
@@ -288,14 +269,40 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
             suiteText.setText(stringOptions.get(which));
         }
     };
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            selectedDateTimeCalendar.set(Calendar.SECOND, 0);
+            selectedDateTimeCalendar.set(Calendar.MILLISECOND, 0);
+            if (calendar.getTimeInMillis() > selectedDateTimeCalendar.getTimeInMillis()) {
+                dateText.setText(getString(R.string.job_date, monthOfYear + 1, dayOfMonth, year));
+                selectedDateTimeCalendar.set(Calendar.YEAR, year);
+                selectedDateTimeCalendar.set(Calendar.MONTH, monthOfYear);
+                selectedDateTimeCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            } else {
+                Toast.makeText(getContext(), R.string.invalid_date, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            Calendar today = Calendar.getInstance();
             selectedDateTimeCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             selectedDateTimeCalendar.set(Calendar.MINUTE, minute);
-            String time = formatter.format(selectedDateTimeCalendar.getTime());
-            timeText.setText(time);
+            if (today.getTimeInMillis() > selectedDateTimeCalendar.getTimeInMillis()) {
+                selectedDateTimeCalendar.set(Calendar.HOUR_OF_DAY, today.get(Calendar.HOUR_OF_DAY));
+                selectedDateTimeCalendar.set(Calendar.MINUTE, today.get(Calendar.MINUTE));
+                Toast.makeText(getContext(), R.string.invalid_time, Toast.LENGTH_SHORT).show();
+            } else {
+                String time = formatter.format(selectedDateTimeCalendar.getTime());
+                timeText.setText(time);
+            }
         }
     };
 
