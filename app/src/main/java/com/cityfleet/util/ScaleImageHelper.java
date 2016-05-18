@@ -6,6 +6,7 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -18,7 +19,7 @@ public class ScaleImageHelper {
         BitmapFactory.decodeFile(filePath, options);
         options.inSampleSize = calculateInSampleSize(options, maxWidth);
         options.inJustDecodeBounds = false;
-        Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
+        Bitmap bitmap = BitmapFactory.decodeFile(new File(filePath).getAbsolutePath(), options);
         int width = options.outWidth;
         int height = options.outHeight;
         double ratio = (double) height / (double) width;

@@ -2,10 +2,13 @@ package com.cityfleet.view.main.chat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,13 +34,17 @@ import com.cityfleet.util.EndlessRecyclerOnScrollListener;
 import com.cityfleet.util.ImagePickerUtil;
 import com.cityfleet.util.MarkMessageSeenEvent;
 import com.cityfleet.util.NewMessageEvent;
+import com.cityfleet.util.OpenChatImageEvent;
 import com.cityfleet.util.PostMessageEvent;
+import com.cityfleet.util.ScaleImageHelper;
 import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
+import com.cityfleet.view.main.MainActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.Bind;
@@ -68,6 +75,7 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
     private int offset = 0;
     private int totalMessagesCount;
     private ImagePickerUtil imagePickerUtil;
+    private ImageResultHandler imageResultHandler;
 
     @Nullable
     @Override
@@ -123,6 +131,11 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
         super.onPause();
         isFragmentActive = false;
         roomId = Constants.DEFAULT_UNSELECTED_POSITION;
+    }
+
+    @Subscribe
+    void onOpenChatImageEvent(OpenChatImageEvent event) {
+        ((ChatActivity) getActivity()).changeFragment(ChatImageDetailFragment.getInstance(event.getImageUrl()), true);
     }
 
     public void setScrollListener() {
@@ -333,11 +346,54 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
 
     @Override
     public void onImageReceived(String url) {
-        Log.d("TAG", "image received: " + url);
+        imageResultHandler = new ImageResultHandler(this);
+        Thread thread = new Thread(new PrepareImageRunnable(url));
+        thread.start();
     }
 
     @Override
     public void onImageCanceledOrFailed() {
 
+    }
+
+    private class PrepareImageRunnable implements Runnable {
+        private String imageUrl;
+
+        public PrepareImageRunnable(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        @Override
+        public void run() {
+            ScaleImageHelper scaleImageHelper = new ScaleImageHelper();
+            byte[] bytes = scaleImageHelper.getScaledImageBytes(imageUrl, Constants.PROFILE_IMAGE_WIDTH);
+            String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
+            if (imageResultHandler != null) {
+                Message msg = new Message();
+                msg.obj = encodedImage;
+                imageResultHandler.handleMessage(msg);
+            }
+        }
+    }
+
+    static class ImageResultHandler extends Handler {
+        WeakReference<ChatDetailFragment> fragmentRef;
+
+        ImageResultHandler(ChatDetailFragment fragment) {
+            this.fragmentRef = new WeakReference<ChatDetailFragment>(fragment);
+        }
+
+        @Override
+        public void handleMessage(Message message) {
+            ChatDetailFragment fragment = this.fragmentRef.get();
+            String encodedImage = (String) message.obj;
+            if (fragment != null) {
+                ChatMessageToSend chatMessageToSend = new ChatMessageToSend();
+                chatMessageToSend.setMethod(ChatMessageTypes.POST_MESSAGE.getName());
+                chatMessageToSend.setImage(encodedImage);
+                chatMessageToSend.setRoom(fragment.chatId);
+                EventBus.getDefault().post(new PostMessageEvent(chatMessageToSend));
+            }
+        }
     }
 }

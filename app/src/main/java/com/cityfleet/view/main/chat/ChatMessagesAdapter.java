@@ -17,8 +17,11 @@ import com.cityfleet.model.ChatFriend;
 import com.cityfleet.model.ChatMessage;
 import com.cityfleet.util.CircleTransform;
 import com.cityfleet.util.Constants;
+import com.cityfleet.util.OpenChatImageEvent;
 import com.cityfleet.util.PrefUtil;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,6 +56,8 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
         TextView chatMessage;
         @Bind(R.id.chatTime)
         TextView chatTime;
+        @Bind(R.id.chatImage)
+        ImageView chatImage;
 
         public ViewHolder(View v) {
             super(v);
@@ -92,7 +97,27 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ChatMessage chatMessage = chatList.get(position);
+        if (TextUtils.isEmpty(chatMessage.getText())) {
+            holder.chatMessage.setVisibility(View.GONE);
+        } else {
+            holder.chatMessage.setVisibility(View.VISIBLE);
+            holder.chatMessage.setText(chatMessage.getText());
+        }
         holder.chatMessage.setText(chatMessage.getText());
+        if (!TextUtils.isEmpty(chatMessage.getImage())) {
+            holder.chatImage.setVisibility(View.VISIBLE);
+            Picasso.with(context).load(chatMessage.getImage()).into(holder.chatImage);
+            holder.chatImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new OpenChatImageEvent(chatMessage.getImage()));
+                }
+            });
+        } else {
+            holder.chatImage.setVisibility(View.GONE);
+            holder.chatImage.setImageResource(0);
+            holder.chatImage.setOnClickListener(null);
+        }
         ChatFriend author = null;
         for (ChatFriend friend : chatMessage.getParticipants()) {
             if (friend.getId() == chatMessage.getAuthor()) {

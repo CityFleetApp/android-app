@@ -10,6 +10,7 @@ public class ChatMessage {
     private int room;
     private String created;
     private int author;
+    private String image;
     private List<ChatFriend> participants;
 
     public String getText() {
@@ -50,5 +51,13 @@ public class ChatMessage {
 
     public void setParticipants(List<ChatFriend> participants) {
         this.participants = participants;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

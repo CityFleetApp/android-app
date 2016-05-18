@@ -14,30 +14,47 @@
         android:layout_alignParentRight="true"
         android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/chatMessage"
+    <LinearLayout
+        android:id="@+id/chatMessageCont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/chat_message_margin"
         android:layout_toLeftOf="@+id/authorImage"
         android:background="@drawable/bubble_green"
-        android:gravity="center_vertical|left"
-        android:text="This is such a cool event I wish I can do it every week"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/chat_bubble_text_size" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/chatMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|left"
+            android:text="This is such a cool event I wish I can do it every week"
+            android:textColor="@android:color/white"
+            android:visibility="gone"
+            android:textSize="@dimen/chat_bubble_text_size" />
+
+        <ImageView
+            android:id="@+id/chatImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/chatTime"
+        fontPath="@string/fontLight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/chatMessage"
-        android:layout_below="@+id/chatMessage"
+        android:layout_alignLeft="@+id/chatMessageCont"
+        android:layout_below="@+id/chatMessageCont"
         android:gravity="left"
+        android:paddingBottom="@dimen/chat_date_margin"
         android:paddingLeft="@dimen/chat_date_margin"
         android:paddingRight="@dimen/chat_date_margin"
-        android:paddingBottom="@dimen/chat_date_margin"
-        android:paddingTop= "5dp"
-        fontPath="@string/fontLight"
+        android:paddingTop="5dp"
         android:text="Lisa wrote 20 min ago"
         android:textColor="@color/chat_date_color"
         android:textSize="@dimen/chat_date_text_size"

@@ -6,6 +6,7 @@ package com.cityfleet.model;
 public class ChatMessageToSend {
     private String method=ChatMessageTypes.POST_MESSAGE.getName();
     private String text;
+    private String image;
     private int room;
 
     public String getMethod() {
@@ -30,5 +31,13 @@ public class ChatMessageToSend {
 
     public void setRoom(int room) {
         this.room = room;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

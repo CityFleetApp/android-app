@@ -26,6 +26,7 @@ public class ImagePickerUtil {
     public static final int REQUEST_PERMISSION_CAMERA = 1;
     public static final int REQUEST_PERMISSION_GALLERY = 2;
     private ImageResultListener listener;
+    private String imageFromCameraPath;
 
     public ImagePickerUtil(Fragment fragment, ImageResultListener listener) {
         this.fragment = fragment;
@@ -65,8 +66,7 @@ public class ImagePickerUtil {
                 break;
             case REQUEST_CAMERA:
                 if (resultCode == Activity.RESULT_OK) {
-                    String url = getFileForImageFromCamera().getAbsolutePath();
-                    listener.onImageReceived(url);
+                    listener.onImageReceived(imageFromCameraPath);
                 } else {
                     listener.onImageCanceledOrFailed();
                 }
@@ -135,7 +135,9 @@ public class ImagePickerUtil {
     }
 
     private File getFileForImageFromCamera() {
-        return new File(fragment.getContext().getExternalFilesDir(null) + File.separator + System.currentTimeMillis() + ".png");
+        File file = new File(fragment.getContext().getExternalFilesDir(null) + File.separator + System.currentTimeMillis() + ".png");
+        imageFromCameraPath = file.getAbsolutePath();
+        return file;
     }
 
     public interface ImageResultListener {

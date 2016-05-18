@@ -21,6 +21,7 @@ public class Constants {
     public static final int PHONE_NUMBER_SIZE = 10;
     public static final int MIN_PASSWORD_LENGTH = 8;
     public static final String IMAGES_LIST_TAG = "images_list";
+    public static final String IMAGE_URL_TAG = "image_url";
     public static final String IMAGES_SELECTED_TAG = "images_selected_tag";
     public static final int DEFAULT_UNSELECTED_POSITION = -1;
     public static final String LEGAL_AID_TYPE_TAG = "legal_aid_type_tag";
