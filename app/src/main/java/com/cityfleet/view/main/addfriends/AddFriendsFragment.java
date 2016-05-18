@@ -3,11 +3,9 @@ package com.cityfleet.view.main.addfriends;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -21,6 +19,7 @@ import android.widget.Toast;
 
 import com.cityfleet.CityFleetApp;
 import com.cityfleet.R;
+import com.cityfleet.util.CommonUtils;
 import com.cityfleet.util.InstagramLoginEvent;
 import com.cityfleet.util.PermissionUtil;
 import com.cityfleet.view.BaseActivity;
@@ -44,7 +43,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -223,12 +221,7 @@ public class AddFriendsFragment extends BaseFragment implements AddFriendsPresen
     private Runnable threadToRetrieveContacts = new Runnable() {
         @Override
         public void run() {
-            Cursor phones = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
-            List<String> allPhoneNumbers = new ArrayList<String>();
-            while (phones.moveToNext()) {
-                allPhoneNumbers.add(phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-            }
-            phones.close();
+            List<String> allPhoneNumbers = CommonUtils.getAllPhoneNumbers(getContext());
             Message message = new Message();
             message.obj = allPhoneNumbers;
             contactsResultHandler.sendMessage(message);

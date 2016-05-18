@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommonUtils {
@@ -42,4 +44,17 @@ public class CommonUtils {
             }
         }
     }
+/*
+This method require contact runtime permission
+ */
+    public static List<String> getAllPhoneNumbers(Context context) {
+        Cursor phonesCursor = context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
+        List<String> allPhoneNumbers = new ArrayList<String>();
+        while (phonesCursor.moveToNext()) {
+            allPhoneNumbers.add(phonesCursor.getString(phonesCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+        }
+        phonesCursor.close();
+        return allPhoneNumbers;
+    }
+
 }
