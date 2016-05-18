@@ -42,7 +42,7 @@
                         android:layout_margin="@dimen/profile_name_padding"
                         android:scaleType="centerCrop" />
 
-                    <ImageButton
+                    <android.support.design.widget.FloatingActionButton
                         android:id="@+id/cameraBtn"
                         android:layout_width="@dimen/camera_btn_size"
                         android:layout_height="@dimen/camera_btn_size"
@@ -50,9 +50,8 @@
                         android:layout_alignRight="@+id/profileImage"
                         android:layout_marginBottom="@dimen/camera_profile_margin"
                         android:layout_marginRight="@dimen/camera_profile_margin"
-                        android:background="@drawable/camera_selector"
-                        android:elevation="@dimen/direct_btn_elevation"
-                        android:src="@drawable/photo_white" />
+                        android:src="@drawable/photo_white"
+                        android:theme="@style/MyFloatingButton" />
 
                     <TextView
                         android:id="@+id/profileFullName"

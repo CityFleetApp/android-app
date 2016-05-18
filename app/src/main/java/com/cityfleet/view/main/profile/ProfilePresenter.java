@@ -5,6 +5,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.cityfleet.CityFleetApp;
+import com.cityfleet.model.ChatRoom;
 import com.cityfleet.model.UserImages;
 import com.cityfleet.model.UserInfo;
 import com.cityfleet.network.NetworkErrorUtil;
@@ -12,6 +13,7 @@ import com.cityfleet.network.NetworkManager;
 import com.cityfleet.util.Constants;
 import com.cityfleet.util.ScaleImageHelper;
 import com.cityfleet.view.login.LoginPresenter;
+import com.cityfleet.view.main.chat.FriendsListPresenter;
 
 import java.util.List;
 
@@ -55,6 +57,16 @@ public class ProfilePresenter {
         }
     }
 
+    public void createChatRoomWithFriend(int friendId) {
+        if (networkManager.isConnectedOrConnecting()) {
+            view.startLoading();
+            Call<ChatRoom> call = networkManager.getNetworkClient().createChatRoom(String.valueOf(friendId), new int[]{friendId});
+            call.enqueue(newChatRoomCallback);
+        } else {
+            view.onNetworkError();
+        }
+    }
+
     public void uploadImageForList(String filePath) {
         if (networkManager.isConnectedOrConnecting()) {
             view.startLoading();
@@ -72,6 +84,25 @@ public class ProfilePresenter {
             view.onNetworkError();
         }
     }
+
+    private Callback<ChatRoom> newChatRoomCallback = new Callback<ChatRoom>() {
+        @Override
+        public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
+            view.stopLoading();
+            if (response.isSuccessful()) {
+                view.onChatRoomCreated(response.body());
+            } else {
+                view.onFailure(NetworkErrorUtil.gerErrorMessage(response));
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ChatRoom> call, Throwable t) {
+            Log.e(FriendsListPresenter.class.getName(), t.getMessage());
+            view.stopLoading();
+            view.onFailure(t.getMessage());
+        }
+    };
 
     private void getScaledImageRequestBody(final String imageUrl, final Handler handler) {
         Runnable runnable = new Runnable() {
@@ -187,5 +218,7 @@ public class ProfilePresenter {
         void onDeleteImageSuccess();
 
         void onUserImagesLoaded(List<UserImages> list);
+
+        void onChatRoomCreated(ChatRoom chatRoom);
     }
 }

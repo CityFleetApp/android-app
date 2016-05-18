@@ -107,7 +107,7 @@ public class JobInfoFragment extends BaseFragment {
     @OnClick(R.id.authorBtn)
     void onAuthorBtnClicked() {
         if (jobOffer != null) {
-            ((BaseActivity) getActivity()).changeFragment(ProfileFragment.getInstanceForFriend(jobOffer.getOwner()), true);
+            ((BaseActivity) getActivity()).changeFragment(ProfileFragment.getInstanceForFriend(jobOffer.getOwner(), getContext()), true);
         }
     }
     @OnClick(R.id.closeBtn)

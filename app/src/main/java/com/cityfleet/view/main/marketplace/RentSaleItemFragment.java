@@ -83,7 +83,7 @@ public class RentSaleItemFragment extends BaseFragment {
 
     @OnClick(R.id.authorLbl)
     void onAuthorLblClicked() {
-        ((BaseActivity) getActivity()).changeFragment(ProfileFragment.getInstanceForFriend(car.getOwner()), true);
+        ((BaseActivity) getActivity()).changeFragment(ProfileFragment.getInstanceForFriend(car.getOwner(), getContext()), true);
     }
 
     @OnClick(R.id.backBtn)

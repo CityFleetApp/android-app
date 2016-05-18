@@ -196,4 +196,8 @@
     <style name="MarketplaceTextApperance" parent="TextAppearance.Design.Tab">
         <item name="android:textColor">@android:color/white</item>
     </style>
+
+    <style name="MyFloatingButton" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/green_color</item>
+    </style>
 </resources>

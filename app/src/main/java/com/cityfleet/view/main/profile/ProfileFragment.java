@@ -1,10 +1,12 @@
 package com.cityfleet.view.main.profile;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -20,13 +22,17 @@ import android.widget.Toast;
 
 import com.cityfleet.CityFleetApp;
 import com.cityfleet.R;
+import com.cityfleet.model.ChatFriend;
+import com.cityfleet.model.ChatRoom;
 import com.cityfleet.model.UserImages;
 import com.cityfleet.model.UserInfo;
 import com.cityfleet.util.CircleFrameTransform;
 import com.cityfleet.util.Constants;
 import com.cityfleet.util.MultipleImagePickerUtil;
+import com.cityfleet.util.PrefUtil;
 import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
+import com.cityfleet.view.main.chat.ChatActivity;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -72,6 +78,8 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
     TextView title;
     @Bind({R.id.imageFirst, R.id.imageSecond, R.id.imageThird, R.id.imageFourth, R.id.imageFifth})
     List<ImageButton> images;
+    @Bind(R.id.messageBtn)
+    FloatingActionButton messageBtn;
     private ProfilePresenter presenter;
     private List<UserImages> imagesList;
     private MultipleImagePickerUtil imagePickerUtil;
@@ -90,6 +98,8 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
         }
         if (isFriendProfile) {
             friendId = bundle.getInt(Constants.FRIEND_ID_EXTRA);
+        } else {
+            messageBtn.setVisibility(View.GONE);
         }
         presenter = new ProfilePresenter(CityFleetApp.getInstance().getNetworkManager(), this, isFriendProfile, friendId);
         presenter.init();
@@ -100,18 +110,25 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
         return view;
     }
 
-    public static ProfileFragment getInstanceForFriend(int userId) {
+    public static ProfileFragment getInstanceForFriend(int userId, Context context) {
         ProfileFragment profileFragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putBoolean(Constants.FRIEND_PROFILE_EXTRA, true);
-        args.putInt(Constants.FRIEND_ID_EXTRA, userId);
-        profileFragment.setArguments(args);
+        if (userId != PrefUtil.getId(context)) {
+            Bundle args = new Bundle();
+            args.putBoolean(Constants.FRIEND_PROFILE_EXTRA, true);
+            args.putInt(Constants.FRIEND_ID_EXTRA, userId);
+            profileFragment.setArguments(args);
+        }
         return profileFragment;
     }
 
     @OnClick(R.id.backBtn)
     void onBackBtnClick() {
         getActivity().onBackPressed();
+    }
+
+    @OnClick(R.id.messageBtn)
+    void onMessageBtnClick() {
+        presenter.createChatRoomWithFriend(friendId);
     }
 
     @Override
@@ -212,6 +229,19 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
                 images.get(i).setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.painting));
             }
         }
+    }
+
+    @Override
+    public void onChatRoomCreated(ChatRoom chatRoom) {
+        List<ChatFriend> chatFriends = chatRoom.getParticipants();
+        int[] participants = new int[chatFriends.size()];
+        for (int i = 0; i < participants.length; i++) {
+            participants[i] = chatFriends.get(i).getId();
+        }
+        Intent i = new Intent(getActivity(), ChatActivity.class);
+        i.putExtra(Constants.CHAT_ID_TAG, chatRoom.getId());
+        i.putExtra(Constants.CHAT_PARTICIPANTS_TAG, participants);
+        getActivity().startActivity(i);
     }
 
 

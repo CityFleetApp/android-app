@@ -27,7 +27,6 @@ import android.widget.Toast;
 import com.cityfleet.CityFleetApp;
 import com.cityfleet.R;
 import com.cityfleet.model.ChatFriend;
-import com.cityfleet.model.ChatMessage;
 import com.cityfleet.model.ChatRoom;
 import com.cityfleet.model.FriendNearby;
 import com.cityfleet.model.Report;

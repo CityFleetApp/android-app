@@ -74,7 +74,7 @@ public class GeneralGoodDetailFragment extends BaseFragment {
 
     @OnClick(R.id.authorLbl)
     void onAuthorLblClicked() {
-        ((BaseActivity) getActivity()).changeFragment(ProfileFragment.getInstanceForFriend(generalGood.getOwner()), true);
+        ((BaseActivity) getActivity()).changeFragment(ProfileFragment.getInstanceForFriend(generalGood.getOwner(), getContext()), true);
     }
 
     @OnClick(R.id.backBtn)

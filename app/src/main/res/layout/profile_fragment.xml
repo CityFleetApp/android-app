@@ -43,7 +43,16 @@
                         android:layout_centerHorizontal="true"
                         android:layout_margin="@dimen/profile_name_padding"
                         android:scaleType="centerCrop" />
-
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/messageBtn"
+                        android:layout_width="@dimen/camera_btn_size"
+                        android:layout_height="@dimen/camera_btn_size"
+                        android:layout_alignBottom="@+id/profileImage"
+                        android:layout_alignRight="@+id/profileImage"
+                        android:layout_marginBottom="@dimen/camera_profile_margin"
+                        android:layout_marginRight="@dimen/camera_profile_margin"
+                        android:src="@drawable/ic_content_markunread"
+                        android:theme="@style/MyFloatingButton" />
                     <TextView
                         android:id="@+id/profileFullName"
                         fontPath="@string/fontLight"
