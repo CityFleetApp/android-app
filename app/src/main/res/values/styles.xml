@@ -8,6 +8,14 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
+    <style name="SplashActivityTheme" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/green_color</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
     <style name="EditTextStyle" parent="@android:style/Widget.EditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

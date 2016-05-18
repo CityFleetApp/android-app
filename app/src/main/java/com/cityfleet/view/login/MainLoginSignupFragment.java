@@ -13,7 +13,7 @@ import com.cityfleet.view.BaseActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SplashScreenFragment extends Fragment {
+public class MainLoginSignupFragment extends Fragment {
 //    @Bind(R.id.textureView)
 //    TextureView textureView;
 //    MediaPlayer mediaPlayer;
@@ -21,7 +21,7 @@ public class SplashScreenFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.splashscreen_fragment, container, false);
+        View view = inflater.inflate(R.layout.main_login_signup_fragment, container, false);
         ButterKnife.bind(this, view);
         //textureView.setSurfaceTextureListener(this);
         return view;
@@ -70,7 +70,7 @@ public class SplashScreenFragment extends Fragment {
 //            mediaPlayer.setOnCompletionListener(this);
 //            mediaPlayer.setOnPreparedListener(this);
 //        } catch (Exception e) {
-//            Log.e(SplashScreenFragment.class.getName(), e.getMessage());
+//            Log.e(MainLoginSignupFragment.class.getName(), e.getMessage());
 //            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
 //        }
 //    }
