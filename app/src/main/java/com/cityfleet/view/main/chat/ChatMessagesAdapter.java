@@ -32,6 +32,7 @@ import java.util.TimeZone;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**
  * Created by vika on 18.04.16.
@@ -106,7 +107,8 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
         holder.chatMessage.setText(chatMessage.getText());
         if (!TextUtils.isEmpty(chatMessage.getImage())) {
             holder.chatImage.setVisibility(View.VISIBLE);
-            Picasso.with(context).load(chatMessage.getImage()).into(holder.chatImage);
+            Picasso.with(context).load(chatMessage.getImage()).transform(new RoundedCornersTransformation(context.getResources().getDimensionPixelSize(R.dimen.chat_image_corner), 0)).
+                    into(holder.chatImage);
             holder.chatImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -124,7 +126,8 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
                 author = friend;
             }
         }
-        if (TextUtils.isEmpty(author.getPhoto())) {
+        String authorName = author == null ? "" : context.getString(R.string.chat_author_name, author.getName());
+        if (author == null || TextUtils.isEmpty(author.getPhoto())) {
             Picasso.with(holder.itemView.getContext()).load(R.drawable.default_large).transform(new CircleTransform()).fit().centerCrop().into(holder.authorImage);
         } else {
             Picasso.with(holder.itemView.getContext()).load(author.getPhoto()).transform(new CircleTransform()).fit().centerCrop().into(holder.authorImage);
@@ -136,7 +139,7 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
             Log.e(ChatRoomsAdapter.class.getName(), e.getMessage());
         }
         String dateTime = simpleDateFormatToShow.format(calendar.getTime());
-        holder.chatTime.setText(dateTime);
+        holder.chatTime.setText(authorName + dateTime);
 
         if (position == 0) {
             TypedValue typedValue = new TypedValue();

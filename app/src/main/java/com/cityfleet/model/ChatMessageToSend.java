@@ -5,8 +5,8 @@ package com.cityfleet.model;
  */
 public class ChatMessageToSend {
     private String method=ChatMessageTypes.POST_MESSAGE.getName();
-    private String text;
-    private String image;
+    private String text="";
+    private String image="";
     private int room;
 
     public String getMethod() {

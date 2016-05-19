@@ -110,8 +110,8 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
     public void onViewRecycled(ViewHolder holder) {
         super.onViewRecycled(holder);
         Picasso.with(holder.itemView.getContext()).cancelTag(holder.imageTag);
-        for(CustomTarget target: holder.imagesTargets){
-            if(target!=null){
+        for (CustomTarget target : holder.imagesTargets) {
+            if (target != null) {
                 Picasso.with(context).cancelRequest(target);
             }
         }
@@ -136,8 +136,8 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         holder.imageTag = chatRoom.getName() + chatRoom.getId();
         Context context = holder.chatImage.getContext();
         int size = context.getResources().getDimensionPixelSize(R.dimen.friends_list_image_height);
-        for(CustomTarget target: holder.imagesTargets){
-            if(target!=null){
+        for (CustomTarget target : holder.imagesTargets) {
+            if (target != null) {
                 Picasso.with(context).cancelRequest(target);
             }
         }
@@ -196,8 +196,12 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
 
         String chatNameString = chatName.substring(0, chatName.lastIndexOf(","));
         holder.chatName.setText(chatNameString);
-        if (!TextUtils.isEmpty(chatRoom.getLastMessage())) {
-            holder.chatResentMessage.setText(chatRoom.getLastMessage());
+        if (!TextUtils.isEmpty(chatRoom.getLastMessageTimestamp())) {
+            if (!TextUtils.isEmpty(chatRoom.getLastMessage())) {
+                holder.chatResentMessage.setText(chatRoom.getLastMessage());
+            } else {
+                holder.chatResentMessage.setText(context.getString(R.string.image_message));
+            }
             Calendar calendar = Calendar.getInstance();
             try {
                 calendar.setTime(simpleDateFormatFromServer.parse(chatRoom.getLastMessageTimestamp()));

@@ -20,7 +20,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/chat_message_margin"
         android:layout_toRightOf="@+id/authorImage"
+        android:gravity="center_vertical"
         android:background="@drawable/bubble_orange"
+        android:showDividers="middle"
+        android:divider="@drawable/chat_layout_divider"
         android:orientation="vertical">
 
         <TextView

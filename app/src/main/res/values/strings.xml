@@ -230,6 +230,7 @@
     <string name="type_name">Type a name</string>
     <string name="recent_chats">Recent chats</string>
     <string name="no_messages">No messages</string>
+    <string name="image_message">Image sent</string>
     <string name="chatting">Chatting</string>
     <string name="create_chat_room">Create chat room</string>
     <string name="add_friends_to_chat_room">Add participants</string>
@@ -269,6 +270,7 @@
     <string name="renew_post">Renew Post</string>
     <string name="discount_code">Discount code</string>
     <string name="add_friends_chat_room_message">Participants added to chat room</string>
+    <string name="chat_author_name">"%1$s wrote at "</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

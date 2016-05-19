@@ -19,6 +19,7 @@ import com.squareup.picasso.Target;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by vika on 18.05.16.
@@ -35,7 +36,7 @@ public class ChatImageDetailFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.gallery_fragment, container, false);
+        View view = inflater.inflate(R.layout.chat_image_gallery, container, false);
         ButterKnife.bind(this, view);
         imageUrl = getArguments().getString(Constants.IMAGE_URL_TAG);
         title.setText(R.string.chatting);
@@ -59,6 +60,11 @@ public class ChatImageDetailFragment extends BaseFragment {
         };
         Picasso.with(getContext()).load(imageUrl).into(target);
         return view;
+    }
+
+    @OnClick(R.id.backBtn)
+    void onBackBtnClick() {
+        getActivity().onBackPressed();
     }
 
     public static ChatImageDetailFragment getInstance(String imageUrl) {
