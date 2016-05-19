@@ -155,6 +155,7 @@ public class BuyRentDetailFragment extends BaseFragment implements BuyRentPresen
 
     @Override
     public void onItemClicked(Car car, View imageView) {
+        searchWord = null;
         Fragment detailFragment = new RentSaleItemFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.CAR_RENT_SALE_TAG, Parcels.wrap(car));

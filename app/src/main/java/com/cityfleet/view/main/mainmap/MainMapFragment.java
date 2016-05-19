@@ -733,7 +733,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                     unselectFriendMarker();
                 }
                 Report report = getReportForMarker(marker);
-                if (!nearbyReportDialogView.isVisible() || (nearbyReportDialogView.isVisible() && !nearbyReportDialogView.getSelectedReport().equals(report))) {
+                if (report!=null && !nearbyReportDialogView.isVisible() || (nearbyReportDialogView.isVisible() && !nearbyReportDialogView.getSelectedReport().equals(report))) {
                     nearbyReportDialogView.show(report, currentLocation);
                 } else {
                     nearbyReportDialogView.hide();

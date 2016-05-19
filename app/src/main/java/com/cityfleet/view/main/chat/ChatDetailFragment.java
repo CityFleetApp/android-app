@@ -39,7 +39,6 @@ import com.cityfleet.util.PostMessageEvent;
 import com.cityfleet.util.ScaleImageHelper;
 import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
-import com.cityfleet.view.main.MainActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

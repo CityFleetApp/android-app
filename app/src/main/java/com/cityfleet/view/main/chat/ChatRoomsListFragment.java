@@ -118,7 +118,7 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
 
     @Override
     public void startLoading() {
-        if (isAdded()) {
+        if (progressBar!=null) {
             progressBar.setVisibility(View.VISIBLE);
         }
     }
@@ -244,7 +244,7 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
 
     @Override
     public void stopLoading() {
-        if (isAdded()) {
+        if (progressBar!=null) {
             progressBar.setVisibility(View.GONE);
         }
     }

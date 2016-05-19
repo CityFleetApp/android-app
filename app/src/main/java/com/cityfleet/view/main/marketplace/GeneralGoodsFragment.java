@@ -196,6 +196,7 @@ public class GeneralGoodsFragment extends BaseFragment implements GeneralGoodsPr
 
     @Override
     public void onItemClicked(GeneralGood generalGood, View view) {
+        searchWord = null;
         Fragment detailFragment = new GeneralGoodDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.GENERAL_GOODS_TAG, Parcels.wrap(generalGood));

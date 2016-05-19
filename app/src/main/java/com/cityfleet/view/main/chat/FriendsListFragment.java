@@ -115,7 +115,9 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
 
     @Override
     public void stopLoading() {
-        progressBar.setVisibility(View.GONE);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -149,10 +151,10 @@ public class FriendsListFragment extends BaseFragment implements FriendsListAdap
     public void onChatRoomCreated(ChatRoom chatRoom) {
         List<ChatFriend> chatFriends = chatRoom.getParticipants();
         int[] participants = new int[chatFriends.size()];
-        for(int i=0; i<participants.length; i++){
+        for (int i = 0; i < participants.length; i++) {
             participants[i] = chatFriends.get(i).getId();
         }
-        ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(chatRoom.getId(),participants ), true);
+        ((BaseActivity) getActivity()).changeFragment(ChatDetailFragment.getInstance(chatRoom.getId(), participants), true);
     }
 
     @Override
