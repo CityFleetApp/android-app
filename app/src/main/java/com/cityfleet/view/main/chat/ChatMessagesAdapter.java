@@ -107,8 +107,7 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
         holder.chatMessage.setText(chatMessage.getText());
         if (!TextUtils.isEmpty(chatMessage.getImage())) {
             holder.chatImage.setVisibility(View.VISIBLE);
-            Picasso.with(context).load(chatMessage.getImage()).transform(new RoundedCornersTransformation(context.getResources().getDimensionPixelSize(R.dimen.chat_image_corner), 0)).
-                    into(holder.chatImage);
+            Picasso.with(context).load(chatMessage.getImage()).transform(new RoundedCornersTransformation(context.getResources().getDimensionPixelSize(R.dimen.chat_image_corner), 0)).into(holder.chatImage);
             holder.chatImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -279,8 +279,6 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     protected synchronized void buildGoogleApiClient() {
         googleApiClient = new GoogleApiClient.Builder(getActivity().getApplicationContext())
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
         createLocationRequest();
@@ -324,6 +322,8 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     public void onStart() {
         super.onStart();
         googleApiClient.connect();
+        googleApiClient.registerConnectionCallbacks(this);
+        googleApiClient.registerConnectionFailedListener(this);
     }
 
     @Override
