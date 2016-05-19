@@ -1,5 +1,6 @@
 package com.cityfleet.view.main.mainmap;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.cityfleet.model.ChatRoom;
@@ -128,7 +129,9 @@ public class MainMapPresenter {
 
         @Override
         public void onFailure(Call<List<FriendNearby>> call, Throwable t) {
-            Log.e(LoginPresenter.class.getName(), t.getMessage());
+            if(!TextUtils.isEmpty(t.getMessage())) {
+                Log.e(LoginPresenter.class.getName(), t.getMessage());
+            }
             //    view.stopLoading();
             view.onFailure(t.getMessage());
         }
@@ -146,9 +149,11 @@ public class MainMapPresenter {
 
         @Override
         public void onFailure(Call<List<Report>> call, Throwable t) {
-            Log.e(LoginPresenter.class.getName(), t.getMessage());
             view.stopLoading();
             view.onFailure(t.getMessage());
+            if (!TextUtils.isEmpty(t.getMessage())) {
+                Log.e(LoginPresenter.class.getName(), t.getMessage());
+            }
         }
     };
     private Callback<Object> reportCallback = new Callback<Object>() {

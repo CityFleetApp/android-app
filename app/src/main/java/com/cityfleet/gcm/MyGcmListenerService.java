@@ -105,7 +105,7 @@ public class MyGcmListenerService extends GcmListenerService {
             Intent intent = new Intent(this, ChatActivity.class);
             List<ChatFriend> chatFriends = chatMessage.getParticipants();
             int[] participants = new int[chatFriends.size()];
-            for(int i=0; i<participants.length; i++){
+            for (int i = 0; i < participants.length; i++) {
                 participants[i] = chatFriends.get(i).getId();
             }
             intent.putExtra(Constants.CHAT_ID_TAG, chatMessage.getRoom());
@@ -128,9 +128,13 @@ public class MyGcmListenerService extends GcmListenerService {
                     e.printStackTrace();
                 }
             }
+            String text = chatMessage.getText();
+            if (TextUtils.isEmpty(chatMessage.getText()) && !TextUtils.isEmpty(chatMessage.getImage())) {
+                text = getString(R.string.image_message);
+            }
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                     .setContentTitle(author.getName())
-                    .setContentText(chatMessage.getText())
+                    .setContentText(text)
                     .setSmallIcon(R.drawable.ic_stat_name)
                     .setAutoCancel(true)
                     .setSound(defaultSoundUri)
