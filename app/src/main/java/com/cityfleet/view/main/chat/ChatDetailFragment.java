@@ -107,15 +107,9 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -133,7 +127,7 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
     }
 
     @Subscribe
-    void onOpenChatImageEvent(OpenChatImageEvent event) {
+    void onEventMainThread(OpenChatImageEvent event) {
         ((ChatActivity) getActivity()).changeFragment(ChatImageDetailFragment.getInstance(event.getImageUrl()), true);
     }
 
@@ -332,6 +326,7 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         if (imagePickerUtil != null) {
             imagePickerUtil.onDestroy();
         }
