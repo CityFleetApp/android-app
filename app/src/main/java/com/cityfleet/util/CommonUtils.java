@@ -51,7 +51,7 @@ This method require contact runtime permission
         Cursor phonesCursor = context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
         List<String> allPhoneNumbers = new ArrayList<String>();
         while (phonesCursor.moveToNext()) {
-            allPhoneNumbers.add(phonesCursor.getString(phonesCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+            allPhoneNumbers.add(phonesCursor.getString(phonesCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)).replaceAll("\\s+",""));
         }
         phonesCursor.close();
         return allPhoneNumbers;

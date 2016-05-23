@@ -20,6 +20,7 @@ import com.cityfleet.model.JobOfferStatus;
 import com.cityfleet.network.NetworkErrorUtil;
 import com.cityfleet.network.NetworkManager;
 import com.cityfleet.util.Constants;
+import com.cityfleet.util.PrefUtil;
 import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
 import com.cityfleet.view.main.profile.ProfileFragment;
@@ -137,6 +138,10 @@ public class JobInfoFragment extends BaseFragment {
         authorLbl.setText(jobOffer.getOwnerName());
         companyPersonalLbl.setText(jobOffer.getPersonal());
         jobTypeLbl.setText(jobOffer.getJobType());
+        if(jobOffer.getOwner()== PrefUtil.getId(getContext())){
+            requestBtn.setVisibility(View.GONE);
+            return;
+        }
         if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.COVERED.name()) && jobOffer.isAwarded()) {
             jobAwardedLbl.setVisibility(View.VISIBLE);
             requestBtn.setText(R.string.complete_job);
