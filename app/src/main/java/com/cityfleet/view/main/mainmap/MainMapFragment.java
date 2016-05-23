@@ -212,6 +212,8 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         // Convert radius from meters to degrees
         double radiusInDegrees = Constants.RANDOM_RADIUS_FOR_MARKER / Constants.METERS_IN_DEGREE;
         double u = random.nextDouble();
+        Log.d("TAG", random.nextFloat()+" -  float");
+        Log.d("TAG", random.nextDouble()+" - double");
         double v = random.nextDouble();
         double w = radiusInDegrees * Math.sqrt(u);
         double t = 2 * Math.PI * v;
@@ -800,8 +802,8 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                 selectedForReportPosition.setLatitude(latLng.latitude);
                 selectedForReportPosition.setLongitude(latLng.longitude);
                 showReportDialog();
-            } else{
-             //  Toast.makeText(getContext(), ,Toast.LENGTH_SHORT).show();
+            } else {
+                //  Toast.makeText(getContext(), ,Toast.LENGTH_SHORT).show();
             }
         }
     };

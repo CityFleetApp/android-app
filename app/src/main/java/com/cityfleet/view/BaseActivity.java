@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.cityfleet.R;
 import com.cityfleet.util.Constants;
@@ -92,10 +93,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (oldFragment != null) {
             ft.remove(oldFragment);
         }
-        ft.add(R.id.fragmentContainer, f);
+        ft.replace(R.id.fragmentContainer, f);
 
         // Commit transaction
         ft.commit();
+        Log.d("TAG", "stack count: " + fragmentManager.getBackStackEntryCount());
     }
 
     public void changeFragmentWithAnimation(Fragment f, boolean addToBackStack, @AnimRes int enter,

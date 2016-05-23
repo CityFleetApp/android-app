@@ -161,17 +161,17 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
 
     @Subscribe
     public void onEventMainThread(final NewMessageEvent event) {
-//        getActivity().runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
                 if (event.getChatMessage().getRoom() == chatId) {
                     offset++;
                     totalMessagesCount++;
                     adapter.addMessage(event.getChatMessage());
                     EventBus.getDefault().post(new MarkMessageSeenEvent(new MarkRoomAsRead(chatId)));
                 }
-         //   }
-        //});
+            }
+        });
     }
 
     @Subscribe(sticky = true)

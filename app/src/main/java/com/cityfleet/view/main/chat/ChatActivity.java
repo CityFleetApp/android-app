@@ -238,7 +238,7 @@ public class ChatActivity extends BaseActivity {
                 for (int i = 0; i < participants.length; i++) {
                     participants[i] = chatFriends.get(i).getId();
                 }
-                changeFragment(ChatDetailFragment.getInstance(response.body().getId(), participants), addToBackStack);
+                changeFragment(ChatDetailFragment.getInstance(response.body().getId(), participants), addToBackStack); //TODO
             } else {
                 ChatActivity.this.onFailure(NetworkErrorUtil.gerErrorMessage(response));
             }
