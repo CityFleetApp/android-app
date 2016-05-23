@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.cityfleet.R;
 import com.cityfleet.model.Report;
 import com.cityfleet.model.ReportType;
+import com.cityfleet.util.CommonUtils;
 import com.cityfleet.util.Constants;
 
 import butterknife.Bind;
@@ -80,7 +81,7 @@ public class NearbyReportDialogView {
         reportLocation.setLatitude(report.getLat());
         reportLocation.setLongitude(report.getLng());
         float distanceInMeters = currentLocation.distanceTo(reportLocation);
-        float distanceInMiles = convertMetersToMiles(distanceInMeters);
+        float distanceInMiles = CommonUtils.convertMetersToMiles(distanceInMeters);
         titleMiles.setText(fragment.getString(R.string.in_miles, fragment.getString(ReportType.values()[report.getReportType() - 1].getNameRes()), String.format("%.1f", distanceInMiles)));
         if (nearReportDialog.getVisibility() == View.GONE) {
             playShowHideAnimation();
@@ -140,7 +141,5 @@ public class NearbyReportDialogView {
         hide();
     }
 
-    private static float convertMetersToMiles(float meters) {
-        return (meters / Constants.METERS_IN_MILE);
-    }
+
 }

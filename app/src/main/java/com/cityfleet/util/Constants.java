@@ -73,4 +73,5 @@ public class Constants {
     public static final float METERS_IN_DEGREE = 111000f;
     public static final String IS_ADD_FRIENDS_TO_CHAT_MODE = "is_add_friends_to_chat_mode";
     public static final String EXCLUDED_FRIENDS_IDS = "excluded_friends_ids";
+    public static final int MAP_REPORTS_RADIUS_METERS = 1000;
 }

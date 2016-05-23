@@ -83,7 +83,7 @@ public class ChatActivity extends BaseActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         int roomId = intent.getIntExtra(Constants.CHAT_ID_TAG, 0);
-        int[] chatParticipants = getIntent().getIntArrayExtra(Constants.CHAT_PARTICIPANTS_TAG);
+        int[] chatParticipants = intent.getIntArrayExtra(Constants.CHAT_PARTICIPANTS_TAG);
         if (roomId != 0 && chatParticipants != null) {
             changeFragment(ChatDetailFragment.getInstance(roomId, chatParticipants), false);
             EventBus.getDefault().post(new MarkMessageSeenEvent(new MarkRoomAsRead(roomId)));

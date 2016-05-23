@@ -57,4 +57,7 @@ This method require contact runtime permission
         return allPhoneNumbers;
     }
 
+    public static float convertMetersToMiles(float meters) {
+        return (meters / Constants.METERS_IN_MILE);
+    }
 }

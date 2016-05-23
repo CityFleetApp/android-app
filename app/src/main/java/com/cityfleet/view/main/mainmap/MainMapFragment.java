@@ -714,7 +714,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     public void onChatRoomCreated(ChatRoom chatRoom) {
         List<ChatFriend> chatFriends = chatRoom.getParticipants();
         int[] participants = new int[chatFriends.size()];
-        for(int i=0; i<participants.length; i++){
+        for (int i = 0; i < participants.length; i++) {
             participants[i] = chatFriends.get(i).getId();
         }
         Intent i = new Intent(getActivity(), ChatActivity.class);
@@ -733,7 +733,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                     unselectFriendMarker();
                 }
                 Report report = getReportForMarker(marker);
-                if (report!=null && !nearbyReportDialogView.isVisible() || (nearbyReportDialogView.isVisible() && !nearbyReportDialogView.getSelectedReport().equals(report))) {
+                if (report != null && !nearbyReportDialogView.isVisible() || (nearbyReportDialogView.isVisible() && !nearbyReportDialogView.getSelectedReport().equals(report))) {
                     nearbyReportDialogView.show(report, currentLocation);
                 } else {
                     nearbyReportDialogView.hide();
@@ -791,10 +791,18 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     private GoogleMap.OnMapLongClickListener mapLongClickListener = new GoogleMap.OnMapLongClickListener() {
         @Override
         public void onMapLongClick(LatLng latLng) {
-            selectedForReportPosition = new Location("");
-            selectedForReportPosition.setLatitude(latLng.latitude);
-            selectedForReportPosition.setLongitude(latLng.longitude);
-            showReportDialog();
+            Location reportLocation = new Location("");
+            reportLocation.setLatitude(latLng.latitude);
+            reportLocation.setLongitude(latLng.longitude);
+            float distanceInMeters = currentLocation.distanceTo(reportLocation);
+            if (distanceInMeters < Constants.MAP_REPORTS_RADIUS_METERS) {
+                selectedForReportPosition = new Location("");
+                selectedForReportPosition.setLatitude(latLng.latitude);
+                selectedForReportPosition.setLongitude(latLng.longitude);
+                showReportDialog();
+            } else{
+             //   Toast.makeText(getContext(), ,Toast.LENGTH_SHORT).show();
+            }
         }
     };
 }

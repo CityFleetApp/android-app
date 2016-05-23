@@ -92,7 +92,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (oldFragment != null) {
             ft.remove(oldFragment);
         }
-        ft.replace(R.id.fragmentContainer, f);
+        ft.add(R.id.fragmentContainer, f);
 
         // Commit transaction
         ft.commit();
@@ -116,37 +116,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         // Commit transaction
         ft.commit();
     }
-
-//    public void changeFragment(Fragment f, boolean addToBackStack) {
-//        changeFragmentWithAnimation(f, addToBackStack, 0, 0, 0, 0);
-//    }
-//
-//    public void changeFragmentWithAnimation(Fragment f, boolean addToBackStack, @AnimRes int enter, @AnimRes int exit, @AnimRes int popEnter, @AnimRes int popExit) {
-//        FragmentManager fm = getSupportFragmentManager();
-//
-//        Fragment oldFragment = fm.findFragmentById(R.id.fragmentContainer);
-//        if (oldFragment != null && oldFragment.getClass().equals(f.getClass())) {
-//            return;
-//        }
-//
-//        FragmentTransaction transaction = fm.beginTransaction();
-//        if (enter != 0) {
-//            transaction.setCustomAnimations(enter, exit, popEnter, popExit);
-//        }
-//
-//        // get count of fragments in backstack
-//        int fragmentsInStack = fm.getBackStackEntryCount();
-//        if (addToBackStack) {
-//            transaction.addToBackStack(null);
-//            // increment count to have actual data about fragments count in backstack
-//            fragmentsInStack++;
-//        }
-//        if (enter != 0) {
-//            transaction.add(R.id.fragmentContainer, f);
-//        } else {
-//            transaction.replace(R.id.fragmentContainer, f);
-//        }
-//        transaction.commit();
-//    }
 
 }
