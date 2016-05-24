@@ -803,7 +803,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                 selectedForReportPosition.setLongitude(latLng.longitude);
                 showReportDialog();
             } else {
-                //  Toast.makeText(getContext(), ,Toast.LENGTH_SHORT).show();
+                  Toast.makeText(getContext(), R.string.report_radius ,Toast.LENGTH_SHORT).show();
             }
         }
     };

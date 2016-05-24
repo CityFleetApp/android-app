@@ -370,7 +370,7 @@ public class DocManagementFragment extends BaseFragment implements DocManagement
             } else if (document != null && !TextUtils.isEmpty(document.getExpiryDate())) {
                 document.setExpiryDateUpdated(true);
             }
-            document.setExpiryDate(year + "-" + String.format("%02d", monthOfYear + 1) + "-" + String.format("%02d", dayOfMonth)); //TODO
+            document.setExpiryDate(String.format("%02d", monthOfYear + 1) + "/" + String.format("%02d", dayOfMonth) + "/" + year);
             docFields.get(positionToUpdate).setText(document.getExpiryDate());
             positionToUpdate = Constants.DEFAULT_UNSELECTED_POSITION;
         }
