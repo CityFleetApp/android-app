@@ -85,6 +85,7 @@ public class LegalAidDetailFragment extends BaseFragment implements LegalAidPres
         title.setText(getTitleTextByType(type));
         String personType = getPersonNameByType(type);
         personTitle.setText(personType);
+        personTitle.setCompoundDrawablesRelativeWithIntrinsicBounds(type.getIconRes(), 0, 0, 0);
         personText.setText(getString(R.string.select_person, personType));
         contactBtn.setText(getString(R.string.contact_person, personType));
         textInfo.setText(getTextInfoNameByType(type));
