@@ -277,7 +277,7 @@ public class ProfileFragment extends BaseFragment implements ProfilePresenter.Pr
     @OnLongClick({R.id.imageFirst, R.id.imageSecond, R.id.imageThird, R.id.imageFourth, R.id.imageFifth})
     boolean onLongImageClick(final View view) {
         final int clickedPosition = getClickedPosition(view);
-        if (imagesList != null && imagesList.size() > clickedPosition && imagesList.get(clickedPosition) != null) {
+        if (!isFriendProfile && imagesList != null && imagesList.size() > clickedPosition && imagesList.get(clickedPosition) != null) {
             new AlertDialog.Builder(getActivity())
                     .setTitle(getString(R.string.delete_dialog_title))
                     .setMessage(getString(R.string.delete_dialog_message))
