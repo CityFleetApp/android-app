@@ -111,10 +111,12 @@ public class JobInfoFragment extends BaseFragment {
             ((BaseActivity) getActivity()).changeFragment(ProfileFragment.getInstanceForFriend(jobOffer.getOwner(), getContext()), true);
         }
     }
+
     @OnClick(R.id.closeBtn)
     void onCloseBtnClicked() {
         ((BaseActivity) getActivity()).goToTop();
     }
+
     private void init() {
         String time = "";
         String date = "";
@@ -130,15 +132,15 @@ public class JobInfoFragment extends BaseFragment {
         timeLbl.setText(time);
         pickupAddressLbl.setText(jobOffer.getPickupAddress());
         dropOffLbl.setText(jobOffer.getDestination());
-        payLbl.setText(getString(R.string.dollar_price, jobOffer.getFare()));
-        tollsLbl.setText(getString(R.string.dollar_price, jobOffer.getTolls()));
+        payLbl.setText(getString(R.string.dollar_price, String.format("%.2f", jobOffer.getFare())));
+        tollsLbl.setText(getString(R.string.dollar_price, String.format("%.2f", jobOffer.getTolls())));
         gratuityLbl.setText(getString(R.string.dollar_price, jobOffer.getGratuity()));
         vehicleTypeLbl.setText(jobOffer.getVehicleType());
         suiteTieLbl.setText(jobOffer.isSuite() ? getString(R.string.yes) : getString(R.string.no));
         authorLbl.setText(jobOffer.getOwnerName());
         companyPersonalLbl.setText(jobOffer.getPersonal());
         jobTypeLbl.setText(jobOffer.getJobType());
-        if(jobOffer.getOwner()== PrefUtil.getId(getContext())){
+        if (jobOffer.getOwner() == PrefUtil.getId(getContext())) {
             requestBtn.setVisibility(View.GONE);
             return;
         }

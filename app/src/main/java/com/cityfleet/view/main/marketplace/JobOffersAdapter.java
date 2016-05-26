@@ -86,7 +86,7 @@ public class JobOffersAdapter extends RecyclerView.Adapter<JobOffersAdapter.View
             Date datetime = intputDateTimeFormatter.parse(jobOffer.getDateTime());
             time = outputTimeFormatter.format(datetime);
             date = outputDateFormatter.format(datetime);
-            timePrice = context.getString(R.string.time_price, time, jobOffer.getFare());
+            timePrice = context.getString(R.string.time_price, time, String.format("%.2f", jobOffer.getFare()));
         } catch (ParseException e) {
             Log.e(JobOffersAdapter.class.getName(), e.getMessage());
         }
