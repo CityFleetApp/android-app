@@ -154,4 +154,5 @@
     <dimen name="chat_image_corner">3dp</dimen>
     <dimen name="bullet_size">7dp</dimen>
     <dimen name="bullet_margin">1dp</dimen>
+    <dimen name="marketplace_big_text_size">13sp</dimen>
 </resources>

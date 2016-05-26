@@ -67,8 +67,10 @@ public class GeneralGoodDetailFragment extends BaseFragment implements ViewPager
         }
         adapter = new RentSaleGalleryPagerAdapter(getContext(), photoList, GeneralGoodDetailFragment.class.getName());
         goodsImagePager.setAdapter(adapter);
-        pageIndicator.setViewPager(goodsImagePager);
-        goodsImagePager.addOnPageChangeListener(this);
+        if (photoList.size() > 1) {
+            pageIndicator.setViewPager(goodsImagePager);
+            goodsImagePager.addOnPageChangeListener(this);
+        }
         goodsPrice.setText(getString(R.string.dollar_price, generalGood.getPrice()));
         goodsTitle.setText(generalGood.getItem());
         typeLbl.setText(generalGood.getCondition());

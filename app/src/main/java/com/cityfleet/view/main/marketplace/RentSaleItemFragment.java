@@ -72,10 +72,12 @@ public class RentSaleItemFragment extends BaseFragment implements ViewPager.OnPa
             photoList.add(new Photo());
             photoList.get(0).setUrl("error");
         }
-        adapter = new RentSaleGalleryPagerAdapter(getContext(), car.getPhotos(), RentSaleItemFragment.class.getName());
+        adapter = new RentSaleGalleryPagerAdapter(getContext(),photoList, RentSaleItemFragment.class.getName());
         carImagePager.setAdapter(adapter);
-        pageIndicator.setViewPager(carImagePager);
-        carImagePager.addOnPageChangeListener(this);
+        if (photoList.size() > 1) {
+            pageIndicator.setViewPager(carImagePager);
+            carImagePager.addOnPageChangeListener(this);
+        }
         carPrice.setText(getString(R.string.dollar_price, car.getPrice()));
         carTitle.setText(car.getYear() + " " + car.getMake() + " " + car.getModel());
         colorLbl.setText(car.getColor());

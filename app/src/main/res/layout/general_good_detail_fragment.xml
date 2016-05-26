@@ -70,6 +70,7 @@
                     android:layout_below="@+id/secondRow"
                     android:drawableLeft="@drawable/cable"
                     android:paddingTop="@dimen/bottom_menu_drawable_padding"
+                    android:textSize="@dimen/marketplace_big_text_size"
                     android:text="Brand New" />
 
                 <View
@@ -77,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@+id/typeLbl"
-                    android:layout_marginTop="@dimen/bottom_menu_drawable_padding"
+                    android:layout_marginTop="@dimen/marketplace_item_padding"
                     android:background="@color/marketplace_divider" />
 
                 <LinearLayout
@@ -91,8 +92,9 @@
                         android:id="@+id/detailsLbl"
                         style="@style/MarketPlaceTextStyle"
                         android:layout_width="wrap_content"
+                        android:textSize="@dimen/marketplace_big_text_size"
                         android:layout_centerVertical="true"
-                        android:layout_marginTop="@dimen/bottom_menu_drawable_padding"
+                        android:layout_marginTop="@dimen/marketplace_item_padding"
                         android:drawableLeft="@drawable/copy"
                         android:text="@string/contact_details" />
 
@@ -101,8 +103,9 @@
                         style="@style/MarketPlaceTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/bottom_menu_drawable_padding"
+                        android:layout_marginTop="@dimen/marketplace_item_padding"
                         android:ellipsize="end"
+                        android:textSize="@dimen/marketplace_big_text_size"
                         android:maxLines="3"
                         android:singleLine="false"
                         android:text="long long long long long long long long long long longlong long long long longlong long long long longlong long long long longlong long long long longlong long long long long long long long long long long long long long long long long long long long long text" />
@@ -112,7 +115,7 @@
                     android:id="@+id/divider2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/bottom_menu_drawable_padding"
+                    android:layout_marginTop="@dimen/marketplace_item_padding"
                     android:background="@color/marketplace_divider" />
 
 
@@ -120,9 +123,10 @@
                     android:id="@+id/authorLbl"
                     style="@style/MarketPlaceTextStyle"
                     android:layout_width="wrap_content"
+                    android:textSize="@dimen/marketplace_big_text_size"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/bottom_menu_drawable_padding"
-                    android:layout_marginTop="@dimen/bottom_menu_drawable_padding"
+                    android:layout_marginTop="@dimen/marketplace_item_padding"
                     android:clickable="true"
                     android:text="jkjkjkjkj" />
             </LinearLayout>
