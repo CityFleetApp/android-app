@@ -120,7 +120,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginTop="@dimen/bottom_menu_drawable_padding"
                         android:drawableLeft="@drawable/copy"
-                        android:text="@string/details" />
+                        android:text="@string/contact_details" />
 
 
                     <TextView

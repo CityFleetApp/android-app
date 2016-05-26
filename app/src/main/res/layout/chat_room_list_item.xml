@@ -9,11 +9,10 @@
     android:paddingRight="@dimen/friend_list_margin_left"
     android:paddingTop="@dimen/friend_list_margin_top">
 
-    <com.cityfleet.util.ChatRoomImageView
+    <com.cityfleet.util.GroupChatImageView
         android:id="@+id/chatImage"
         android:layout_width="@dimen/friends_list_image_height"
-        android:layout_height="@dimen/friends_list_image_height"
-        android:scaleType="centerCrop" />
+        android:layout_height="@dimen/friends_list_image_height" />
 
     <LinearLayout
         android:layout_width="match_parent"

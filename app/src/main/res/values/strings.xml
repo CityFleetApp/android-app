@@ -141,8 +141,8 @@
     <string name="select_seats">Select Seats</string>
     <string name="select_price">Select Price</string>
     <string name="price">Price</string>
-    <string name="descr">Description</string>
-    <string name="provide_description">Provide Description</string>
+    <string name="contact_details">Contact Details</string>
+    <string name="provide_description">Provide Contact Details</string>
     <string name="item">Item</string>
     <string name="enter_item">Enter Item</string>
     <string name="asking_price">Asking Price</string>
