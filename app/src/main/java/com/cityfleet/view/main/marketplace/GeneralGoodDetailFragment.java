@@ -17,6 +17,7 @@ import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
 import com.cityfleet.view.main.profile.ProfileFragment;
 import com.squareup.picasso.Picasso;
+import com.viewpagerindicator.IconPageIndicator;
 
 import org.parceler.Parcels;
 
@@ -29,7 +30,7 @@ import butterknife.OnClick;
 /**
  * Created by vika on 30.03.16.
  */
-public class GeneralGoodDetailFragment extends BaseFragment {
+public class GeneralGoodDetailFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.goodsImagePager)
@@ -46,6 +47,8 @@ public class GeneralGoodDetailFragment extends BaseFragment {
     TextView authorLbl;
     @Bind(R.id.closeBtn)
     ImageButton closeBtn;
+    @Bind(R.id.pageIndicator)
+    IconPageIndicator pageIndicator;
     private GeneralGood generalGood;
     private RentSaleGalleryPagerAdapter adapter;
 
@@ -58,12 +61,14 @@ public class GeneralGoodDetailFragment extends BaseFragment {
         closeBtn.setVisibility(View.VISIBLE);
         generalGood = Parcels.unwrap(getArguments().getParcelable(Constants.GENERAL_GOODS_TAG));
         List<Photo> photoList = generalGood.getPhotos();
-        if(photoList.isEmpty()){
+        if (photoList.isEmpty()) {
             photoList.add(new Photo());
             photoList.get(0).setUrl("error");
         }
         adapter = new RentSaleGalleryPagerAdapter(getContext(), photoList, GeneralGoodDetailFragment.class.getName());
         goodsImagePager.setAdapter(adapter);
+        pageIndicator.setViewPager(goodsImagePager);
+        goodsImagePager.addOnPageChangeListener(this);
         goodsPrice.setText(getString(R.string.dollar_price, generalGood.getPrice()));
         goodsTitle.setText(generalGood.getItem());
         typeLbl.setText(generalGood.getCondition());
@@ -81,14 +86,33 @@ public class GeneralGoodDetailFragment extends BaseFragment {
     void onBackBtnClick() {
         getActivity().onBackPressed();
     }
+
     @OnClick(R.id.closeBtn)
     void onCloseBtnClicked() {
         ((BaseActivity) getActivity()).goToTop();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         Picasso.with(getContext()).cancelTag(GeneralGoodDetailFragment.class.getName());
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        ((RentSaleGalleryPagerAdapter) goodsImagePager.getAdapter()).setCurrentPosition(position);
+        pageIndicator.setCurrentItem(position);
+        pageIndicator.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

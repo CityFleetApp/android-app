@@ -152,5 +152,6 @@
     <dimen name="large_image_notification_size">64dp</dimen>
     <dimen name="icon_height">17dp</dimen>
     <dimen name="chat_image_corner">3dp</dimen>
-    <dimen name="bullet_size">8dp</dimen>
+    <dimen name="bullet_size">7dp</dimen>
+    <dimen name="bullet_margin">1dp</dimen>
 </resources>

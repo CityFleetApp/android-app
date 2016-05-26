@@ -20,7 +20,6 @@ import com.cityfleet.network.NetworkManager;
 import com.cityfleet.util.Constants;
 import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
-import com.cityfleet.view.main.mainmap.MainMapFragment;
 
 import java.util.List;
 
@@ -107,8 +106,7 @@ public class JobOfferCompletedFragment extends BaseFragment {
         @Override
         public void onResponse(Call<Void> call, Response<Void> response) {
             if (response.isSuccessful()) {
-                ((BaseActivity) getActivity()).clearBackstack();
-                ((BaseActivity) getActivity()).changeFragment(new MainMapFragment(), false);
+                ((BaseActivity) getActivity()).goToTop();
             } else {
                 String error = NetworkErrorUtil.gerErrorMessage(response);
                 if (TextUtils.isEmpty(error)) {

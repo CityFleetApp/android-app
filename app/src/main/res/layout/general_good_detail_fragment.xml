@@ -21,6 +21,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/rent_sale_pager_height" />
 
+            <com.viewpagerindicator.IconPageIndicator
+                android:id="@+id/pageIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="18dp" />
+
             <TextView
                 android:id="@+id/goodsTitle"
                 android:layout_width="match_parent"
@@ -99,6 +107,7 @@
                         android:singleLine="false"
                         android:text="long long long long long long long long long long longlong long long long longlong long long long longlong long long long longlong long long long longlong long long long long long long long long long long long long long long long long long long long long text" />
                 </LinearLayout>
+
                 <View
                     android:id="@+id/divider2"
                     android:layout_width="match_parent"
@@ -108,13 +117,13 @@
 
 
                 <TextView
-                    android:clickable="true"
                     android:id="@+id/authorLbl"
                     style="@style/MarketPlaceTextStyle"
-                    android:layout_marginTop="@dimen/bottom_menu_drawable_padding"
-                    android:layout_marginBottom="@dimen/bottom_menu_drawable_padding"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/bottom_menu_drawable_padding"
+                    android:layout_marginTop="@dimen/bottom_menu_drawable_padding"
+                    android:clickable="true"
                     android:text="jkjkjkjkj" />
             </LinearLayout>
         </RelativeLayout>
