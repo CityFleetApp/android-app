@@ -12,23 +12,39 @@ import com.cityfleet.R;
 import com.cityfleet.model.Photo;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.viewpagerindicator.IconPagerAdapter;
 
 import java.util.List;
 
 /**
  * Created by vika on 30.03.16.
  */
-public class RentSaleGalleryPagerAdapter extends PagerAdapter {
+public class RentSaleGalleryPagerAdapter extends PagerAdapter implements IconPagerAdapter {
+    int iconResId = R.drawable.bullet_inactive;
+    int activeIconResId = R.drawable.bullet_active;
     private Context context;
     private LayoutInflater layoutInflater;
     private List<Photo> images;
     private String picassoTag;
+    int currentItem = 0;
 
     public RentSaleGalleryPagerAdapter(Context context, List<Photo> images, String picassoTag) {
         this.images = images;
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.picassoTag = picassoTag;
+    }
+
+    @Override
+    public int getIconResId(int i) {
+        if (i == currentItem)
+            return activeIconResId;
+
+        return iconResId;
+    }
+
+    public void setCurrentPosition(int i) {
+        currentItem = i;
     }
 
     @Override

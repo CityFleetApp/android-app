@@ -34,6 +34,8 @@
     <color name="seekbar_background">#b4b4b4</color>
     <color name="change_password_background">#f0eff5</color>
     <color name="black_transparent">#80000000</color>
+    <color name="bullet_active_color">#80000000</color>
+    <color name="bullet_inactive_color">#40000000</color>
     <color name="legalaid_background">#f3f4f8</color>
     <color name="date_text_color">#747474</color>
     <color name="marketplace_text_color">#828282</color>

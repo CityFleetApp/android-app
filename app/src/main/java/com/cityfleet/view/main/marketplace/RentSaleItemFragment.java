@@ -17,6 +17,7 @@ import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
 import com.cityfleet.view.main.profile.ProfileFragment;
 import com.squareup.picasso.Picasso;
+import com.viewpagerindicator.IconPageIndicator;
 
 import org.parceler.Parcels;
 
@@ -29,7 +30,7 @@ import butterknife.OnClick;
 /**
  * Created by vika on 30.03.16.
  */
-public class RentSaleItemFragment extends BaseFragment {
+public class RentSaleItemFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.carImagePager)
@@ -52,8 +53,11 @@ public class RentSaleItemFragment extends BaseFragment {
     TextView authorLbl;
     @Bind(R.id.closeBtn)
     ImageButton closeBtn;
+    @Bind(R.id.pageIndicator)
+    IconPageIndicator pageIndicator;
     private Car car;
     private RentSaleGalleryPagerAdapter adapter;
+
 
     @Nullable
     @Override
@@ -70,6 +74,8 @@ public class RentSaleItemFragment extends BaseFragment {
         }
         adapter = new RentSaleGalleryPagerAdapter(getContext(), car.getPhotos(), RentSaleItemFragment.class.getName());
         carImagePager.setAdapter(adapter);
+        pageIndicator.setViewPager(carImagePager);
+        carImagePager.addOnPageChangeListener(this);
         carPrice.setText(getString(R.string.dollar_price, car.getPrice()));
         carTitle.setText(car.getYear() + " " + car.getMake() + " " + car.getModel());
         colorLbl.setText(car.getColor());
@@ -100,6 +106,24 @@ public class RentSaleItemFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         Picasso.with(getContext()).cancelTag(RentSaleItemFragment.class.getName());
+        carImagePager.removeOnPageChangeListener(this);
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        ((RentSaleGalleryPagerAdapter) carImagePager.getAdapter()).setCurrentPosition(position);
+        pageIndicator.setCurrentItem(position);
+        pageIndicator.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

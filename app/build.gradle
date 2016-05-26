@@ -79,6 +79,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
     compile 'com.neovisionaries:nv-websocket-client:1.25'
+    compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
 }
 
 
