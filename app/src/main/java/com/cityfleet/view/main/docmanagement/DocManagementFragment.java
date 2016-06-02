@@ -37,6 +37,8 @@ import com.cityfleet.view.BaseFragment;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -55,6 +57,8 @@ public class DocManagementFragment extends BaseFragment implements DocManagement
     private static final int SELECT_FILE = 666;
     private static final int REQUEST_PERMISSION_CAMERA = 1;
     private static final int REQUEST_PERMISSION_GALLERY = 2;
+    protected static final SimpleDateFormat dateFormatToShow = new SimpleDateFormat(Constants.OUTPUT_DATE_FORMAT);
+    protected static final SimpleDateFormat dateFormatOnServer = new SimpleDateFormat(Constants.DOC_MANAGEMENT_DATE_FORMAT);
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.progressBar)
@@ -337,6 +341,13 @@ public class DocManagementFragment extends BaseFragment implements DocManagement
         for (int i = 0; i < documents.size(); i++) {
             int docType = documents.get(i).getDocumentType();
             documentsList[docType - 1] = documents.get(i);
+            if (!TextUtils.isEmpty(documents.get(i).getExpiryDate())) {
+                try {
+                    documents.get(i).setDate(dateFormatOnServer.parse(documents.get(i).getExpiryDate()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         initDocumentsInUi();
     }
@@ -354,7 +365,10 @@ public class DocManagementFragment extends BaseFragment implements DocManagement
                 if (i == Constants.DOCUMENT_PLATE_NUMBER_POSITION) {
                     docFields.get(i).setText(document.getPlateNumber());
                 } else {
-                    docFields.get(i).setText(document.getExpiryDate());
+                    if (document.getDate() != null) {
+                        docFields.get(i).setText(dateFormatToShow.format(document.getDate()));
+                    }
+
                 }
             }
         }
@@ -370,7 +384,13 @@ public class DocManagementFragment extends BaseFragment implements DocManagement
             } else if (document != null && !TextUtils.isEmpty(document.getExpiryDate())) {
                 document.setExpiryDateUpdated(true);
             }
-            document.setExpiryDate(String.format("%02d", monthOfYear + 1) + "/" + String.format("%02d", dayOfMonth) + "/" + year);
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            document.setExpiryDate(dateFormatToShow.format(calendar.getTime()));
+            document.setDate(calendar.getTime());
+            //  document.setExpiryDate(String.format("%02d", monthOfYear + 1) + "/" + String.format("%02d", dayOfMonth) + "/" + year);
             docFields.get(positionToUpdate).setText(document.getExpiryDate());
             positionToUpdate = Constants.DEFAULT_UNSELECTED_POSITION;
         }

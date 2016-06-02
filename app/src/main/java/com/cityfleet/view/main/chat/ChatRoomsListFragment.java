@@ -155,55 +155,57 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
 
     @Subscribe
     public void onEventMainThread(final NewMessageEvent event) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        if(getActivity()!=null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 
-                ChatMessage chatMessage = event.getChatMessage();
-                ChatRoom chatRoomWithNewMessage = null;
-                for (ChatRoom chatRoom : adapter.getChatList()) {
-                    if (chatRoom.getId() == chatMessage.getRoom()) {
-                        chatRoomWithNewMessage = chatRoom;
-                        if (chatMessage.getAuthor() != PrefUtil.getId(getContext())) {
-                            chatRoom.setUnseen(chatRoom.getUnseen() + 1);
+                    ChatMessage chatMessage = event.getChatMessage();
+                    ChatRoom chatRoomWithNewMessage = null;
+                    for (ChatRoom chatRoom : adapter.getChatList()) {
+                        if (chatRoom.getId() == chatMessage.getRoom()) {
+                            chatRoomWithNewMessage = chatRoom;
+                            if (chatMessage.getAuthor() != PrefUtil.getId(getContext())) {
+                                chatRoom.setUnseen(chatRoom.getUnseen() + 1);
+                            }
+                            chatRoom.setLastMessage(chatMessage.getText());
+                            chatRoom.setLastMessageTimestamp(chatMessage.getCreated());
+                            break;
                         }
-                        chatRoom.setLastMessage(chatMessage.getText());
-                        chatRoom.setLastMessageTimestamp(chatMessage.getCreated());
-                        break;
                     }
-                }
 
-                if (chatRoomWithNewMessage != null) {
-                    adapter.getChatList().remove(chatRoomWithNewMessage);
-                    adapter.getChatList().add(0, chatRoomWithNewMessage);
-                } else {
-
-                    boolean containsSearchWords = false;
-                    if (searchField.getText().toString().isEmpty()) {
-                        containsSearchWords = true;
+                    if (chatRoomWithNewMessage != null) {
+                        adapter.getChatList().remove(chatRoomWithNewMessage);
+                        adapter.getChatList().add(0, chatRoomWithNewMessage);
                     } else {
-                        for (ChatFriend chatFriend : chatMessage.getParticipants()) {
-                            if (chatFriend.getId() != PrefUtil.getId(getContext()) && chatFriend.getName().toLowerCase().contains(searchField.getText().toString().toLowerCase())) {
-                                containsSearchWords = true;
-                                break;
+
+                        boolean containsSearchWords = false;
+                        if (searchField.getText().toString().isEmpty()) {
+                            containsSearchWords = true;
+                        } else {
+                            for (ChatFriend chatFriend : chatMessage.getParticipants()) {
+                                if (chatFriend.getId() != PrefUtil.getId(getContext()) && chatFriend.getName().toLowerCase().contains(searchField.getText().toString().toLowerCase())) {
+                                    containsSearchWords = true;
+                                    break;
+                                }
                             }
                         }
-                    }
 
-                    if (containsSearchWords) {
-                        chatRoomWithNewMessage = new ChatRoom();
-                        chatRoomWithNewMessage.setLastMessage(chatMessage.getText());
-                        chatRoomWithNewMessage.setLastMessageTimestamp(chatMessage.getCreated());
-                        chatRoomWithNewMessage.setUnseen(1);
-                        chatRoomWithNewMessage.setId(chatMessage.getRoom());
-                        chatRoomWithNewMessage.setParticipants(chatMessage.getParticipants());
-                        adapter.getChatList().add(0, chatRoomWithNewMessage);
-                        presenter.onNewMessageWithoutChatRoom();
+                        if (containsSearchWords) {
+                            chatRoomWithNewMessage = new ChatRoom();
+                            chatRoomWithNewMessage.setLastMessage(chatMessage.getText());
+                            chatRoomWithNewMessage.setLastMessageTimestamp(chatMessage.getCreated());
+                            chatRoomWithNewMessage.setUnseen(1);
+                            chatRoomWithNewMessage.setId(chatMessage.getRoom());
+                            chatRoomWithNewMessage.setParticipants(chatMessage.getParticipants());
+                            adapter.getChatList().add(0, chatRoomWithNewMessage);
+                            presenter.onNewMessageWithoutChatRoom();
+                        }
                     }
+                    adapter.notifyDataSetChanged();
                 }
-                adapter.notifyDataSetChanged();
-            }
-        });
+            });
+        }
     }
 
     @Subscribe

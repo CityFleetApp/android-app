@@ -3,6 +3,8 @@ package com.cityfleet.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 /**
  * Created by vika on 22.03.16.
  */
@@ -11,6 +13,7 @@ public class Document {
     private String file;
     @SerializedName("expiry_date")
     private String expiryDate;
+    private Date date;
     @SerializedName("plate_number")
     private String plateNumber;
     @SerializedName("document_type")
@@ -73,6 +76,14 @@ public class Document {
 
     public String getPlateNumber() {
         return plateNumber;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public void setPlateNumber(String plateNumber) {

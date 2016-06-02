@@ -8,6 +8,7 @@ import com.cityfleet.network.NetworkErrorUtil;
 import com.cityfleet.network.NetworkManager;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -20,6 +21,7 @@ import retrofit2.Response;
  * Created by vika on 22.03.16.
  */
 public class DocManagementPresenter {
+
     private DocManagementView view;
     private NetworkManager networkManager;
 
@@ -47,8 +49,11 @@ public class DocManagementPresenter {
             if ((needToCreate && !TextUtils.isEmpty(document.getPlateNumber())) || document.isPlateNumberUpdated()) {
                 plateNumberBody = RequestBody.create(MediaType.parse("multipart/form-data"), document.getPlateNumber());
             }
-            if ((needToCreate && !TextUtils.isEmpty(document.getExpiryDate())) || document.isExpiryDateUpdated()) {
-                expiryDateBody = RequestBody.create(MediaType.parse("multipart/form-data"), document.getExpiryDate());
+            if ((needToCreate && document.getDate() != null) || document.isExpiryDateUpdated()) {
+                Date date = document.getDate();
+                if (date != null) {
+                    expiryDateBody = RequestBody.create(MediaType.parse("multipart/form-data"), DocManagementFragment.dateFormatOnServer.format(date));
+                }
             }
             if (needToCreate) {
                 documentTypeBody = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(document.getDocumentType()));
@@ -64,7 +69,6 @@ public class DocManagementPresenter {
             view.onNetworkError();
         }
     }
-
 
 
     public void getAllDocuments() {
