@@ -8,8 +8,12 @@ import android.widget.TextView;
 
 import com.cityfleet.R;
 import com.cityfleet.model.Notification;
+import com.cityfleet.util.Constants;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -19,6 +23,8 @@ import butterknife.ButterKnife;
  * Created by vika on 17.03.16.
  */
 public class NotificationsListAdapter extends RecyclerView.Adapter<NotificationsListAdapter.ViewHolder> {
+    protected static final SimpleDateFormat simpleDateFormatToShow = new SimpleDateFormat(Constants.CHAT_DATETIME_FORMAT);
+    protected static final SimpleDateFormat simpleDateFormatFromServer = new SimpleDateFormat(Constants.DOC_MANAGEMENT_DATE_FORMAT);
     private List<Notification> notifications = new ArrayList<Notification>();
     private OnItemClickListener listener;
 
@@ -60,7 +66,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter<Notifications
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Notification notification = notifications.get(position);
-        holder.date.setText(notification.getCreated());
+        String dateToShow = "";
+        try {
+            Date date = simpleDateFormatFromServer.parse(notification.getCreated());
+            dateToShow = simpleDateFormatToShow.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        holder.date.setText(dateToShow);
         holder.notificationTitle.setText(notification.getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

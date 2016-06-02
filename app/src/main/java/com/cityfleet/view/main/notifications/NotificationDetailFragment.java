@@ -23,6 +23,9 @@ import com.cityfleet.view.main.marketplace.JobInfoFragment;
 
 import org.parceler.Parcels;
 
+import java.text.ParseException;
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -99,7 +102,14 @@ public class NotificationDetailFragment extends BaseFragment {
         title.setText(getString(R.string.tlc_alert));
         notificationTitle.setText(notification.getTitle());
         notificationMessage.setText(notification.getMessage());
-        date.setText(notification.getCreated());
+        String dateToShow = "";
+        try {
+            Date date = NotificationsListAdapter.simpleDateFormatFromServer.parse(notification.getCreated());
+            dateToShow = NotificationsListAdapter.simpleDateFormatToShow.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        date.setText(dateToShow);
         if (notification.getRefType().equals("offer_created")) {
             seeJobBtn.setVisibility(View.VISIBLE);
         }
