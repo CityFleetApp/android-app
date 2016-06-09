@@ -121,9 +121,12 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
     private void initWithEditValues() {
         try {
             Date date = outputFormatter.parse(jobOffer.getDateTime());
-            selectedDateTimeCalendar.setTime(date);
-            dateText.setText(dateFormat.format(date));
-            timeText.setText(formatter.format(date));
+            Calendar calendar = Calendar.getInstance();
+            if (date.after(calendar.getTime())) {
+                selectedDateTimeCalendar.setTime(date);
+                dateText.setText(dateFormat.format(date));
+                timeText.setText(formatter.format(date));
+            }
         } catch (ParseException e) {
             Log.e(JobOfferFragment.class.getName(), e.getMessage());
         }
@@ -154,7 +157,7 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
 
     @OnClick({R.id.postBtn, R.id.updateBtn})
     void onPostBtnClick() {
-        if (TextUtils.isEmpty(titleText.getText()) || dateText.equals(getString(R.string.select_date)) || timeText.equals(getString(R.string.select_time)) ||
+        if (TextUtils.isEmpty(titleText.getText()) || dateText.getText().equals(getString(R.string.select_date)) || timeText.getText().equals(getString(R.string.select_time)) ||
                 TextUtils.isEmpty(pickupText.getText()) || TextUtils.isEmpty(destinationText.getText())
                 || TextUtils.isEmpty(fareEt.getText()) || jobOffer.getJobTypeId() == Constants.DEFAULT_UNSELECTED_POSITION ||
                 jobOffer.getVehicleTypeId() == Constants.DEFAULT_UNSELECTED_POSITION || TextUtils.isEmpty(instructionsET.getText()) || TextUtils.isEmpty(companyPersonalText.getText())) {
