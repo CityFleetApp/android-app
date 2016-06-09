@@ -1,6 +1,7 @@
 package com.cityfleet.view.main.mainmap;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,12 +29,25 @@ public class ReportDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.report_dialog, null);
         ButterKnife.bind(this, v);
+        getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                ((MainMapFragment) getTargetFragment()).onReportDialogClosed();
+            }
+        });
+        getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                ((MainMapFragment) getTargetFragment()).onReportDialogClosed();
+            }
+        });
         return v;
     }
 
     @Override
     public void onDestroyView() {
         ButterKnife.unbind(this);
+        ((MainMapFragment) getTargetFragment()).onReportDialogClosed();
         super.onDestroyView();
     }
 
