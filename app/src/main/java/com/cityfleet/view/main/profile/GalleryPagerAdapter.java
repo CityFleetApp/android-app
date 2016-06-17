@@ -7,7 +7,6 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.cityfleet.R;
@@ -16,6 +15,9 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.List;
+
+import it.sephiroth.android.library.imagezoom.ImageViewTouch;
+import it.sephiroth.android.library.imagezoom.ImageViewTouchBase;
 
 /**
  * Created by vika on 15.03.16.
@@ -45,7 +47,8 @@ public class GalleryPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = layoutInflater.inflate(R.layout.fullscreen_image, container, false);
-        final ImageView imageView = (ImageView) itemView.findViewById(R.id.bigImage);
+        final ImageViewTouch imageView = (ImageViewTouch) itemView.findViewById(R.id.bigImage);
+        imageView.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
         final ProgressBar progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
         Target target = new Target() {
             @Override

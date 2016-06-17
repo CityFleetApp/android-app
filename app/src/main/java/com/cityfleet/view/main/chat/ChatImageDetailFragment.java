@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -20,6 +19,8 @@ import com.squareup.picasso.Target;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import it.sephiroth.android.library.imagezoom.ImageViewTouch;
+import it.sephiroth.android.library.imagezoom.ImageViewTouchBase;
 
 /**
  * Created by vika on 18.05.16.
@@ -28,7 +29,7 @@ public class ChatImageDetailFragment extends BaseFragment {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.image)
-    ImageView image;
+    ImageViewTouch image;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
     private String imageUrl;
@@ -40,12 +41,15 @@ public class ChatImageDetailFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         imageUrl = getArguments().getString(Constants.IMAGE_URL_TAG);
         title.setText(R.string.chatting);
+        image.setDisplayType(ImageViewTouchBase.DisplayType.FIT_TO_SCREEN);
         progressBar.setVisibility(View.VISIBLE);
         Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                progressBar.setVisibility(View.GONE);
-                image.setImageBitmap(bitmap);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                    image.setImageBitmap(bitmap);
+                }
             }
 
             @Override

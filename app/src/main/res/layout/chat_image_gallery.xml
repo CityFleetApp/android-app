@@ -6,12 +6,10 @@
 
     <include layout="@layout/toolbar" />
 
-    <ImageView
+    <it.sephiroth.android.library.imagezoom.ImageViewTouch
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter" />
+        android:layout_height="match_parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
