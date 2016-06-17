@@ -157,20 +157,22 @@ public class JobInfoFragment extends BaseFragment {
 
     @OnClick(R.id.requestBtn)
     void onRequestBtnClick() {
-        if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.COVERED.name()) && jobOffer.isAwarded()) {
-            JobOfferAwardFragment fragment = new JobOfferAwardFragment();
-            Bundle args = new Bundle();
-            args.putInt(Constants.JOB_OFFER_ID_TAG, jobOffer.getId());
-            args.putString(Constants.JOB_OFFER_TITLE_TAG, jobOffer.getTitle());
-            fragment.setArguments(args);
-            ((BaseActivity) getActivity()).changeFragment(fragment, true);
-        } else {
-            NetworkManager networkManager = CityFleetApp.getInstance().getNetworkManager();
-            if (networkManager.isConnectedOrConnecting()) {
-                Call<Void> call = networkManager.getNetworkClient().requestJob(jobOffer.getId());
-                call.enqueue(requestCallback);
+        if (jobOffer != null) {
+            if (jobOffer.getStatus().equalsIgnoreCase(JobOfferStatus.COVERED.name()) && jobOffer.isAwarded()) {
+                JobOfferAwardFragment fragment = new JobOfferAwardFragment();
+                Bundle args = new Bundle();
+                args.putInt(Constants.JOB_OFFER_ID_TAG, jobOffer.getId());
+                args.putString(Constants.JOB_OFFER_TITLE_TAG, jobOffer.getTitle());
+                fragment.setArguments(args);
+                ((BaseActivity) getActivity()).changeFragment(fragment, true);
             } else {
-                Toast.makeText(getActivity(), getString(R.string.networkMesMoInternet), Toast.LENGTH_LONG).show();
+                NetworkManager networkManager = CityFleetApp.getInstance().getNetworkManager();
+                if (networkManager.isConnectedOrConnecting()) {
+                    Call<Void> call = networkManager.getNetworkClient().requestJob(jobOffer.getId());
+                    call.enqueue(requestCallback);
+                } else {
+                    Toast.makeText(getActivity(), getString(R.string.networkMesMoInternet), Toast.LENGTH_LONG).show();
+                }
             }
         }
     }
@@ -191,6 +193,8 @@ public class JobInfoFragment extends BaseFragment {
             if (response.isSuccessful()) {
                 getActivity().onBackPressed();
                 Toast.makeText(getContext(), R.string.job_request_sent, Toast.LENGTH_SHORT).show();
+            } else if (response.code() == Constants.NOT_FOUND) {
+                Toast.makeText(getContext(), R.string.job_offer_canceled, Toast.LENGTH_LONG).show();
             } else {
                 String error = NetworkErrorUtil.gerErrorMessage(response);
                 if (TextUtils.isEmpty(error)) {
@@ -213,6 +217,8 @@ public class JobInfoFragment extends BaseFragment {
             if (response.isSuccessful()) {
                 jobOffer = response.body();
                 init();
+            } else if (response.code() == Constants.NOT_FOUND) {
+                Toast.makeText(getContext(), R.string.job_offer_canceled, Toast.LENGTH_LONG).show();
             } else {
                 String error = NetworkErrorUtil.gerErrorMessage(response);
                 if (TextUtils.isEmpty(error)) {

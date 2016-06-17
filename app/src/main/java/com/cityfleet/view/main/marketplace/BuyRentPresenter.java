@@ -1,5 +1,6 @@
 package com.cityfleet.view.main.marketplace;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.cityfleet.model.Car;
@@ -59,7 +60,9 @@ public class BuyRentPresenter {
 
         @Override
         public void onFailure(Call<PagesResult<Car>> call, Throwable t) {
-            Log.e(BuyRentPresenter.class.getName(), t.getMessage());
+            if(!TextUtils.isEmpty(t.getMessage())) {
+                Log.e(BuyRentPresenter.class.getName(), t.getMessage());
+            }
             view.stopLoading();
             view.onFailure(t.getMessage());
         }

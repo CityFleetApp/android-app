@@ -70,7 +70,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void goToTop() {
-        fragmentManager.popBackStack(fragmentManager.getBackStackEntryAt(0).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if(fragmentManager.getBackStackEntryCount()>0){
+            fragmentManager.popBackStack(fragmentManager.getBackStackEntryAt(0).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        } else{
+            onBackPressed();
+        }
+
     }
 
     public void clearBackstack() {
