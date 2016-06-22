@@ -52,7 +52,6 @@ import retrofit2.Response;
  * Created by vika on 15.04.16.
  */
 public class ChatActivity extends BaseActivity {
-    private static final String SERVER = "ws://104.236.223.160/?token=";
     private WebSocket webSocket;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
@@ -121,7 +120,7 @@ public class ChatActivity extends BaseActivity {
 
     private WebSocket connectToWebSocket() throws IOException, WebSocketException {
         return new WebSocketFactory()
-                .createSocket(SERVER + PrefUtil.getToken(this))
+                .createSocket(getString(R.string.chat_endpoint) + PrefUtil.getToken(this))
                 .addListener(webSocketListener)
                 .addExtension(WebSocketExtension.PERMESSAGE_DEFLATE)
                 .connectAsynchronously();

@@ -11,43 +11,43 @@ import org.parceler.Parcel;
  */
 @Parcel
 public class UserEditInfo {
-    private String bio;
-    private String username;
-    private String phone;
+    String bio;
+    String username;
+    String phone;
     @SerializedName("car_make")
-    private int carMake = Constants.DEFAULT_UNSELECTED_POSITION;
+    int carMake = Constants.DEFAULT_UNSELECTED_POSITION;
     @SerializedName("car_model")
-    private int carModel = Constants.DEFAULT_UNSELECTED_POSITION;
+    int carModel = Constants.DEFAULT_UNSELECTED_POSITION;
     @SerializedName("car_year")
-    private int carYear = Constants.DEFAULT_UNSELECTED_POSITION;
+    int carYear = Constants.DEFAULT_UNSELECTED_POSITION;
     @SerializedName("car_type")
-    private int carType = Constants.DEFAULT_UNSELECTED_POSITION;
+    int carType = Constants.DEFAULT_UNSELECTED_POSITION;
     @SerializedName("car_color")
-    private int carColor = Constants.DEFAULT_UNSELECTED_POSITION;
+    int carColor = Constants.DEFAULT_UNSELECTED_POSITION;
     @SerializedName("car_make_display")
-    private String carMakeDisplay;
+    String carMakeDisplay;
     @SerializedName("car_model_display")
-    private String carModelDisplay;
+    String carModelDisplay;
     @SerializedName("car_color_display")
-    private String carColorDisplay;
+    String carColorDisplay;
     @SerializedName("car_type_display")
-    private String carTypeDisplay;
+    String carTypeDisplay;
     @Expose
-    private boolean isBioChanged = false;
+    boolean isBioChanged = false;
     @Expose
-    private boolean isUsernameChanged = false;
+    boolean isUsernameChanged = false;
     @Expose
-    private boolean isPhoneChanged = false;
+    boolean isPhoneChanged = false;
     @Expose
-    private boolean isCarMakeChanged = false;
+    boolean isCarMakeChanged = false;
     @Expose
-    private boolean isCarModelChanged = false;
+    boolean isCarModelChanged = false;
     @Expose
-    private boolean isCarColorChanged = false;
+    boolean isCarColorChanged = false;
     @Expose
-    private boolean isCarTypeChanged = false;
+    boolean isCarTypeChanged = false;
     @Expose
-    private boolean isCarYearChanged = false;
+    boolean isCarYearChanged = false;
 
 
     public UserEditInfo() {

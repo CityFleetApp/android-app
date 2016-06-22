@@ -33,10 +33,19 @@ android {
         versionName "0.9.9"
     }
     buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    lintOptions {
+        abortOnError false
+        absolutePaths false
+        lintConfig file("lint.xml")
     }
 }
 apt {

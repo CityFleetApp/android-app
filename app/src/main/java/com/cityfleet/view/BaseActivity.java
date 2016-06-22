@@ -26,6 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             finish();
+            return;
         }
     };
 

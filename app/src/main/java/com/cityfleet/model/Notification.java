@@ -9,16 +9,16 @@ import org.parceler.Parcel;
  */
 @Parcel
 public class Notification {
-    private String title;
-    private String type;
-    private String message;
-    private String created;
-    private boolean unseen;
-    private int id;
+    String title;
+    String type;
+    String message;
+    String created;
+    boolean unseen;
+    int id;
     @SerializedName("ref_type")
-    private String refType;
+    String refType;
     @SerializedName("ref_id")
-    private int refId;
+    int refId;
 
     public String getType() {
         return type;

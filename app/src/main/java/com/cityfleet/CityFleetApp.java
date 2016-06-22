@@ -13,22 +13,16 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-public class CityFleetApp extends Application{
-
-    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-    private static final String TWITTER_KEY = "9neWixCKXdBBR3hLYCq8BAxS8";
-    private static final String TWITTER_SECRET = "JLZSfqPXiiNCMOmHzU3eK85DD0VqmoUkmVNNp92LSyx9GPyGRS";
+public class CityFleetApp extends Application {
 
     private NetworkManager networkManager;
     private static CityFleetApp instance;
-//    private RefWatcher refWatcher;
     private boolean isChatFragmentRunning = false;
 
     @Override
     public void onCreate() {
         super.onCreate();
-     //   refWatcher = LeakCanary.install(this);
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(getString(R.string.twitter_key), getString(R.string.twitter_secret));
         Fabric.with(this, new Crashlytics(), new Twitter(authConfig));
         FacebookSdk.sdkInitialize(getApplicationContext());
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
@@ -37,10 +31,6 @@ public class CityFleetApp extends Application{
                 .build());
         instance = this;
     }
-
-//    public RefWatcher getRefWatcher() {
-//        return refWatcher;
-//    }
 
     public NetworkManager getNetworkManager() {
         if (networkManager == null) {

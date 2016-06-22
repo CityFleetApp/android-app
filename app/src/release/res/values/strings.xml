@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="endpoint">https://api.cityfleet.io/api/</string>
+    <string name="chat_endpoint">wss://api.cityfleet.io/?token=</string>
+    <string name="google_api_key">AIzaSyDnkAqdgzCK8PU2NcgfVGAT8ADwWO0mdbI</string>
+    <string name="facebook_app_id">639072919602886</string>
+    <string name="instagram_client_id">14260ce051294b2f86479b00ae97c8fc</string>
+    <string name="instagram_client_secret">875f210ed9ef423ca684e9d818cea6c9</string>
+    <string name="instagram_redirect_url">https://www.cityfleet.io</string>
+    <string name="twitter_key">nODQzVKT3wrFb0CdyvX69WUso</string>
+    <string name="twitter_secret">Ss3lC0yOPeiA3bzEaz8Et0pgKbKLOChYoQgAUEr0Jp9ZFoZ458</string>
+</resources>

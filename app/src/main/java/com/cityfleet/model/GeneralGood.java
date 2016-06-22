@@ -14,18 +14,18 @@ import java.util.List;
  */
 @Parcel
 public class GeneralGood {
-    private int id;
-    private String item;
-    private String condition;
-    private String description;
-    private String price;
-    private int owner;
+    int id;
+    String item;
+    String condition;
+    String description;
+    String price;
+    int owner;
     @SerializedName("owner_name")
-    private String ownerName;
-    private int[] dimensions = new int[2];
-    private List<Photo> photos = new ArrayList<Photo>();
+    String ownerName;
+    int[] dimensions = new int[2];
+    List<Photo> photos = new ArrayList<Photo>();
     @Expose
-    private int conditionId = Constants.DEFAULT_UNSELECTED_POSITION;
+    int conditionId = Constants.DEFAULT_UNSELECTED_POSITION;
 
     public int getId() {
         return id;

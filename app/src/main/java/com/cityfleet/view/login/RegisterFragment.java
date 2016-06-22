@@ -49,7 +49,6 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
     @Bind(R.id.phoneEt)
     EditText phoneEt;
     @NotEmpty
-    @Size(min = Constants.MIN_LENGTH_HACK_LICENSE, max = Constants.MIN_LENGTH_HACK_LICENSE)
     @Bind(R.id.hackLicenseEt)
     EditText hackLicenseEt;
     @Email

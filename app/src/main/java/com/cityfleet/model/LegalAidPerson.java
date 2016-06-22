@@ -9,12 +9,12 @@ import org.parceler.Parcel;
  */
 @Parcel
 public class LegalAidPerson {
-    private String name;
+    String name;
     @SerializedName("years_of_experience")
-    private int yearsOfExperience;
-    private int rating;
-    private String phone;
-    private String address;
+    int yearsOfExperience;
+    int rating;
+    String phone;
+    String address;
 
     public String getName() {
         return name;

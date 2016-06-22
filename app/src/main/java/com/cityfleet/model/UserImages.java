@@ -7,9 +7,9 @@ import org.parceler.Parcel;
  */
 @Parcel
 public class UserImages {
-    private int id;
-    private String file;
-    private String thumbnail;
+    int id;
+    String file;
+    String thumbnail;
 
     public String getFile() {
         return file;

@@ -105,7 +105,6 @@
                     android:id="@+id/hackLicenseEt"
                     style="@style/RegistrationEdittextStyle"
                     android:hint="@string/enter_your_hack_license"
-                    android:inputType="number"
                     android:nextFocusDown="@+id/email"/>
             </LinearLayout>
 

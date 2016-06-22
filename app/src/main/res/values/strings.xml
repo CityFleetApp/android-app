@@ -7,7 +7,6 @@
     <string name="create_an_account">Create an account</string>
     <string name="enter_email">Enter Email</string>
     <string name="enter_password">Enter Password</string>
-    <string name="endpoint">http://104.236.223.160/api/</string>
     <string name="networkMesMoInternet">No internet connection detected!</string>
     <string name="default_error_mes">Something went wrong</string>
     <string name="login_or_create_an_account_and_nenjoy_the_experience">Login or create an Account and\nenjoy the experience</string>
@@ -30,7 +29,6 @@
     <string name="password_validation_mes">Password must be at least 8 characters long and contain at least one number</string>
     <string name="password_match_mes">Passwords don\'t match</string>
     <string name="license_error">Should be at least 6 characters long</string>
-    <string name="google_api_key">AIzaSyD6n3x0DiZuvIh8m5yQJ0NC1tVOrp1KB48</string>
     <string name="report">Report</string>
     <string name="notification">Notification</string>
     <string name="notifications">Notifications</string>
@@ -63,11 +61,7 @@
     <string name="sign_out">Sign out</string>
     <string name="pick_profile_image_title">Choose profile image</string>
     <string name="pick_image_title">Choose image</string>
-    <string name="facebook_app_id">754079204723225</string>
-    <string name="instagram_client_id">dcbc5373293d4c8aa3465ad53ca946bc</string>
-    <string name="instagram_client_secret">714646a846324f258a4e528bb8c1dc0c</string>
     <string name="instagram_url">https://api.instagram.com/oauth/authorize/?</string>
-    <string name="instagram_redirect_url">http://citifleet</string>
     <string name="instagram_url_get_token">https://api.instagram.com/oauth/access_token</string>
     <string name="rating">(%1$d)</string>
     <string name="bio">Bio</string>
