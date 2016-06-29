@@ -76,6 +76,7 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
     private MultipleImagePickerUtil imagePickerUtil;
     private boolean isEditMode = false;
     private GeneralGood generalGood;
+    private boolean isDeleted = false;
 
     @Nullable
     @Override
@@ -136,6 +137,7 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
 
     @OnClick(R.id.deleteBtn)
     void onDeleteBtnClick() {
+        isDeleted = true;
         presenter.deleteGeneralGood(generalGood.getId());
     }
 
@@ -262,6 +264,11 @@ public class GeneralGoodsFragment extends BaseFragment implements PostingGeneral
 
     @Override
     public void onPostCreatesSuccessfully() {
+        if (isDeleted) {
+            Toast.makeText(getActivity(), R.string.post_deleted, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), isEditMode ? R.string.post_updated : R.string.post_created, Toast.LENGTH_SHORT).show();
+        }
         getActivity().onBackPressed();
     }
 

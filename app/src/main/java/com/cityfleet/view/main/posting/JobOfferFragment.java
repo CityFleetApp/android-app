@@ -92,6 +92,7 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
 
     private Calendar selectedDateTimeCalendar = Calendar.getInstance();
     private boolean isEditMode = false;
+    private boolean isDeleted = false;
     private JobOffer jobOffer;
 
     private JobOfferPresenter presenter;
@@ -181,6 +182,7 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
 
     @OnClick(R.id.deleteBtn)
     void onDeleteBtnClick() {
+        isDeleted = true;
         presenter.deleteJobOffer(jobOffer.getId());
     }
 
@@ -376,6 +378,11 @@ public class JobOfferFragment extends BaseFragment implements JobOfferPresenter.
 
     @Override
     public void onPostCreatesSuccessfully() {
+        if (isDeleted) {
+            Toast.makeText(getActivity(), R.string.job_offer_deleted, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), isEditMode ? R.string.job_offer_updated : R.string.job_offer_created, Toast.LENGTH_SHORT).show();
+        }
         getActivity().onBackPressed();
     }
 

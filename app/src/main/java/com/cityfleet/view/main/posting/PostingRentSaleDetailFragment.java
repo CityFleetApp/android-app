@@ -89,7 +89,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
     private CarPostingType postingType;
     private Car car;
     private boolean isEditMode = false;
-
+    private boolean isDeleted = false;
     private PostingRentSaleDetailPresenter presenter;
     private List<CarOption> makeList;
     private List<CarOption> modelList;
@@ -153,6 +153,7 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
 
     @OnClick(R.id.deleteBtn)
     void onDeleteBtnClick() {
+        isDeleted = true;
         presenter.deletePost(postingType, car.getId());
     }
 
@@ -426,6 +427,11 @@ public class PostingRentSaleDetailFragment extends BaseFragment implements Posti
 
     @Override
     public void onPostCreatesSuccessfully() {
+        if (isDeleted) {
+            Toast.makeText(getActivity(), R.string.post_deleted, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), isEditMode ? R.string.post_updated : R.string.post_created, Toast.LENGTH_SHORT).show();
+        }
         getActivity().onBackPressed();
     }
 
