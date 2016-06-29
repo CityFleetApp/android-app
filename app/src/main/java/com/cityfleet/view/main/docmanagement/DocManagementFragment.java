@@ -40,6 +40,7 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -135,8 +136,12 @@ public class DocManagementFragment extends BaseFragment implements DocManagement
         positionToUpdate = getClickedExpDatePosition(view);
         Calendar dateAndTime = Calendar.getInstance();
         dateAndTime.add(Calendar.DAY_OF_YEAR, 1);
+        long minTime = dateAndTime.getTime().getTime();
+        if (documentsList[positionToUpdate] !=null && documentsList[positionToUpdate].getDate() != null) {
+            dateAndTime.setTime(documentsList[positionToUpdate].getDate());
+        }
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, dateAndTime.get(Calendar.YEAR), dateAndTime.get(Calendar.MONTH), dateAndTime.get(Calendar.DAY_OF_MONTH));
-        dialog.getDatePicker().setMinDate(dateAndTime.getTime().getTime());
+        dialog.getDatePicker().setMinDate(minTime);
         dialog.show();
     }
 
@@ -145,6 +150,14 @@ public class DocManagementFragment extends BaseFragment implements DocManagement
         int clickedPosition = getClickedSaveBtnPosition(view);
         Document document = documentsList[clickedPosition];
         if (document != null && !TextUtils.isEmpty(document.getFile()) && (!TextUtils.isEmpty(document.getExpiryDate()) || !TextUtils.isEmpty(document.getPlateNumber()))) {
+            if (!TextUtils.isEmpty(document.getExpiryDate())) {
+                Calendar dateAndTime = Calendar.getInstance();
+                Date selected = document.getDate();
+                if(selected.before(dateAndTime.getTime())){
+                    Toast.makeText(getActivity(), R.string.ext_date_not_valid, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
             document.setDocumentType(clickedPosition + 1);
             presenter.createOrUpdateDocument(document);
         } else if (document == null) {

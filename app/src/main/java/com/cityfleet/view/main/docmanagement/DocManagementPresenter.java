@@ -34,7 +34,7 @@ public class DocManagementPresenter {
         if (networkManager.isConnectedOrConnecting()) {
             boolean needToCreate = true;
             RequestBody fileBody = null, expiryDateBody = null, plateNumberBody = null, documentTypeBody = null;
-            if (document.getId() == 0 && !document.isExpiryDateUpdated() && !document.isImageUpdated() && !document.isPlateNumberUpdated()) {
+            if (document.getId() == 0 || !document.isExpiryDateUpdated() && !document.isImageUpdated() && !document.isPlateNumberUpdated()) {
                 needToCreate = true;
             } else if (document.getId() != 0 && !document.isExpiryDateUpdated() && !document.isImageUpdated() && !document.isPlateNumberUpdated()) {
                 return;

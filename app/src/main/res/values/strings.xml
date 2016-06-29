@@ -173,6 +173,7 @@
     <string name="select_image_empty">Please select image</string>
     <string name="plate_number_empty">Please enter Plate Number</string>
     <string name="ext_date_empty">Please enter expiration date</string>
+    <string name="ext_date_not_valid">Please enter valid expiration date</string>
     <string name="enter_all_fields">Please enter all fields</string>
     <string name="details">Details</string>
     <string name="drop_off_address">Drop Off Address</string>
