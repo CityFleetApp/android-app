@@ -33,31 +33,31 @@
                 android:src="@drawable/arrow_right_red" />
         </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@color/lineColor" />
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/divider"-->
+            <!--android:background="@color/lineColor" />-->
 
-        <RelativeLayout
-            android:id="@+id/jobsOfferBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true">
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/jobsOfferBtn"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:clickable="true">-->
 
-            <TextView
-                style="@style/DashBtnStyle"
-                android:drawableLeft="@drawable/buss_selected"
-                android:text="@string/job_offers"
-                android:textAllCaps="false" />
+            <!--<TextView-->
+                <!--style="@style/DashBtnStyle"-->
+                <!--android:drawableLeft="@drawable/buss_selected"-->
+                <!--android:text="@string/job_offers"-->
+                <!--android:textAllCaps="false" />-->
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingRight="@dimen/add_friends_padding_left"
-                android:src="@drawable/arrow_right_red" />
-        </RelativeLayout>
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:paddingRight="@dimen/add_friends_padding_left"-->
+                <!--android:src="@drawable/arrow_right_red" />-->
+        <!--</RelativeLayout>-->
 
         <View
             android:layout_width="match_parent"

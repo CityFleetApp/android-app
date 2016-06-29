@@ -47,11 +47,11 @@ public class PostingFragment extends BaseFragment {
     void onVehiclesBtnClick() {
         ((BaseActivity) getActivity()).changeFragment(new PostintRentSaleFragment(), true);
     }
-
-    @OnClick(R.id.jobsOfferBtn)
-    void onJobOffersBtnClick() {
-        ((BaseActivity) getActivity()).changeFragment(new JobOfferFragment(), true);
-    }
+//
+//    @OnClick(R.id.jobsOfferBtn)
+//    void onJobOffersBtnClick() {
+//        ((BaseActivity) getActivity()).changeFragment(new JobOfferFragment(), true);
+//    }
 
     @OnClick(R.id.generalGoodsBtn)
     void onGeneralGoodsBtnClick() {

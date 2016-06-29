@@ -21,122 +21,134 @@
             android:id="@+id/logo"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_above="@+id/carsForRentBtn"
+            android:layout_above="@+id/btnLayout"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:src="@drawable/logo" />
 
-        <RelativeLayout
-            android:id="@+id/carsForRentBtn"
-            style="@style/MarketplacaBtnLayoutStyle"
-            android:layout_above="@+id/generalGoodsForSaleBtn"
-            android:layout_marginBottom="@dimen/marketplace_btn_margin_side"
-            android:background="@drawable/red_btn_selector">
-
-            <ImageView
-                android:id="@+id/car"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@drawable/car_big" />
-
-            <TextView
-                android:id="@+id/carTitle"
-                style="@style/MarketplaceTextStyle"
-                android:layout_toLeftOf="@+id/carsBack"
-                android:layout_toRightOf="@+id/car"
-                android:text="@string/cars_for_rent_sale" />
-
-            <ImageView
-                android:id="@+id/carsBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:padding="@dimen/toolbar_back_padding"
-                android:src="@drawable/arrow_right" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/generalGoodsForSaleBtn"
-            style="@style/MarketplacaBtnLayoutStyle"
-            android:layout_above="@+id/jobsOfferBtn"
-            android:layout_marginBottom="@dimen/marketplace_btn_margin_side"
-            android:background="@drawable/green_btn_background">
-
-            <ImageView
-                android:id="@+id/carInvisible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@drawable/car_big"
-                android:visibility="invisible" />
-
-            <ImageView
-                android:id="@+id/settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/carInvisible"
-                android:layout_alignRight="@+id/carInvisible"
-                android:layout_centerVertical="true"
-                android:src="@drawable/wheel" />
-
-            <TextView
-                android:id="@+id/settingsTitle"
-                style="@style/MarketplaceTextStyle"
-                android:layout_toLeftOf="@+id/settingsBack"
-                android:layout_toRightOf="@+id/settings"
-                android:text="@string/general_goods_for_sale" />
-
-            <ImageView
-                android:id="@+id/settingsBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:padding="@dimen/toolbar_back_padding"
-                android:src="@drawable/arrow_right" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/jobsOfferBtn"
-            style="@style/MarketplacaBtnLayoutStyle"
+        <LinearLayout
+            android:id="@+id/btnLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
             android:layout_marginBottom="@dimen/marketplace_margin_bottom"
-            android:background="@drawable/orange_btn_background">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/carInvisible2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@drawable/car_big"
-                android:visibility="invisible" />
+            <RelativeLayout
+                android:id="@+id/carsForRentBtn"
+                style="@style/MarketplacaBtnLayoutStyle"
+                android:layout_above="@+id/generalGoodsForSaleBtn"
+                android:layout_marginBottom="@dimen/marketplace_btn_margin_side"
+                android:background="@drawable/red_btn_selector">
 
-            <ImageView
-                android:id="@+id/jobs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/carInvisible2"
-                android:layout_alignRight="@+id/carInvisible2"
-                android:layout_centerVertical="true"
-                android:src="@drawable/user_big" />
+                <ImageView
+                    android:id="@+id/car"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/car_big" />
 
-            <TextView
-                android:id="@+id/jobsTitle"
-                style="@style/MarketplaceTextStyle"
-                android:layout_toLeftOf="@+id/jobsBack"
-                android:layout_toRightOf="@+id/jobs"
-                android:text="@string/job_offers" />
+                <TextView
+                    android:id="@+id/carTitle"
+                    style="@style/MarketplaceTextStyle"
+                    android:layout_toLeftOf="@+id/carsBack"
+                    android:layout_toRightOf="@+id/car"
+                    android:text="@string/cars_for_rent_sale" />
 
-            <ImageView
-                android:id="@+id/jobsBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:padding="@dimen/toolbar_back_padding"
-                android:src="@drawable/arrow_right" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/carsBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/toolbar_back_padding"
+                    android:src="@drawable/arrow_right" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/generalGoodsForSaleBtn"
+                style="@style/MarketplacaBtnLayoutStyle"
+                android:layout_above="@+id/jobsOfferBtn"
+                android:layout_marginBottom="@dimen/marketplace_btn_margin_side"
+                android:background="@drawable/green_btn_selector">
+
+                <ImageView
+                    android:id="@+id/carInvisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/car_big"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/carInvisible"
+                    android:layout_alignRight="@+id/carInvisible"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/wheel" />
+
+                <TextView
+                    android:id="@+id/settingsTitle"
+                    style="@style/MarketplaceTextStyle"
+                    android:layout_toLeftOf="@+id/settingsBack"
+                    android:layout_toRightOf="@+id/settings"
+                    android:text="@string/general_goods_for_sale" />
+
+                <ImageView
+                    android:id="@+id/settingsBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/toolbar_back_padding"
+                    android:src="@drawable/arrow_right" />
+            </RelativeLayout>
+
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/jobsOfferBtn"-->
+                <!--style="@style/MarketplacaBtnLayoutStyle"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_marginBottom="@dimen/marketplace_margin_bottom"-->
+                <!--android:background="@drawable/orange_btn_background"-->
+                <!--android:visibility="invisible">-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/carInvisible2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:src="@drawable/car_big"-->
+                    <!--android:visibility="invisible" />-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/jobs"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignLeft="@+id/carInvisible2"-->
+                    <!--android:layout_alignRight="@+id/carInvisible2"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:src="@drawable/user_big" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/jobsTitle"-->
+                    <!--style="@style/MarketplaceTextStyle"-->
+                    <!--android:layout_toLeftOf="@+id/jobsBack"-->
+                    <!--android:layout_toRightOf="@+id/jobs"-->
+                    <!--android:text="@string/job_offers" />-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/jobsBack"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:padding="@dimen/toolbar_back_padding"-->
+                    <!--android:src="@drawable/arrow_right" />-->
+            <!--</RelativeLayout>-->
+        </LinearLayout>
+
     </RelativeLayout>
 </LinearLayout>

@@ -105,7 +105,7 @@
             android:id="@+id/notificationBtn"
             style="@style/BottomPanelButton"
             android:drawableTop="@drawable/notification_selector"
-            android:text="@string/notification" />
+            android:text="@string/notifications" />
 
         <TextView
             android:id="@+id/reportBtn"

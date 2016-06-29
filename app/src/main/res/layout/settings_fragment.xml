@@ -172,7 +172,7 @@
                 <TextView
                     style="@style/DashBtnStyle"
                     android:drawableLeft="@drawable/bell"
-                    android:text="@string/notification"
+                    android:text="@string/notification_settings"
                     android:textAllCaps="false" />
 
                 <android.support.v7.widget.SwitchCompat

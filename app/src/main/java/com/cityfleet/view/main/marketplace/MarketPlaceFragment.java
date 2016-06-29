@@ -52,10 +52,10 @@ public class MarketPlaceFragment extends BaseFragment {
         ((BaseActivity) getActivity()).changeFragment(new GeneralGoodsFragment(), true);
     }
 
-    @OnClick(R.id.jobsOfferBtn)
-    void jobsOfferBtnClick() {
-        ((BaseActivity) getActivity()).changeFragment(new JobOffersFragment(), true);
-    }
+//    @OnClick(R.id.jobsOfferBtn)
+//    void jobsOfferBtnClick() {
+//        ((BaseActivity) getActivity()).changeFragment(new JobOffersFragment(), true);
+//    }
 
     @Override
     public void onDestroy() {
