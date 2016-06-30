@@ -127,7 +127,7 @@ public class ChatDetailFragment extends BaseFragment implements ImagePickerUtil.
     }
 
     @Subscribe
-    void onEventMainThread(OpenChatImageEvent event) {
+    public void onEventMainThread(OpenChatImageEvent event) {
         ((ChatActivity) getActivity()).changeFragment(ChatImageDetailFragment.getInstance(event.getImageUrl()), true);
     }
 
