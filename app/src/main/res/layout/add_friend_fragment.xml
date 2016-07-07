@@ -96,28 +96,28 @@
                         android:src="@drawable/add" />
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/instagramBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/divider"
-                    android:background="@drawable/add_friends_button_selector"
-                    android:clickable="true">
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/instagramBtn"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="@dimen/divider"-->
+                    <!--android:background="@drawable/add_friends_button_selector"-->
+                    <!--android:clickable="true">-->
 
-                    <TextView
-                        style="@style/AddFriendsBtnStyle"
-                        android:drawableLeft="@drawable/instagramm"
-                        android:text="@string/instagram_friends"
-                        android:textColor="@color/green_color" />
+                    <!--<TextView-->
+                        <!--style="@style/AddFriendsBtnStyle"-->
+                        <!--android:drawableLeft="@drawable/instagramm"-->
+                        <!--android:text="@string/instagram_friends"-->
+                        <!--android:textColor="@color/green_color" />-->
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:paddingRight="@dimen/add_friends_padding_left"
-                        android:src="@drawable/add" />
-                </RelativeLayout>
+                    <!--<ImageView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:paddingRight="@dimen/add_friends_padding_left"-->
+                        <!--android:src="@drawable/add" />-->
+                <!--</RelativeLayout>-->
 
                 <RelativeLayout
                     android:id="@+id/twitterBtn"
