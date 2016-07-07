@@ -5,10 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.Size;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,6 +26,8 @@ import com.cityfleet.util.CommonUtils;
 import com.cityfleet.util.Constants;
 import com.cityfleet.util.GcmRegistrationTypes;
 import com.cityfleet.util.PrefUtil;
+import com.cityfleet.view.BaseActivity;
+import com.cityfleet.view.main.WebFragment;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
@@ -69,6 +76,8 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
     ProgressBar progressBar;
     @BindString(R.string.default_error_mes)
     String defaultErrorMes;
+    @Bind(R.id.tosAndPrivacyChb)
+    CheckBox tosAndPrivacyChb;
 
     @Nullable
     @Override
@@ -79,6 +88,30 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
         presenter = new RegistrationPresenter(CityFleetApp.getInstance().getNetworkManager(), this);
         validator = new Validator(this);
         validator.setValidationListener(this);
+        SpannableString checkboxText = new SpannableString(getString(R.string.signup_checkbox));
+        ClickableSpan span1 = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                ((BaseActivity) getActivity()).changeFragment(WebFragment.getInstance(getString(R.string.privacy_policy), getString(R.string.endpoint) + Constants.PRIVACY_POLICY_PATH), true);
+            }
+        };
+
+        ClickableSpan span2 = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                ((BaseActivity) getActivity()).changeFragment(WebFragment.getInstance(getString(R.string.tos), getString(R.string.endpoint) + Constants.TOS_PATH), true);
+            }
+        };
+        int privacyStart = checkboxText.toString().indexOf(getString(R.string.privacy_policy));
+        int privacyEnd = privacyStart + getString(R.string.privacy_policy).length();
+        int termsStart = checkboxText.toString().indexOf(getString(R.string.tos));
+        int termsEnd = termsStart + getString(R.string.tos).length();
+        checkboxText.setSpan(span1, privacyStart, privacyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        checkboxText.setSpan(span2, termsStart, termsEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        tosAndPrivacyChb.setText(checkboxText);
+        tosAndPrivacyChb.setMovementMethod(LinkMovementMethod.getInstance());
+
         return view;
     }
 
@@ -100,8 +133,12 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
 
     @Override
     public void onValidationSucceeded() {
-        presenter.signup(fullNameEt.getText().toString(), usernameEt.getText().toString(), phoneEt.getText().toString(), hackLicenseEt.getText().toString(),
-                emailEt.getText().toString(), passwordEt.getText().toString(), confirmPasswordEt.getText().toString());
+        if (!tosAndPrivacyChb.isChecked()) {
+            Toast.makeText(getContext(), R.string.registration_chb_message, Toast.LENGTH_SHORT).show();
+        } else {
+            presenter.signup(fullNameEt.getText().toString(), usernameEt.getText().toString(), phoneEt.getText().toString(), hackLicenseEt.getText().toString(),
+                    emailEt.getText().toString(), passwordEt.getText().toString(), confirmPasswordEt.getText().toString());
+        }
     }
 
     @Override
@@ -111,7 +148,7 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
 
 
     @Override
-    public void onSignUpSuccess(String token,int id) {
+    public void onSignUpSuccess(String token, int id) {
         PrefUtil.setToken(getContext(), token);
         PrefUtil.setId(getContext(), id);
         Intent intent = new Intent(getActivity(), RegistrationIntentService.class);

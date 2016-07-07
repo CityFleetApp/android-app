@@ -79,6 +79,8 @@
     <string name="status_visible_invisible">Status Visible/Invisible</string>
     <string name="chat_privacy">Chat Privacy</string>
     <string name="help_faq">Help/FAQ</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="tos">Terms and Conditions</string>
     <string name="token_header">"Token "</string>
     <string name="current_password">Current Password</string>
     <string name="current_password_hint">Enter your current password</string>
@@ -275,6 +277,8 @@
     <string name="post_created">Post was created successfully</string>
     <string name="post_updated">Post was updated successfully</string>
     <string name="post_deleted">Post was deleted successfully</string>
+    <string name="signup_checkbox">I agree to Privacy Policy and Terms and Conditions</string>
+    <string name="registration_chb_message">Please indicate that you have read and agree to Privacy Policy and Terms and Conditions</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

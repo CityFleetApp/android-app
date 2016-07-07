@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cityfleet.R;
-import com.cityfleet.util.Constants;
 import com.cityfleet.view.BaseFragment;
 
 import butterknife.Bind;
@@ -22,26 +21,41 @@ import butterknife.OnClick;
 /**
  * Created by vika on 18.03.16.
  */
-public class HelpFragment extends BaseFragment {
+public class WebFragment extends BaseFragment {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.webView)
     WebView webView;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
+    private String path;
+    private String toolbarTitle;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.help_fragment, container, false);
         ButterKnife.bind(this, view);
-        title.setText(R.string.help_faq);
+        Bundle args = getArguments();
+
+        path = args.getString("path");
+        toolbarTitle = args.getString("title");
+
+        title.setText(toolbarTitle);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new FrameWebViewClient());
-        webView.loadUrl(getResources().getString(R.string.endpoint) + Constants.HELP_URL_PATH);
+        webView.loadUrl(path);
         return view;
     }
 
+    public static WebFragment getInstance(String title, String path){
+        WebFragment webFragment = new WebFragment();
+        Bundle args = new Bundle();
+        args.putString("title",title);
+        args.putString("path", path);
+        webFragment.setArguments(args);
+        return webFragment;
+    }
     @OnClick(R.id.backBtn)
     void onBackBtnClick() {
         getActivity().onBackPressed();

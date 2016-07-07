@@ -30,6 +30,8 @@ public class Constants {
     public static final float DISABLED_LAYOUT_ALPHA = 0.5f;
     public static final float ENABLED_LAYOUT_ALPHA = 1f;
     public static final String HELP_URL_PATH = "help/";
+    public static final String PRIVACY_POLICY_PATH = "policy/";
+    public static final String TOS_PATH = "terms/";
     public static final int DOCUMENTS_TYPES_COUNT = 8;
     public static final int DOCUMENT_PLATE_NUMBER_POSITION = 6;
     public static final String POSTING_TYPE_TAG = "posting_type";

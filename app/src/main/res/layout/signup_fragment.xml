@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,20 +27,20 @@
                 <TextView
                     style="@style/RegistrationEdittextLabelStyle"
                     android:drawableLeft="@drawable/user"
-                    android:text="@string/full_name"/>
+                    android:text="@string/full_name" />
 
                 <EditText
                     android:id="@+id/fullNameEt"
                     style="@style/RegistrationEdittextStyle"
                     android:hint="@string/enter_your_full_name"
                     android:inputType="text"
-                    android:nextFocusDown="@+id/usernameEt"/>
+                    android:nextFocusDown="@+id/usernameEt" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/lineColor"/>
+                android:background="@color/lineColor" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,20 +51,20 @@
                 <TextView
                     style="@style/RegistrationEdittextLabelStyle"
                     android:drawableLeft="@drawable/user"
-                    android:text="@string/username"/>
+                    android:text="@string/username" />
 
                 <EditText
                     android:id="@+id/usernameEt"
                     style="@style/RegistrationEdittextStyle"
                     android:hint="@string/enter_your_username"
                     android:inputType="text"
-                    android:nextFocusDown="@+id/phoneEt"/>
+                    android:nextFocusDown="@+id/phoneEt" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/lineColor"/>
+                android:background="@color/lineColor" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,20 +75,20 @@
                 <TextView
                     style="@style/RegistrationEdittextLabelStyle"
                     android:drawableLeft="@drawable/call"
-                    android:text="Phone"/>
+                    android:text="Phone" />
 
                 <EditText
                     android:id="@+id/phoneEt"
                     style="@style/RegistrationEdittextStyle"
                     android:hint="@string/enter_your_phone"
                     android:inputType="number"
-                    android:nextFocusDown="@+id/hackLicenseEt"/>
+                    android:nextFocusDown="@+id/hackLicenseEt" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/lineColor"/>
+                android:background="@color/lineColor" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,19 +99,19 @@
                 <TextView
                     style="@style/RegistrationEdittextLabelStyle"
                     android:drawableLeft="@drawable/sertificate"
-                    android:text="@string/hack_license"/>
+                    android:text="@string/hack_license" />
 
                 <EditText
                     android:id="@+id/hackLicenseEt"
                     style="@style/RegistrationEdittextStyle"
                     android:hint="@string/enter_your_hack_license"
-                    android:nextFocusDown="@+id/email"/>
+                    android:nextFocusDown="@+id/email" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/lineColor"/>
+                android:background="@color/lineColor" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -122,20 +122,20 @@
                 <TextView
                     style="@style/RegistrationEdittextLabelStyle"
                     android:drawableLeft="@drawable/envelope"
-                    android:text="@string/email"/>
+                    android:text="@string/email" />
 
                 <EditText
                     android:id="@+id/emailEt"
                     style="@style/RegistrationEdittextStyle"
                     android:hint="@string/enter_your_email"
                     android:inputType="textEmailAddress"
-                    android:nextFocusDown="@+id/password"/>
+                    android:nextFocusDown="@+id/password" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/lineColor"/>
+                android:background="@color/lineColor" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -146,20 +146,20 @@
                 <TextView
                     style="@style/RegistrationEdittextLabelStyle"
                     android:drawableLeft="@drawable/lock"
-                    android:text="@string/password"/>
+                    android:text="@string/password" />
 
                 <EditText
                     android:id="@+id/passwordEt"
                     style="@style/RegistrationEdittextStyle"
                     android:hint="@string/enter_your_password"
                     android:inputType="textPassword"
-                    android:nextFocusDown="@+id/confirmPasswordEt"/>
+                    android:nextFocusDown="@+id/confirmPasswordEt" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/lineColor"/>
+                android:background="@color/lineColor" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -170,20 +170,36 @@
                 <TextView
                     style="@style/RegistrationEdittextLabelStyle"
                     android:drawableLeft="@drawable/lock"
-                    android:text="@string/confirm_password"/>
+                    android:text="@string/confirm_password" />
 
                 <EditText
                     android:id="@+id/confirmPasswordEt"
                     style="@style/RegistrationEdittextStyle"
                     android:hint="@string/enter_your_confirm_password"
                     android:inputType="textPassword"
-                    android:nextFocusDown="@+id/signupBtn"/>
+                    android:nextFocusDown="@+id/signupBtn" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/lineColor"/>
+                android:background="@color/lineColor" />
+
+            <CheckBox
+                android:id="@+id/tosAndPrivacyChb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/reg_edittext_padding"
+                android:checked="false"
+                android:text="@string/signup_checkbox"
+                android:textColor="@color/checkbox_text_selector"
+                android:textSize="@dimen/reg_edittext_lbl_textsize" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
 
             <Button
                 android:id="@+id/signupBtn"
@@ -198,14 +214,15 @@
                 android:text="@string/sign_up"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size"/>
+                android:textSize="@dimen/text_size" />
 
         </LinearLayout>
     </ScrollView>
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </RelativeLayout>
