@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cityfleet.R;
@@ -30,7 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -122,7 +120,6 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         for (int i = 0; i > targetList.size(); i++) {
             Picasso.with(context).cancelRequest(targetList.get(i));
         }
-        Log.d("TAG", "recycled view for position: "+ holder.getAdapterPosition());
     }
 
     @Override
@@ -132,7 +129,9 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         List<String> images = new ArrayList<String>();
         for (ChatFriend chatFriend : chatRoom.getParticipants()) {
             if (chatFriend.getId() != PrefUtil.getId(holder.itemView.getContext())) {
-                chatName.append(chatFriend.getName()).append(", ");
+                if (!TextUtils.isEmpty(chatFriend.getName())) {
+                    chatName.append(chatFriend.getName()).append(", ");
+                }
                 String photo = chatFriend.getPhoto();
                 images.add(photo);
             }
@@ -156,9 +155,12 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         for (int i = targetList.size(); i > images.size(); i--) {
             Picasso.with(context).cancelRequest(targetList.get(i - 1));
         }
-
-        String chatNameString = chatName.substring(0, chatName.lastIndexOf(","));
-        holder.chatName.setText(chatNameString);
+        if (!TextUtils.isEmpty(chatName)) {
+            String chatNameString = chatName.substring(0, chatName.lastIndexOf(","));
+            holder.chatName.setText(chatNameString);
+        } else {
+            holder.chatName.setText("");
+        }
         if (!TextUtils.isEmpty(chatRoom.getLastMessageTimestamp())) {
             if (!TextUtils.isEmpty(chatRoom.getLastMessage())) {
                 holder.chatResentMessage.setText(chatRoom.getLastMessage());
