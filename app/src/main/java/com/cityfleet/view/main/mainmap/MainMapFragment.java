@@ -62,6 +62,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -118,7 +119,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     private List<Marker> nearbyFriendsMarkerList = new ArrayList<Marker>();
     private boolean needToAnimateZoomToLocation = true;
     private Marker selectedFriendMarker = null;
-
+    private boolean isCameraChangedDueToLocation = true;
 
     @Nullable
     @Override
@@ -212,8 +213,8 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         // Convert radius from meters to degrees
         double radiusInDegrees = Constants.RANDOM_RADIUS_FOR_MARKER / Constants.METERS_IN_DEGREE;
         double u = random.nextDouble();
-        Log.d("TAG", random.nextFloat()+" -  float");
-        Log.d("TAG", random.nextDouble()+" - double");
+        Log.d("TAG", random.nextFloat() + " -  float");
+        Log.d("TAG", random.nextDouble() + " - double");
         double v = random.nextDouble();
         double w = radiusInDegrees * Math.sqrt(u);
         double t = 2 * Math.PI * v;
@@ -380,6 +381,7 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
         map.setOnMarkerClickListener(markerClickListener);
         map.setOnMapClickListener(mapClickListener);
         map.setOnMapLongClickListener(mapLongClickListener);
+        map.setOnCameraChangeListener(mapCameraChangeListener);
     }
 
     public static int getPixelsFromDp(Context context, float dp) {
@@ -459,6 +461,8 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
 
     @OnClick(R.id.gpsBtn)
     void onGpsBtnClick() {
+        needToAnimateZoomToLocation = true;
+        isCameraChangedDueToLocation = true;
         if (currentLocation != null) {
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), Constants.ZOOM_LEVEL));
         }
@@ -528,8 +532,8 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
     public void onLocationChanged(Location location) {
         currentLocation = location;
         if (needToAnimateZoomToLocation) {
+            isCameraChangedDueToLocation = true;
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), Constants.ZOOM_LEVEL));
-            needToAnimateZoomToLocation = false;
         }
         presenter.loadReportsNearby(currentLocation.getLatitude(), currentLocation.getLongitude());
         presenter.loadFriendsNearby(currentLocation.getLatitude(), currentLocation.getLongitude());
@@ -803,7 +807,19 @@ public class MainMapFragment extends BaseFragment implements OnMapReadyCallback,
                 selectedForReportPosition.setLongitude(latLng.longitude);
                 showReportDialog();
             } else {
-                  Toast.makeText(getContext(), R.string.report_radius ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.report_radius, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+    private GoogleMap.OnCameraChangeListener mapCameraChangeListener = new GoogleMap.OnCameraChangeListener() {
+        @Override
+        public void onCameraChange(CameraPosition cameraPosition) {
+            if (isCameraChangedDueToLocation) {
+                isCameraChangedDueToLocation = false;
+                needToAnimateZoomToLocation = true;
+            } else {
+                needToAnimateZoomToLocation = false;
+                isCameraChangedDueToLocation = false;
             }
         }
     };
