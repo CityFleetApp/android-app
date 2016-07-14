@@ -25,7 +25,7 @@ import com.cityfleet.util.Constants;
 import com.cityfleet.util.PermissionUtil;
 import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
-import com.cityfleet.view.main.HelpFragment;
+import com.cityfleet.view.main.WebFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -119,7 +119,7 @@ public class SettingsFragment extends BaseFragment implements SettingsPresenter.
 
     @OnClick(R.id.profileBtn)
     void onProfileBtnClick() {
-        ((BaseActivity)getActivity()).changeFragment(new EditUserProfileFragment(), true);
+        ((BaseActivity) getActivity()).changeFragment(new EditUserProfileFragment(), true);
     }
 
     @OnClick(R.id.changePasswordBtn)
@@ -132,9 +132,21 @@ public class SettingsFragment extends BaseFragment implements SettingsPresenter.
         getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
+
     @OnClick(R.id.helpFaqBtn)
-    void onHelpFaqBtnClick() {
-        ((BaseActivity) getActivity()).changeFragment(new HelpFragment(), true);
+    void onHelpBtnClick() {
+        ((BaseActivity) getActivity()).changeFragment(WebFragment.getInstance(getString(R.string.help_faq), getString(R.string.endpoint) + Constants.HELP_URL_PATH), true);
+    }
+
+
+    @OnClick(R.id.privacyBtn)
+    void onPrivacyClick() {
+        ((BaseActivity) getActivity()).changeFragment(WebFragment.getInstance(getString(R.string.privacy_policy), getString(R.string.endpoint) + Constants.PRIVACY_POLICY_PATH), true);
+    }
+
+    @OnClick(R.id.termsBtn)
+    void onTermsBtnClick() {
+        ((BaseActivity) getActivity()).changeFragment(WebFragment.getInstance(getString(R.string.tos), getString(R.string.endpoint) + Constants.TOS_PATH), true);
     }
 
     @OnCheckedChanged(R.id.statusVisibleSwitch)

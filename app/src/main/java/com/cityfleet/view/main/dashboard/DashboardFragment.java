@@ -28,7 +28,7 @@ import com.cityfleet.util.PrefUtil;
 import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
 import com.cityfleet.view.login.LoginFlowActivity;
-import com.cityfleet.view.main.HelpFragment;
+import com.cityfleet.view.main.WebFragment;
 import com.cityfleet.view.main.addfriends.AddFriendsFragment;
 import com.cityfleet.view.main.benefits.BenefitsFragment;
 import com.cityfleet.view.main.chat.ChatActivity;
@@ -88,9 +88,8 @@ public class DashboardFragment extends BaseFragment implements DashboardView, Im
 
     @OnClick(R.id.cameraBtn)
     void onCameraBtnClick() {
-     imagePickerUtil.onImageClick();
+        imagePickerUtil.onImageClick();
     }
-
 
 
     @Override
@@ -150,7 +149,7 @@ public class DashboardFragment extends BaseFragment implements DashboardView, Im
 
     @OnClick(R.id.helpBtn)
     void onHelpBtnBtnClick() {
-        ((BaseActivity) getActivity()).changeFragment(new HelpFragment(), true);
+        ((BaseActivity) getActivity()).changeFragment(WebFragment.getInstance(getString(R.string.help_faq),getString(R.string.endpoint) + Constants.HELP_URL_PATH ), true);
     }
 
     @OnClick(R.id.settingsBtn)

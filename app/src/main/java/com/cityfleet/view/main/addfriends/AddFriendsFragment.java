@@ -22,7 +22,6 @@ import com.cityfleet.R;
 import com.cityfleet.util.CommonUtils;
 import com.cityfleet.util.InstagramLoginEvent;
 import com.cityfleet.util.PermissionUtil;
-import com.cityfleet.view.BaseActivity;
 import com.cityfleet.view.BaseFragment;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -128,10 +127,10 @@ public class AddFriendsFragment extends BaseFragment implements AddFriendsPresen
         }
     }
 
-    @OnClick(R.id.instagramBtn)
-    void onInstagramBtnClick() {
-        ((BaseActivity) getActivity()).changeFragment(new InstagramWebFragment(), true);
-    }
+//    @OnClick(R.id.instagramBtn)
+//    void onInstagramBtnClick() {
+//        ((BaseActivity) getActivity()).changeFragment(new InstagramWebFragment(), true);
+//    }
 
     @Override
     public void startLoading() {
