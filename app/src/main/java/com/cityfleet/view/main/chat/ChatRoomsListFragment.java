@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -159,7 +160,7 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (getView() != null) {
+              //      if (getView() != null) {
                         ChatMessage chatMessage = event.getChatMessage();
                         ChatRoom chatRoomWithNewMessage = null;
                         for (ChatRoom chatRoom : adapter.getChatList()) {
@@ -180,9 +181,9 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
                         } else {
 
                             boolean containsSearchWords = false;
-                            if (searchField != null && searchField.getText().toString().isEmpty()) {
+                            if (searchField != null && TextUtils.isEmpty(searchField.getText())) {
                                 containsSearchWords = true;
-                            } else {
+                            } else if(searchField!=null){
                                 for (ChatFriend chatFriend : chatMessage.getParticipants()) {
                                     if (chatFriend.getId() != PrefUtil.getId(getContext()) && chatFriend.getName().toLowerCase().contains(searchField.getText().toString().toLowerCase())) {
                                         containsSearchWords = true;
@@ -203,7 +204,7 @@ public class ChatRoomsListFragment extends BaseFragment implements ChatRoomsAdap
                             }
                         }
                         adapter.notifyDataSetChanged();
-                    }
+                   // }
                 }
             });
         }
