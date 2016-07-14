@@ -44,7 +44,7 @@ public class RegisterFragment extends Fragment implements Validator.ValidationLi
     @NotEmpty
     @Bind(R.id.usernameEt)
     EditText usernameEt;
-    @NotEmpty
+    @NotEmpty(messageResId = R.string.phone_error)
     @Size(value = Constants.PHONE_NUMBER_SIZE)
     @Bind(R.id.phoneEt)
     EditText phoneEt;

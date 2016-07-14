@@ -275,6 +275,7 @@
     <string name="post_created">Post was created successfully</string>
     <string name="post_updated">Post was updated successfully</string>
     <string name="post_deleted">Post was deleted successfully</string>
+    <string name="phone_error">Enter a valid 10 digit phone number</string>
     <string-array name="pick_image_options">
         <item>Take Photo</item>
         <item>Choose from Gallery</item>

@@ -125,7 +125,7 @@ public class EditUserProfileFragment extends BaseFragment implements EditUserPro
                 userEditInfo.setPhone(phonenumber);
                 userEditInfo.setPhoneChanged(true);
             } else {
-                Toast.makeText(getContext(), R.string.phone_validation, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.phone_error, Toast.LENGTH_SHORT).show();
                 return;
             }
         }
